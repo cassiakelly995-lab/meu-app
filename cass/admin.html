@@ -11,73 +11,59 @@
         body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
         .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); }
         .gradient-text { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3); }
+        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white; cursor: pointer; }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body class="p-4">
     <div id="loginScreen" class="min-h-screen flex items-center justify-center">
-        <div class="glass rounded-3xl p-8 max-w-md w-full shadow-2xl">
-            <div class="text-center mb-8">
-                <div class="text-6xl mb-4">👑</div>
-                <h1 class="text-4xl font-bold gradient-text mb-2">Painel Admin</h1>
-                <p class="text-gray-600">Cassia Prompt</p>
-            </div>
+        <div class="glass rounded-3xl p-8 max-w-md w-full shadow-2xl text-center">
+            <h1 class="text-4xl font-bold gradient-text mb-6">Painel Admin</h1>
             <form onsubmit="event.preventDefault(); login(); return false;">
-                <div class="mb-6">
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">🔐 Senha de Administrador</label>
-                    <input type="password" id="adminPass" required placeholder="••••••••" class="w-full px-4 py-3 rounded-xl border-2 focus:border-purple-500 focus:outline-none">
-                    <p class="text-xs text-gray-500 mt-2">Senha padrão: <code class="bg-gray-100 px-2 py-1 rounded">admin2026</code></p>
-                </div>
-                <button type="submit" class="btn-primary w-full py-4 rounded-xl text-white font-semibold text-lg transition-all">🚀 Acessar</button>
+                <input type="password" id="adminPass" required placeholder="Senha" class="w-full px-4 py-3 rounded-xl border-2 mb-4">
+                <button type="submit" class="btn-primary w-full py-4 rounded-xl font-bold">🚀 Acessar</button>
             </form>
         </div>
     </div>
 
-    <div id="adminPanel" class="hidden max-w-6xl mx-auto">
-        <div class="glass rounded-2xl p-6 mb-6 flex justify-between items-center">
-            <h1 class="text-3xl font-bold gradient-text">👑 Painel Administrativo</h1>
-            <button onclick="location.reload()" class="px-4 py-2 bg-red-100 text-red-700 rounded-lg">Sair</button>
-        </div>
-
-        <div class="glass rounded-2xl p-6">
-            <h2 class="text-2xl font-bold gradient-text mb-6">🔗 Gerar Link de Cliente</h2>
-            <form onsubmit="event.preventDefault(); generateLink(); return false;" class="space-y-4">
-                <input type="text" id="clientName" required placeholder="Nome do Cliente" class="w-full px-4 py-3 rounded-xl border-2">
-                <button type="submit" class="btn-primary w-full py-4 rounded-xl text-white font-semibold">✨ Gerar Link</button>
-            </form>
-            <div id="linkResult" class="hidden mt-6 p-4 bg-green-50 rounded-xl border border-green-200">
-                <p class="text-sm font-bold text-green-800 mb-2">✅ Link Gerado:</p>
-                <input type="text" id="generatedLink" readonly class="w-full p-2 border rounded mb-3">
-                <button onclick="copyLink()" class="w-full py-2 bg-green-600 text-white rounded-lg">Copiar Link</button>
+    <div id="adminPanel" class="hidden max-w-4xl mx-auto mt-10">
+        <div class="glass rounded-2xl p-6 shadow-xl">
+            <h2 class="text-2xl font-bold gradient-text mb-6">Gerar Link de Cliente</h2>
+            <input type="text" id="clientName" placeholder="Nome do Cliente" class="w-full px-4 py-3 rounded-xl border-2 mb-4">
+            <button onclick="generateLink()" class="btn-primary w-full py-4 rounded-xl font-bold">✨ Criar Link</button>
+            
+            <div id="linkResult" class="hidden mt-6 p-4 bg-green-50 border-2 border-green-200 rounded-xl">
+                <input type="text" id="generatedLink" readonly class="w-full p-2 border mb-2 bg-white rounded">
+                <button onclick="copyLink()" class="w-full py-2 bg-green-600 text-white rounded font-bold">📋 Copiar Link</button>
             </div>
         </div>
     </div>
 
     <script>
         const ADMIN_PASSWORD = 'admin2026';
-        const BASE_URL = window.location.origin + '/meu-app/cass';
+        const BASE_URL = window.location.origin + window.location.pathname.replace('/admin.html', '');
 
         function login() {
-            const pass = document.getElementById('adminPass').value;
-            if (pass === ADMIN_PASSWORD) {
+            if (document.getElementById('adminPass').value === ADMIN_PASSWORD) {
                 document.getElementById('loginScreen').classList.add('hidden');
                 document.getElementById('adminPanel').classList.remove('hidden');
-            } else {
-                alert('❌ Senha incorreta!');
-            }
+            } else { alert('Senha incorreta!'); }
         }
 
         function generateLink() {
             const name = document.getElementById('clientName').value;
-            const link = `${BASE_URL}/cassia-app.html?token=access-cassia-2026&client=${Date.now()}`;
+            if(!name) return alert('Digite o nome!');
+            const clientId = 'c' + Date.now();
+            // TOKEN INCLUÍDO AQUI:
+            const link = `${BASE_URL}/cassia-app.html?token=access-cassia-2026&client=${clientId}`;
             document.getElementById('generatedLink').value = link;
             document.getElementById('linkResult').classList.remove('hidden');
         }
 
         function copyLink() {
-            const link = document.getElementById('generatedLink').value;
-            navigator.clipboard.writeText(link).then(() => alert('✅ Link copiado!'));
+            const el = document.getElementById('generatedLink');
+            el.select();
+            document.execCommand('copy');
+            alert('✅ Link copiado para o WhatsApp!');
         }
     </script>
 </body>

@@ -10,66 +10,67 @@
         body { font-family: 'Outfit', sans-serif; background: #0f172a; scroll-behavior: smooth; }
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
         .gradient-text { background: linear-gradient(90deg, #c084fc, #db2777, #f43f5e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        input[type="range"] { accent-color: #db2777; }
-        .animate-fade { animation: fadeIn 0.5s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .input-focus:focus { border-color: #db2777; box-shadow: 0 0 15px rgba(219, 39, 119, 0.2); }
     </style>
 </head>
 <body class="text-slate-200 p-4">
 
-    <div id="content" class="hidden max-w-2xl mx-auto pb-20 animate-fade">
+    <div id="content" class="hidden max-w-2xl mx-auto pb-20">
         <header class="text-center my-10">
             <h1 class="text-5xl font-black gradient-text mb-2">CÁSSIA PROMPT</h1>
-            <p class="text-slate-500 tracking-widest text-[10px] uppercase font-bold text-center">Arquitetura de Prompts de Alta Performance</p>
+            <p class="text-slate-500 tracking-widest text-[10px] uppercase font-bold text-center italic">A sua Engenheira de Inteligência Artificial</p>
         </header>
 
         <div class="glass p-8 rounded-[2.5rem] shadow-2xl space-y-8 mb-10 border border-white/5">
             
-            <h2 class="text-xl font-bold text-pink-500 flex items-center gap-2 italic">🚀 Gerador de Prompt Mestre</h2>
+            <div class="space-y-1 text-center">
+                <h2 class="text-2xl font-black text-white">Criador de Scripts Magnéticos</h2>
+                <p class="text-slate-400 text-sm">Preencha os detalhes abaixo para gerar um prompt impossível de ser ignorado.</p>
+            </div>
             
             <div class="space-y-6">
                 <div>
-                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">1. Atuar como (Persona de Elite)</label>
-                    <input type="text" id="persona" placeholder="Ex: Especialista em Tráfego Pago, Copywriter de Lançamentos..." class="w-full bg-slate-800 border border-slate-700 p-4 rounded-2xl mt-1 text-sm outline-none focus:border-pink-500 transition-all">
+                    <label class="text-[10px] font-black text-pink-500 uppercase tracking-widest">1. Quem deve escrever este texto? (Persona)</label>
+                    <input type="text" id="persona" placeholder="Ex: Um Especialista em Vendas com 10 anos de experiência..." class="w-full bg-slate-800/50 border border-slate-700 p-4 rounded-2xl mt-1 text-sm outline-none input-focus transition-all">
                 </div>
 
                 <div>
-                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">2. O que deve ser criado?</label>
-                    <input type="text" id="tarefa" placeholder="Ex: Um roteiro de vídeo de vendas para Reels..." class="w-full bg-slate-800 border border-slate-700 p-4 rounded-2xl mt-1 text-sm outline-none focus:border-pink-500 transition-all">
+                    <label class="text-[10px] font-black text-pink-500 uppercase tracking-widest">2. O que vamos criar agora? (Produto/Serviço)</label>
+                    <input type="text" id="tarefa" placeholder="Ex: Um convite para uma mentoria de emagrecimento pelo WhatsApp..." class="w-full bg-slate-800/50 border border-slate-700 p-4 rounded-2xl mt-1 text-sm outline-none input-focus transition-all">
                 </div>
 
                 <div>
-                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">3. Para quem é? (Público-Alvo)</label>
-                    <input type="text" id="publico" placeholder="Ex: Mulheres empreendedoras que ganham +5k por mês..." class="w-full bg-slate-800 border border-slate-700 p-4 rounded-2xl mt-1 text-sm outline-none focus:border-pink-500 transition-all">
+                    <label class="text-[10px] font-black text-pink-500 uppercase tracking-widest">3. Para quem estamos falando? (Público & Dor)</label>
+                    <input type="text" id="publico" placeholder="Ex: Pessoas cansadas de dietas que não funcionam e buscam algo rápido..." class="w-full bg-slate-800/50 border border-slate-700 p-4 rounded-2xl mt-1 text-sm outline-none input-focus transition-all">
                 </div>
 
                 <div>
-                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">4. Qual o objetivo principal?</label>
-                    <input type="text" id="objetivo" placeholder="Ex: Convencer a pessoa a clicar no link da Bio agora..." class="w-full bg-slate-800 border border-slate-700 p-4 rounded-2xl mt-1 text-sm outline-none focus:border-pink-500 transition-all">
+                    <label class="text-[10px] font-black text-pink-500 uppercase tracking-widest">4. Qual é a Oferta ou Gancho Principal?</label>
+                    <input type="text" id="oferta" placeholder="Ex: Uma aula gratuita na quarta-feira com apenas 10 vagas disponíveis..." class="w-full bg-slate-800/50 border border-slate-700 p-4 rounded-2xl mt-1 text-sm outline-none input-focus transition-all">
                 </div>
 
                 <div>
-                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">5. Tom de Voz e Estilo</label>
-                    <select id="tom" class="w-full bg-slate-800 border border-slate-700 p-4 rounded-2xl mt-1 text-sm outline-none focus:border-pink-500 transition-all">
-                        <option value="Persuasivo, focado em gatilhos mentais e desejo.">Persuasivo e Magnético</option>
-                        <option value="Profissional, autoritário, direto e técnico.">Autoridade e Profissional</option>
-                        <option value="Amigável, acolhedor e com linguagem simples.">Amigável e Conectado</option>
-                        <option value="Descontraído, engraçado e cheio de energia.">Criativo e Disruptivo</option>
+                    <label class="text-[10px] font-black text-pink-500 uppercase tracking-widest">5. Tom de Voz Desejado</label>
+                    <select id="tom" class="w-full bg-slate-800/50 border border-slate-700 p-4 rounded-2xl mt-1 text-sm outline-none input-focus transition-all">
+                        <option value="Urgente e Persuasivo (ideal para vendas rápidas)">Urgente e Persuasivo</option>
+                        <option value="Elegante e Autoritário (ideal para serviços caros)">Elegante e Autoritário</option>
+                        <option value="Humano e Empático (ideal para consultorias)">Humano e Empático</option>
+                        <option value="Curto e Direto ao Ponto (ideal para WhatsApp)">Curto e Direto (High-Speed)</option>
                     </select>
                 </div>
 
-                <button onclick="gerarPromptMestre()" class="w-full bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 p-6 rounded-3xl font-black text-xl uppercase shadow-2xl hover:scale-[1.02] transition-transform active:scale-95">
-                    Engenhar Prompt de Elite 💎
+                <button onclick="gerarPromptExtraordinario()" class="w-full bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 p-6 rounded-3xl font-black text-xl uppercase shadow-2xl hover:scale-[1.02] transition-transform active:scale-95 border-b-4 border-black/20">
+                    GERAR PROMPT EXTRAORDINÁRIO 💎
                 </button>
             </div>
         </div>
 
-        <div id="resultadoArea" class="hidden mt-10 animate-fade">
-            <div class="bg-white rounded-[2.5rem] p-8 shadow-2xl border-4 border-pink-500">
-                <p class="text-[10px] font-black text-slate-400 uppercase mb-2 tracking-widest text-center italic">Prompt Estruturado com Sucesso</p>
-                <textarea id="promptFinal" class="w-full h-80 bg-slate-50 p-6 rounded-2xl text-slate-900 font-medium text-sm border-none focus:outline-none resize-none leading-relaxed"></textarea>
+        <div id="resultadoArea" class="hidden mt-10">
+            <div class="bg-white rounded-[2.5rem] p-8 shadow-2xl border-4 border-pink-500 relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-pink-500 text-white text-[10px] font-black px-4 py-1 rounded-bl-xl">PRONTO PARA USAR</div>
+                <textarea id="promptFinal" class="w-full h-96 bg-transparent p-2 text-slate-900 font-medium text-sm border-none focus:outline-none resize-none leading-relaxed"></textarea>
                 <button onclick="copyPrompt()" class="w-full mt-6 bg-slate-900 text-white p-5 rounded-2xl font-black text-xl hover:bg-black transition-all shadow-lg active:scale-95">
-                    📋 COPIAR PROMPT DE ELITE
+                    📋 COPIAR E COLAR NO CHATGPT
                 </button>
             </div>
         </div>
@@ -77,41 +78,42 @@
 
     <div id="error" class="text-center mt-48">
         <h1 class="text-4xl font-black text-red-600 uppercase mb-2 italic">Acesso Restrito</h1>
-        <p class="text-slate-500 font-bold tracking-widest uppercase text-xs">Por favor, utilize seu token oficial.</p>
+        <p class="text-slate-500 font-bold tracking-widest uppercase text-xs">Utilize o link enviado pela Cássia.</p>
     </div>
 
     <script>
-        // SEGURANÇA POR TOKEN
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('token') === 'access-cassia-2026') {
             document.getElementById('content').classList.remove('hidden');
             document.getElementById('error').classList.add('hidden');
         }
 
-        function gerarPromptMestre() {
-            const persona = document.getElementById('persona').value || "Especialista em Comunicação";
-            const tarefa = document.getElementById('tarefa').value || "um conteúdo de alto valor";
-            const publico = document.getElementById('publico').value || "meu público-alvo";
-            const objetivo = document.getElementById('objetivo').value || "gerar engajamento e autoridade";
+        function gerarPromptExtraordinario() {
+            const persona = document.getElementById('persona').value || "Especialista em Comunicação Digital";
+            const tarefa = document.getElementById('tarefa').value || "um roteiro persuasivo";
+            const publico = document.getElementById('publico').value || "meu cliente ideal";
+            const oferta = document.getElementById('oferta').value || "um benefício exclusivo";
             const tom = document.getElementById('tom').value;
 
-            // A MÁGICA DO PROMPT DETALHADO (Framework Expert)
-            const promptMestre = `[SISTEMA DE ENGENHARIA DE PROMPT - CÁSSIA PROMPT]
+            // LÓGICA DE PROMPT DE ALTA PERFORMANCE
+            const promptMestre = `ATUE COMO: ${persona}.
+Sua missão é escrever ${tarefa} focando totalmente em ${publico}.
 
-CONTEXTO: Estou trabalhando na criação de ${tarefa}.
-PERSONA: Você deve atuar como um(a) ${persona} de alto nível, com foco em resultados reais e excelência técnica.
-PÚBLICO-ALVO: O conteúdo é destinado especificamente para ${publico}.
-OBJETIVO: O resultado final deve ser capaz de ${objetivo}.
+ESTRUTURA OBRIGATÓRIA (Siga à risca):
+1. GANCHO INICIAL: Comece com uma pergunta ou afirmação que quebre o padrão e prenda a atenção em 3 segundos.
+2. CONEXÃO COM A DOR: Mostre que você entende o problema que o público enfrenta (ex: ${publico}).
+3. A OFERTA: Introduza o(a) ${oferta} como a solução definitiva.
+4. CHAMADA PARA AÇÃO (CTA): Finalize com uma instrução clara e simples do que fazer a seguir.
 
-DIRETRIZES DE EXECUÇÃO:
-1. Use um tom de voz que seja ${tom}.
-2. Evite clichês e linguagens genéricas; foque em detalhes que conectem com as dores e desejos do público.
-3. Estrutura: Garanta que o conteúdo tenha um início impactante (Gancho), um desenvolvimento sólido e uma chamada para ação (CTA) impossível de ignorar.
-4. Linguagem: Seja natural, mas mantenha a sofisticação exigida pela persona.
+REGRAS DE OURO:
+- Use um tom de voz ${tom}.
+- Se for para WhatsApp: Use emojis de forma estratégica, parágrafos curtos (máximo 2 linhas) e uma linguagem de conversa real, nada de robôs.
+- Se for para E-mail: Foque em um assunto (Subject Line) irresistível e uma leitura fluída.
+- NÃO use palavras genéricas como "incrível" ou "oportunidade única". Seja específico e gere desejo real.
 
-ENTREGA: Gere agora a versão completa e otimizada de ${tarefa}.`;
+POR ONDE COMEÇAR: Comece agora a escrever o texto final de forma extraordinária.`;
 
-            document.getElementById('promptFinal').value = promptMestre + "\n\n--- \nSistema: Cássia Prompt Elite";
+            document.getElementById('promptFinal').value = promptMestre + "\n\n--- \nEngenharia: Cássia Prompt Elite";
             document.getElementById('resultadoArea').classList.remove('hidden');
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
@@ -120,7 +122,7 @@ ENTREGA: Gere agora a versão completa e otimizada de ${tarefa}.`;
             const cp = document.getElementById("promptFinal");
             cp.select();
             document.execCommand("copy");
-            alert("🚀 Prompt de Elite Copiado com Sucesso!");
+            alert("🚀 Prompt Extraordinário Copiado!");
         }
     </script>
 </body>

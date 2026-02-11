@@ -120,7 +120,7 @@
 
             let clients = JSON.parse(localStorage.getItem('cassia_clients') || '[]');
             clients.push(client);
-            localStorage.setItem('cassia_clients', JSON.stringify(clients));
+            const BASE_URL = window.location.origin + '/meu-app/cass';
 
             const link = `${BASE_URL}/cassia-app.html?token=${ACCESS_TOKEN}&client=${clientId}`;
             document.getElementById('generatedLink').value = link;

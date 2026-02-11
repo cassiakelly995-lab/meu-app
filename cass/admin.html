@@ -2,77 +2,62 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Admin - Cássia Prompt</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin - Cássia Prompt</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;900&display=swap');
+        body { font-family: 'Outfit', sans-serif; background: #0f172a; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+    </style>
 </head>
-<body class="bg-slate-900 text-white p-8">
-    <div class="max-w-md mx-auto bg-slate-800 p-8 rounded-[2rem] shadow-2xl border border-slate-700">
-        <h1 class="text-3xl font-black mb-6 text-center text-pink-500 uppercase italic">Central de Comando</h1>
-        
-        <div class="space-y-4 mb-8">
-            <div class="bg-slate-700/50 p-4 rounded-2xl">
-                <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Novo Acesso (Ex: nome-do-cliente)</label>
-                <input type="text" id="novoCliente" class="w-full bg-slate-800 p-3 rounded-xl mt-2 outline-none border border-slate-600 focus:border-pink-500">
-                <button onclick="adicionarCliente()" class="w-full bg-green-600 mt-4 p-4 rounded-xl font-black uppercase text-sm hover:bg-green-500 transition-all">Ativar Novo Cliente ✅</button>
+<body class="text-slate-200 p-6">
+
+    <div class="max-w-md mx-auto mt-10">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl font-black text-pink-500 uppercase italic">Painel de Controlo</h1>
+            <p class="text-slate-500 text-xs font-bold uppercase tracking-widest">Administração Cássia Prompt</p>
+        </header>
+
+        <div class="glass p-8 rounded-[2.5rem] shadow-2xl border border-pink-500/20 space-y-6">
+            <div>
+                <h2 class="text-sm font-black text-slate-400 uppercase mb-4">Link de Acesso dos Clientes</h2>
+                <div class="bg-slate-900/50 p-4 rounded-2xl border border-slate-700">
+                    <p class="text-[10px] text-pink-400 font-mono break-all" id="linkOficial">
+                        https://cassiakelly995-lab.github.io/meu-app/cass/cassia-app.html?token=access-cassia-2026
+                    </p>
+                </div>
+                <button onclick="copiarLink()" class="w-full mt-4 bg-pink-600 hover:bg-pink-700 p-4 rounded-xl font-black uppercase text-xs transition-all shadow-lg">
+                    📋 Copiar Link Oficial
+                </button>
+            </div>
+
+            <hr class="border-slate-800">
+
+            <div class="space-y-3">
+                <h2 class="text-sm font-black text-slate-400 uppercase">Estado do Sistema</h2>
+                <div class="flex items-center gap-3">
+                    <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                    <p class="text-sm font-bold text-green-500">Servidor Online & Seguro</p>
+                </div>
+                <p class="text-[11px] text-slate-500">O token atual é fixo para garantir estabilidade máxima nos teus testes do Instagram.</p>
             </div>
         </div>
 
-        <h2 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-4">Clientes Ativos</h2>
-        <div id="listaClientes" class="space-y-3">
-            </div>
+        <div class="text-center mt-8">
+            <a href="cassia-app.html?token=access-cassia-2026" class="text-slate-500 hover:text-white text-xs font-bold uppercase tracking-widest underline">
+                Aceder ao Gerador de Prompts
+            </a>
+        </div>
     </div>
 
     <script>
-        function carregarClientes() {
-            const lista = JSON.parse(localStorage.getItem('tokensCassia')) || ['access-cassia-2026'];
-            const container = document.getElementById('listaClientes');
-            container.innerHTML = '';
-            
-            lista.forEach(token => {
-                container.innerHTML += `
-                    <div class="flex justify-between items-center bg-slate-700/30 p-4 rounded-2xl border border-slate-600">
-                        <span class="font-mono text-sm text-pink-300 italic">${token}</span>
-                        <div class="flex gap-2">
-                             <button onclick="copyLink('${token}')" class="bg-blue-600 p-2 rounded-lg text-[10px] font-bold">LINK</button>
-                             <button onclick="banirCliente('${token}')" class="bg-red-600 p-2 rounded-lg text-[10px] font-bold">BANIR</button>
-                        </div>
-                    </div>
-                `;
+        function copiarLink() {
+            const link = document.getElementById('linkOficial').innerText.trim();
+            navigator.clipboard.writeText(link).then(() => {
+                alert("🚀 Link copiado! Já podes enviar para os teus clientes do Instagram.");
             });
         }
-
-        function adicionarCliente() {
-            const input = document.getElementById('novoCliente');
-            const novo = input.value.trim().toLowerCase().replace(/\s+/g, '-');
-            if(!novo) return;
-
-            let lista = JSON.parse(localStorage.getItem('tokensCassia')) || ['access-cassia-2026'];
-            if(!lista.includes(novo)) {
-                lista.push(novo);
-                localStorage.setItem('tokensCassia', JSON.stringify(lista));
-                input.value = '';
-                carregarClientes();
-                alert('Cliente Ativado com Sucesso!');
-            }
-        }
-
-        function banirCliente(token) {
-            if(token === 'access-cassia-2026') return alert('Token mestre não pode ser removido.');
-            if(!confirm('Deseja realmente BANIR este acesso?')) return;
-            
-            let lista = JSON.parse(localStorage.getItem('tokensCassia')) || [];
-            lista = lista.filter(t => t !== token);
-            localStorage.setItem('tokensCassia', JSON.stringify(lista));
-            carregarClientes();
-        }
-
-        function copyLink(token) {
-            const link = `https://cassiakelly995-lab.github.io/meu-app/cass/cassia-app.html?token=${token}`;
-            navigator.clipboard.writeText(link);
-            alert('Link do Cliente Copiado!');
-        }
-
-        carregarClientes();
     </script>
 </body>
 </html>

@@ -1,42 +1,50 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Painel Admin - Cassia</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-900 flex items-center justify-center min-h-screen p-4">
-    <div id="loginScreen" class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md text-center">
-        <h1 class="text-2xl font-bold mb-6">Painel Administrativo</h1>
-        <input type="password" id="adminPass" placeholder="Senha" class="w-full p-3 border rounded mb-4">
-        <button onclick="login()" class="w-full bg-purple-600 text-white p-3 rounded font-bold hover:bg-purple-700">🚀 Acessar</button>
+<body class="bg-slate-900 min-h-screen flex items-center justify-center p-4">
+    <div id="lS" class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-sm text-center">
+        <h1 class="text-2xl font-bold mb-6 text-slate-800">Painel Admin</h1>
+        <input type="password" id="aP" placeholder="Senha" class="w-full p-3 border-2 rounded-xl mb-4 outline-none focus:border-purple-500">
+        <button onclick="check()" class="w-full bg-purple-600 text-white p-4 rounded-xl font-bold hover:bg-purple-700 transition-all">🚀 Acessar</button>
+        <p class="text-xs text-slate-400 mt-4">Senha: admin2026</p>
     </div>
 
-    <div id="adminPanel" class="hidden bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md">
-        <h2 class="text-xl font-bold mb-4">Gerar Link</h2>
-        <input type="text" id="clientName" placeholder="Nome do Cliente" class="w-full p-3 border rounded mb-4">
-        <button onclick="generateLink()" class="w-full bg-green-600 text-white p-3 rounded font-bold mb-4">✨ Criar Link</button>
-        <div id="linkResult" class="hidden">
-            <input type="text" id="generatedLink" readonly class="w-full p-2 border bg-gray-50 mb-2 text-sm">
-            <p class="text-xs text-green-600 font-bold">✅ Copie e mande para o cliente!</p>
+    <div id="aPnl" class="hidden bg-white p-8 rounded-3xl shadow-2xl w-full max-w-md">
+        <h2 class="text-xl font-bold mb-4 text-slate-800">Gerar Link Cliente</h2>
+        <input type="text" id="cN" placeholder="Nome do Cliente" class="w-full p-3 border-2 rounded-xl mb-4">
+        <button onclick="gen()" class="w-full bg-green-600 text-white p-4 rounded-xl font-bold">✨ Criar Link</button>
+        <div id="res" class="hidden mt-6 p-4 bg-slate-50 rounded-xl border">
+            <input type="text" id="gL" readonly class="w-full p-2 border text-sm mb-2">
+            <button onclick="copy()" class="w-full py-2 bg-slate-800 text-white rounded-lg text-sm">Copiar Link</button>
         </div>
     </div>
 
     <script>
-        function login() {
-            const pass = document.getElementById('adminPass').value;
-            if (pass === 'admin2026') {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('adminPanel').style.display = 'block';
+        function check() {
+            const p = document.getElementById('aP').value;
+            if (p === 'admin2026') {
+                document.getElementById('lS').classList.add('hidden');
+                document.getElementById('aPnl').classList.remove('hidden');
             } else { alert('Senha incorreta!'); }
         }
 
-        function generateLink() {
-            const name = document.getElementById('clientName').value;
-            const baseUrl = window.location.origin + window.location.pathname.replace('/admin.html', '');
-            const link = baseUrl + '/cassia-app.html?token=access-cassia-2026&client=' + Date.now();
-            document.getElementById('generatedLink').value = link;
-            document.getElementById('linkResult').style.display = 'block';
+        function gen() {
+            const url = window.location.origin + window.location.pathname.replace('/admin.html', '');
+            const link = url + '/cassia-app.html?token=access-cassia-2026&client=' + Date.now();
+            document.getElementById('gL').value = link;
+            document.getElementById('res').classList.remove('hidden');
+        }
+
+        function copy() {
+            const field = document.getElementById('gL');
+            field.select();
+            document.execCommand('copy');
+            alert('Copiado!');
         }
     </script>
 </body>

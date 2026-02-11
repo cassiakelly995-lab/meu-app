@@ -11,32 +11,33 @@
         <h1 class="text-2xl font-bold mb-6 text-slate-800">Painel Admin</h1>
         <input type="password" id="aP" placeholder="Senha" class="w-full p-3 border-2 rounded-xl mb-4 outline-none focus:border-purple-500">
         <button onclick="check()" class="w-full bg-purple-600 text-white p-4 rounded-xl font-bold hover:bg-purple-700 transition-all">🚀 Acessar</button>
-        <p class="text-xs text-slate-400 mt-4">Senha: admin2026</p>
     </div>
 
     <div id="aPnl" class="hidden bg-white p-8 rounded-3xl shadow-2xl w-full max-w-md">
-        <h2 class="text-xl font-bold mb-4 text-slate-800">Gerar Link Cliente</h2>
-        <input type="text" id="cN" placeholder="Nome do Cliente" class="w-full p-3 border-2 rounded-xl mb-4">
-        <button onclick="gen()" class="w-full bg-green-600 text-white p-4 rounded-xl font-bold">✨ Criar Link</button>
-        <div id="res" class="hidden mt-6 p-4 bg-slate-50 rounded-xl border">
-            <input type="text" id="gL" readonly class="w-full p-2 border text-sm mb-2">
-            <button onclick="copy()" class="w-full py-2 bg-slate-800 text-white rounded-lg text-sm">Copiar Link</button>
+        <h2 class="text-xl font-bold mb-4 text-slate-800 text-center">👑 Gerenciar Acessos</h2>
+        <input type="text" id="cN" placeholder="Nome do Cliente" class="w-full p-3 border-2 rounded-xl mb-4 outline-none">
+        <button onclick="gen()" class="w-full bg-purple-600 text-white p-4 rounded-xl font-bold">✨ Gerar Novo Link</button>
+        <div id="res" class="hidden mt-6 p-4 bg-slate-50 rounded-xl border-2 border-dashed border-slate-200">
+            <p class="text-xs font-bold text-slate-500 mb-2">LINK PARA O CLIENTE:</p>
+            <input type="text" id="gL" readonly class="w-full p-2 border text-sm mb-3 bg-white">
+            <button onclick="copy()" class="w-full py-3 bg-green-600 text-white rounded-xl font-bold">📋 Copiar Link</button>
         </div>
     </div>
 
     <script>
         function check() {
-            const p = document.getElementById('aP').value;
-            if (p === 'admin2026') {
+            if (document.getElementById('aP').value === 'admin2026') {
                 document.getElementById('lS').classList.add('hidden');
                 document.getElementById('aPnl').classList.remove('hidden');
             } else { alert('Senha incorreta!'); }
         }
 
         function gen() {
-            const const url = window.location.origin + window.location.pathname.split('/').slice(0, -1).join('/');
-            const link = url + '/cassia-app.html?token=access-cassia-2026&client=' + Date.now();
-            document.getElementById('gL').value = link;
+            // CORREÇÃO DEFINITIVA DO LINK DUPLICADO AQUI:
+            const base = window.location.origin + window.location.pathname.split('/').slice(0, -1).join('/');
+            const finalLink = base + '/cassia-app.html?token=access-cassia-2026&client=' + Date.now();
+            
+            document.getElementById('gL').value = finalLink;
             document.getElementById('res').classList.remove('hidden');
         }
 
@@ -44,7 +45,7 @@
             const field = document.getElementById('gL');
             field.select();
             document.execCommand('copy');
-            alert('Copiado!');
+            alert('✅ Link copiado!');
         }
     </script>
 </body>

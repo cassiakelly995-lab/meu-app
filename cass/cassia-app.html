@@ -11,26 +11,23 @@
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
         .gradient-text { background: linear-gradient(90deg, #c084fc, #db2777, #f43f5e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         input[type="range"] { accent-color: #db2777; }
-        .animate-fade { animation: fadeIn 0.5s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="text-slate-200 p-4">
 
-    <div id="content" class="hidden max-w-2xl mx-auto pb-20 animate-fade">
+    <div id="content" class="hidden max-w-2xl mx-auto pb-20">
         <header class="text-center my-10">
             <h1 class="text-5xl font-black gradient-text mb-2">CÁSSIA PROMPT</h1>
             <p class="text-slate-500 tracking-widest text-[10px] uppercase font-bold text-center">Engenharia de Prompts de Alta Performance</p>
         </header>
 
         <div class="glass p-8 rounded-[2.5rem] shadow-2xl space-y-8 mb-10">
-            
             <div class="space-y-4">
                 <h2 class="text-xl font-bold flex items-center gap-2 text-pink-500">⚙️ Configurações</h2>
                 <div class="grid grid-cols-2 gap-6">
                     <div>
                         <label class="text-[10px] font-bold text-slate-400 uppercase">Tom de Voz</label>
-                        <select id="tom" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl mt-1 text-sm text-white focus:border-pink-500 outline-none">
+                        <select id="tom" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-xl mt-1 text-sm text-white outline-none">
                             <option value="Profissional e Técnico">Profissional</option>
                             <option value="Persuasivo e Vendedor">Persuasivo</option>
                             <option value="Amigável e Casual">Amigável</option>
@@ -55,7 +52,7 @@
                         <option value="E-mail de Cobrança Elegante">E-mail de Cobrança</option>
                     </select>
                     <input type="text" id="destinoCom" placeholder="Para quem é? (Ex: Cliente novo)" class="w-full bg-slate-800 p-3 rounded-xl text-sm border border-slate-700 outline-none">
-                    <input type="text" id="assuntoCom" placeholder="Assunto (Ex: Assinatura de contrato)" class="w-full bg-slate-800 p-3 rounded-xl text-sm border border-slate-700 outline-none">
+                    <input type="text" id="assuntoCom" placeholder="Assunto (Ex: Mentoria de IA)" class="w-full bg-slate-800 p-3 rounded-xl text-sm border border-slate-700 outline-none">
                 </div>
                 <button onclick="gerarComunicacao()" class="w-full bg-blue-600 p-4 rounded-2xl font-black uppercase text-xs">Gerar Script ⚡</button>
             </div>
@@ -82,12 +79,18 @@
     </div>
 
     <script>
-        // Lógica de Segurança por Token
-        const tokensSalvos = JSON.parse(localStorage.getItem('tokensCassia')) || ['access-cassia-2026'];
+        // 🎫 LISTA DE ACESSO (Edite aqui para adicionar ou remover pessoas)
+        const tokensValidos = [
+            'access-cassia-2026', 
+            'instagram-promo', 
+            'teste-gratis',
+            'cliente-especial'
+        ];
+
         const urlParams = new URLSearchParams(window.location.search);
         const tokenUsuario = urlParams.get('token');
 
-        if (tokensSalvos.includes(tokenUsuario)) {
+        if (tokensValidos.includes(tokenUsuario)) {
             document.getElementById('content').classList.remove('hidden');
             document.getElementById('error').classList.add('hidden');
         }
@@ -101,12 +104,25 @@
         function gerarComunicacao() {
             const tipo = document.getElementById('tipoCom').value;
             const destino = document.getElementById('destinoCom').value || "Cliente";
-            const assunto = document.getElementById('assuntoCom').value || "nosso serviço";
-            const p = `Atue como Copywriter Sênior. Escreva um ${tipo} para ${destino} sobre ${assunto}. Tom: ${document.getElementById('tom').value}. Use emojis se for WhatsApp.`;
+            const assunto = document.getElementById('assuntoCom').value || "serviço";
+            const tom = document.getElementById('tom').value;
+            const p = `Atue como Copywriter Sênior. Escreva um ${tipo} para ${destino} sobre ${assunto}. Tom: ${tom}. Use quebras de linha e emojis se for WhatsApp.`;
             mostrar(p);
         }
 
         function gerarMegaPrompt() {
             const nicho = document.getElementById('nicho').value || "Expert";
-            const problema = document.getElementById('problema').value || "ajuda técnica";
-            const p = `Atue como um ${nicho} com 20 anos de experiência. Resolva isso: ${problema}. Use criatividade nível ${document.getElementById('criatividade').value}/10. NÃO INVENTE D
+            const problema = document.getElementById('problema').value || "tarefa técnica";
+            const p = `Atue como um ${nicho} com 20 anos de experiência. Resolva isso: ${problema}. Use criatividade nível ${document.getElementById('criatividade').value}/10. NÃO INVENTE DADOS FALSOS.`;
+            mostrar(p);
+        }
+
+        function copyPrompt() {
+            const cp = document.getElementById("promptFinal");
+            cp.select();
+            document.execCommand("copy");
+            alert("🚀 Copiado!");
+        }
+    </script>
+</body>
+</html>

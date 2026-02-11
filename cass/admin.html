@@ -34,7 +34,7 @@
         }
 
         function gen() {
-            const url = window.location.origin + window.location.pathname.replace('/admin.html', '');
+            const const url = window.location.origin + window.location.pathname.split('/').slice(0, -1).join('/');
             const link = url + '/cassia-app.html?token=access-cassia-2026&client=' + Date.now();
             document.getElementById('gL').value = link;
             document.getElementById('res').classList.remove('hidden');

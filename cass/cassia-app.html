@@ -3,82 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt | High Performance</title>
+    <title>Cássia Prompt | Elite Prompt Engineering</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background: #05070a; color: #e2e8f0; overflow-x: hidden; }
-        .cyber-card { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 2rem; }
-        .neon-text { text-shadow: 0 0 10px rgba(219, 39, 119, 0.5); font-style: italic; }
-        .glow-button { background: linear-gradient(135deg, #db2777 0%, #7c3aed 100%); transition: 0.3s; box-shadow: 0 0 20px rgba(124, 58, 237, 0.3); }
-        .glow-button:hover { box-shadow: 0 0 30px rgba(219, 39, 119, 0.6); transform: translateY(-2px); }
-        input, textarea { background: rgba(0,0,0,0.3) !important; border: 1px solid rgba(255,255,255,0.1) !important; transition: 0.3s; color: white !important; }
-        input:focus, textarea:focus { border-color: #db2777 !important; outline: none; box-shadow: 0 0 10px rgba(219, 39, 119, 0.2); }
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;700&display=swap');
+        
+        :root { --accent: #db2777; --bg: #020617; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: #f8fafc; }
+        h1 { font-family: 'Space Grotesk', sans-serif; }
+
+        .glass-panel { 
+            background: rgba(15, 23, 42, 0.6); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .input-group label { 
+            display: block; 
+            font-size: 0.65rem; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            letter-spacing: 0.1em; 
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            background: rgba(2, 6, 23, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            color: white;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(219, 39, 119, 0.1);
+        }
+
+        .btn-primary {
+            background: white;
+            color: black;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .prompt-preview {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #10b981;
+            border: 1px solid #10b98133;
+        }
     </style>
 </head>
-<body class="p-4 md:p-10">
+<body class="min-h-screen p-4 md:p-8 flex flex-col items-center">
 
-    <div id="content" class="hidden max-w-5xl mx-auto">
-        <div class="flex justify-between items-center mb-12 px-4">
-            <span class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 italic">SISTEMA CÁSSIA PROMPT • ELITE V5</span>
+    <div id="content" class="hidden w-full max-w-6xl">
+        <div class="flex justify-between items-center mb-12 border-b border-white/5 pb-6">
+            <h2 class="text-xl font-bold tracking-tighter italic">CÁSSIA<span class="text-pink-600">PROMPT</span></h2>
+            <div class="px-3 py-1 rounded-full border border-green-500/30 bg-green-500/10 text-[10px] text-green-400 font-bold uppercase tracking-widest">
+                Engine v6.0 Online
+            </div>
         </div>
 
-        <header class="text-center mb-12">
-            <h1 class="text-6xl font-black tracking-tighter mb-4 neon-text italic">CÁSSIA PROMPT</h1>
-            <p class="text-slate-400 max-w-xl mx-auto text-[10px] uppercase tracking-[0.4em] font-bold">Arquitetura de Precisão Cirúrgica</p>
-        </header>
+        <div class="grid lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-5 space-y-6">
+                <div class="glass-panel p-8 rounded-[2rem] space-y-6">
+                    <div class="input-group">
+                        <label>01. Atuação (Expertise)</label>
+                        <input type="text" id="persona" placeholder="Ex: Advogado Tributarista ou Copywriter Sênior">
+                    </div>
 
-        <div class="grid md:grid-cols-2 gap-8">
-            <div class="cyber-card p-8 space-y-6 border border-white/5">
-                <div>
-                    <label class="text-[10px] font-bold text-pink-500 uppercase tracking-widest block mb-2">01. Especialista (Persona)</label>
-                    <input type="text" id="persona" placeholder="Ex: Advogado Civil Sênior..." class="w-full p-4 rounded-xl text-sm">
-                </div>
+                    <div class="input-group">
+                        <label>02. Objetivo Direto (Sem rodeios)</label>
+                        <input type="text" id="canal" placeholder="Ex: Petição Inicial de Divórcio ou Script VSL">
+                    </div>
 
-                <div>
-                    <label class="text-[10px] font-bold text-pink-500 uppercase tracking-widest block mb-2">02. Fatos e Dados Reais (Sem Invenções)</label>
-                    <textarea id="contexto" placeholder="Liste os fatos, leis e informações verídicas aqui..." class="w-full p-4 rounded-xl text-sm h-32 resize-none"></textarea>
-                </div>
+                    <div class="input-group">
+                        <label>03. Dados e Fatos Reais (Input Verídico)</label>
+                        <textarea id="contexto" rows="4" placeholder="Cole aqui os fatos, leis, nomes e valores reais. O sistema ignorará o que não estiver aqui."></textarea>
+                    </div>
 
-                <div>
-                    <label class="text-[10px] font-bold text-pink-500 uppercase tracking-widest block mb-2">03. Destinatário / Autoridade</label>
-                    <input type="text" id="publico" placeholder="Ex: Juiz da Vara de Família..." class="w-full p-4 rounded-xl text-sm">
-                </div>
-                
-                <div>
-                    <label class="text-[10px] font-bold text-pink-500 uppercase tracking-widest block mb-2">04. Documento / Formato</label>
-                    <input type="text" id="canal" placeholder="Ex: Petição Inicial, Notificação Extrajudicial..." class="w-full p-4 rounded-xl text-sm">
-                </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="input-group">
+                            <label>04. Público</label>
+                            <input type="text" id="publico" placeholder="Destinatário">
+                        </div>
+                        <div class="input-group">
+                            <label>05. Rigor Técnico</label>
+                            <select id="rigor">
+                                <option value="Máximo (Direto ao ponto, técnico)">Máximo</option>
+                                <option value="Equilibrado (Persuasivo)">Equilibrado</option>
+                                <option value="Casual (Humanizado)">Casual</option>
+                            </select>
+                        </div>
+                    </div>
 
-                <div>
-                    <label class="text-[10px] font-bold text-pink-500 uppercase tracking-widest block mb-2">05. Tom de Voz</label>
-                    <input type="text" id="tom" placeholder="Ex: Jurídico Formal e Objetivo..." class="w-full p-4 rounded-xl text-sm">
+                    <button onclick="gerarPrompt()" class="btn-primary w-full py-5 rounded-2xl text-sm">
+                        Engenhar Prompt de Alta Performance ⚡
+                    </button>
                 </div>
-
-                <button onclick="gerarPromptFinal()" class="w-full glow-button p-5 rounded-2xl font-black text-sm uppercase tracking-widest">
-                    Gerar Engenharia de Prompt ⚡
-                </button>
             </div>
 
-            <div class="flex flex-col h-full">
-                <div id="resultadoArea" class="hidden h-full">
-                    <div class="cyber-card p-8 border-pink-500/30 h-full flex flex-col border-2">
-                        <span class="text-[10px] font-bold uppercase tracking-widest text-pink-500 mb-6">Prompt Estruturado de Alta Performance</span>
-                        <textarea id="promptFinal" class="flex-grow w-full bg-transparent border-none text-slate-300 text-sm leading-relaxed p-0 focus:ring-0 resize-none outline-none font-mono"></textarea>
-                        <button onclick="copyPrompt()" class="mt-6 w-full bg-white text-black p-5 rounded-2xl font-black text-xs uppercase transition-all hover:bg-pink-500 hover:text-white">
-                            Copiar para o ChatGPT
-                        </button>
+            <div class="lg:col-span-7 h-full">
+                <div id="outputContainer" class="hidden h-full flex flex-col">
+                    <div class="glass-panel p-8 rounded-[2rem] flex-grow flex flex-col border-pink-600/20 border-2">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-[10px] font-black uppercase text-pink-500 tracking-[0.2em]">Prompt Estruturado de Nível 10</span>
+                            <button onclick="copy()" class="text-[10px] font-bold underline uppercase hover:text-pink-500 transition-colors">Copiar agora</button>
+                        </div>
+                        <textarea id="result" class="prompt-preview w-full flex-grow p-6 rounded-xl text-sm leading-relaxed border-none focus:ring-0 resize-none overflow-y-auto outline-none"></textarea>
                     </div>
                 </div>
-                <div id="placeholderResult" class="h-full border border-dashed border-slate-800 rounded-[2rem] flex items-center justify-center p-12 text-center">
-                    <p class="text-slate-600 text-[10px] font-bold uppercase tracking-[0.3em]">Aguardando dados brutos...</p>
+
+                <div id="placeholder" class="h-full min-h-[400px] border-2 border-dashed border-white/5 rounded-[2rem] flex flex-col items-center justify-center text-center p-10">
+                    <div class="w-12 h-12 border-2 border-pink-500/20 rounded-full mb-4 flex items-center justify-center">
+                        <div class="w-2 h-2 bg-pink-500 rounded-full animate-ping"></div>
+                    </div>
+                    <p class="text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em]">Aguardando processamento de variáveis...</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="error" class="text-center mt-48">
-        <h1 class="text-2xl font-black text-slate-800 uppercase tracking-[0.5em]">Acesso Negado</h1>
+    <div id="error" class="mt-40 text-center">
+        <h1 class="text-slate-800 font-black text-3xl uppercase tracking-tighter">Acesso Restrito</h1>
     </div>
 
     <script>
@@ -88,48 +150,46 @@
             document.getElementById('error').classList.add('hidden');
         }
 
-        function gerarPromptFinal() {
+        function gerarPrompt() {
             const persona = document.getElementById('persona').value || "Especialista";
-            const contexto = document.getElementById('contexto').value || "Sem dados";
-            const publico = document.getElementById('publico').value || "Destinatário";
-            const canal = document.getElementById('canal').value || "Documento";
-            const tom = document.getElementById('tom').value || "Objetivo";
+            const objetivo = document.getElementById('canal').value || "Documento Técnico";
+            const fatos = document.getElementById('contexto').value || "Nenhum dado informado";
+            const publico = document.getElementById('publico').value || "Indefinido";
+            const rigor = document.getElementById('rigor').value;
 
-            // Lógica para detectar Petição/Peça Jurídica
-            let diretrizEspecifica = "";
-            if(canal.toLowerCase().includes("petição") || canal.toLowerCase().includes("inicial") || canal.toLowerCase().includes("peça")) {
-                diretrizEspecifica = `PROTOCOLO JURÍDICO: Seja direto e objetivo. Vá direto aos pedidos. Elimine introduções genéricas, textos motivacionais ou "lenga-lenga". Foque na fundamentação técnica baseada nos fatos fornecidos.`;
-            }
+            // Lógica de "Prompt Chain" - A melhor do mercado atual
+            const promptFinal = `### INSTRUÇÕES DE SISTEMA (NÃO IGNORE)
+Você é um(a) ${persona} com foco em resultados práticos e escrita de alto nível.
+Sua tarefa é produzir um(a) ${objetivo} para ${publico}.
 
-            const promptElite = `[ENGENHARIA DE PROMPT CÁSSIA - NÍVEL 10]
+### CONTEXTO REAL E VERÍDICO (FONTE ÚNICA)
+"${fatos}"
 
-TAREFA: Elaborar ${canal}.
-PERSONA: ${persona}.
-DESTINATÁRIO: ${publico}.
-ESTILO: ${tom}.
+### REGRAS DE EXECUÇÃO RÍGIDAS
+1. OBJETIVIDADE: Se o objetivo for jurídico ou técnico, vá DIRETO AO PONTO. Elimine introduções polidas, adjetivos vazios ou frases de efeito.
+2. VERACIDADE: Utilize EXCLUSIVAMENTE os dados fornecidos no contexto acima. Proibido inventar prazos, leis, valores ou fatos adicionais.
+3. RIGOR: Nível de rigor ${rigor}. 
+4. TOM: Profissional, analítico e cirúrgico.
+5. ESTRUTURA: Se for uma petição, siga a estrutura formal (Fatos, Direito, Pedido). Se for comunicação, use blocos lógicos.
 
-FATOS VERÍDICOS (DADOS REAIS):
-"${contexto}"
+### O QUE NÃO FAZER
+- Não alucine informações.
+- Não use "lenga-lenga" ou introduções burocráticas como "Espero que este e-mail o encontre bem".
+- Não peça desculpas ou faça comentários fora do documento.
 
-DIRETRIZES RÍGIDAS:
-1. NÃO INVENTE: Use apenas os fatos acima. Se faltar informação, use [INSERIR DADOS].
-2. OBJETIVIDADE TOTAL: ${diretrizEspecifica || "Seja conciso e profissional."}
-3. ESTRUTURA: Entregue o texto pronto para revisão final, sem comentários laterais.
-4. VERACIDADE: Proibido alucinar ou criar leis inexistentes.
+ENTREGA: Comece o texto de forma direta agora.`;
 
-RESULTADO:`;
-
-            document.getElementById('promptFinal').value = promptElite;
-            document.getElementById('placeholderResult').classList.add('hidden');
-            document.getElementById('resultadoArea').classList.remove('hidden');
+            document.getElementById('result').value = promptFinal;
+            document.getElementById('placeholder').style.display = 'none';
+            document.getElementById('outputContainer').classList.remove('hidden');
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
 
-        function copyPrompt() {
-            const cp = document.getElementById("promptFinal");
-            cp.select();
-            document.execCommand("copy");
-            alert("COPIADO: Pronto para colar no ChatGPT.");
+        function copy() {
+            const el = document.getElementById('result');
+            el.select();
+            document.execCommand('copy');
+            alert('Prompt de Alta Performance Copiado!');
         }
     </script>
 </body>

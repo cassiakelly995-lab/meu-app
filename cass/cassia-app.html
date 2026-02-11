@@ -1,34 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Cliente</title>
+    <title>Gerador de Prompts Profissionais</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-900 min-h-screen flex items-center justify-center p-4 text-white">
-    <div id="content" class="hidden text-center">
-        <h1 class="text-3xl font-bold mb-4">🚀 Bem-vindo(a)!</h1>
-        <p class="text-slate-400 mb-8">Seus prompts exclusivos já estão liberados.</p>
-        <div class="bg-white text-slate-800 p-6 rounded-2xl shadow-xl">
-            <p class="font-bold">Prompt 01:</p>
-            <textarea readonly class="w-full p-2 border rounded mt-2 text-sm">Exemplo de prompt para o cliente...</textarea>
+<body class="bg-slate-900 min-h-screen p-4 text-white font-sans">
+    <div id="content" class="hidden max-w-2xl mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-purple-400">🚀 Fábrica de Prompts</h1>
+            <p class="text-slate-400">Preencha as lacunas para gerar seu comando profissional.</p>
+        </header>
+
+        <div class="bg-slate-800 p-6 rounded-2xl shadow-xl mb-6 border-l-4 border-blue-500">
+            <h2 class="text-xl font-bold mb-4 flex items-center">⚖️ Para Advogados</h2>
+            <p class="text-sm text-slate-400 mb-2">Qual o tema da petição ou tese?</p>
+            <input type="text" id="temaAdv" placeholder="Ex: Divórcio Litigioso, Revisional de Aluguel..." class="w-full p-3 rounded-xl bg-slate-700 border-none mb-4 text-white">
+            <button onclick="gerarAdv()" class="w-full bg-blue-600 hover:bg-blue-700 p-3 rounded-xl font-bold transition">Gerar Prompt Jurídico</button>
+        </div>
+
+        <div class="bg-slate-800 p-6 rounded-2xl shadow-xl mb-6 border-l-4 border-green-500">
+            <h2 class="text-xl font-bold mb-4 flex items-center">🛍️ Para Lojistas</h2>
+            <p class="text-sm text-slate-400 mb-2">Qual produto você quer vender?</p>
+            <input type="text" id="prodLoj" placeholder="Ex: Sapato de Couro, Perfume Importado..." class="w-full p-3 rounded-xl bg-slate-700 border-none mb-4 text-white">
+            <button onclick="gerarLoj()" class="w-full bg-green-600 hover:bg-green-600 p-3 rounded-xl font-bold transition">Gerar Prompt de Vendas</button>
+        </div>
+
+        <div id="resultadoArea" class="hidden bg-white text-slate-900 p-6 rounded-2xl shadow-2xl mt-8">
+            <p class="font-bold text-purple-700 mb-2">✅ Seu Prompt está pronto:</p>
+            <textarea id="promptFinal" readonly class="w-full h-40 p-3 border rounded-lg bg-slate-50 text-sm focus:outline-none"></textarea>
+            <button onclick="copyPrompt()" class="w-full mt-4 bg-slate-900 text-white p-3 rounded-xl font-bold italic">📋 Copiar para usar no ChatGPT</button>
         </div>
     </div>
 
-    <div id="error" class="text-center">
-        <h1 class="text-2xl font-bold text-red-500">🚫 Acesso Negado</h1>
-        <p class="mt-2 text-slate-400">Este link é inválido ou expirou.</p>
+    <div id="error" class="text-center mt-20">
+        <h1 class="text-2xl font-bold text-red-500">🚫 Acesso Restrito</h1>
+        <p class="mt-2 text-slate-400">Use o link enviado pela Cássia para acessar.</p>
     </div>
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
-
-        // VERIFICA SE O TOKEN É O MESMO QUE VOCÊ GEROU NO ADMIN
-        if (token === 'access-cassia-2026') {
+        if (urlParams.get('token') === 'access-cassia-2026') {
             document.getElementById('content').classList.remove('hidden');
             document.getElementById('error').classList.add('hidden');
+        }
+
+        function mostrar(txt) {
+            document.getElementById('promptFinal').value = txt;
+            document.getElementById('resultadoArea').classList.remove('hidden');
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        function gerarAdv() {
+            const tema = document.getElementById('temaAdv').value || "[TEMA]";
+            const p = `Atue como um Advogado Especialista. Elabore uma fundamentação jurídica detalhada sobre ${tema}, citando a necessidade de base legal no Código Civil e jurisprudência recente. O tom deve ser formal e técnico.`;
+            mostrar(p);
+        }
+
+        function gerarLoj() {
+            const prod = document.getElementById('prodLoj').value || "[PRODUTO]";
+            const p = `Atue como um Copywriter de alto nível. Crie uma legenda persuasiva para o Instagram vendendo ${prod}. Use gatilhos mentais de escassez e exclusividade, termine com uma chamada para ação (CTA) para o link na bio.`;
+            mostrar(p);
+        }
+
+        function copyPrompt() {
+            const copyText = document.getElementById("promptFinal");
+            copyText.select();
+            document.execCommand("copy");
+            alert("Prompt copiado com sucesso!");
         }
     </script>
 </body>

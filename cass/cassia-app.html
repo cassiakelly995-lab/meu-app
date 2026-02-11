@@ -3,69 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt - Gerador Avançado</title>
+    <title>Cássia Prompt - Alta Capacidade</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+    </style>
 </head>
-<body class="bg-slate-900 min-h-screen p-4 text-white font-sans">
-    <div id="content" class="hidden max-w-2xl mx-auto pb-20">
-        <header class="text-center mb-10 mt-6">
-            <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">🚀 Cássia Prompt</h1>
-            <p class="text-slate-400 mt-2 italic text-sm">Gerador de Inteligência Especializada</p>
+<body class="bg-slate-900 min-h-screen p-4 text-white">
+    <div id="content" class="hidden max-w-2xl mx-auto pb-24">
+        <header class="text-center mb-10 mt-8">
+            <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">🚀 Cássia Prompt</h1>
+            <p class="text-slate-400 mt-2 italic font-medium">Sistemas de Inteligência de Alta Performance</p>
         </header>
 
-        <div class="bg-slate-800 p-6 rounded-2xl shadow-xl mb-6 border-l-4 border-orange-500">
-            <h2 class="text-xl font-bold mb-4 flex items-center">⚖️ Jurídico Imobiliário</h2>
-            <label class="text-xs text-slate-400 uppercase font-bold">Tema do Caso</label>
-            <input type="text" id="temaImo" placeholder="Ex: Atraso na obra, Despejo..." class="w-full p-3 rounded-xl bg-slate-700 my-2 text-white border border-slate-600 outline-none">
+        <div class="bg-slate-800 p-6 rounded-3xl shadow-2xl mb-6 border-t-8 border-orange-500">
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">⚖️ Expert Jurídico Imobiliário</h2>
             
-            <label class="text-xs text-slate-400 uppercase font-bold">Detalhes/Cláusulas</label>
-            <input type="text" id="detalheImo" placeholder="Ex: Cláusula 15ª abusiva, multa de 20%..." class="w-full p-3 rounded-xl bg-slate-700 my-2 text-white border border-slate-600 outline-none">
+            <label class="text-xs text-orange-400 uppercase font-bold">Fato Gerador / Tema</label>
+            <input type="text" id="temaImo" placeholder="Ex: Rescisão por atraso na entrega das chaves..." class="w-full p-4 rounded-2xl bg-slate-700 my-2 text-white border border-slate-600 focus:ring-2 focus:ring-orange-500 outline-none transition-all">
+            
+            <label class="text-xs text-orange-400 uppercase font-bold">Cláusulas ou Detalhes Técnicos</label>
+            <input type="text" id="detalheImo" placeholder="Ex: Cláusula de tolerância de 180 dias excedida..." class="w-full p-4 rounded-2xl bg-slate-700 my-2 text-white border border-slate-600 focus:ring-2 focus:ring-orange-500 outline-none transition-all">
 
-            <label class="text-xs text-slate-400 uppercase font-bold">Objetivo Final</label>
-            <input type="text" id="objImo" placeholder="Ex: Rescisão de contrato, liminar urgente..." class="w-full p-3 rounded-xl bg-slate-700 my-2 text-white border border-slate-600 outline-none">
+            <label class="text-xs text-orange-400 uppercase font-bold">Pedido Principal (O que você quer?)</label>
+            <input type="text" id="objImo" placeholder="Ex: Devolução integral dos valores pagos e multa..." class="w-full p-4 rounded-2xl bg-slate-700 my-2 text-white border border-slate-600 focus:ring-2 focus:ring-orange-500 outline-none transition-all">
             
-            <button onclick="gerarImo()" class="w-full bg-orange-600 hover:bg-orange-700 p-4 rounded-xl font-bold mt-4 shadow-lg transition-all">Gerar Prompt Jurídico</button>
+            <button onclick="gerarImo()" class="w-full bg-orange-600 hover:bg-orange-700 p-4 rounded-2xl font-bold mt-4 shadow-lg hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest">Gerar Análise Jurídica</button>
         </div>
 
-        <div class="bg-slate-800 p-6 rounded-2xl shadow-xl mb-6 border-l-4 border-green-500">
-            <h2 class="text-xl font-bold mb-4 flex items-center">🛍️ Vendas e Lojistas</h2>
-            <label class="text-xs text-slate-400 uppercase font-bold">Produto/Serviço</label>
-            <input type="text" id="prodVenda" placeholder="Ex: Harmonização Facial, Sapato..." class="w-full p-3 rounded-xl bg-slate-700 my-2 text-white border border-slate-600 outline-none">
+        <div class="bg-slate-800 p-6 rounded-3xl shadow-2xl mb-6 border-t-8 border-green-500">
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">🛍️ Estrategista de Vendas</h2>
             
-            <label class="text-xs text-slate-400 uppercase font-bold">Público-Alvo (Quem compra?)</label>
-            <input type="text" id="alvoVenda" placeholder="Ex: Mulheres 30+, Advogados..." class="w-full p-3 rounded-xl bg-slate-700 my-2 text-white border border-slate-600 outline-none">
+            <label class="text-xs text-green-400 uppercase font-bold">Produto ou Serviço</label>
+            <input type="text" id="prodVenda" placeholder="Ex: Consultoria Jurídica Premium..." class="w-full p-4 rounded-2xl bg-slate-700 my-2 text-white border border-slate-600 focus:ring-2 focus:ring-green-500 outline-none transition-all">
+            
+            <label class="text-xs text-green-400 uppercase font-bold">Público-Alvo Específico</label>
+            <input type="text" id="alvoVenda" placeholder="Ex: Investidores de imóveis de alto padrão..." class="w-full p-4 rounded-2xl bg-slate-700 my-2 text-white border border-slate-600 focus:ring-2 focus:ring-green-500 outline-none transition-all">
 
-            <label class="text-xs text-slate-400 uppercase font-bold">Oferta/Diferencial</label>
-            <input type="text" id="ofertaVenda" placeholder="Ex: 12x sem juros, brinde VIP..." class="w-full p-3 rounded-xl bg-slate-700 my-2 text-white border border-slate-600 outline-none">
+            <label class="text-xs text-green-400 uppercase font-bold">Oferta Única / Diferencial</label>
+            <input type="text" id="ofertaVenda" placeholder="Ex: Primeira análise gratuita e garantia de prazo..." class="w-full p-4 rounded-2xl bg-slate-700 my-2 text-white border border-slate-600 focus:ring-2 focus:ring-green-500 outline-none transition-all">
             
-            <button onclick="gerarVenda()" class="w-full bg-green-600 hover:bg-green-700 p-4 rounded-xl font-bold mt-4 shadow-lg transition-all">Gerar Prompt de Vendas</button>
+            <button onclick="gerarVenda()" class="w-full bg-green-600 hover:bg-green-700 p-4 rounded-2xl font-bold mt-4 shadow-lg hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest">Criar Copy de Vendas</button>
         </div>
 
-        <div class="bg-slate-800 p-6 rounded-2xl shadow-xl mb-10 border-l-4 border-purple-500">
-            <h2 class="text-xl font-bold mb-4 flex items-center">🔮 Outras Áreas</h2>
-            <label class="text-xs text-slate-400 uppercase font-bold">Profissional Desejado</label>
-            <input type="text" id="quemIA" placeholder="Ex: Nutricionista, Mentor de Carreira..." class="w-full p-3 rounded-xl bg-slate-700 my-2 text-white border border-slate-600 outline-none">
+        <div class="bg-slate-800 p-6 rounded-3xl shadow-2xl mb-12 border-t-8 border-purple-500">
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">🔮 Qualquer Outra Área</h2>
             
-            <label class="text-xs text-slate-400 uppercase font-bold">O que deve ser feito?</label>
-            <input type="text" id="oqueIA" placeholder="Ex: Criar roteiro de vídeo, plano de treino..." class="w-full p-3 rounded-xl bg-slate-700 my-2 text-white border border-slate-600 outline-none">
+            <label class="text-xs text-purple-400 uppercase font-bold">Especialista Desejado</label>
+            <input type="text" id="quemIA" placeholder="Ex: Perito Contábil, Gestor de Tráfego..." class="w-full p-4 rounded-2xl bg-slate-700 my-2 text-white border border-slate-600 focus:ring-2 focus:ring-purple-500 outline-none transition-all">
+            
+            <label class="text-xs text-purple-400 uppercase font-bold">O que a IA deve entregar?</label>
+            <input type="text" id="oqueIA" placeholder="Ex: Um parecer técnico sobre desvio de função..." class="w-full p-4 rounded-2xl bg-slate-700 my-2 text-white border border-slate-600 focus:ring-2 focus:ring-purple-500 outline-none transition-all">
 
-            <label class="text-xs text-slate-400 uppercase font-bold">Estilo da Resposta</label>
-            <input type="text" id="estiloIA" placeholder="Ex: Engraçado, Formal, Passo a Passo..." class="w-full p-3 rounded-xl bg-slate-700 my-2 text-white border border-slate-600 outline-none">
+            <label class="text-xs text-purple-400 uppercase font-bold">Nível de Rigor/Estilo</label>
+            <input type="text" id="estiloIA" placeholder="Ex: Rigor científico, Extremamente formal..." class="w-full p-4 rounded-2xl bg-slate-700 my-2 text-white border border-slate-600 focus:ring-2 focus:ring-purple-500 outline-none transition-all">
             
-            <button onclick="gerarGeral()" class="w-full bg-purple-600 hover:bg-purple-700 p-4 rounded-xl font-bold mt-4 shadow-lg transition-all">Gerar Prompt Personalizado</button>
+            <button onclick="gerarGeral()" class="w-full bg-purple-600 hover:bg-purple-700 p-4 rounded-2xl font-bold mt-4 shadow-lg hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-sm">Gerar Inteligência Personalizada</button>
         </div>
 
-        <div id="resultadoArea" class="hidden bg-white text-slate-900 p-6 rounded-3xl shadow-2xl mt-8 sticky bottom-4 border-4 border-purple-400">
-            <p class="font-bold text-purple-700 mb-2 italic">✨ Prompt Pronto:</p>
-            <textarea id="promptFinal" class="w-full h-44 p-4 border-2 border-slate-100 rounded-xl bg-slate-50 text-sm text-slate-800 font-medium focus:outline-none"></textarea>
-            <button onclick="copyPrompt()" class="w-full mt-4 bg-slate-900 text-white p-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-black transition-all">
-                📋 COPIAR PROMPT
+        <div id="resultadoArea" class="hidden bg-white text-slate-900 p-8 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] mt-8 sticky bottom-4 border-4 border-purple-500 animate-bounce-short">
+            <p class="font-extrabold text-purple-800 mb-3 flex items-center italic tracking-tight">✅ SEU PROMPT PROFISSIONAL:</p>
+            <textarea id="promptFinal" class="w-full h-56 p-4 border-none rounded-2xl bg-slate-100 text-[13px] leading-relaxed text-slate-900 font-semibold focus:outline-none resize-none shadow-inner"></textarea>
+            
+            <button onclick="copyPrompt()" class="w-full mt-5 bg-slate-950 text-white p-5 rounded-2xl font-black text-lg flex items-center justify-center gap-3 hover:bg-black transition-all shadow-xl active:scale-95">
+                📋 COPIAR E USAR NA IA
             </button>
         </div>
     </div>
 
-    <div id="error" class="text-center mt-40">
-        <h1 class="text-3xl font-bold text-red-500">🚫 Acesso Inválido</h1>
+    <div id="error" class="text-center mt-48">
+        <h1 class="text-4xl font-black text-red-600 mb-2">ACESSO RESTRITO</h1>
+        <p class="text-slate-500 font-bold">Este terminal exige um token válido.</p>
     </div>
 
     <script>
@@ -79,38 +88,37 @@
             const assinatura = "\n\n--- \nGerado por Cássia Prompt";
             document.getElementById('promptFinal').value = texto + assinatura;
             document.getElementById('resultadoArea').classList.remove('hidden');
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
 
         function gerarImo() {
             const t = document.getElementById('temaImo').value || "[TEMA]";
             const d = document.getElementById('detalheImo').value || "[DETALHES]";
             const o = document.getElementById('objImo').value || "[OBJETIVO]";
-            const p = `Atue como Advogado Especialista em Direito Imobiliário. Analise: ${t}. Detalhes importantes: ${d}. Meu objetivo final é: ${o}. Escreva uma orientação técnica e os fundamentos legais.`;
+            const p = `[ALTA CAPACIDADE JURÍDICA]\nAtue como um Advogado Sênior Especialista em Direito Imobiliário.\nCONTEXTO: ${t}.\nFATOS: ${d}.\nOBJETIVO: ${o}.\n\nDIRETRIZES RÍGIDAS:\n1. NÃO invente leis ou jurisprudências. Baseie-se no Código Civil Brasileiro e leis específicas.\n2. Se houver lacuna de informação, peça os documentos necessários.\n3. Estruture em: Fundamentação Técnica, Riscos e Estratégia Recomendada.`;
             mostrar(p);
         }
 
         function gerarVenda() {
-            const p1 = document.getElementById('prodVenda').value || "[PRODUTO]";
-            const a = document.getElementById('alvoVenda').value || "[PÚBLICO]";
-            const o = document.getElementById('ofertaVenda').value || "[OFERTA]";
-            const p = `Atue como Copywriter Profissional. Crie um script de vendas para ${p1}, focado no público ${a}. Destaque a oferta ${o} e use gatilhos mentais para fechamento rápido.`;
+            const pr = document.getElementById('prodVenda').value || "[PRODUTO]";
+            const al = document.getElementById('alvoVenda').value || "[PÚBLICO]";
+            const of = document.getElementById('ofertaVenda').value || "[OFERTA]";
+            const p = `[ALTA CONVERSÃO COMERCIAL]\nAtue como Copywriter e Estrategista de Vendas de Elite.\nPRODUTO: ${pr}.\nPÚBLICO: ${al}.\nOFERTA: ${of}.\n\nDIRETRIZES RÍGIDAS:\n1. Use gatilhos mentais reais (Autoridade, Reciprocidade, Escassez).\n2. Escreva um texto que resolva uma dor profunda do público.\n3. NÃO use frases genéricas; seja específico e impactante.`;
             mostrar(p);
         }
 
         function gerarGeral() {
             const q = document.getElementById('quemIA').value || "Especialista";
-            const o = document.getElementById('oqueIA').value || "tarefa";
-            const e = document.getElementById('estiloIA').value || "profissional";
-            const p = `Atue como um especialista em ${q}. Sua missão é: ${o}. O estilo da sua resposta deve ser obrigatoriamente: ${e}.`;
+            const o = document.getElementById('oqueIA').value || "executar tarefa";
+            const e = document.getElementById('estiloIA').value || "técnico e direto";
+            const p = `[MÓDULO ESPECIALISTA MULTIDISCIPLINAR]\nPERSONA: Você é um(a) ${q} de alto nível.\nTAREFA: ${o}.\nESTILO: ${e}.\n\nREGRAS DE OURO:\n1. Mantenha fidelidade aos fatos. NÃO crie informações sem base.\n2. Se o pedido for ambíguo, peça esclarecimentos antes de responder.\n3. Entregue um resultado digno de um profissional de elite da área citada.`;
             mostrar(p);
         }
 
         function copyPrompt() {
-            const copyText = document.getElementById("promptFinal");
-            copyText.select();
+            const cp = document.getElementById("promptFinal");
+            cp.select();
             document.execCommand("copy");
-            alert("Prompt copiado!");
+            alert("✅ PROMPT DE ALTA CAPACIDADE COPIADO!");
         }
     </script>
 </body>

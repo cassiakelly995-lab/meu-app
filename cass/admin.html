@@ -22,7 +22,7 @@
             <form onsubmit="event.preventDefault(); login(); return false;">
                 <input type="password" id="adminPass" required placeholder="Senha de Administrador" class="w-full px-4 py-3 rounded-xl border-2 mb-4 focus:border-purple-500 outline-none">
                 <button type="submit" class="btn-primary w-full py-4 rounded-xl font-bold text-lg">🚀 Acessar</button>
-                <p class="text-xs text-gray-400 mt-4">Senha: admin2026</p>
+                <p class="text-xs text-gray-400 mt-4">Senha padrão: admin2026</p>
             </form>
         </div>
     </div>
@@ -48,7 +48,8 @@
 
     <script>
         const ADMIN_PASSWORD = 'admin2026';
-        // Ajusta automaticamente a URL base do GitHub
+        
+        // CORREÇÃO DO ERRO 404: Esta linha detecta o endereço correto do seu GitHub
         const BASE_URL = window.location.origin + window.location.pathname.replace('/admin.html', '');
 
         function login() {
@@ -66,19 +67,5 @@
             if (!name) return alert('Por favor, digite o nome do cliente.');
             
             const clientId = 'c' + Date.now();
-            // Aqui é onde inserimos o código de segurança (token)
-            const link = `${BASE_URL}/cassia-app.html?token=access-cassia-2026&client=${clientId}`;
             
-            document.getElementById('generatedLink').value = link;
-            document.getElementById('linkResult').classList.remove('hidden');
-        }
-
-        function copyLink() {
-            const copyText = document.getElementById('generatedLink');
-            copyText.select();
-            document.execCommand("copy");
-            alert("✅ Link copiado! Agora é só colar no WhatsApp do cliente.");
-        }
-    </script>
-</body>
-</html>
+            //

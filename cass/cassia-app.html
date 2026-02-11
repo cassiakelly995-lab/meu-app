@@ -3,107 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt | Universal Engine</title>
+    <title>Cássia Prompt | God Mode Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;700&display=swap');
-        :root { --accent: #db2777; --bg: #020617; }
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Inter:wght@400;900&display=swap');
+        :root { --neon: #00f2ff; --pink: #db2777; --bg: #030712; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: #f8fafc; overflow-x: hidden; }
-        .cyber-glass { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .accent-border { border-left: 4px solid var(--accent); }
-        input, textarea, select { 
-            background: rgba(0,0,0,0.4) !important; 
-            border: 1px solid rgba(255,255,255,0.1) !important; 
-            color: white !important;
-            transition: 0.3s;
-        }
-        input:focus, textarea:focus { border-color: var(--accent) !important; outline: none; box-shadow: 0 0 15px rgba(219, 39, 119, 0.1); }
-        .btn-elite { background: linear-gradient(90deg, #db2777, #7c3aed); transition: 0.4s; }
-        .btn-elite:hover { filter: brightness(1.2); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(219, 39, 119, 0.3); }
+        .cyber-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); transition: 0.4s; }
+        .cyber-card:hover { border-color: var(--pink); box-shadow: 0 0 30px rgba(219, 39, 119, 0.1); }
+        .neon-border { border-left: 4px solid var(--pink); }
+        input, textarea, select { background: rgba(0,0,0,0.5) !important; border: 1px solid rgba(255,255,255,0.1) !important; color: white !important; transition: 0.3s; }
+        input:focus, textarea:focus { border-color: var(--neon) !important; outline: none; box-shadow: 0 0 15px rgba(0, 242, 255, 0.2); }
+        .btn-god { background: white; color: black; font-weight: 900; transition: 0.4s; text-transform: uppercase; letter-spacing: 0.2em; }
+        .btn-god:hover { background: var(--pink); color: white; transform: scale(1.02); box-shadow: 0 0 40px rgba(219, 39, 119, 0.4); }
     </style>
 </head>
 <body class="min-h-screen p-4 md:p-8">
 
-    <div id="content" class="hidden max-w-6xl mx-auto">
-        <header class="flex justify-between items-center mb-12">
-            <div>
-                <h1 class="text-3xl font-black tracking-tighter italic uppercase">CÁSSIA<span class="text-pink-600">PROMPT</span></h1>
-                <p class="text-[9px] font-bold text-slate-500 tracking-[0.4em] uppercase">Universal Engineering Hub</p>
+    <div id="content" class="hidden max-w-7xl mx-auto">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-12 gap-4">
+            <div class="text-center md:text-left">
+                <h1 style="font-family: 'Space Grotesk';" class="text-5xl font-black italic tracking-tighter">CÁSSIA<span class="text-pink-600">PROMPT</span></h1>
+                <p class="text-[9px] font-bold text-cyan-400 tracking-[0.5em] uppercase">Advanced Neural Architect • God Mode</p>
             </div>
-            <div class="hidden md:block text-right">
-                <p class="text-[10px] text-slate-500 font-mono uppercase">Status: Pronta para Processamento</p>
-                <p class="text-[10px] text-pink-500 font-mono uppercase">Modo: Multidisciplinar Ativo</p>
+            <div class="flex gap-4">
+                <div class="text-right border-r border-white/10 pr-4">
+                    <p class="text-[10px] text-slate-500 font-bold uppercase">Análise de Dados</p>
+                    <p class="text-[10px] text-green-500 font-mono">CRÍTICA ATIVA</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-[10px] text-slate-500 font-bold uppercase">Nível de Saída</p>
+                    <p class="text-[10px] text-pink-500 font-mono">ULTRA-HIGH PRECISION</p>
+                </div>
             </div>
         </header>
 
-        <div class="grid lg:grid-cols-2 gap-10">
-            <div class="cyber-glass p-8 rounded-[2.5rem] space-y-6">
-                <div class="accent-border pl-4 mb-8">
-                    <h2 class="text-lg font-bold uppercase tracking-tighter">Definição de Parâmetros</h2>
-                    <p class="text-xs text-slate-500">Configure a inteligência para qualquer área de atuação.</p>
+        <div class="grid lg:grid-cols-2 gap-8">
+            <div class="cyber-card p-8 rounded-[2rem] space-y-5">
+                <div class="neon-border pl-4 mb-6">
+                    <h2 class="text-lg font-bold uppercase italic">Configuração de Variáveis</h2>
                 </div>
 
-                <div class="space-y-4">
-                    <div>
-                        <label class="text-[10px] font-black text-pink-500 uppercase tracking-widest mb-2 block">01. Especialista Desejado</label>
-                        <input type="text" id="persona" placeholder="Ex: Chef de Cozinha, Engenheiro Civil, Copywriter, Advogado..." class="w-full p-4 rounded-2xl text-sm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="col-span-2">
+                        <label class="text-[9px] font-black text-pink-500 uppercase tracking-widest block mb-2">01. Persona Master (Quem a IA se torna?)</label>
+                        <input type="text" id="persona" placeholder="Ex: Copywriter Sênior com foco em Neurovendas..." class="w-full p-3 rounded-xl text-xs">
                     </div>
-
                     <div>
-                        <label class="text-[10px] font-black text-pink-500 uppercase tracking-widest mb-2 block">02. Objetivo ou Entregável</label>
-                        <input type="text" id="objetivo" placeholder="Ex: Receita Fit, Petição Inicial, Script de YouTube, Cronograma..." class="w-full p-4 rounded-2xl text-sm">
+                        <label class="text-[9px] font-black text-pink-500 uppercase tracking-widest block mb-2">02. Formato Final</label>
+                        <input type="text" id="formato" placeholder="Ex: VSL, Petição, Artigo..." class="w-full p-3 rounded-xl text-xs">
                     </div>
-
                     <div>
-                        <label class="text-[10px] font-black text-pink-500 uppercase tracking-widest mb-2 block">03. Insumos e Dados Reais (Fatos)</label>
-                        <textarea id="fatos" rows="5" placeholder="Insira aqui as informações que a IA deve usar. Pode ser um caso jurídico, ingredientes de uma geladeira, ou dados de um produto." class="w-full p-4 rounded-2xl text-sm resize-none"></textarea>
+                        <label class="text-[9px] font-black text-pink-500 uppercase tracking-widest block mb-2">03. Público-Alvo Especial</label>
+                        <input type="text" id="alvo" placeholder="Ex: Clientes de Ticket Alto..." class="w-full p-3 rounded-xl text-xs">
                     </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="text-[10px] font-black text-pink-500 uppercase tracking-widest mb-2 block">04. Para Quem? (Alvo)</label>
-                            <input type="text" id="alvo" placeholder="Ex: Juiz, Cliente, Seguidores..." class="w-full p-4 rounded-2xl text-sm">
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-black text-pink-500 uppercase tracking-widest mb-2 block">05. Rigor e Tom</label>
-                            <select id="tom" class="w-full p-4 rounded-2xl text-sm">
-                                <option value="Analítico e Técnico (Direto ao ponto)">Analítico/Técnico</option>
-                                <option value="Persuasivo e Criativo">Persuasivo/Criativo</option>
-                                <option value="Acolhedor e Didático">Acolhedor/Didático</option>
-                                <option value="Formal e Impositivo">Formal/Sério</option>
-                            </select>
-                        </div>
+                    <div class="col-span-2">
+                        <label class="text-[9px] font-black text-pink-500 uppercase tracking-widest block mb-2">04. Dados, Fatos e Provas (O Core da Verdade)</label>
+                        <textarea id="fatos" rows="4" placeholder="Insira dados brutos, números, leis ou fatos inquestionáveis aqui..." class="w-full p-3 rounded-xl text-xs resize-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="text-[9px] font-black text-pink-500 uppercase tracking-widest block mb-2">05. A "Dor" ou Problema Principal</label>
+                        <input type="text" id="dor" placeholder="O que o destinatário mais teme?" class="w-full p-3 rounded-xl text-xs">
+                    </div>
+                    <div>
+                        <label class="text-[9px] font-black text-pink-500 uppercase tracking-widest block mb-2">06. Benefício Irresistível</label>
+                        <input type="text" id="beneficio" placeholder="Qual o resultado final real?" class="w-full p-3 rounded-xl text-xs">
+                    </div>
+                    <div>
+                        <label class="text-[9px] font-black text-pink-500 uppercase tracking-widest block mb-2">07. Restrições (O que NÃO fazer?)</label>
+                        <input type="text" id="restricoes" placeholder="Ex: Sem adjetivos, sem gírias..." class="w-full p-3 rounded-xl text-xs">
+                    </div>
+                    <div>
+                        <label class="text-[9px] font-black text-pink-500 uppercase tracking-widest block mb-2">08. Nível de Crítica da IA</label>
+                        <select id="critica" class="w-full p-3 rounded-xl text-xs">
+                            <option value="AGRESSIVA (Se meus dados forem fracos, pare e me avise)">Crítica Agressiva</option>
+                            <option value="MODERADA (Sugira melhorias no meio do texto)">Crítica Moderada</option>
+                            <option value="PASSIVA (Apenas siga as ordens)">Crítica Passiva</option>
+                        </select>
                     </div>
                 </div>
 
-                <button onclick="gerarPromptUniversal()" class="w-full btn-elite p-5 rounded-2xl font-black text-sm uppercase tracking-[0.2em] mt-4">
-                    Arquitetar Prompt de Alta Performance ⚡
+                <button onclick="gerarPromptGodMode()" class="w-full btn-god p-5 rounded-2xl text-xs mt-4">
+                    Executar Engenharia de Elite ⚡
                 </button>
             </div>
 
-            <div class="flex flex-col h-full">
-                <div id="resultBox" class="hidden h-full">
-                    <div class="cyber-glass p-8 rounded-[2.5rem] h-full flex flex-col border border-pink-500/30">
-                        <div class="flex justify-between items-center mb-6">
-                            <span class="text-[10px] font-black text-pink-500 uppercase tracking-widest">Prompt Gerado com Sucesso</span>
-                            <button onclick="copyToClipboard()" class="text-[10px] font-bold text-white hover:text-pink-400 uppercase transition-all">📋 Copiar para Área de Transferência</button>
-                        </div>
-                        <textarea id="promptFinal" class="flex-grow w-full bg-transparent border-none text-slate-300 text-sm leading-relaxed p-0 focus:ring-0 resize-none font-mono outline-none"></textarea>
-                        <div class="mt-6 p-4 bg-pink-500/10 border border-pink-500/20 rounded-xl">
-                            <p class="text-[9px] text-pink-300 leading-tight"><strong>Dica do Antônio:</strong> Cole este prompt no ChatGPT e veja a mágica acontecer. O sistema forçará a IA a ser direta e fiel aos seus dados.</p>
-                        </div>
+            <div id="resultArea" class="hidden flex flex-col h-full">
+                <div class="cyber-card p-8 rounded-[2rem] flex-grow flex flex-col border border-cyan-500/20">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-[10px] font-black text-cyan-400 uppercase tracking-widest italic">Prompt Estruturado de Nível Máximo</span>
+                        <button onclick="copyToClipboard()" class="text-[9px] font-bold text-white hover:text-pink-500 transition-all uppercase underline">Copiar Prompt</button>
                     </div>
-                </div>
-                
-                <div id="placeholder" class="h-full border-2 border-dashed border-slate-800 rounded-[2.5rem] flex flex-col items-center justify-center p-12 text-center bg-slate-900/10">
-                    <p class="text-slate-600 text-[10px] font-bold uppercase tracking-[0.3em]">Aguardando definição multidisplinar para iniciar o processamento...</p>
+                    <textarea id="promptFinal" class="flex-grow w-full bg-transparent border-none text-slate-300 text-xs leading-loose p-0 focus:ring-0 resize-none font-mono outline-none"></textarea>
                 </div>
             </div>
         </div>
     </div>
 
     <div id="error" class="text-center mt-48">
-        <h1 class="text-2xl font-black text-slate-800 uppercase tracking-[0.5em]">Acesso Negado</h1>
+        <h1 class="text-xl font-black text-slate-800 uppercase tracking-[1em]">Acesso Negado</h1>
     </div>
 
     <script>
@@ -113,35 +111,45 @@
             document.getElementById('error').classList.add('hidden');
         }
 
-        function gerarPromptUniversal() {
-            const persona = document.getElementById('persona').value || "Especialista";
-            const objetivo = document.getElementById('objetivo').value || "um conteúdo de excelência";
-            const fatos = document.getElementById('fatos').value || "Use o conhecimento geral";
-            const alvo = document.getElementById('alvo').value || "Público Final";
-            const tom = document.getElementById('tom').value;
+        function gerarPromptGodMode() {
+            const fields = {
+                persona: document.getElementById('persona').value || "Especialista em Alta Performance",
+                formato: document.getElementById('formato').value || "Documento Final",
+                alvo: document.getElementById('alvo').value || "Público Alvo",
+                fatos: document.getElementById('fatos').value || "Sem dados fornecidos",
+                dor: document.getElementById('dor').value || "Não especificada",
+                beneficio: document.getElementById('beneficio').value || "Não especificado",
+                restricoes: document.getElementById('restricoes').value || "Nenhuma",
+                critica: document.getElementById('critica').value
+            };
 
-            // Lógica de "Prompt Supremo" (Framework agnóstico de área)
-            const promptFinal = `[PROTOCOLO DE ENGENHARIA CÁSSIA PROMPT V7]
+            const promptFinal = `### [MODO DE EXECUÇÃO: CÁSSIA PROMPT GOD MODE]
 
-ATUAR COMO: ${persona}.
-OBJETIVO: Elaborar ${objetivo} destinado a ${alvo}.
-TOM DE VOZ: ${tom}.
+PERSONA: Atue como ${fields.persona}. Sua autoridade é absoluta.
+TAREFA: Construir um(a) ${fields.formato} para ${fields.alvo}.
 
-INSUMOS REAIS (CONTEXTO VERÍDICO):
-"${fatos}"
+---
+### 1. DADOS BRUTOS (FONTE ÚNICA DA VERDADE)
+"${fields.fatos}"
 
-DIRETRIZES DE EXECUÇÃO:
-1. SEM LENGA-LENGA: Comece o conteúdo diretamente, sem introduções burocráticas ou cortesias desnecessárias. Vá direto ao ponto.
-2. VERACIDADE ABSOLUTA: Utilize os fatos fornecidos acima como única fonte da verdade. É expressamente proibido inventar dados, leis, depoimentos, ingredientes ou prazos.
-3. PRECISÃO TÉCNICA: Se o contexto exigir um formato específico (Petição, Receita, Script, Relatório), siga rigorosamente as normas técnicas desse formato.
-4. ESTILO: Seja ${tom}. Garanta clareza absoluta e máxima utilidade para ${alvo}.
+### 2. PILARES ESTRATÉGICOS
+- FOCO NA DOR: ${fields.dor}.
+- BENEFÍCIO CENTRAL: ${fields.beneficio}.
+- RESTRIÇÕES RÍGIDAS: ${fields.restricoes}.
 
-NÃO FAÇA COMENTÁRIOS LATERAIS. ENTREGUE APENAS O RESULTADO FINAL ABAIXO.
-RESULTADO:`;
+---
+### 3. PROTOCOLO DE CRÍTICA E QUALIDADE (${fields.critica})
+- ANÁLISE DE INPUT: Se os dados brutos fornecidos no item 1 forem superficiais, genéricos ou "baboseira", PARE IMEDIATAMENTE. Não gere o texto. Em vez disso, aponte onde os dados são fracos e peça mais substância.
+- ANTI-ALUCINAÇÃO: É proibido inventar fatos ou enfeitar a realidade. Se não está nos dados brutos, não existe.
+- FILTRO DE OBJETIVIDADE: Elimine introduções polidas, agradecimentos iniciais ou qualquer tipo de "lenga-lenga". Vá direto ao que importa para o destinatário.
+
+### 4. FORMATO DE ENTREGA
+O resultado deve ser técnico, cirúrgico e direto. Se for jurídico, use rigor. Se for vendas, use psicologia de alto impacto. Não faça comentários laterais.
+
+ENTREGA: Comece agora.`;
 
             document.getElementById('promptFinal').value = promptFinal;
-            document.getElementById('placeholder').style.display = 'none';
-            document.getElementById('resultBox').classList.remove('hidden');
+            document.getElementById('resultArea').classList.remove('hidden');
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
 
@@ -149,7 +157,7 @@ RESULTADO:`;
             const el = document.getElementById('promptFinal');
             el.select();
             document.execCommand('copy');
-            alert("SISTEMA: Prompt universal copiado com sucesso.");
+            alert("SISTEMA: Prompt de Nível Máximo copiado!");
         }
     </script>
 </body>

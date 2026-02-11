@@ -35,23 +35,26 @@
     </div>
 
     <div id="adminPanel" class="hidden max-w-6xl mx-auto">
-        <div class="glass rounded-2xl p-6 mb-6 text-center">
-            <h1 class="text-3xl font-bold gradient-text">👑 Painel Administrativo</h1>
+        <div class="glass rounded-2xl p-6 mb-6">
+            <div class="flex justify-between items-center">
+                <h1 class="text-3xl font-bold gradient-text">👑 Painel Administrativo</h1>
+                <button onclick="logout()" class="px-6 py-3 bg-red-100 text-red-700 rounded-xl font-semibold">🚪 Sair</button>
+            </div>
         </div>
 
         <div class="glass rounded-2xl p-6">
             <h2 class="text-2xl font-bold gradient-text mb-6">🔗 Gerar Link de Cliente</h2>
             <form onsubmit="event.preventDefault(); generateLink(); return false;" class="space-y-4">
-                <input type="text" id="clientName" required placeholder="Nome do Cliente" class="w-full px-4 py-3 rounded-xl border-2">
-                <button type="submit" class="btn-primary w-full py-4 rounded-xl text-white font-semibold">✨ Gerar Link</button>
+                <input type="text" id="clientName" required placeholder="Nome do Cliente" class="w-full px-4 py-3 rounded-xl border-2 focus:border-purple-500 focus:outline-none">
+                <button type="submit" class="btn-primary w-full py-4 rounded-xl text-white font-semibold text-lg transition-all">✨ Gerar Link</button>
             </form>
-            <div id="linkResult" class="hidden mt-4 p-4 bg-green-50 rounded-xl border">
-                <input type="text" id="generatedLink" readonly class="w-full p-2 text-sm border mb-2">
-                <button onclick="copyLink()" class="w-full py-2 bg-green-600 text-white rounded">Copiar Link</button>
+            <div id="linkResult" class="hidden mt-8 p-6 bg-green-50 rounded-xl border-2 border-green-200">
+                <input type="text" id="generatedLink" readonly class="w-full px-4 py-3 bg-white rounded-lg border mb-4">
+                <button onclick="copyLink()" class="w-full py-3 bg-green-600 text-white rounded-lg font-semibold">📋 Copiar Link</button>
             </div>
             <div id="clientsList" class="mt-8">
-                <h3 class="font-bold mb-4">👥 Clientes:</h3>
-                <div id="clientsContainer" class="space-y-2"></div>
+                <h3 class="text-xl font-bold gradient-text mb-4">👥 Clientes Cadastrados</h3>
+                <div id="clientsContainer" class="space-y-3"></div>
             </div>
         </div>
     </div>
@@ -70,6 +73,11 @@
             } else {
                 alert('❌ Senha incorreta!');
             }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('admin_logged');
+            location.reload();
         }
 
         function generateLink() {
@@ -95,9 +103,9 @@
             const clients = JSON.parse(localStorage.getItem('cassia_clients') || '[]');
             const container = document.getElementById('clientsContainer');
             container.innerHTML = clients.reverse().map(c => `
-                <div class="p-3 bg-white border rounded shadow-sm flex justify-between">
+                <div class="bg-white p-4 rounded-lg border flex justify-between items-center">
                     <span>${c.name}</span>
-                    <button onclick="copyManual('${c.id}')" class="text-purple-600 text-sm font-bold">Copiar</button>
+                    <button onclick="copyManual('${c.id}')" class="text-purple-600 font-bold">Copiar Link</button>
                 </div>
             `).join('');
         }

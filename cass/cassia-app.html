@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt | V8 Singularity</title>
+    <title>Cássia Prompt | V8 Singularity Elite</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root { --magenta: #ff007a; --cyan: #00f2ff; --bg-dark: #020205; --card-bg: rgba(10, 11, 15, 0.95); }
@@ -25,7 +25,13 @@
         .terminal-header { background: #111; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; }
         #output { padding: 25px; color: var(--cyan); font-family: 'monospace'; font-size: 13px; min-height: 100px; white-space: pre-wrap; display: none; }
         .btn-sync { float: right; margin-top: 20px; background: var(--cyan); border: none; color: #000; padding: 12px 40px; font-family: 'Orbitron'; font-size: 12px; font-weight: 900; cursor: pointer; transition: 0.3s; }
-        .btn-sync:hover { background: #fff; box-shadow: 0 0 20px #fff; }
+        
+        /* RODAPÉ DE SEGURANÇA JURÍDICA */
+        .juridico-footer { margin-top: 60px; width: 100%; max-width: 950px; padding: 30px; border-top: 1px solid #1a1a1a; background: rgba(0,0,0,0.4); }
+        .juridico-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .juridico-item { font-size: 10px; color: #666; line-height: 1.6; text-transform: uppercase; letter-spacing: 1px; }
+        .juridico-item b { color: var(--magenta); display: block; margin-bottom: 5px; }
+        .copyright { text-align: center; margin-top: 40px; font-size: 9px; color: #333; letter-spacing: 3px; }
     </style>
 </head>
 <body>
@@ -48,7 +54,7 @@
 
         <div class="quality-section">
             <span class="box-label">Corpus de Fatos (Fonte Única e Inquestionável)</span>
-            <textarea id="facts" rows="6" oninput="update()" placeholder="Cole aqui os dados brutos. O sistema filtrará exageros automaticamente."></textarea>
+            <textarea id="facts" rows="6" oninput="update()" placeholder="Cole aqui os dados brutos. O rigor contra exageros é automático."></textarea>
             <div class="status-bar"><div id="fill"></div></div>
             <div id="status-text" style="font-size: 9px; color: #555; margin-top: 8px; letter-spacing: 1px;">INTEGRIDADE DE DADOS: AGUARDANDO...</div>
         </div>
@@ -63,6 +69,30 @@
 
         <button class="btn-sync" onclick="sync()">GERAR COMANDO ELITE</button>
     </div>
+
+    <footer class="juridico-footer">
+        <div class="juridico-grid">
+            <div class="juridico-item">
+                <b>I. NATUREZA TÉCNICA</b>
+                O sistema é um otimizador de engenharia de prompt para IA. Não substitui o aconselhamento jurídico de um profissional qualificado.
+            </div>
+            <div class="juridico-item">
+                <b>II. RESPONSABILIDADE</b>
+                A revisão final, conferência de prazos e veracidade dos dados gerados pela IA são deveres exclusivos do usuário utilizador.
+            </div>
+            <div class="juridico-item">
+                <b>III. ANTI-ALUCINAÇÃO</b>
+                O protocolo V8 impõe restrições severas à IA, contudo, o risco de erros intrínsecos aos modelos de linguagem exige curadoria humana.
+            </div>
+            <div class="juridico-item">
+                <b>IV. PRIVACIDADE (LGPD)</b>
+                O processamento de dados ocorre via interface local. Não armazenamos informações sensíveis de clientes ou processos.
+            </div>
+        </div>
+        <div class="copyright">
+            © 2026 CÁSSIA PROMPT | V8 ELITE SINGULARITY EDITION | TODOS OS DIREITOS RESERVADOS
+        </div>
+    </footer>
 
     <script>
         function update() {
@@ -79,17 +109,17 @@
             const f = document.getElementById('facts').value;
             if(f.length < 50) return alert("ERRO: O V8 exige densidade de fatos para evitar alucinações.");
             
-            const prompt = `### [PROTOCOLO DE SEGURANÇA V8 - RIGOR MÁXIMO]\n\n` +
-                `**ESTADO DE PERSONA:** Atue como ${document.getElementById('p1').value}. Sua prioridade absoluta é a precisão dos fatos sobre a polidez da escrita.\n\n` +
+            const prompt = `### [PROTOCOLO DE SEGURANÇA V8 - SINGULARITY RIGOR]\n\n` +
+                `**ESTADO DE PERSONA:** Atue como ${document.getElementById('p1').value}.\n\n` +
                 `**MISSÃO:** ${document.getElementById('p2').value}\n\n` +
                 `**1. FONTE ÚNICA DA VERDADE (FATOS BRUTOS):**\n"${f}"\n\n` +
                 `**2. REGRAS CRÍTICAS ANTI-ALUCINAÇÃO:**\n` +
-                `- É terminantemente PROIBIDO inventar datas, valores ou procedimentos não listados no item 1.\n` +
-                `- Se houver uma lacuna de informação, escreva "[INFORMAÇÃO NÃO FORNECIDA]" em vez de assumir algo.\n` +
-                `- Elimine adjetivos exagerados (ex: "extrema urgência", "gravíssimo") a menos que estejam explicitamente nos dados brutos.\n\n` +
+                `- PROIBIDO inventar fatos, datas ou exagerar situações.\n` +
+                `- Priorize a qualidade do atendimento técnico acima da polidez.\n` +
+                `- Caso falte informação, use "[PENDENTE DE DADOS]".\n\n` +
                 `**3. CADEIA DE VERIFICAÇÃO:**\n` +
-                `Antes de entregar o resultado, faça um double-check: "Cada frase que escrevi tem base direta no item 1?". Se a resposta for não, apague a frase.\n\n` +
-                `**ENTREGA:** Texto técnico, direto e 100% fiel aos dados fornecidos. Comece agora.`;
+                `Revise se cada afirmação possui base direta nos dados fornecidos no Item 1.\n\n` +
+                `**EXECUÇÃO:** Inicie agora de forma cirúrgica.`;
 
             document.getElementById('output').innerText = prompt;
             document.getElementById('output').style.display = 'block';
@@ -97,7 +127,7 @@
 
         function copy() {
             navigator.clipboard.writeText(document.getElementById('output').innerText);
-            alert("PROTOCOLO COPIADO COM SUCESSO.");
+            alert("PROTOCOLO SINCRONIZADO E COPIADO.");
         }
     </script>
 </body>

@@ -3,133 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt | V8 Singularity</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>Cássia Prompt | V8 Elite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <style>
-        :root { --magenta: #ff007a; --cyan: #00f2ff; --bg-dark: #020205; --card-bg: rgba(10, 11, 15, 0.98); }
-        body { background: var(--bg-dark); color: #fff; font-family: 'Rajdhani', sans-serif; margin: 0; padding: 20px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; }
+        :root { --magenta: #ff007a; --cyan: #00f2ff; --bg: #050505; --card: #0c0c0c; }
+        body { background: var(--bg); color: #e0e0e0; font-family: 'Rajdhani', sans-serif; margin: 0; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
         
-        /* LINHA DE SCANNING */
-        .scan-line { width: 100%; height: 2px; background: var(--cyan); position: fixed; top: 0; left: 0; opacity: 0; z-index: 100; box-shadow: 0 0 15px var(--cyan); }
-        .scanning { animation: scan 2s linear infinite; opacity: 1; }
-        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
-
-        .eng-header { border: 1px solid #444; padding: 2px 15px; font-size: 10px; letter-spacing: 3px; color: #888; margin-bottom: 10px; }
-        h1 { font-family: 'Orbitron', sans-serif; font-size: 24px; letter-spacing: 6px; text-transform: uppercase; margin: 0; text-shadow: 0 0 10px rgba(255, 0, 122, 0.3); }
+        .header-top { border: 1px solid #222; padding: 4px 12px; font-size: 10px; letter-spacing: 2px; color: #555; margin-bottom: 10px; text-transform: uppercase; }
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 22px; letter-spacing: 4px; margin: 0; color: #fff; }
         h1 b { color: var(--magenta); }
 
-        .main-dashboard { width: 100%; max-width: 950px; background: var(--card-bg); border: 1px solid rgba(0, 242, 255, 0.1); padding: 35px; border-radius: 4px; box-shadow: 0 50px 100px rgba(0,0,0,0.9); transition: 0.5s; }
+        .dashboard { width: 100%; max-width: 900px; background: var(--card); border: 1px solid #1a1a1a; padding: 40px; margin-top: 30px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
 
-        /* UPLOAD PDF ESTILIZADO */
-        .upload-zone { border: 1px dashed var(--cyan); background: rgba(0, 242, 255, 0.03); padding: 30px; text-align: center; margin-bottom: 30px; cursor: pointer; transition: 0.3s; position: relative; overflow: hidden; }
-        .upload-zone:hover { background: rgba(0, 242, 255, 0.08); box-shadow: inset 0 0 20px rgba(0, 242, 255, 0.1); }
-        .upload-zone span { font-size: 12px; letter-spacing: 3px; color: var(--cyan); font-weight: bold; text-shadow: 0 0 5px var(--cyan); }
+        /* UPLOAD DISCRETO */
+        .upload-area { border: 1px solid #222; padding: 15px; text-align: center; margin-bottom: 30px; cursor: pointer; background: #080808; }
+        .upload-area:hover { border-color: var(--cyan); }
+        .upload-area span { font-size: 11px; color: var(--cyan); font-weight: 600; letter-spacing: 1px; }
 
-        .grid-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 10px; }
-        .box-input { background: rgba(0,0,0,0.6); border-left: 3px solid var(--magenta); padding: 15px; transition: 0.3s; }
-        .box-input:focus-within { border-left-color: var(--cyan); background: rgba(0, 242, 255, 0.02); }
-        .box-label { font-size: 10px; color: var(--cyan); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; display: block; font-weight: 700; opacity: 0.7; }
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .input-group { border-left: 2px solid var(--magenta); padding-left: 15px; margin-bottom: 20px; }
+        .label { font-size: 10px; color: #555; text-transform: uppercase; margin-bottom: 8px; display: block; font-weight: 600; }
         
-        input, textarea { width: 100%; background: transparent; border: none; color: #fff; font-family: 'Rajdhani'; font-size: 15px; border-bottom: 1px solid #222; padding: 8px 0; }
+        input, textarea { width: 100%; background: transparent; border: none; color: #fff; font-family: 'Rajdhani'; font-size: 16px; border-bottom: 1px solid #222; padding: 10px 0; box-sizing: border-box; }
         input:focus, textarea:focus { outline: none; border-bottom-color: var(--cyan); }
-        
-        .status-bar { height: 4px; background: #111; margin-top: 15px; box-shadow: inset 0 0 5px #000; }
-        #fill { height: 100%; width: 0%; background: var(--cyan); transition: 1s cubic-bezier(0.17, 0.67, 0.83, 0.67); box-shadow: 0 0 15px var(--cyan); }
 
-        /* TERMINAL DE SAÍDA ELITE */
-        .terminal-box { margin-top: 35px; background: #000; border: 1px solid #1a1a1a; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .terminal-header { background: #0a0a0a; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; }
-        #output { padding: 30px; color: var(--cyan); font-family: 'monospace'; font-size: 13px; line-height: 1.6; min-height: 150px; white-space: pre-wrap; display: none; }
-        
-        .btn-sync { float: right; margin-top: 20px; background: var(--cyan); border: none; color: #000; padding: 15px 45px; font-family: 'Orbitron'; font-size: 11px; font-weight: 900; cursor: pointer; transition: 0.3s; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); }
-        .btn-sync:hover { background: #fff; box-shadow: 0 0 30px rgba(255, 255, 255, 0.4); transform: translateY(-2px); }
+        .progress-box { margin-top: 25px; }
+        .bar-bg { height: 2px; background: #1a1a1a; margin-top: 10px; }
+        #bar-fill { height: 100%; width: 0%; background: var(--cyan); transition: 0.5s; }
 
-        /* RODAPÉ ESTRUTURADO */
-        .juridico-footer { margin-top: 80px; width: 100%; max-width: 950px; padding: 40px; border-top: 1px solid #1a1a1a; background: linear-gradient(to bottom, rgba(10,11,15,0.8), transparent); display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
-        .juridico-item { font-size: 11px; color: #555; line-height: 1.6; transition: 0.3s; }
-        .juridico-item:hover { color: #888; }
-        .juridico-item b { color: var(--magenta); display: block; margin-bottom: 8px; font-family: 'Orbitron'; font-size: 9px; letter-spacing: 1px; }
+        /* TERMINAL LIMPO */
+        .terminal { margin-top: 40px; background: #000; border: 1px solid #222; }
+        .term-head { background: #080808; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a1a1a; }
+        .term-title { font-size: 10px; font-family: 'Orbitron'; color: #444; }
+        #output { padding: 25px; color: var(--cyan); font-family: 'monospace'; font-size: 13px; min-height: 100px; white-space: pre-wrap; display: none; }
         
-        .copyright { text-align: center; width: 100%; margin: 50px 0; font-size: 9px; color: #222; letter-spacing: 5px; font-family: 'Orbitron'; }
+        .btn-main { float: right; margin-top: 25px; background: var(--cyan); border: none; color: #000; padding: 12px 35px; font-family: 'Orbitron'; font-size: 11px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
+        .btn-copy { background: var(--magenta); border: none; color: #fff; font-size: 9px; padding: 5px 10px; cursor: pointer; font-family: 'Orbitron'; }
+
+        /* RODAPÉ DE SEGURANÇA JURÍDICA */
+        .footer-legal { margin-top: 60px; width: 100%; max-width: 900px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; padding: 30px; border-top: 1px solid #111; }
+        .legal-item { font-size: 10px; color: #444; line-height: 1.6; }
+        .legal-item b { color: #777; display: block; margin-bottom: 5px; font-size: 9px; }
+        .copyright { margin-top: 40px; font-size: 9px; color: #222; letter-spacing: 3px; }
     </style>
 </head>
 <body>
 
-    <div id="scanner" class="scan-line"></div>
+    <div class="header-top">Protocolo V8 Singularity</div>
+    <h1>CÁSSIA PROMPT | <b>ELITE</b></h1>
 
-    <div class="eng-header">UNIVERSAL COMMAND INTERFACE</div>
-    <h1>CÁSSIA PROMPT | V8 <b>Singularity</b></h1>
-    <div style="font-size: 10px; letter-spacing: 6px; color: #444; margin-bottom: 30px; font-family: 'Orbitron';">ELITE PROFESSIONAL EDITION</div>
-
-    <div class="main-dashboard">
+    <div class="dashboard">
         
-        <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
-            <span id="upload-status">⇪ SYNC SYSTEM: IMPORTAR DOCUMENTO PDF</span>
+        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+            <span id="up-status">IMPORTAR ARQUIVO PDF (OPCIONAL)</span>
             <input type="file" id="fileInput" hidden accept="application/pdf">
         </div>
 
-        <div class="grid-inputs">
-            <div class="box-input">
-                <span class="box-label">01. Especialista / Persona</span>
-                <input type="text" id="p1" placeholder="Ex: Gestor de Marketing Digital">
+        <div class="input-grid">
+            <div class="input-group">
+                <span class="label">Papel do Especialista</span>
+                <input type="text" id="p1" placeholder="Ex: Analista Sênior">
             </div>
-            <div class="box-input">
-                <span class="box-label">02. Objetivo Estratégico</span>
-                <input type="text" id="p2" placeholder="Ex: Análise de Dados Trimestral">
+            <div class="input-group">
+                <span class="label">Objetivo do Comando</span>
+                <input type="text" id="p2" placeholder="Ex: Relatório de Impacto">
             </div>
         </div>
 
-        <div style="margin-top: 30px;">
-            <span class="box-label">03. Corpus de Fatos (Contexto do Documento)</span>
-            <textarea id="facts" rows="8" oninput="updateStatus()" placeholder="Aguardando entrada de dados para processamento..."></textarea>
-            <div class="status-bar"><div id="fill"></div></div>
-            <div id="status-text" style="font-size: 9px; color: #444; margin-top: 8px; font-family: 'Orbitron';">INTEGRIDADE: NULA</div>
+        <div style="margin-top: 20px;">
+            <span class="label">Base de Dados (Contexto)</span>
+            <textarea id="facts" rows="6" oninput="update()" placeholder="Insira o texto bruto ou use o PDF..."></textarea>
+            <div class="progress-box">
+                <div id="status-text" style="font-size: 9px; color: #333; text-transform: uppercase;">Densidade: nula</div>
+                <div class="bar-bg"><div id="bar-fill"></div></div>
+            </div>
         </div>
 
-        <div class="terminal-box">
-            <div class="terminal-header">
-                <span style="font-size: 9px; font-family: 'Orbitron'; color: #444; letter-spacing: 2px;">COMMAND TERMINAL [READY]</span>
-                <button onclick="copy()" style="background:var(--magenta); border:none; color:#fff; font-size:9px; padding:6px 12px; cursor:pointer; font-weight:bold; font-family:'Orbitron';">COPY TRIGGER</button>
+        <div class="terminal">
+            <div class="term-head">
+                <span class="term-title">Saída de Prompt</span>
+                <button class="btn-copy" onclick="copy()">Copiar</button>
             </div>
             <div id="output"></div>
         </div>
 
-        <button class="btn-sync" onclick="generate()">SYNC V8 ENGINE</button>
+        <button class="btn-main" onclick="generate()">Gerar Comando</button>
     </div>
 
-    <footer class="juridico-footer">
-        <div class="juridico-item">
-            <b>SECURITY PROTOCOL</b>
-            Algoritmo de filtragem factual. O comando obriga a IA a se ater exclusivamente à base de dados fornecida no Corpus.
+    <footer class="footer-legal">
+        <div class="legal-item">
+            <b>Segurança Jurídica</b>
+            Este console processa dados localmente. A responsabilidade técnica e revisão final pertencem exclusivamente ao usuário.
         </div>
-        <div class="juridico-item">
-            <b>USER RESPONSIBILITY</b>
-            A validação técnica final é dever do operador humano. Este console é um acelerador de produtividade, não um substituto intelectual.
-        </div>
-        <div class="juridico-item">
-            <b>LOCAL PROCESSING</b>
-            Privacidade absoluta: o motor de leitura PDF.js opera no lado do cliente (browser). Nenhum dado é enviado para nuvem externa.
-        </div>
-        <div class="juridico-item">
-            <b>ZERO HALLUCINATION</b>
-            Configurado com parâmetros de vacância: qualquer ausência de dados no Corpus resultará em sinalização técnica no prompt.
+        <div class="legal-item">
+            <b>Privacidade LGPD</b>
+            Nenhum dado inserido ou extraído de documentos PDF é armazenado em servidores externos. O controle é 100% do operador.
         </div>
     </footer>
-    <div class="copyright">© 2026 CÁSSIA PROMPT | V8 SINGULARITY | ELITE EDITION</div>
+    <div class="copyright">CÁSSIA PROMPT © 2026 | UNIVERSAL ELITE EDITION</div>
 
     <script>
         const fileInput = document.getElementById('fileInput');
-        const scanner = document.getElementById('scanner');
         
         fileInput.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (!file) return;
-            
-            // Ativar animação de scanning
-            scanner.classList.add('scanning');
-            document.getElementById('upload-status').innerText = "⏳ SCANNING PDF CORE...";
-            
+            document.getElementById('up-status').innerText = "PROCESSANDO DOCUMENTO...";
             const reader = new FileReader();
             reader.onload = async function() {
                 const typedarray = new Uint8Array(this.result);
@@ -141,54 +121,34 @@
                     text += content.items.map(item => item.str).join(" ") + "\n";
                 }
                 document.getElementById('facts').value = text.substring(0, 15000);
-                document.getElementById('upload-status').innerText = "✓ DOCUMENT SYNCED";
-                scanner.classList.remove('scanning');
-                updateStatus();
+                document.getElementById('up-status').innerText = "PDF INTEGRADO COM SUCESSO";
+                update();
             };
             reader.readAsArrayBuffer(file);
         });
 
-        function updateStatus() {
+        function update() {
             let len = document.getElementById('facts').value.length;
             let p = Math.min((len / 500) * 100, 100);
-            document.getElementById('fill').style.width = p + "%";
-            const statusTxt = document.getElementById('status-text');
-            if(p > 70) { statusTxt.innerText = "INTEGRIDADE: ELITE"; statusTxt.style.color = "var(--cyan)"; }
-            else { statusTxt.innerText = "INTEGRIDADE: INSUFICIENTE"; statusTxt.style.color = "#444"; }
+            document.getElementById('bar-fill').style.width = p + "%";
+            document.getElementById('status-text').innerText = p > 50 ? "Densidade: Elite" : "Densidade: Baixa";
         }
 
         function generate() {
-            const output = document.getElementById('output');
             const f = document.getElementById('facts').value;
-            if(f.length < 20) return alert("ERRO: O motor requer dados para ignição.");
-
-            output.style.display = 'block';
-            output.innerText = "";
-            
-            const text = `### [SINGULARITY V8 - ELITE PROTOCOL]\n\n` +
+            if(f.length < 20) return alert("ERRO: Dados insuficientes.");
+            const output = document.getElementById('output');
+            output.innerText = `### [PROTOCOLO V8 SINGULARITY]\n\n` +
                 `**PERSONA:** ${document.getElementById('p1').value}\n` +
-                `**OBJETIVO:** ${document.getElementById('p2').value}\n\n` +
-                `**CONTEÚDO BASE:**\n"${f}"\n\n` +
-                `**REGRAS DE OURO:**\n` +
-                `- Use APENAS a base acima.\n` +
-                `- Marque ausência de dados como [VACÂNCIA].\n` +
-                `- Rigor técnico absoluto. Proibido alucinar.`;
-
-            // Efeito de digitação terminal
-            let i = 0;
-            function type() {
-                if (i < text.length) {
-                    output.innerText += text.charAt(i);
-                    i++;
-                    setTimeout(type, 1);
-                }
-            }
-            type();
+                `**MISSÃO:** ${document.getElementById('p2').value}\n\n` +
+                `**CONTEXTO BRUTO:**\n"${f}"\n\n` +
+                `**REGRAS:**\n- Proibido alucinar.\n- Use apenas os dados acima.\n- Resposta técnica e direta.`;
+            output.style.display = 'block';
         }
 
         function copy() {
             navigator.clipboard.writeText(document.getElementById('output').innerText);
-            alert("PROTOCOLO COPIADO PARA O CONSOLE.");
+            alert("Copiado.");
         }
     </script>
 </body>

@@ -3,105 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt | V8 God Mode</title>
+    <title>Cássia Prompt | V8 God Mode Elite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #020205; color: #ffffff; margin: 0; padding: 20px; }
-        .container { max-width: 850px; margin: 0 auto; background: #080810; padding: 40px; border: 1px solid #ff2e8c; box-shadow: 0 0 50px rgba(255, 46, 140, 0.2); }
-        h1 { color: #ff2e8c; text-align: center; font-size: 22px; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 30px; border-bottom: 2px solid #1a1a2e; padding-bottom: 20px; }
-        .aviso-v8 { background: rgba(255, 46, 140, 0.1); border: 1px solid #ff2e8c; padding: 15px; margin-bottom: 30px; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; text-align: center; color: #ff99cc; }
-        label { display: block; margin-bottom: 10px; color: #ff2e8c; font-weight: bold; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; }
-        input, textarea { width: 100%; padding: 15px; border: 1px solid #1a1a2e; background: #000; color: #fff; box-sizing: border-box; font-size: 14px; margin-bottom: 20px; }
-        input:focus, textarea:focus { border-color: #ff2e8c; outline: none; background: #05050a; }
+        :root { --accent: #ff2e8c; --neon: #00ffcc; --glass: rgba(15, 15, 25, 0.85); }
+        body { font-family: 'Inter', sans-serif; background: radial-gradient(circle at top, #1a0a1a, #020205); color: #ffffff; margin: 0; padding: 40px 20px; min-height: 100vh; }
         
-        .btn-executar { width: 100%; padding: 25px; background: #ff2e8c; color: #fff; border: none; font-weight: 900; font-size: 16px; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; transition: 0.3s; }
-        .btn-executar:hover { background: #fff; color: #ff2e8c; box-shadow: 0 0 20px #fff; }
-        
-        .result-wrapper { position: relative; margin-top: 30px; display: none; }
-        #resultado { padding: 30px; background: #000; border: 1px solid #ff2e8c; color: #00ffcc; font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.6; white-space: pre-wrap; }
-        .btn-copiar { position: absolute; top: 10px; right: 10px; padding: 10px 20px; background: #00ffcc; color: #000; border: none; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .container { 
+            max-width: 900px; margin: 0 auto; background: var(--glass); padding: 50px; 
+            border-radius: 15px; border: 1px solid rgba(255, 46, 140, 0.2);
+            backdrop-filter: blur(20px); box-shadow: 0 50px 100px rgba(0,0,0,0.7);
+        }
 
-        footer { margin-top: 60px; padding: 30px; border-top: 1px solid #1a1a2e; font-size: 11px; color: #444; text-align: justify; line-height: 1.8; }
-        .f-bold { color: #ff2e8c; font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 10px; text-align: center; font-size: 13px; }
+        h1 { text-align: center; font-weight: 300; letter-spacing: 10px; text-transform: uppercase; font-size: 18px; margin-bottom: 40px; color: rgba(255,255,255,0.7); }
+        h1 b { color: var(--accent); font-weight: 700; }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .full { grid-column: span 2; }
+
+        label { display: block; margin-bottom: 8px; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); font-weight: 700; }
+        
+        input, textarea, select { 
+            width: 100%; padding: 15px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); 
+            color: #fff; border-radius: 5px; font-size: 14px; transition: 0.3s;
+        }
+        input:focus, textarea:focus { border-color: var(--accent); outline: none; background: rgba(255, 46, 140, 0.05); }
+
+        .btn-executar { 
+            width: 100%; padding: 25px; background: transparent; color: #fff; border: 1px solid var(--accent);
+            font-weight: 700; font-size: 14px; cursor: pointer; text-transform: uppercase; letter-spacing: 5px;
+            margin-top: 30px; transition: 0.5s;
+        }
+        .btn-executar:hover { background: var(--accent); box-shadow: 0 0 30px rgba(255, 46, 140, 0.4); }
+
+        .result-wrapper { margin-top: 40px; display: none; animation: fadeIn 0.8s; }
+        #resultado { padding: 30px; background: rgba(0,0,0,0.5); border-left: 2px solid var(--neon); color: #ddd; font-family: 'Courier New', monospace; line-height: 1.6; position: relative; }
+        
+        .btn-copiar { position: absolute; top: -15px; right: 20px; padding: 8px 20px; background: var(--neon); color: #000; border: none; font-size: 10px; font-weight: 900; cursor: pointer; text-transform: uppercase; }
+
+        footer { margin-top: 80px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 40px; }
+        .footer-text { font-size: 10px; color: rgba(255,255,255,0.3); line-height: 2; text-transform: uppercase; letter-spacing: 1px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>CÁSSIA PROMPT | V8 GOD MODE</h1>
-    <div class="aviso-v8">⚠️ QUALIDADE MÁXIMA EXIGIDA: DADOS RASOS SERÃO BARRADOS PELO SISTEMA.</div>
+    <h1>Cássia Prompt | <b>V8 God Mode</b></h1>
     
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-        <div style="grid-column: span 2;">
-            <label>01. PERSONA (QUEM A IA SERÁ?)</label>
-            <input type="text" id="p1" placeholder="Ex: Especialista Sênior OAB, Gestora Jurídica...">
+    <div class="grid">
+        <div class="full">
+            <label>01. Autoridade Absoluta</label>
+            <input type="text" id="p1" placeholder="Ex: Advogada Sênior OAB, Estrategista High-Ticket...">
         </div>
-        <div style="grid-column: span 2;">
-            <label>02. AÇÃO (O QUE VOCÊ QUER FAZER?)</label>
-            <input type="text" id="p2" placeholder="Ex: Elaborar Petição Inicial, Criar E-mail de Cobrança, Analisar Contrato...">
+        <div class="full">
+            <label>02. Intenção e Entregável</label>
+            <input type="text" id="p2" placeholder="O que deseja construir hoje?">
         </div>
-        <div style="grid-column: span 2;">
-            <label>03. DADOS BRUTOS (FONTE ÚNICA DA VERDADE)</label>
-            <textarea id="p4" rows="8" placeholder="DETALHE OS FATOS AQUI. SEM DADOS REAIS, O V8 NÃO GERA RESULTADO."></textarea>
+        <div class="full">
+            <label>03. Corpus de Dados (Fonte Única da Verdade)</label>
+            <textarea id="p3" rows="6" placeholder="Insira os fatos brutos. O rigor começa aqui."></textarea>
+        </div>
+        <div class="full">
+            <label>04. Referências Técnicas (Leis, Jurisprudência ou Regras)</label>
+            <textarea id="p4" rows="3" placeholder="Opcional: Normas que a IA deve obedecer cegamente."></textarea>
         </div>
         <div>
-            <label>04. RESULTADO ESPERADO</label>
-            <input type="text" id="p6" placeholder="Qual o impacto final desejado?">
+            <label>05. Nível de Rigor</label>
+            <select id="p5">
+                <option value="Diamante (Rigor Absoluto)">Diamante (Rigor Absoluto)</option>
+                <option value="Sóbrio (Analítico)">Sóbrio (Analítico)</option>
+                <option value="Fluido (Estratégico)">Fluido (Estratégico)</option>
+            </select>
         </div>
         <div>
-            <label>05. RESTRIÇÃO RÍGIDA</label>
-            <input type="text" id="p7" placeholder="O que não pode ser esquecido ou feito?">
+            <label>06. Modo de Saída</label>
+            <select id="p6">
+                <option value="Texto Final Direto">Texto Final Direto</option>
+                <option value="Análise Crítica + Texto">Análise Crítica + Texto</option>
+                <option value="Plano de Ação Estratégico">Plano de Ação Estratégico</option>
+            </select>
         </div>
-        <button onclick="gerarV8()" class="btn-executar" style="grid-column: span 2;">EXECUTAR ENGENHARIA GOD MODE ⚡</button>
+        <button onclick="gerarV8()" class="btn-executar" class="full">Ativar Engenharia de Elite ⚡</button>
     </div>
 
     <div class="result-wrapper" id="wrapper">
-        <button class="btn-copiar" onclick="copiarPrompt()">Copiar Comando</button>
-        <div id="resultado"></div>
+        <div id="resultado">
+            <button class="btn-copiar" onclick="copiar()">Copiar Prompt</button>
+            <div id="texto-res"></div>
+        </div>
     </div>
 </div>
 
 <footer>
-    <span class="f-bold">Protocolo de Segurança Jurídica e Técnica</span>
-    1. <strong>Finalidade:</strong> O V8 God Mode elimina alucinações através de rigor técnico e dados reais.
-    2. <strong>Responsabilidade:</strong> O usuário é o único responsável pela revisão final dos dados gerados.
-    3. <strong>Anti-Preguiça:</strong> Dados superficiais (Campo 03) barram a execução automática do sistema.
-    4. <strong>Privacidade:</strong> Processamento local sem armazenamento de dados sensíveis (LGPD).
-    <div style="text-align: center; margin-top: 20px; color: #ff2e8c; font-weight: bold;">© 2026 Cássia Prompt - V8 Elite Edition</div>
+    <span style="color:var(--accent); font-weight:700; letter-spacing:3px; font-size:11px;">PROTOCOLO DE SEGURANÇA V8</span>
+    <p class="footer-text">
+        I. Ferramenta de alta performance. Requer curadoria humana.<br>
+        II. Filtro anti-alucinação ativo. Dados rasos invalidam a execução.<br>
+        III. Privacidade local total em conformidade com a LGPD.
+    </p>
+    <p style="margin-top:20px; font-size:9px; color:rgba(255,255,255,0.1);">© 2026 CÁSSIA PROMPT | ELITE EDITION</p>
 </footer>
 
 <script>
     function gerarV8() {
-        const dados = document.getElementById('p4').value;
-        const wrapper = document.getElementById('wrapper');
-        const res = document.getElementById('resultado');
-        
-        if(dados.length < 50) {
-            alert("SISTEMA BARRADO: Dados insuficientes. O V8 exige substância para garantir a qualidade do atendimento.");
-            return;
-        }
+        const d = document.getElementById('p3').value;
+        if(d.length < 50) return alert("ERRO: O V8 God Mode não processa mediocridade. Insira dados substanciais.");
 
-        const promptFinal = `### [EXECUÇÃO: CÁSSIA PROMPT V8 GOD MODE]\n\n` +
-            `**PERSONA:** Atue como ${document.getElementById('p1').value}.\n` +
-            `**TAREFA:** ${document.getElementById('p2').value}.\n\n` +
-            `**1. DADOS BRUTOS (FONTE ÚNICA DA VERDADE):**\n"${dados}"\n\n` +
-            `**2. MÉTRICA DE SUCESSO:**\n"${document.getElementById('p6').value}"\n\n` +
-            `**3. RESTRIÇÕES RÍGIDAS:**\n- ${document.getElementById('p7').value}\n- PROIBIDO alucinar fatos não descritos no item 1.\n- PROIBIDO lenga-lenga ou introduções polidas.\n\n` +
-            `**4. PROTOCOLO ANTI-ALUCINAÇÃO:**\n` +
-            `Se os dados forem superficiais para uma entrega de elite, PARE. Aponte a falha técnica e peça mais dados. Priorize sempre a precisão e a qualidade absoluta do atendimento.\n\n` +
-            `**ENTREGA:** Inicie agora. Seja técnico, cirúrgico e profissional.`;
+        const prompt = `### [PROTOCOLO V8 GOD MODE ACTIVATED]\n\n` +
+            `**1. PERSONA:** Atue como ${document.getElementById('p1').value}.\n` +
+            `**2. TAREFA:** ${document.getElementById('p2').value}.\n` +
+            `**3. FONTE DA VERDADE (DADOS):**\n"${d}"\n\n` +
+            `**4. REFERÊNCIAS RÍGIDAS:**\n"${document.getElementById('p4').value}"\n\n` +
+            `**5. PARÂMETROS DE EXECUÇÃO:**\n` +
+            `- Nível de Rigor: ${document.getElementById('p5').value}\n` +
+            `- Modo de Saída: ${document.getElementById('p6').value}\n\n` +
+            `**6. DIRETRIZES ANTI-ALUCINAÇÃO:**\n` +
+            `- Proibido inventar. Proibido polidez desnecessária.\n` +
+            `- Se os dados forem insuficientes para o nível ${document.getElementById('p5').value}, EXPOHA a falha técnica.\n` +
+            `- Priorize a qualidade máxima do atendimento e a precisão absoluta.\n\n` +
+            `**ENTREGA:** Execute de forma cirúrgica.`;
 
-        res.innerText = promptFinal;
-        wrapper.style.display = 'block';
+        document.getElementById('texto-res').innerText = prompt;
+        document.getElementById('wrapper').style.display = 'block';
         window.scrollTo(0, document.body.scrollHeight);
     }
 
-    function copiarPrompt() {
-        const texto = document.getElementById('resultado').innerText;
-        navigator.clipboard.writeText(texto).then(() => {
-            alert("COMANDO COPIADO! Cole na sua IA de preferência.");
-        });
+    function copiar() {
+        navigator.clipboard.writeText(document.getElementById('texto-res').innerText);
+        alert("ENGENHARIA COPIADA. Pronto para o comando.");
     }
 </script>
-
 </body>
 </html>

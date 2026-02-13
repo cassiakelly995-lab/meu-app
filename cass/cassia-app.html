@@ -3,124 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt | V8 Elite Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <title>Cássia Prompt | V8 Elite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <style>
-        :root { --primary: #000; --accent: #ff007a; --secondary: #00f2ff; --bg: #f8f9fa; --card: #ffffff; }
-        body { background: var(--bg); color: #1a1a1a; font-family: 'Inter', sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; }
+        :root { --ms-blue: #0078d4; --ms-bg: #f3f2f1; --ms-card: #ffffff; --ms-text: #323130; --accent: #ff007a; }
+        body { background-color: var(--ms-bg); color: var(--ms-text); font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; }
         
-        /* HEADER EXECUTIVO */
-        header { width: 100%; background: var(--primary); padding: 40px 0; text-align: center; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .logo-area h1 { font-family: 'Montserrat', sans-serif; font-size: 28px; letter-spacing: 2px; text-transform: uppercase; margin: 0; }
-        .logo-area h1 b { color: var(--accent); }
-        .version-tag { font-size: 10px; background: var(--accent); color: #fff; padding: 2px 10px; border-radius: 50px; vertical-align: middle; margin-left: 10px; }
+        /* BARRA SUPERIOR EXECUTIVA */
+        .top-bar { width: 100%; height: 48px; background: #000; display: flex; align-items: center; padding: 0 20px; box-sizing: border-box; color: #fff; font-size: 12px; letter-spacing: 1px; font-weight: 600; }
 
-        .container { width: 100%; max-width: 1000px; padding: 40px 20px; box-sizing: border-box; }
-        .card { background: var(--card); border: 1px solid #e0e0e0; border-radius: 8px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-
-        /* UPLOAD MODERNIZADO */
-        .upload-section { border: 2px dashed #d1d1d1; border-radius: 6px; padding: 30px; text-align: center; margin-bottom: 30px; cursor: pointer; transition: 0.3s; background: #fafafa; }
-        .upload-section:hover { border-color: var(--secondary); background: #f0fbff; }
-        .upload-section i { font-size: 24px; color: #666; display: block; margin-bottom: 10px; }
-        .upload-section span { font-weight: 600; color: #333; font-size: 14px; }
-
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
-        .input-group label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: #888; margin-bottom: 8px; letter-spacing: 1px; }
-        input, textarea { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 12px; font-family: 'Inter'; font-size: 15px; box-sizing: border-box; transition: 0.2s; }
-        input:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255, 0, 122, 0.1); }
-
-        /* BARRA DE INTEGRIDADE */
-        .integrity-bar { height: 6px; background: #eee; border-radius: 10px; margin-top: 10px; overflow: hidden; }
-        #fill { height: 100%; width: 0%; background: linear-gradient(to right, var(--accent), var(--secondary)); transition: 0.5s; }
-
-        /* TERMINAL DE SAÍDA PROFISSIONAL */
-        .terminal { margin-top: 40px; border-radius: 6px; overflow: hidden; border: 1px solid #000; }
-        .terminal-header { background: #000; color: #fff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 600; }
-        #output { padding: 25px; background: #fdfdfd; color: #333; font-family: 'Courier New', Courier, monospace; font-size: 14px; line-height: 1.6; min-height: 120px; white-space: pre-wrap; display: none; }
-
-        .btn-generate { width: 100%; background: var(--primary); color: #fff; border: none; padding: 18px; font-family: 'Montserrat'; font-size: 14px; font-weight: 700; cursor: pointer; border-radius: 4px; text-transform: uppercase; transition: 0.3s; margin-top: 20px; }
-        .btn-generate:hover { background: #333; transform: translateY(-2px); }
-        .btn-copy { background: var(--accent); color: #fff; border: none; padding: 6px 15px; border-radius: 4px; cursor: pointer; font-size: 11px; }
-
-        /* RODAPÉ DE SEGURANÇA JURÍDICA - LEITURA CLARA */
-        .security-footer { margin-top: 60px; width: 100%; max-width: 1000px; padding: 40px 20px; border-top: 2px solid #eee; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
-        .security-box h3 { font-family: 'Montserrat'; font-size: 14px; color: var(--primary); margin-bottom: 15px; text-transform: uppercase; border-left: 4px solid var(--accent); padding-left: 10px; }
-        .security-box p { font-size: 14px; color: #555; line-height: 1.7; margin: 0; }
+        .app-container { width: 100%; max-width: 1100px; padding: 60px 20px; box-sizing: border-box; }
         
-        .final-copyright { text-align: center; padding: 40px; font-size: 12px; color: #aaa; width: 100%; }
+        .main-header { margin-bottom: 40px; text-align: left; border-left: 6px solid var(--accent); padding-left: 25px; }
+        .main-header h1 { font-size: 32px; font-weight: 800; margin: 0; letter-spacing: -1px; color: #000; }
+        .main-header p { margin: 5px 0 0; color: #605e5c; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* CARDS DO SISTEMA */
+        .fluent-card { background: var(--ms-card); border-radius: 4px; border: 1px solid #edebe9; box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,0.132), 0 0.3px 0.9px 0 rgba(0,0,0,0.108); padding: 40px; margin-bottom: 25px; }
+
+        /* LACUNAS ELABORADAS */
+        .module-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px; }
+        .module-box { display: flex; flex-direction: column; }
+        .module-box label { font-size: 13px; font-weight: 700; color: #323130; margin-bottom: 12px; display: flex; align-items: center; }
+        .module-box label i { color: var(--accent); margin-right: 8px; font-style: normal; }
+
+        input, textarea, select { border: 1px solid #8a8886; border-radius: 2px; padding: 12px 15px; font-size: 15px; font-family: 'Inter'; color: #323130; background: #fff; transition: all 0.2s; }
+        input:hover, textarea:hover { border-color: #323130; }
+        input:focus, textarea:focus { outline: none; border-color: var(--ms-blue); box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2); }
+
+        /* UPLOAD DISCRETO E SOFISTICADO */
+        .ms-upload { border: 1px solid #edebe9; background: #faf9f8; padding: 20px; border-radius: 2px; text-align: center; cursor: pointer; transition: 0.2s; margin-bottom: 30px; }
+        .ms-upload:hover { background: #f3f2f1; border-color: #d2d0ce; }
+        .ms-upload span { font-size: 13px; font-weight: 600; color: var(--ms-blue); }
+
+        /* TERMINAL DE SAÍDA */
+        .output-console { margin-top: 40px; border: 1px solid #d2d0ce; border-radius: 2px; }
+        .console-header { background: #faf9f8; padding: 12px 20px; border-bottom: 1px solid #edebe9; display: flex; justify-content: space-between; align-items: center; }
+        .console-header span { font-size: 11px; font-weight: 700; color: #605e5c; text-transform: uppercase; }
+        #output { padding: 30px; background: #fff; color: #323130; font-family: 'Consolas', monospace; font-size: 14px; line-height: 1.6; min-height: 150px; white-space: pre-wrap; display: none; border-top: 1px solid #f3f2f1; }
+
+        /* BOTÃO MICROSOFT STYLE */
+        .btn-ms { background-color: var(--ms-blue); color: #fff; border: none; padding: 15px 30px; font-size: 14px; font-weight: 600; border-radius: 2px; cursor: pointer; transition: 0.2s; float: right; margin-top: 20px; }
+        .btn-ms:hover { background-color: #005a9e; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .btn-copy { background: transparent; border: 1px solid var(--ms-blue); color: var(--ms-blue); padding: 5px 15px; font-size: 11px; font-weight: 600; cursor: pointer; }
+        .btn-copy:hover { background: var(--ms-blue); color: #fff; }
+
+        /* SEGURANÇA JURÍDICA MANTIDA */
+        .security-section { margin-top: 60px; padding-top: 40px; border-top: 1px solid #d2d0ce; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .sec-card h3 { font-size: 14px; font-weight: 700; color: #000; text-transform: uppercase; margin-bottom: 15px; }
+        .sec-card p { font-size: 13.5px; color: #605e5c; line-height: 1.7; margin: 0; }
+
+        .integrity-container { margin-top: 15px; }
+        .integrity-label { font-size: 10px; font-weight: 700; color: #a19f9d; text-transform: uppercase; margin-bottom: 5px; display: block; }
+        .integrity-bar { height: 4px; background: #edebe9; width: 100%; position: relative; }
+        #fill { height: 100%; width: 0%; background: var(--accent); transition: 0.5s; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo-area">
-            <h1>Cássia Prompt <b>Elite</b> <span class="version-tag">V8</span></h1>
-            <p style="font-size: 12px; opacity: 0.7; margin-top: 10px; letter-spacing: 2px;">PROTOCOLOS DE COMANDO DE ALTA PERFORMANCE</p>
-        </div>
-    </header>
+    <div class="top-bar">CÁSSIA PROMPT | V8 SINGULARITY ELITE</div>
 
-    <div class="container">
-        <div class="card">
-            <div class="upload-section" onclick="document.getElementById('fileInput').click()">
-                <i class="upload-icon">📂</i>
-                <span id="up-status">CLIQUE PARA IMPORTAR O DOCUMENTO PDF (ANÁLISE LOCAL)</span>
+    <div class="app-container">
+        
+        <div class="main-header">
+            <h1>Console de Engenharia V8</h1>
+            <p>Sincronização de Dados e Comandos</p>
+        </div>
+
+        <div class="fluent-card">
+            <div class="ms-upload" onclick="document.getElementById('fileInput').click()">
+                <span id="up-status"> IMPORTAR DOCUMENTO PDF PARA ANÁLISE LOCAL</span>
                 <input type="file" id="fileInput" hidden accept="application/pdf">
             </div>
 
-            <div class="form-grid">
-                <div class="input-group">
-                    <label>01. Vetor de Autoridade</label>
-                    <input type="text" id="p1" placeholder="Ex: Advogada Especialista em Família">
+            <div class="module-grid">
+                <div class="module-box">
+                    <label><i>■</i> ARQUITETURA DE PERSONA</label>
+                    <input type="text" id="p1" placeholder="Ex: Advogada Sênior, OAB/SP">
                 </div>
-                <div class="input-group">
-                    <label>02. Objetivo da Tarefa</label>
-                    <input type="text" id="p2" placeholder="Ex: Elaboração de Petição Inicial">
+                <div class="module-box">
+                    <label><i>■</i> MATRIZ DE OBJETIVO</label>
+                    <input type="text" id="p2" placeholder="Ex: Recurso de Apelação Cível">
                 </div>
             </div>
 
-            <div class="input-group" style="margin-bottom: 10px;">
-                <label>03. Corpus de Fatos (Contexto do Caso)</label>
-                <textarea id="facts" rows="8" oninput="updateIntegrity()" placeholder="Insira os fatos brutos ou utilize o upload de PDF para extração automática..."></textarea>
-            </div>
-            
-            <div style="margin-bottom: 30px;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-size: 10px; font-weight: 800; color: #aaa; text-transform: uppercase;">Rigor Factual</span>
-                    <span id="status-label" style="font-size: 10px; font-weight: 800; color: #aaa;">AGUARDANDO DADOS</span>
+            <div class="module-box" style="margin-top: 30px;">
+                <label><i>■</i> NÚCLEO DE FATOS (CORPUS)</label>
+                <textarea id="facts" rows="10" oninput="update()" placeholder="Aguardando inserção de dados estruturados ou extração de PDF..."></textarea>
+                <div class="integrity-container">
+                    <span id="status-text" class="integrity-label">STATUS DE INTEGRIDADE: DADOS AUSENTES</span>
+                    <div class="integrity-bar"><div id="fill"></div></div>
                 </div>
-                <div class="integrity-bar"><div id="fill"></div></div>
             </div>
 
-            <button class="btn-generate" onclick="processV8()">Gerar Protocolo de Comando</button>
+            <button class="btn-ms" onclick="generate()">EXECUTAR PROTOCOLO V8</button>
 
-            <div class="terminal">
-                <div class="terminal-header">
-                    <span>COMMAND TRIGGER</span>
-                    <button class="btn-copy" onclick="copyText()">COPIAR COMANDO</button>
+            <div class="output-console">
+                <div class="console-header">
+                    <span>PROMPT ESTRUTURADO</span>
+                    <button class="btn-copy" onclick="copy()">COPIAR</button>
                 </div>
                 <div id="output"></div>
             </div>
         </div>
-    </div>
 
-    <section class="security-footer">
-        <div class="security-box">
-            <h3>Segurança Jurídica e Técnica</h3>
-            <p>O <b>Cássia Prompt V8</b> utiliza um protocolo rigoroso de filtragem para mitigar alucinações de IA. O sistema obriga a ferramenta a se basear exclusivamente no "Corpus de Fatos" fornecido. Toda e qualquer lacuna de informação será sinalizada, proibindo a IA de inventar dados processuais ou fáticos.</p>
+        <div class="security-section">
+            <div class="sec-card">
+                <h3>Segurança Jurídica e Técnica</h3>
+                <p>O Cássia Prompt V8 utiliza um protocolo rigoroso de filtragem para mitigar alucinações de IA. O sistema obriga a ferramenta a se basear exclusivamente no "Corpus de Fatos" fornecido. Toda e qualquer lacuna de informação será sinalizada, proibindo a IA de inventar dados processuais ou fáticos.</p>
+            </div>
+            <div class="sec-card">
+                <h3>Privacidade e LGPD</h3>
+                <p>Este console opera via Processamento Local. A extração de dados de arquivos PDF ocorre inteiramente dentro do seu navegador. Nenhum documento ou dado sensível é enviado para nossos servidores ou armazenado em nuvem externa, garantindo sigilo profissional absoluto.</p>
+            </div>
+            <div class="sec-card">
+                <h3>Responsabilidade do Operador</h3>
+                <p>A Inteligência Artificial atua como um assistente de produtividade. A revisão técnica, a fundamentação legal e a decisão final sobre o conteúdo gerado são de responsabilidade exclusiva e indelegável do profissional usuário.</p>
+            </div>
         </div>
-        <div class="security-box">
-            <h3>Privacidade e LGPD</h3>
-            <p>Este console opera via <b>Processamento Local</b>. A extração de dados de arquivos PDF ocorre inteiramente dentro do seu navegador. Nenhum documento ou dado sensível é enviado para nossos servidores ou armazenado em nuvem externa, garantindo sigilo profissional absoluto.</p>
-        </div>
-        <div class="security-box" style="margin-top: -20px;">
-            <h3>Responsabilidade do Operador</h3>
-            <p>A Inteligência Artificial atua como um assistente de produtividade. A revisão técnica, a fundamentação legal e a decisão final sobre o conteúdo gerado são de responsabilidade exclusiva e indelegável do profissional usuário.</p>
-        </div>
-    </section>
 
-    <div class="final-copyright">
-        © 2026 CÁSSIA PROMPT | V8 ELITE EDITION | DESENVOLVIDO PARA ALTA PERFORMANCE
     </div>
 
     <script>
@@ -129,53 +131,46 @@
         fileInput.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (!file) return;
-            document.getElementById('up-status').innerText = "⏳ EXTRAINDO DADOS DO PDF...";
-            
+            document.getElementById('up-status').innerText = " PROCESSANDO NÚCLEO...";
             const reader = new FileReader();
             reader.onload = async function() {
                 const typedarray = new Uint8Array(this.result);
                 const pdf = await pdfjsLib.getDocument(typedarray).promise;
-                let fullText = "";
+                let text = "";
                 for (let i = 1; i <= pdf.numPages; i++) {
                     const page = await pdf.getPage(i);
                     const content = await page.getTextContent();
-                    fullText += content.items.map(item => item.str).join(" ") + "\n";
+                    text += content.items.map(item => item.str).join(" ") + "\n";
                 }
-                document.getElementById('facts').value = fullText.substring(0, 15000);
-                document.getElementById('up-status').innerText = "✅ DOCUMENTO INTEGRADO COM SUCESSO";
-                updateIntegrity();
+                document.getElementById('facts').value = text.substring(0, 15000);
+                document.getElementById('up-status').innerText = " DOCUMENTO SINCRONIZADO";
+                update();
             };
             reader.readAsArrayBuffer(file);
         });
 
-        function updateIntegrity() {
+        function update() {
             let len = document.getElementById('facts').value.length;
             let p = Math.min((len / 500) * 100, 100);
             document.getElementById('fill').style.width = p + "%";
-            document.getElementById('status-label').innerText = p > 50 ? "RIGOR: ELITE (DADOS DENSOS)" : "RIGOR: INSUFICIENTE";
-            document.getElementById('status-label').style.color = p > 50 ? "#00f2ff" : "#aaa";
+            document.getElementById('status-text').innerText = p > 50 ? "STATUS DE INTEGRIDADE: ELITE" : "STATUS DE INTEGRIDADE: BAIXA";
         }
 
-        function processV8() {
-            const facts = document.getElementById('facts').value;
-            if(facts.length < 30) return alert("Erro: O protocolo exige uma base de dados mínima.");
-            
-            const out = document.getElementById('output');
-            out.innerText = `### [SISTEMA CÁSSIA PROMPT V8 - SINGULARITY]\n\n` +
+        function generate() {
+            const f = document.getElementById('facts').value;
+            if(f.length < 20) return alert("ERRO: O sistema requer dados.");
+            const output = document.getElementById('output');
+            output.innerText = `### [SINGULARITY V8 ELITE]\n\n` +
                 `**PERSONA:** ${document.getElementById('p1').value}\n` +
                 `**MISSÃO:** ${document.getElementById('p2').value}\n\n` +
-                `**BASE DE DADOS INQUESTIONÁVEL:**\n"${facts}"\n\n` +
-                `**DIRETRIZES DE SEGURANÇA:**\n` +
-                `- Proibido alucinar ou inferir fatos fora da base fornecida.\n` +
-                `- Se houver ausência de informação crítica, use: [INFORMAÇÃO NÃO CONSTA].\n` +
-                `- Resposta técnica, objetiva e livre de exageros adjetivos.`;
-            
-            out.style.display = 'block';
+                `**CORPUS DE FATOS:**\n"${f}"\n\n` +
+                `**REGRAS:**\n1. Use apenas a base acima.\n2. Se faltar dado, use [LACUNA].\n3. Tom técnico e preciso.`;
+            output.style.display = 'block';
         }
 
-        function copyText() {
+        function copy() {
             navigator.clipboard.writeText(document.getElementById('output').innerText);
-            alert("Comando copiado com sucesso.");
+            alert("Comando copiado.");
         }
     </script>
 </body>

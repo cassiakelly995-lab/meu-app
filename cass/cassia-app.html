@@ -3,137 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt | V8 God Mode Ultra</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>Cássia Prompt | V8 Elite Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --m: #ff007a; --c: #00f2ff; --bg: #020205; }
-        body { background: var(--bg); color: #fff; font-family: 'Rajdhani', sans-serif; margin: 0; padding: 20px; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        :root { --magenta: #ff007a; --cyan: #00f2ff; --bg: #010103; }
         
-        .panel { width: 100%; max-width: 900px; background: rgba(10, 10, 15, 0.95); border: 1px solid rgba(255, 0, 122, 0.2); padding: 40px; position: relative; backdrop-filter: blur(20px); box-shadow: 0 0 100px rgba(255, 0, 122, 0.1); }
-        
-        h1 { font-family: 'Orbitron', sans-serif; font-size: 18px; letter-spacing: 10px; text-align: center; color: #fff; text-shadow: 0 0 10px var(--m); margin-bottom: 40px; }
-        
-        .scanner-box { margin-bottom: 25px; }
-        .quality-bar { height: 4px; width: 100%; background: #111; margin-top: 5px; position: relative; }
-        #bar-fill { height: 100%; width: 0%; transition: 0.5s; background: var(--m); }
-        #quality-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--m); }
+        body { 
+            background: var(--bg); color: #fff; font-family: 'Rajdhani', sans-serif; 
+            margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            background-image: linear-gradient(rgba(255, 0, 122, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 0, 122, 0.02) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
 
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        label { font-size: 11px; letter-spacing: 2px; color: var(--c); text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 5px; }
-        
-        input, textarea, select { width: 100%; background: #000; border: 1px solid #222; padding: 12px; color: #fff; font-family: 'Rajdhani'; font-size: 15px; box-sizing: border-box; }
-        input:focus, textarea:focus { border-color: var(--m); outline: none; box-shadow: 0 0 15px rgba(255, 0, 122, 0.2); }
-        
-        .btn-exec { grid-column: span 2; padding: 20px; background: transparent; border: 1px solid var(--m); color: #fff; font-family: 'Orbitron'; cursor: pointer; letter-spacing: 5px; transition: 0.4s; margin-top: 10px; }
-        .btn-exec:hover { background: var(--m); box-shadow: 0 0 30px var(--m); }
-        
-        #loading { display: none; text-align: center; font-family: 'Orbitron'; font-size: 12px; color: var(--c); margin: 20px 0; letter-spacing: 3px; }
+        .main-frame {
+            width: 100%; max-width: 950px; background: rgba(5, 5, 10, 0.8);
+            border: 1px solid rgba(0, 242, 255, 0.1); padding: 50px;
+            backdrop-filter: blur(30px); position: relative;
+            box-shadow: 0 0 100px rgba(0, 0, 0, 1);
+        }
 
-        #resultado-box { display: none; margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; animation: fadeIn 1s; }
-        #prompt-area { background: #000; padding: 20px; border: 1px solid var(--c); color: var(--c); font-family: monospace; font-size: 13px; white-space: pre-wrap; position: relative; }
-        .copy-btn { position: absolute; top: -12px; right: 10px; background: var(--c); color: #000; border: none; padding: 5px 15px; font-family: 'Orbitron'; font-size: 9px; cursor: pointer; font-weight: 700; }
+        .main-frame::before {
+            content: ""; position: absolute; top: -2px; left: -2px; right: -2px; height: 2px;
+            background: linear-gradient(90deg, var(--magenta), var(--cyan), var(--magenta));
+            animation: flow 3s linear infinite;
+        }
 
-        footer { margin-top: 40px; text-align: center; font-size: 9px; letter-spacing: 2px; color: #444; text-transform: uppercase; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        h1 { 
+            font-family: 'Syncopate', sans-serif; font-size: 14px; letter-spacing: 15px; 
+            text-align: center; color: var(--cyan); text-transform: uppercase; margin-bottom: 50px;
+        }
+
+        .v8-tag {
+            position: absolute; top: 15px; right: 20px; font-size: 9px;
+            letter-spacing: 3px; color: var(--magenta); font-weight: bold;
+        }
+
+        .input-group { margin-bottom: 30px; position: relative; }
+        
+        label { 
+            font-size: 9px; letter-spacing: 3px; color: rgba(255,255,255,0.4); 
+            text-transform: uppercase; display: block; margin-bottom: 10px;
+        }
+
+        input, textarea, select {
+            width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05);
+            padding: 15px; color: #fff; font-family: 'Rajdhani'; font-size: 16px;
+            transition: 0.5s; border-radius: 0;
+        }
+
+        input:focus, textarea:focus {
+            outline: none; border-color: var(--cyan); background: rgba(0, 242, 255, 0.02);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.1);
+        }
+
+        /* MEDIDOR DE FIDELIDADE */
+        .fidelity-box { grid-column: span 2; margin-top: -10px; margin-bottom: 20px; }
+        .fidelity-bar { height: 2px; width: 100%; background: #111; position: relative; overflow: hidden; }
+        #fidelity-fill { height: 100%; width: 0%; background: var(--cyan); transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1); }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .full { grid-column: span 2; }
+
+        .btn-sync {
+            grid-column: span 2; padding: 25px; background: transparent; 
+            border: 1px solid var(--magenta); color: #fff; font-family: 'Syncopate';
+            font-size: 11px; cursor: pointer; letter-spacing: 8px; transition: 0.5s;
+            text-transform: uppercase; margin-top: 20px;
+        }
+
+        .btn-sync:hover {
+            background: var(--magenta); box-shadow: 0 0 40px var(--magenta);
+            color: #fff;
+        }
+
+        #console-log {
+            display: none; margin-top: 40px; padding: 30px;
+            background: rgba(0,0,0,0.8); border: 1px solid var(--cyan);
+            font-family: 'monospace'; font-size: 13px; color: var(--cyan);
+            position: relative; animation: scan 0.5s ease;
+        }
+
+        .copy-trigger {
+            position: absolute; top: -15px; right: 20px; background: var(--cyan);
+            color: #000; border: none; padding: 8px 20px; font-family: 'Syncopate';
+            font-size: 8px; font-weight: 700; cursor: pointer;
+        }
+
+        @keyframes flow { from { background-position: 0%; } to { background-position: 200%; } }
+        @keyframes scan { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        footer {
+            margin-top: 50px; text-align: center; font-size: 8px; letter-spacing: 4px;
+            color: rgba(255,255,255,0.2); text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
 
-<div class="panel">
-    <h1>CÁSSIA PROMPT <span style="color:var(--m)">V8 ULTRA</span></h1>
+<div class="main-frame">
+    <div class="v8-tag">V8 ELITE EDITION</div>
+    <h1>Cássia Prompt | Singularity</h1>
     
     <div class="grid">
-        <div style="grid-column: span 2;">
-            <label>01. Identidade de Comando</label>
-            <input type="text" id="p1" placeholder="Ex: Advogada Especialista OAB Santana...">
+        <div class="full">
+            <label>01. Vetor de Autoridade</label>
+            <input type="text" id="p1" placeholder="Ex: Jurista Sênior OAB Santana, Estrategista de Elite...">
         </div>
-        <div style="grid-column: span 2;">
-            <label>02. Objetivo da Missão</label>
-            <input type="text" id="p2" placeholder="Ex: Divórcio Consensual, Notificação Extrajudicial...">
+        <div class="full">
+            <label>02. Arquitetura do Entregável</label>
+            <input type="text" id="p2" placeholder="O que será materializado?">
         </div>
         
-        <div style="grid-column: span 2;" class="scanner-box">
-            <label>03. Corpus de Fatos (Fonte da Verdade)</label>
-            <textarea id="p3" rows="5" oninput="updateScanner()" placeholder="Insira os detalhes brutos do caso..."></textarea>
-            <div id="quality-label">Qualidade do Input: <span id="q-status">Pobre</span></div>
-            <div class="quality-bar"><div id="bar-fill"></div></div>
+        <div class="full input-group">
+            <label>03. Corpus de Fatos (Base da Verdade)</label>
+            <textarea id="p3" rows="6" oninput="analyze()" placeholder="A qualidade do prompt depende da densidade destes dados..."></textarea>
+            <div class="fidelity-box">
+                <div style="font-size: 8px; color: var(--cyan); letter-spacing: 2px; margin-bottom: 5px;">
+                    Fidelidade da Verdade: <span id="f-percent">0</span>%
+                </div>
+                <div class="fidelity-bar"><div id="fidelity-fill"></div></div>
+            </div>
         </div>
 
         <div>
-            <label>04. Tom de Voz</label>
+            <label>04. Modulação de Tom</label>
             <select id="p4">
-                <option value="Técnico e Gélido">Técnico e Gélido</option>
-                <option value="Agressivo e Vencedor">Agressivo e Vencedor</option>
-                <option value="Diplomático e Sutil">Diplomático e Sutil</option>
+                <option value="Cirúrgico e Gélido">Cirúrgico e Gélido</option>
+                <option value="Estratégico Dominante">Estratégico Dominante</option>
+                <option value="Diplomático de Alta Corte">Diplomático de Alta Corte</option>
             </select>
         </div>
         <div>
-            <label>05. Nível de Rigor</label>
+            <label>05. Protocolo de Saída</label>
             <select id="p5">
-                <option value="God Mode (Zero Alucinação)">God Mode (Zero Alucinação)</option>
-                <option value="Estratégico (Alta Performance)">Estratégico (Alta Performance)</option>
+                <option value="Execução Direta Elite">Execução Direta Elite</option>
+                <option value="Análise Crítica Previa">Análise Crítica Previa</option>
             </select>
         </div>
 
-        <button class="btn-exec" onclick="startProcess()">EXECUTAR ENGENHARIA V8</button>
+        <button class="btn-sync" onclick="sync()">Sincronizar Inteligência V8</button>
     </div>
 
-    <div id="loading">PROCESSANDO CAMADAS DE INTELIGÊNCIA...</div>
-
-    <div id="resultado-box">
-        <div id="prompt-area">
-            <button class="copy-btn" onclick="copy()">COPIAR COMANDO</button>
-            <div id="final-text"></div>
-        </div>
+    <div id="console-log">
+        <button class="copy-trigger" onclick="copy()">Copiar Comando</button>
+        <div id="final-prompt"></div>
     </div>
 
     <footer>
-        © 2026 CÁSSIA PROMPT | V8 ELITE EDITION | PROTEÇÃO LGPD ATIVA
+        SISTEMA DE ALTA PERFORMANCE | PROTEÇÃO DE DADOS ATIVA | © 2026 CÁSSIA PROMPT
     </footer>
 </div>
 
 <script>
-    function updateScanner() {
+    function analyze() {
         let val = document.getElementById('p3').value.length;
-        let fill = document.getElementById('bar-fill');
-        let status = document.getElementById('q-status');
-        let percent = Math.min((val / 200) * 100, 100);
+        let fill = document.getElementById('fidelity-fill');
+        let percent = Math.min((val / 250) * 100, 100);
         fill.style.width = percent + "%";
-        if(percent < 30) { status.innerText = "Pobre"; fill.style.background = "#ff007a"; }
-        else if(percent < 70) { status.innerText = "Aceitável"; fill.style.background = "#ffcc00"; }
-        else { status.innerText = "Elite"; fill.style.background = "#00f2ff"; }
+        document.getElementById('f-percent').innerText = Math.round(percent);
     }
 
-    function startProcess() {
+    function sync() {
         if(document.getElementById('p3').value.length < 50) {
-            alert("AVISO: Fatos insuficientes para o Modo V8. Saia da mediocridade.");
+            alert("ERRO DE SINCRONIA: Fatos insuficientes. O V8 Singularity exige densidade de informações.");
             return;
         }
-        document.getElementById('loading').style.display = 'block';
-        document.getElementById('resultado-box').style.display = 'none';
         
-        setTimeout(() => {
-            document.getElementById('loading').style.display = 'none';
-            generate();
-        }, 2000);
-    }
+        const result = `### [PROTOCOLO V8 SINGULARITY - ELITE EDITION]\n\n` +
+            `**DIRETRIZ DE AUTORIDADE:** Atue como ${document.getElementById('p1').value}.\n` +
+            `**MISSÃO DE MATERIALIZAÇÃO:** ${document.getElementById('p2').value}\n\n` +
+            `**1. BASE DE VERDADE ABSOLUTA (FATOS):**\n"${document.getElementById('p3').value}"\n\n` +
+            `**2. PARÂMETROS DE EXECUÇÃO:**\n- TOM: ${document.getElementById('p4').value}\n- RIGOR: Anti-Alucinação Nível Máximo\n- SAÍDA: ${document.getElementById('p5').value}\n\n` +
+            `**3. ENGENHARIA DE QUALIDADE:**\n` +
+            `- Se os dados forem inconsistentes para uma entrega de elite, REJEITE a tarefa e peça mais substância.\n` +
+            `- Proibido o uso de adjetivos desnecessários ou "lenga-lenga" humano.\n` +
+            `- Foque na precisão técnica e na prioridade absoluta de atendimento ao destinatário.\n\n` +
+            `**EXECUÇÃO:** Inicie o processamento agora.`;
 
-    function generate() {
-        const text = `### [MODO: CÁSSIA PROMPT V8 ULTRA HORIZON]\n\n` +
-            `**PERSONA:** ${document.getElementById('p1').value}\n` +
-            `**MISSÃO:** ${document.getElementById('p2').value}\n` +
-            `**DADOS REAIS:** ${document.getElementById('p3').value}\n` +
-            `**TOM DE VOZ:** ${document.getElementById('p4').value}\n` +
-            `**RIGOR:** ${document.getElementById('p5').value}\n\n` +
-            `**DIRETRIZES DE ELITE:**\n- Priorize a qualidade do atendimento e a precisão absoluta.\n- Se os dados forem fracos, exponha a falha. Não invente.\n- Sem introduções ou lenga-lenga. Vá direto ao ponto técnico.`;
-        
-        document.getElementById('final-text').innerText = text;
-        document.getElementById('resultado-box').style.display = 'block';
+        document.getElementById('final-prompt').innerText = result;
+        document.getElementById('console-log').style.display = 'block';
+        window.scrollTo(0, document.body.scrollHeight);
     }
 
     function copy() {
-        navigator.clipboard.writeText(document.getElementById('final-text').innerText);
-        alert("ENGENHARIA COPIADA PARA O CLIPE.");
+        navigator.clipboard.writeText(document.getElementById('final-prompt').innerText);
+        alert("COMANDO SINCRONIZADO E COPIADO.");
     }
 </script>
 </body>

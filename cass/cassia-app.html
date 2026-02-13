@@ -1,163 +1,88 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cássia Prompt | V8 God Mode</title>
     <style>
-        body { 
-            font-family: 'Inter', -apple-system, sans-serif; 
-            background-color: #050508; 
-            color: #ffffff; 
-            margin: 0; 
-            padding: 20px; 
-        }
-        .container { 
-            max-width: 900px; 
-            margin: 0 auto; 
-            background: #0d0d14; 
-            padding: 40px; 
-            border-radius: 8px; 
-            border: 1px solid #ff2e8c;
-            box-shadow: 0 0 30px rgba(255, 46, 140, 0.1);
-        }
-        h1 { 
-            color: #ff2e8c; 
-            text-align: center; 
-            font-size: 24px; 
-            text-transform: uppercase; 
-            letter-spacing: 4px;
-            margin-bottom: 40px;
-        }
-        .grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 20px; 
-        }
-        label { 
-            display: block; 
-            margin-bottom: 8px; 
-            color: #ff2e8c; 
-            font-weight: bold; 
-            font-size: 11px; 
-            text-transform: uppercase;
-        }
-        input, textarea, select { 
-            width: 100%; 
-            padding: 14px; 
-            border-radius: 4px; 
-            border: 1px solid #1a1a2e; 
-            background: #080810; 
-            color: #eee; 
-            box-sizing: border-box;
-            font-size: 14px;
-        }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #020205; color: #ffffff; margin: 0; padding: 20px; }
+        .container { max-width: 850px; margin: 0 auto; background: #080810; padding: 40px; border: 1px solid #ff2e8c; box-shadow: 0 0 40px rgba(255, 46, 140, 0.15); }
+        h1 { color: #ff2e8c; text-align: center; font-size: 22px; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 40px; border-bottom: 1px solid #1a1a2e; padding-bottom: 20px; }
+        label { display: block; margin-bottom: 10px; color: #ff2e8c; font-weight: bold; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; }
+        input, textarea { width: 100%; padding: 15px; border-radius: 0; border: 1px solid #1a1a2e; background: #000; color: #fff; box-sizing: border-box; font-size: 14px; margin-bottom: 25px; }
         input:focus, textarea:focus { border-color: #ff2e8c; outline: none; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .full { grid-column: span 2; }
+        button { width: 100%; padding: 25px; background: #ff2e8c; color: #fff; border: none; font-weight: 900; font-size: 16px; cursor: pointer; text-transform: uppercase; letter-spacing: 3px; transition: 0.3s; }
+        button:hover { background: #fff; color: #ff2e8c; }
+        #resultado { margin-top: 30px; padding: 25px; background: #000; border-left: 4px solid #ff2e8c; display: none; color: #00ffcc; font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.6; }
         
-        button { 
-            width: 100%; 
-            padding: 20px; 
-            background: #ffffff; 
-            color: #000; 
-            border: none; 
-            border-radius: 4px; 
-            font-weight: 900; 
-            font-size: 15px;
-            cursor: pointer; 
-            margin-top: 30px; 
-            text-transform: uppercase;
-            transition: 0.3s;
-        }
-        button:hover { background: #ff2e8c; color: #fff; }
-        
-        #resultado { 
-            margin-top: 30px; 
-            padding: 25px; 
-            background: #000; 
-            border: 1px solid #ff2e8c; 
-            display: none; 
-            white-space: pre-wrap;
-            color: #00ffcc;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-        }
-        
-        footer { 
-            margin-top: 60px; 
-            padding: 30px; 
-            border-top: 1px solid #1a1a2e; 
-            font-size: 11px; 
-            color: #555; 
-            text-align: center; 
-        }
+        /* RODAPÉ DE PROTEÇÃO JURÍDICA */
+        footer { margin-top: 60px; padding: 30px; border-top: 1px solid #1a1a2e; font-size: 11px; color: #444; text-align: justify; line-height: 1.8; }
+        .f-bold { color: #ff2e8c; font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 10px; text-align: center; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>CÁSSIA PROMPT | V8 ELITE EDITION ⚡</h1>
+    <h1>CÁSSIA PROMPT | V8 GOD MODE ACTIVATED</h1>
     
     <div class="grid">
         <div class="full">
-            <label>01. PERSONA MASTER (QUEM A IA SE TORNA?)</label>
-            <input type="text" id="p1" placeholder="Ex: Especialista Sênior com foco em precisão técnica...">
-        </div>
-        <div>
-            <label>02. FORMATO FINAL</label>
-            <input type="text" id="p2" placeholder="Ex: Relatório, Petição, VSL...">
-        </div>
-        <div>
-            <label>03. PÚBLICO-ALVO ESPECIAL</label>
-            <input type="text" id="p3" placeholder="Ex: Clientes de Ticket Alto, Magistrados...">
+            <label>01. PERSONA (AUTORIDADE ABSOLUTA)</label>
+            <input type="text" id="p1" placeholder="Ex: Funcionária da OAB, Especialista em Divórcios...">
         </div>
         <div class="full">
-            <label>04. DADOS, FATOS E PROVAS (O CORE DA VERDADE)</label>
-            <textarea id="p4" rows="8" placeholder="Insira dados brutos, números ou fatos inquestionáveis aqui..."></textarea>
+            <label>02. DADOS BRUTOS (FONTE ÚNICA DA VERDADE)</label>
+            <textarea id="p4" rows="8" placeholder="INSIRA FATOS REAIS. SE FOR FRACO, O SISTEMA IRÁ BARRAR."></textarea>
         </div>
         <div>
-            <label>05. A "DOR" OU PROBLEMA PRINCIPAL</label>
-            <input type="text" id="p5" placeholder="O que o destinatário mais teme?">
+            <label>03. BENEFÍCIO CENTRAL</label>
+            <input type="text" id="p6" placeholder="O que garante o sucesso?">
         </div>
         <div>
-            <label>06. BENEFÍCIO IRRESISTÍVEL</label>
-            <input type="text" id="p6" placeholder="Qual o resultado final real?">
+            <label>04. RESTRIÇÕES RÍGIDAS</label>
+            <input type="text" id="p7" placeholder="O que é proibido esquecer?">
         </div>
-        <div>
-            <label>07. RESTRIÇÕES (O QUE NÃO FAZER?)</label>
-            <input type="text" id="p7" placeholder="Ex: Sem adjetivos, sem gírias...">
-        </div>
-        <div>
-            <label>08. NÍVEL DE CRÍTICA DA IA</label>
-            <select id="p8">
-                <option value="Crítica Agressiva">Crítica Agressiva (Anti-Alucinação)</option>
-                <option value="Analítico Sóbrio">Analítico Sóbrio</option>
-            </select>
-        </div>
-        <button onclick="gerarV8()" class="full">EXECUTAR ENGENHARIA DE ELITE ⚡</button>
+        <button onclick="executarV8()" class="full">EXECUTAR PROTOCOLO DE ELITE</button>
     </div>
 
     <div id="resultado"></div>
 </div>
 
 <footer>
-    <p><strong>CÁSSIA PROMPT V8 ELITE TECH - TERMOS E RESPONSABILIDADE</strong></p>
-    <p>1. Este sistema é um otimizador de instruções e não substitui o julgamento profissional.</p>
-    <p>2. Toda resposta gerada deve ser conferida. O usuário é o único responsável.</p>
-    <p>3. Operamos localmente. Não armazenamos dados sensíveis (LGPD).</p>
-    <p>© 2026 Cássia Prompt - V8 Elite Tech | Todos os direitos reservados.</p>
+    <span class="f-bold">Nota de Segurança e Responsabilidade</span>
+    1. Natureza: Otimizador de engenharia de prompt. Não substitui o profissional técnico.
+    2. Responsabilidade: A conferência de veracidade e prazos é dever exclusivo do usuário.
+    3. Anti-Alucinação: O sistema filtra dados superficiais para evitar erros da IA.
+    4. Privacidade: Processamento local. Sem armazenamento de dados (LGPD).
+    <div style="text-align: center; margin-top: 20px;">© 2026 Cássia Prompt - V8 God Mode | Elite Edition</div>
 </footer>
 
 <script>
-    function gerarV8() {
+    function executarV8() {
+        const dados = document.getElementById('p4').value;
         const res = document.getElementById('resultado');
-        const fatos = document.getElementById('p4').value;
-        if(!fatos) { alert("Erro: O campo 04 é essencial."); return; }
         
-        const comando = `[PROTOCOLO V8 GOD MODE ACTIVATED]\n\nAtue como: ${document.getElementById('p1').value}\nFatos inquestionáveis: ${fatos}\nNível de Rigor: ${document.getElementById('p8').value}\n\nREGRAS ANTI-ALUCINAÇÃO: Proibido inventar dados. Se a informação não estiver nos fatos, ignore-a.`;
-        
-        res.innerText = comando;
+        // FILTRO ANTI-BABOSEIRA (Barra se tiver menos de 30 caracteres)
+        if(dados.length < 30) {
+            alert("ERRO: DADOS INSUFICIENTES. O V8 não trabalha com informações superficiais. Insira a substância do caso.");
+            return;
+        }
+
+        const promptFinal = `### [MODO DE EXECUÇÃO: V8 GOD MODE]\n\n` +
+            `PERSONA: ${document.getElementById('p1').value}\n` +
+            `CONTEXTO: ${dados}\n` +
+            `FOCO: ${document.getElementById('p6').value}\n` +
+            `RESTRIÇÃO: ${document.getElementById('p7').value}\n\n` +
+            `PROTOCOLO DE QUALIDADE:\n` +
+            `- Se os dados acima forem fracos, PARE. Não invente.\n` +
+            `- Proibido alucinar fatos.\n` +
+            `- Sem lenga-lenga. Seja cirúrgico e direto.`;
+
+        res.innerText = promptFinal;
         res.style.display = 'block';
+        window.scrollTo(0, document.body.scrollHeight);
     }
 </script>
 

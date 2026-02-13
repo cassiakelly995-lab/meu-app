@@ -3,52 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt - V8 Elite Edition</title>
+    <title>Cássia Prompt | V8 Elite Edition</title>
     <style>
-        body { font-family: sans-serif; background-color: #05050a; color: #ffffff; margin: 0; padding: 20px; }
-        .container { max-width: 900px; margin: 0 auto; background: #0c0c14; padding: 30px; border-radius: 15px; border: 1px solid #ff2e8c; }
-        h1 { color: #ff2e8c; text-align: center; font-size: 24px; text-transform: uppercase; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-        label { display: block; margin-bottom: 5px; color: #ff2e8c; font-weight: bold; font-size: 12px; }
-        input, textarea, select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #222; background: #151520; color: white; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            background-color: #020205; 
+            color: #ffffff; 
+            margin: 0; 
+            padding: 20px; 
+        }
+        .container { 
+            max-width: 900px; 
+            margin: 0 auto; 
+            background: #080810; 
+            padding: 40px; 
+            border-radius: 12px; 
+            border: 1px solid #ff2e8c;
+            box-shadow: 0 0 20px rgba(255, 46, 140, 0.2);
+        }
+        h1 { 
+            color: #ff2e8c; 
+            text-align: center; 
+            font-size: 28px; 
+            text-transform: uppercase; 
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+        }
+        .grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 20px; 
+        }
+        label { 
+            display: block; 
+            margin-bottom: 8px; 
+            color: #ff2e8c; 
+            font-weight: bold; 
+            font-size: 11px; 
+            text-transform: uppercase;
+        }
+        input, textarea { 
+            width: 100%; 
+            padding: 15px; 
+            border-radius: 6px; 
+            border: 1px solid #1a1a2e; 
+            background: #0f0f1a; 
+            color: #eee; 
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        input:focus, textarea:focus {
+            border-color: #ff2e8c;
+            outline: none;
+        }
         .full-width { grid-column: span 2; }
-        button { width: 100%; padding: 20px; background: #ffffff; color: #000; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; text-transform: uppercase; }
-        #resultado { margin-top: 20px; padding: 15px; background: #000; border: 1px dashed #ff2e8c; display: none; white-space: pre-wrap; }
         
-        /* RODAPÉ DE SEGURANÇA JURÍDICA */
-        footer { margin-top: 50px; padding: 20px; border-top: 1px solid #333; font-size: 12px; color: #888; text-align: justify; line-height: 1.5; }
-        .footer-title { color: #ff2e8c; font-weight: bold; text-align: center; display: block; margin-bottom: 10px; }
+        button { 
+            width: 100%; 
+            padding: 22px; 
+            background: #ffffff; 
+            color: #000; 
+            border: none; 
+            border-radius: 8px; 
+            font-weight: 900; 
+            font-size: 16px;
+            cursor: pointer; 
+            margin-top: 30px; 
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #ff2e8c;
+            color: #fff;
+        }
+        #resultado { 
+            margin-top: 30px; 
+            padding: 20px; 
+            background: #000; 
+            border: 1px solid #ff2e8c; 
+            display: none; 
+            white-space: pre-wrap;
+            color: #00ffcc;
+            font-family: monospace;
+        }
+        
+        /* RODAPÉ DE SEGURANÇA PROFISSIONAL */
+        footer { 
+            margin-top: 60px; 
+            padding: 30px; 
+            border-top: 1px solid #1a1a2e; 
+            font-size: 12px; 
+            color: #666; 
+            text-align: center; 
+            line-height: 1.8; 
+        }
+        .footer-title { 
+            color: #ff2e8c; 
+            font-weight: bold; 
+            display: block; 
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Cássia Prompt | V8 Elite Edition ⚡</h1>
+    <h1>CÁSSIA PROMPT | V8 ELITE EDITION ⚡</h1>
     
     <div class="grid">
         <div class="full-width">
             <label>01. PERSONA MASTER (QUEM A IA SE TORNA?)</label>
-            <input type="text" id="p1" placeholder="Ex: Advogado Especialista em Direito Civil...">
+            <input type="text" id="p1" placeholder="Ex: Advogado Sênior com foco em Direito Processual...">
         </div>
         <div>
             <label>02. FORMATO FINAL</label>
-            <input type="text" id="p2" placeholder="Ex: Petição, Recurso, Parecer...">
+            <input type="text" id="p2" placeholder="Ex: Contestação, Recurso, E-mail...">
         </div>
         <div>
             <label>03. PÚBLICO-ALVO</label>
-            <input type="text" id="p3" placeholder="Ex: Juiz da 2ª Vara Cível...">
+            <input type="text" id="p3" placeholder="Ex: Desembargador, Cliente Final...">
         </div>
         <div class="full-width">
             <label>04. DADOS, FATOS E PROVAS (O CORE DA VERDADE)</label>
-            <textarea id="p4" rows="6" placeholder="Insira os fatos inquestionáveis aqui..."></textarea>
+            <textarea id="p4" rows="8" placeholder="Insira aqui os detalhes fundamentais do caso ou projeto..."></textarea>
         </div>
         <div>
             <label>05. A DOR OU PROBLEMA</label>
-            <input type="text" id="p5" placeholder="O que precisa ser resolvido?">
+            <input type="text" id="p5" placeholder="Qual o obstáculo principal?">
         </div>
         <div>
             <label>06. BENEFÍCIO REAL</label>
-            <input type="text" id="p6" placeholder="Qual o resultado esperado?">
+            <input type="text" id="p6" placeholder="Qual o objetivo da vitória?">
         </div>
         <button onclick="gerarV8()" class="full-width">EXECUTAR ENGENHARIA DE ELITE ⚡</button>
     </div>
@@ -58,22 +144,26 @@
 
 <footer>
     <span class="footer-title">CÁSSIA PROMPT V8 ELITE TECH - TERMOS E RESPONSABILIDADE</span>
-    <p><strong>1. Natureza da Ferramenta:</strong> Este sistema é um otimizador de instruções para IA e não substitui o julgamento profissional do usuário.</p>
-    <p><strong>2. Responsabilidade:</strong> Toda resposta gerada deve ser conferida. O usuário é o único responsável pelos documentos ou decisões baseadas nestes resultados.</p>
-    <p><strong>3. Privacidade:</strong> Operamos localmente no seu navegador. Não armazenamos dados sensíveis (LGPD).</p>
-    <p style="text-align: center; margin-top: 15px; font-weight: bold;">© 2026 Cássia Prompt - V8 Elite Tech | Todos os direitos reservados.</p>
+    <p>
+        <strong>1. Natureza da Ferramenta:</strong> Otimizador de instruções para IA. Não substitui o julgamento profissional.<br>
+        <strong>2. Responsabilidade:</strong> Toda resposta da IA deve ser revisada. O usuário é o único responsável pelo uso final.<br>
+        <strong>3. Privacidade:</strong> Processamento local. Não armazenamos dados sensíveis (LGPD).
+    </p>
+    <p style="margin-top: 15px; font-weight: bold; color: #444;">
+        © 2026 Cássia Prompt - V8 Elite Tech | Todos os direitos reservados.
+    </p>
 </footer>
 
 <script>
     function gerarV8() {
-        const r = document.getElementById('resultado');
-        const p4 = document.getElementById('p4').value;
-        if(!p4) { alert("O campo 04 é obrigatório para a segurança do motor!"); return; }
+        const res = document.getElementById('resultado');
+        const fatos = document.getElementById('p4').value;
+        if(!fatos) { alert("Erro: O campo 04 (Dados e Fatos) é essencial para a precisão do V8."); return; }
         
-        const prompt = `[MODO V8 ATIVADO]\nPersona: ${document.getElementById('p1').value}\nFormato: ${document.getElementById('p2').value}\nFatos: ${p4}\n\nInstrução: Atue com rigor técnico e evite alucinações.`;
+        const comando = `[PROTOCOLO V8 ELITE ACTIVATED]\n\nAtue como: ${document.getElementById('p1').value}\nFormato: ${document.getElementById('p2').value}\nContexto: ${fatos}\n\nInstrução Técnica: Realize uma análise profunda baseada nos fatos fornecidos. Proibido inventar dados.`;
         
-        r.innerText = prompt;
-        r.style.display = 'block';
+        res.innerText = comando;
+        res.style.display = 'block';
         window.scrollTo(0, document.body.scrollHeight);
     }
 </script>

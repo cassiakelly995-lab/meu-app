@@ -3,187 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt | Elite Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700&display=swap" rel="stylesheet">
+    <title>Cássia Prompt | V8 God Mode</title>
     <style>
-        :root {
-            --accent: #ff2e8c;
-            --bg: #030305;
-            --glass: rgba(10, 10, 15, 0.8);
-        }
         body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: var(--bg); 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            background-color: #050508; 
             color: #ffffff; 
             margin: 0; 
-            padding: 60px 20px;
-            -webkit-font-smoothing: antialiased;
+            padding: 20px; 
         }
         .container { 
-            max-width: 800px; 
+            max-width: 900px; 
             margin: 0 auto; 
-            background: var(--glass); 
-            padding: 60px; 
-            border-radius: 2px; /* Bordas retas são mais sofisticadas */
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            background: #0d0d14; 
+            padding: 40px; 
+            border-radius: 8px; 
+            border: 1px solid #ff2e8c;
+            box-shadow: 0 0 30px rgba(255, 46, 140, 0.1);
         }
-        header { text-align: center; margin-bottom: 60px; }
         h1 { 
-            font-weight: 200; 
-            font-size: 14px; 
-            letter-spacing: 12px; 
+            color: #ff2e8c; 
+            text-align: center; 
+            font-size: 24px; 
             text-transform: uppercase; 
-            color: rgba(255,255,255,0.5);
-            margin: 0;
+            letter-spacing: 4px;
+            margin-bottom: 40px;
         }
-        h1 b { color: var(--accent); font-weight: 700; letter-spacing: 8px; }
-        
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; }
-        .full { grid-column: span 2; }
-        
-        .field { position: relative; }
+        .grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 20px; 
+        }
         label { 
             display: block; 
-            margin-bottom: 12px; 
-            color: rgba(255,255,255,0.3); 
-            font-size: 9px; 
+            margin-bottom: 8px; 
+            color: #ff2e8c; 
+            font-weight: bold; 
+            font-size: 11px; 
             text-transform: uppercase;
-            letter-spacing: 3px;
-            font-weight: 700;
         }
-        input, textarea { 
+        input, textarea, select { 
             width: 100%; 
-            padding: 12px 0; 
-            border: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
-            background: transparent; 
-            color: #fff; 
+            padding: 14px; 
+            border-radius: 4px; 
+            border: 1px solid #1a1a2e; 
+            background: #080810; 
+            color: #eee; 
             box-sizing: border-box;
-            font-size: 15px;
-            font-weight: 400;
-            transition: all 0.5s;
+            font-size: 14px;
         }
-        input:focus, textarea:focus {
-            border-bottom-color: var(--accent);
-            outline: none;
-        }
+        input:focus, textarea:focus { border-color: #ff2e8c; outline: none; }
+        .full { grid-column: span 2; }
         
         button { 
             width: 100%; 
-            padding: 25px; 
-            background: transparent; 
-            color: #fff; 
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 0; 
-            font-weight: 400; 
-            font-size: 11px;
+            padding: 20px; 
+            background: #ffffff; 
+            color: #000; 
+            border: none; 
+            border-radius: 4px; 
+            font-weight: 900; 
+            font-size: 15px;
             cursor: pointer; 
-            margin-top: 60px; 
+            margin-top: 30px; 
             text-transform: uppercase;
-            letter-spacing: 5px;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: 0.3s;
         }
-        button:hover {
-            background: #fff;
-            color: #000;
-            border-color: #fff;
-        }
+        button:hover { background: #ff2e8c; color: #fff; }
         
         #resultado { 
-            margin-top: 60px; 
-            padding: 30px; 
-            background: rgba(255,255,255,0.02); 
-            border-left: 1px solid var(--accent);
+            margin-top: 30px; 
+            padding: 25px; 
+            background: #000; 
+            border: 1px solid #ff2e8c; 
             display: none; 
-            font-size: 14px;
-            line-height: 1.8;
-            color: rgba(255,255,255,0.7);
+            white-space: pre-wrap;
+            color: #00ffcc;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
         }
         
         footer { 
-            margin-top: 100px; 
-            padding: 40px; 
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.03);
-        }
-        .f-title { 
-            color: var(--accent); 
-            font-size: 10px;
-            font-weight: 700; 
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            display: block;
-        }
-        .f-text {
-            font-size: 10px;
-            color: rgba(255,255,255,0.2);
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 2;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            margin-top: 60px; 
+            padding: 30px; 
+            border-top: 1px solid #1a1a2e; 
+            font-size: 11px; 
+            color: #555; 
+            text-align: center; 
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <header>
-        <h1>Cássia Prompt | <b>Elite Edition</b></h1>
-    </header>
+    <h1>CÁSSIA PROMPT | V8 ELITE EDITION ⚡</h1>
     
     <div class="grid">
         <div class="full">
-            <label>01. Identidade do Especialista</label>
-            <input type="text" id="p1" placeholder="Quem a IA deve ser? (Ex: Estrategista de Marcas, Consultor Sênior...)">
+            <label>01. PERSONA MASTER (QUEM A IA SE TORNA?)</label>
+            <input type="text" id="p1" placeholder="Ex: Especialista Sênior com foco em precisão técnica...">
         </div>
         <div>
-            <label>02. Entregável Final</label>
-            <input type="text" id="p2" placeholder="O que será criado? (Ex: Relatório, Artigo, Análise...)">
+            <label>02. FORMATO FINAL</label>
+            <input type="text" id="p2" placeholder="Ex: Relatório, Petição, VSL...">
         </div>
         <div>
-            <label>03. Destinatário</label>
-            <input type="text" id="p3" placeholder="Para quem é o conteúdo?">
+            <label>03. PÚBLICO-ALVO ESPECIAL</label>
+            <input type="text" id="p3" placeholder="Ex: Clientes de Ticket Alto, Magistrados...">
         </div>
         <div class="full">
-            <label>04. Corpus de Dados e Contexto Técnico</label>
-            <textarea id="p4" rows="5" placeholder="Cole aqui os fatos, números ou documentos base..."></textarea>
+            <label>04. DADOS, FATOS E PROVAS (O CORE DA VERDADE)</label>
+            <textarea id="p4" rows="8" placeholder="Insira dados brutos, números ou fatos inquestionáveis aqui..."></textarea>
         </div>
         <div>
-            <label>05. Desafio Central</label>
-            <input type="text" id="p5" placeholder="Qual problema precisamos resolver?">
+            <label>05. A "DOR" OU PROBLEMA PRINCIPAL</label>
+            <input type="text" id="p5" placeholder="O que o destinatário mais teme?">
         </div>
         <div>
-            <label>06. Meta de Performance</label>
-            <input type="text" id="p6" placeholder="Qual o impacto desejado?">
+            <label>06. BENEFÍCIO IRRESISTÍVEL</label>
+            <input type="text" id="p6" placeholder="Qual o resultado final real?">
         </div>
-        <button onclick="gerarV8()" class="full">Ativar Protocolo V8</button>
+        <div>
+            <label>07. RESTRIÇÕES (O QUE NÃO FAZER?)</label>
+            <input type="text" id="p7" placeholder="Ex: Sem adjetivos, sem gírias...">
+        </div>
+        <div>
+            <label>08. NÍVEL DE CRÍTICA DA IA</label>
+            <select id="p8">
+                <option value="Crítica Agressiva">Crítica Agressiva (Anti-Alucinação)</option>
+                <option value="Analítico Sóbrio">Analítico Sóbrio</option>
+            </select>
+        </div>
+        <button onclick="gerarV8()" class="full">EXECUTAR ENGENHARIA DE ELITE ⚡</button>
     </div>
 
     <div id="resultado"></div>
 </div>
 
 <footer>
-    <span class="f-title">Protocolo de Segurança e Responsabilidade</span>
-    <p class="f-text">
-        I. Ferramenta de otimização técnica de alto nível.<br>
-        II. A revisão humana é mandatória para validação final.<br>
-        III. Processamento local em conformidade com normas globais de privacidade.
-    </p>
-    <p style="margin-top: 30px; font-size: 9px; color: rgba(255,255,255,0.1); letter-spacing: 2px;">
-        © 2026 CÁSSIA PROMPT | V8 ELITE EDITION
-    </p>
+    <p><strong>CÁSSIA PROMPT V8 ELITE TECH - TERMOS E RESPONSABILIDADE</strong></p>
+    <p>1. Este sistema é um otimizador de instruções e não substitui o julgamento profissional.</p>
+    <p>2. Toda resposta gerada deve ser conferida. O usuário é o único responsável.</p>
+    <p>3. Operamos localmente. Não armazenamos dados sensíveis (LGPD).</p>
+    <p>© 2026 Cássia Prompt - V8 Elite Tech | Todos os direitos reservados.</p>
 </footer>
 
 <script>
     function gerarV8() {
         const res = document.getElementById('resultado');
         const fatos = document.getElementById('p4').value;
-        if(!fatos) return alert("Dados insuficientes.");
+        if(!fatos) { alert("Erro: O campo 04 é essencial."); return; }
         
-        res.innerText = `[V8 ELITE EDITION ACTIVATED]\n\nRole: ${document.getElementById('p1').value}\nTask: ${document.getElementById('p2').value}\nData: ${fatos}\n\nExecute com máxima sofisticação técnica.`;
+        const comando = `[PROTOCOLO V8 GOD MODE ACTIVATED]\n\nAtue como: ${document.getElementById('p1').value}\nFatos inquestionáveis: ${fatos}\nNível de Rigor: ${document.getElementById('p8').value}\n\nREGRAS ANTI-ALUCINAÇÃO: Proibido inventar dados. Se a informação não estiver nos fatos, ignore-a.`;
+        
+        res.innerText = comando;
         res.style.display = 'block';
     }
 </script>

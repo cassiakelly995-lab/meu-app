@@ -1,84 +1,86 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cássia Prompt | V8 God Mode</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #020205; color: #ffffff; margin: 0; padding: 20px; }
-        .container { max-width: 850px; margin: 0 auto; background: #080810; padding: 40px; border: 1px solid #ff2e8c; box-shadow: 0 0 40px rgba(255, 46, 140, 0.15); }
-        h1 { color: #ff2e8c; text-align: center; font-size: 22px; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 40px; border-bottom: 1px solid #1a1a2e; padding-bottom: 20px; }
+        body { font-family: 'Segoe UI', Helvetica, sans-serif; background-color: #020205; color: #ffffff; margin: 0; padding: 20px; }
+        .container { max-width: 850px; margin: 0 auto; background: #080810; padding: 40px; border: 1px solid #ff2e8c; box-shadow: 0 0 50px rgba(255, 46, 140, 0.2); }
+        h1 { color: #ff2e8c; text-align: center; font-size: 22px; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 30px; border-bottom: 2px solid #1a1a2e; padding-bottom: 20px; }
+        .aviso-v8 { background: rgba(255, 46, 140, 0.1); border: 1px solid #ff2e8c; padding: 15px; margin-bottom: 30px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; text-align: center; color: #ff99cc; }
         label { display: block; margin-bottom: 10px; color: #ff2e8c; font-weight: bold; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; }
-        input, textarea { width: 100%; padding: 15px; border-radius: 0; border: 1px solid #1a1a2e; background: #000; color: #fff; box-sizing: border-box; font-size: 14px; margin-bottom: 25px; }
-        input:focus, textarea:focus { border-color: #ff2e8c; outline: none; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .full { grid-column: span 2; }
-        button { width: 100%; padding: 25px; background: #ff2e8c; color: #fff; border: none; font-weight: 900; font-size: 16px; cursor: pointer; text-transform: uppercase; letter-spacing: 3px; transition: 0.3s; }
-        button:hover { background: #fff; color: #ff2e8c; }
-        #resultado { margin-top: 30px; padding: 25px; background: #000; border-left: 4px solid #ff2e8c; display: none; color: #00ffcc; font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.6; }
-        
-        /* RODAPÉ DE PROTEÇÃO JURÍDICA */
+        input, textarea { width: 100%; padding: 15px; border-radius: 0; border: 1px solid #1a1a2e; background: #000; color: #fff; box-sizing: border-box; font-size: 14px; margin-bottom: 20px; }
+        input:focus, textarea:focus { border-color: #ff2e8c; outline: none; background: #05050a; }
+        button { width: 100%; padding: 25px; background: #ff2e8c; color: #fff; border: none; font-weight: 900; font-size: 16px; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; transition: 0.3s; }
+        button:hover { background: #fff; color: #ff2e8c; box-shadow: 0 0 20px #fff; }
+        #resultado { margin-top: 30px; padding: 25px; background: #000; border-left: 5px solid #ff2e8c; display: none; color: #00ffcc; font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.6; }
         footer { margin-top: 60px; padding: 30px; border-top: 1px solid #1a1a2e; font-size: 11px; color: #444; text-align: justify; line-height: 1.8; }
-        .f-bold { color: #ff2e8c; font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 10px; text-align: center; }
+        .f-bold { color: #ff2e8c; font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 10px; text-align: center; font-size: 13px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>CÁSSIA PROMPT | V8 GOD MODE ACTIVATED</h1>
+    <h1>CÁSSIA PROMPT | V8 GOD MODE</h1>
     
-    <div class="grid">
-        <div class="full">
-            <label>01. PERSONA (AUTORIDADE ABSOLUTA)</label>
-            <input type="text" id="p1" placeholder="Ex: Funcionária da OAB, Especialista em Divórcios...">
+    <div class="aviso-v8">
+        ⚠️ ESTE AMBIENTE É RESTRITO A PROFISSIONAIS DE ELITE. PROIBIDO PREGUIÇA OU DADOS SUPERFICIAIS.
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div style="grid-column: span 2;">
+            <label>01. AUTORIDADE (QUEM VOCÊ É NO COMANDO?)</label>
+            <input type="text" id="p1" placeholder="Ex: Funcionária OAB, Advogado Sênior, Gestor de Crise...">
         </div>
-        <div class="full">
-            <label>02. DADOS BRUTOS (FONTE ÚNICA DA VERDADE)</label>
-            <textarea id="p4" rows="8" placeholder="INSIRA FATOS REAIS. SE FOR FRACO, O SISTEMA IRÁ BARRAR."></textarea>
+        <div style="grid-column: span 2;">
+            <label>02. DADOS BRUTOS (FONTE ÚNICA DA VERDADE - SEM ENFEITES)</label>
+            <textarea id="p4" rows="8" placeholder="DESCREVA OS FATOS COM PRECISÃO. SE O INPUT FOR RASO, O MOTOR V8 IRÁ BARRAR A EXECUÇÃO."></textarea>
         </div>
         <div>
-            <label>03. BENEFÍCIO CENTRAL</label>
-            <input type="text" id="p6" placeholder="O que garante o sucesso?">
+            <label>03. RESULTADO ESPERADO</label>
+            <input type="text" id="p6" placeholder="O que define a vitória?">
         </div>
         <div>
-            <label>04. RESTRIÇÕES RÍGIDAS</label>
-            <input type="text" id="p7" placeholder="O que é proibido esquecer?">
+            <label>04. PONTO CRÍTICO (NÃO PODE FALTAR)</label>
+            <input type="text" id="p7" placeholder="Ex: Documento atualizado, prazo fatal...">
         </div>
-        <button onclick="executarV8()" class="full">EXECUTAR PROTOCOLO DE ELITE</button>
+        <button onclick="gerarV8()" style="grid-column: span 2;">EXECUTAR ENGENHARIA GOD MODE ⚡</button>
     </div>
 
     <div id="resultado"></div>
 </div>
 
 <footer>
-    <span class="f-bold">Nota de Segurança e Responsabilidade</span>
-    1. Natureza: Otimizador de engenharia de prompt. Não substitui o profissional técnico.
-    2. Responsabilidade: A conferência de veracidade e prazos é dever exclusivo do usuário.
-    3. Anti-Alucinação: O sistema filtra dados superficiais para evitar erros da IA.
-    4. Privacidade: Processamento local. Sem armazenamento de dados (LGPD).
-    <div style="text-align: center; margin-top: 20px;">© 2026 Cássia Prompt - V8 God Mode | Elite Edition</div>
+    <span class="f-bold">Protocolo de Segurança Jurídica e Técnica</span>
+    1. <strong>Finalidade:</strong> O V8 God Mode é destinado exclusivamente a quem busca respostas completas, eliminando alucinações da IA através de rigor técnico.
+    2. <strong>Responsabilidade:</strong> Priorizamos a qualidade absoluta no atendimento. O usuário é o único responsável pela revisão final dos dados gerados.
+    3. <strong>Anti-Preguiça:</strong> A IA é instruída a ignorar comandos vazios. Se não houver substância nos fatos, não haverá excelência no resultado.
+    4. <strong>Privacidade:</strong> Sem armazenamento externo. Operação local e segura (LGPD).
+    <div style="text-align: center; margin-top: 20px; color: #ff2e8c; font-weight: bold;">© 2026 Cássia Prompt - V8 Elite Edition</div>
 </footer>
 
 <script>
-    function executarV8() {
+    function gerarV8() {
         const dados = document.getElementById('p4').value;
         const res = document.getElementById('resultado');
         
-        // FILTRO ANTI-BABOSEIRA (Barra se tiver menos de 30 caracteres)
-        if(dados.length < 30) {
-            alert("ERRO: DADOS INSUFICIENTES. O V8 não trabalha com informações superficiais. Insira a substância do caso.");
+        // FILTRO DE RIGOR CÁSSIA PROMPT
+        if(dados.length < 50) {
+            alert("SISTEMA BARRADO: Dados insuficientes ou superficiais. O V8 God Mode exige qualidade e fatos reais para operar. Saia da zona de preguiça e detalhe as informações.");
             return;
         }
 
-        const promptFinal = `### [MODO DE EXECUÇÃO: V8 GOD MODE]\n\n` +
+        const promptFinal = `### [EXECUÇÃO: CÁSSIA PROMPT V8 GOD MODE]\n\n` +
             `PERSONA: ${document.getElementById('p1').value}\n` +
-            `CONTEXTO: ${dados}\n` +
-            `FOCO: ${document.getElementById('p6').value}\n` +
-            `RESTRIÇÃO: ${document.getElementById('p7').value}\n\n` +
-            `PROTOCOLO DE QUALIDADE:\n` +
-            `- Se os dados acima forem fracos, PARE. Não invente.\n` +
-            `- Proibido alucinar fatos.\n` +
-            `- Sem lenga-lenga. Seja cirúrgico e direto.`;
+            `DADOS BRUTOS: ${dados}\n` +
+            `OBJETIVO: ${document.getElementById('p6').value}\n` +
+            `RESTRIÇÃO RÍGIDA: ${document.getElementById('p7').value}\n\n` +
+            `ENGENHARIA ANTI-ALUCINAÇÃO:\n` +
+            `- Priorize a qualidade do atendimento e a precisão técnica.\n` +
+            `- Se os dados forem vagos, exponha a falha e peça mais substância.\n` +
+            `- Proibido inventar. Proibido lenga-lenga. Proibido ser medíocre.\n` +
+            `- Resposta direta, cirúrgica e de alta performance.`;
 
         res.innerText = promptFinal;
         res.style.display = 'block';

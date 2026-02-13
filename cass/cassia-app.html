@@ -1,259 +1,140 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt | V8 God Mode</title>
+    <title>Cássia Prompt | V8 God Mode Ultra</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --magenta: #ff007a;
-            --cyan: #00f2ff;
-            --dark-bg: #050508;
-            --glass: rgba(10, 10, 15, 0.9);
-        }
-
-        body {
-            background-color: var(--dark-bg);
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(255, 0, 122, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(0, 242, 255, 0.05) 0%, transparent 40%);
-            color: #e0e0e0;
-            font-family: 'Rajdhani', sans-serif;
-            margin: 0;
-            padding: 40px 20px;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 850px;
-            margin: 0 auto;
-            background: var(--glass);
-            border: 1px solid rgba(255, 0, 122, 0.3);
-            border-radius: 5px;
-            padding: 50px;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(255, 0, 122, 0.05);
-            position: relative;
-        }
-
-        .container::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--magenta), var(--cyan), transparent);
-        }
-
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            text-align: center;
-            font-size: 20px;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            color: #fff;
-            margin-bottom: 40px;
-            text-shadow: 0 0 10px rgba(255, 0, 122, 0.5);
-        }
-
-        h1 b { color: var(--magenta); text-shadow: 0 0 15px var(--magenta); }
-
-        .v8-header {
-            text-align: center;
-            font-size: 10px;
-            letter-spacing: 4px;
-            color: var(--cyan);
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        label {
-            display: block;
-            font-size: 11px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--magenta);
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
-
-        input, textarea, select {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-left: 3px solid var(--magenta);
-            padding: 15px;
-            color: #fff;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 16px;
-            margin-bottom: 25px;
-            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-left-color: var(--cyan);
-            background: rgba(255, 255, 255, 0.02);
-            box-shadow: -10px 0 20px rgba(0, 242, 255, 0.1);
-        }
+        :root { --m: #ff007a; --c: #00f2ff; --bg: #020205; }
+        body { background: var(--bg); color: #fff; font-family: 'Rajdhani', sans-serif; margin: 0; padding: 20px; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        
+        .panel { width: 100%; max-width: 900px; background: rgba(10, 10, 15, 0.95); border: 1px solid rgba(255, 0, 122, 0.2); padding: 40px; position: relative; backdrop-filter: blur(20px); box-shadow: 0 0 100px rgba(255, 0, 122, 0.1); }
+        
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 18px; letter-spacing: 10px; text-align: center; color: #fff; text-shadow: 0 0 10px var(--m); margin-bottom: 40px; }
+        
+        .scanner-box { margin-bottom: 25px; }
+        .quality-bar { height: 4px; width: 100%; background: #111; margin-top: 5px; position: relative; }
+        #bar-fill { height: 100%; width: 0%; transition: 0.5s; background: var(--m); }
+        #quality-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--m); }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .full { grid-column: span 2; }
+        label { font-size: 11px; letter-spacing: 2px; color: var(--c); text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 5px; }
+        
+        input, textarea, select { width: 100%; background: #000; border: 1px solid #222; padding: 12px; color: #fff; font-family: 'Rajdhani'; font-size: 15px; box-sizing: border-box; }
+        input:focus, textarea:focus { border-color: var(--m); outline: none; box-shadow: 0 0 15px rgba(255, 0, 122, 0.2); }
+        
+        .btn-exec { grid-column: span 2; padding: 20px; background: transparent; border: 1px solid var(--m); color: #fff; font-family: 'Orbitron'; cursor: pointer; letter-spacing: 5px; transition: 0.4s; margin-top: 10px; }
+        .btn-exec:hover { background: var(--m); box-shadow: 0 0 30px var(--m); }
+        
+        #loading { display: none; text-align: center; font-family: 'Orbitron'; font-size: 12px; color: var(--c); margin: 20px 0; letter-spacing: 3px; }
 
-        .btn-activate {
-            width: 100%;
-            padding: 25px;
-            background: transparent;
-            border: 1px solid var(--cyan);
-            color: var(--cyan);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 14px;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: 0.5s;
-            position: relative;
-            overflow: hidden;
-            margin-top: 20px;
-        }
+        #resultado-box { display: none; margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; animation: fadeIn 1s; }
+        #prompt-area { background: #000; padding: 20px; border: 1px solid var(--c); color: var(--c); font-family: monospace; font-size: 13px; white-space: pre-wrap; position: relative; }
+        .copy-btn { position: absolute; top: -12px; right: 10px; background: var(--c); color: #000; border: none; padding: 5px 15px; font-family: 'Orbitron'; font-size: 9px; cursor: pointer; font-weight: 700; }
 
-        .btn-activate:hover {
-            background: var(--cyan);
-            color: #000;
-            box-shadow: 0 0 40px rgba(0, 242, 255, 0.4);
-        }
-
-        /* ÁREA DE RESULTADO CIBERNÉTICA */
-        .result-container {
-            margin-top: 50px;
-            display: none;
-            animation: slideUp 0.6s ease-out;
-        }
-
-        #resultado {
-            background: #000;
-            padding: 30px;
-            border: 1px solid var(--cyan);
-            color: var(--cyan);
-            font-family: 'monospace';
-            font-size: 14px;
-            line-height: 1.6;
-            white-space: pre-wrap;
-            position: relative;
-        }
-
-        .btn-copy {
-            float: right;
-            background: var(--magenta);
-            border: none;
-            color: #fff;
-            padding: 8px 15px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 9px;
-            cursor: pointer;
-            margin-bottom: 10px;
-        }
-
-        footer {
-            margin-top: 100px;
-            padding: 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
-            text-align: center;
-            font-size: 10px;
-            letter-spacing: 2px;
-            color: rgba(255, 255, 255, 0.2);
-            text-transform: uppercase;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        footer { margin-top: 40px; text-align: center; font-size: 9px; letter-spacing: 2px; color: #444; text-transform: uppercase; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="v8-header">SYSTEM STATUS: OPTIMIZED</div>
-    <h1>CÁSSIA PROMPT | <b>V8 GOD MODE</b></h1>
+<div class="panel">
+    <h1>CÁSSIA PROMPT <span style="color:var(--m)">V8 ULTRA</span></h1>
     
     <div class="grid">
-        <div class="full">
-            <label>IDENTIDADE DO ESPECIALISTA (PERSONA)</label>
-            <input type="text" id="p1" placeholder="Ex: ADVOGADA SÊNIOR, ESTRATEGISTA DE ELITE...">
+        <div style="grid-column: span 2;">
+            <label>01. Identidade de Comando</label>
+            <input type="text" id="p1" placeholder="Ex: Advogada Especialista OAB Santana...">
         </div>
-        <div class="full">
-            <label>O QUE VOCÊ VAI CONSTRUIR HOJE? (AÇÃO)</label>
-            <input type="text" id="p2" placeholder="Ex: PETIÇÃO CIRÚRGICA, RELATÓRIO DE IMPACTO...">
+        <div style="grid-column: span 2;">
+            <label>02. Objetivo da Missão</label>
+            <input type="text" id="p2" placeholder="Ex: Divórcio Consensual, Notificação Extrajudicial...">
         </div>
-        <div class="full">
-            <label>CORPUS DE DADOS (FONTE ÚNICA DA VERDADE)</label>
-            <textarea id="p3" rows="6" placeholder="INSIRA OS FATOS BRUTOS. O SISTEMA IRÁ BARRAR PREGUIÇA."></textarea>
+        
+        <div style="grid-column: span 2;" class="scanner-box">
+            <label>03. Corpus de Fatos (Fonte da Verdade)</label>
+            <textarea id="p3" rows="5" oninput="updateScanner()" placeholder="Insira os detalhes brutos do caso..."></textarea>
+            <div id="quality-label">Qualidade do Input: <span id="q-status">Pobre</span></div>
+            <div class="quality-bar"><div id="bar-fill"></div></div>
         </div>
-        <div class="full">
-            <label>REFERÊNCIAS RÍGIDAS (LEIS OU REGRAS)</label>
-            <input type="text" id="p4" placeholder="Ex: Artigo 5º CF, Regras de Compliance...">
+
+        <div>
+            <label>04. Tom de Voz</label>
+            <select id="p4">
+                <option value="Técnico e Gélido">Técnico e Gélido</option>
+                <option value="Agressivo e Vencedor">Agressivo e Vencedor</option>
+                <option value="Diplomático e Sutil">Diplomático e Sutil</option>
+            </select>
         </div>
         <div>
-            <label>NÍVEL DE RIGOR TÉCNICO</label>
+            <label>05. Nível de Rigor</label>
             <select id="p5">
-                <option value="DIAMANTE (RIGOR ABSOLUTO)">DIAMANTE (RIGOR ABSOLUTO)</option>
-                <option value="SÓBRIO (ANALÍTICO)">SÓBRIO (ANALÍTICO)</option>
-                <option value="CYBER (ESTRATÉGICO)">CYBER (ESTRATÉGICO)</option>
+                <option value="God Mode (Zero Alucinação)">God Mode (Zero Alucinação)</option>
+                <option value="Estratégico (Alta Performance)">Estratégico (Alta Performance)</option>
             </select>
         </div>
-        <div>
-            <label>PROTOCOLO DE SAÍDA</label>
-            <select id="p6">
-                <option value="ENTREGA DIRETA">ENTREGA DIRETA</option>
-                <option value="ANÁLISE CRÍTICA + TEXTO">ANÁLISE CRÍTICA + TEXTO</option>
-            </select>
-        </div>
-        <button onclick="ativarV8()" class="btn-activate" class="full">ATIVAR PROTOCOLO V8</button>
+
+        <button class="btn-exec" onclick="startProcess()">EXECUTAR ENGENHARIA V8</button>
     </div>
 
-    <div class="result-container" id="res-box">
-        <button class="btn-copy" onclick="copiar()">COPY COMMAND</button>
-        <div id="resultado"></div>
+    <div id="loading">PROCESSANDO CAMADAS DE INTELIGÊNCIA...</div>
+
+    <div id="resultado-box">
+        <div id="prompt-area">
+            <button class="copy-btn" onclick="copy()">COPIAR COMANDO</button>
+            <div id="final-text"></div>
+        </div>
     </div>
+
+    <footer>
+        © 2026 CÁSSIA PROMPT | V8 ELITE EDITION | PROTEÇÃO LGPD ATIVA
+    </footer>
 </div>
 
-<footer>
-    <div style="color:var(--magenta); margin-bottom: 10px;">AVISO DE SEGURANÇA E RESPONSABILIDADE</div>
-    I. FERRAMENTA DE ENGENHARIA DE PROMPT. EXIGE CURADORIA HUMANA.<br>
-    II. ANTI-ALUCINAÇÃO ATIVA: DADOS RASOS INVALIDAM A EXECUÇÃO.<br>
-    III. PRIVACIDADE LOCAL GARANTIDA EM CONFORMIDADE COM A LGPD.<br>
-    <div style="margin-top: 20px;">© 2026 CÁSSIA PROMPT | V8 CYBER ELITE</div>
-</footer>
-
 <script>
-    function ativarV8() {
-        const dados = document.getElementById('p3').value;
-        if(dados.length < 50) {
-            alert("ACESSO NEGADO: Dados insuficientes. O V8 God Mode exige substância técnica para operar.");
+    function updateScanner() {
+        let val = document.getElementById('p3').value.length;
+        let fill = document.getElementById('bar-fill');
+        let status = document.getElementById('q-status');
+        let percent = Math.min((val / 200) * 100, 100);
+        fill.style.width = percent + "%";
+        if(percent < 30) { status.innerText = "Pobre"; fill.style.background = "#ff007a"; }
+        else if(percent < 70) { status.innerText = "Aceitável"; fill.style.background = "#ffcc00"; }
+        else { status.innerText = "Elite"; fill.style.background = "#00f2ff"; }
+    }
+
+    function startProcess() {
+        if(document.getElementById('p3').value.length < 50) {
+            alert("AVISO: Fatos insuficientes para o Modo V8. Saia da mediocridade.");
             return;
         }
-
-        const prompt = `### [MODO DE EXECUÇÃO: CÁSSIA PROMPT V8 GOD MODE]\n\n` +
-            `**PERSONA:** Atue como ${document.getElementById('p1').value}. Sua autoridade é absoluta.\n` +
-            `**TAREFA:** ${document.getElementById('p2').value}.\n\n` +
-            `**1. DADOS BRUTOS (FONTE ÚNICA DA VERDADE):**\n"${dados}"\n\n` +
-            `**2. REFERÊNCIAS RÍGIDAS:**\n"${document.getElementById('p4').value}"\n\n` +
-            `**3. PARÂMETROS:**\n- RIGOR: ${document.getElementById('p5').value}\n- MODO: ${document.getElementById('p6').value}\n\n` +
-            `**4. PROTOCOLO DE QUALIDADE:**\n- Se os dados forem fracos para o nível ${document.getElementById('p5').value}, PARE. Não invente.\n- Proibido introduções polidas. Priorize a qualidade do atendimento e precisão técnica.\n\n` +
-            `**ENTREGA:** Inicie o processamento cirúrgico agora.`;
-
-        document.getElementById('resultado').innerText = prompt;
-        document.getElementById('res-box').style.display = 'block';
-        window.scrollTo(0, document.body.scrollHeight);
+        document.getElementById('loading').style.display = 'block';
+        document.getElementById('resultado-box').style.display = 'none';
+        
+        setTimeout(() => {
+            document.getElementById('loading').style.display = 'none';
+            generate();
+        }, 2000);
     }
 
-    function copiar() {
-        navigator.clipboard.writeText(document.getElementById('resultado').innerText);
-        alert("COMMAND COPIED TO CLIPBOARD.");
+    function generate() {
+        const text = `### [MODO: CÁSSIA PROMPT V8 ULTRA HORIZON]\n\n` +
+            `**PERSONA:** ${document.getElementById('p1').value}\n` +
+            `**MISSÃO:** ${document.getElementById('p2').value}\n` +
+            `**DADOS REAIS:** ${document.getElementById('p3').value}\n` +
+            `**TOM DE VOZ:** ${document.getElementById('p4').value}\n` +
+            `**RIGOR:** ${document.getElementById('p5').value}\n\n` +
+            `**DIRETRIZES DE ELITE:**\n- Priorize a qualidade do atendimento e a precisão absoluta.\n- Se os dados forem fracos, exponha a falha. Não invente.\n- Sem introduções ou lenga-lenga. Vá direto ao ponto técnico.`;
+        
+        document.getElementById('final-text').innerText = text;
+        document.getElementById('resultado-box').style.display = 'block';
+    }
+
+    function copy() {
+        navigator.clipboard.writeText(document.getElementById('final-text').innerText);
+        alert("ENGENHARIA COPIADA PARA O CLIPE.");
     }
 </script>
-
 </body>
 </html>

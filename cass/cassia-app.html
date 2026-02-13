@@ -3,168 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt | V8 Elite Edition</title>
+    <title>Cássia Prompt | Elite Edition</title>
     <style>
+        :root {
+            --accent: #ff2e8c;
+            --bg: #050508;
+            --card: rgba(15, 15, 25, 0.7);
+        }
         body { 
-            font-family: 'Segoe UI', Roboto, sans-serif; 
-            background-color: #020205; 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            background-color: var(--bg); 
             color: #ffffff; 
             margin: 0; 
-            padding: 20px; 
+            padding: 40px 20px;
+            letter-spacing: -0.01em;
         }
         .container { 
-            max-width: 900px; 
+            max-width: 850px; 
             margin: 0 auto; 
-            background: #080810; 
-            padding: 40px; 
-            border-radius: 12px; 
-            border: 1px solid #ff2e8c;
-            box-shadow: 0 0 20px rgba(255, 46, 140, 0.2);
+            background: var(--card); 
+            padding: 50px; 
+            border-radius: 20px; 
+            border: 1px solid rgba(255, 46, 140, 0.15);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
         h1 { 
-            color: #ff2e8c; 
+            color: #fff; 
             text-align: center; 
-            font-size: 28px; 
+            font-size: 22px; 
             text-transform: uppercase; 
-            letter-spacing: 3px;
-            margin-bottom: 30px;
+            letter-spacing: 6px;
+            margin-bottom: 40px;
+            font-weight: 300;
         }
-        .grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 20px; 
-        }
+        h1 span { color: var(--accent); font-weight: 700; }
+        
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .full { grid-column: span 2; }
+        
         label { 
             display: block; 
-            margin-bottom: 8px; 
-            color: #ff2e8c; 
-            font-weight: bold; 
-            font-size: 11px; 
+            margin-bottom: 10px; 
+            color: rgba(255, 255, 255, 0.5); 
+            font-size: 10px; 
             text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
         }
         input, textarea { 
             width: 100%; 
-            padding: 15px; 
-            border-radius: 6px; 
-            border: 1px solid #1a1a2e; 
-            background: #0f0f1a; 
-            color: #eee; 
+            padding: 16px; 
+            border-radius: 4px; 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            background: rgba(0, 0, 0, 0.3); 
+            color: #fff; 
             box-sizing: border-box;
             font-size: 14px;
+            transition: all 0.3s ease;
         }
         input:focus, textarea:focus {
-            border-color: #ff2e8c;
+            border-color: var(--accent);
+            background: rgba(0, 0, 0, 0.5);
             outline: none;
         }
-        .full-width { grid-column: span 2; }
         
         button { 
             width: 100%; 
-            padding: 22px; 
-            background: #ffffff; 
-            color: #000; 
-            border: none; 
-            border-radius: 8px; 
-            font-weight: 900; 
-            font-size: 16px;
+            padding: 20px; 
+            background: transparent; 
+            color: var(--accent); 
+            border: 1px solid var(--accent);
+            border-radius: 4px; 
+            font-weight: 600; 
+            font-size: 13px;
             cursor: pointer; 
-            margin-top: 30px; 
+            margin-top: 40px; 
             text-transform: uppercase;
-            transition: 0.3s;
+            letter-spacing: 3px;
+            transition: all 0.4s;
         }
         button:hover {
-            background: #ff2e8c;
+            background: var(--accent);
             color: #fff;
-        }
-        #resultado { 
-            margin-top: 30px; 
-            padding: 20px; 
-            background: #000; 
-            border: 1px solid #ff2e8c; 
-            display: none; 
-            white-space: pre-wrap;
-            color: #00ffcc;
-            font-family: monospace;
+            box-shadow: 0 0 30px rgba(255, 46, 140, 0.3);
         }
         
-        /* RODAPÉ DE SEGURANÇA PROFISSIONAL */
-        footer { 
-            margin-top: 60px; 
-            padding: 30px; 
-            border-top: 1px solid #1a1a2e; 
-            font-size: 12px; 
-            color: #666; 
-            text-align: center; 
-            line-height: 1.8; 
+        #resultado { 
+            margin-top: 40px; 
+            padding: 25px; 
+            background: rgba(0,0,0,0.4); 
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: 2px solid var(--accent);
+            display: none; 
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #ddd;
         }
-        .footer-title { 
-            color: #ff2e8c; 
-            font-weight: bold; 
+        
+        footer { 
+            margin-top: 80px; 
+            padding: 40px; 
+            border-top: 1px solid rgba(255, 255, 255, 0.03); 
+            font-size: 11px; 
+            color: rgba(255, 255, 255, 0.3); 
+            text-align: center; 
+            line-height: 2; 
+        }
+        .f-title { 
+            color: var(--accent); 
+            font-weight: 700; 
             display: block; 
-            margin-bottom: 10px;
-            font-size: 14px;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>CÁSSIA PROMPT | V8 ELITE EDITION ⚡</h1>
+    <h1>CÁSSIA PROMPT | <span>ELITE EDITION</span></h1>
     
     <div class="grid">
-        <div class="full-width">
-            <label>01. PERSONA MASTER (QUEM A IA SE TORNA?)</label>
-            <input type="text" id="p1" placeholder="Ex: Advogado Sênior com foco em Direito Processual...">
+        <div class="full">
+            <label>01. Persona Master</label>
+            <input type="text" id="p1" placeholder="Ex: Jurista Sênior em Direito Digital...">
         </div>
         <div>
-            <label>02. FORMATO FINAL</label>
-            <input type="text" id="p2" placeholder="Ex: Contestação, Recurso, E-mail...">
+            <label>02. Formato</label>
+            <input type="text" id="p2" placeholder="Ex: Petição Inicial...">
         </div>
         <div>
-            <label>03. PÚBLICO-ALVO</label>
-            <input type="text" id="p3" placeholder="Ex: Desembargador, Cliente Final...">
+            <label>03. Target</label>
+            <input type="text" id="p3" placeholder="Ex: Tribunal de Justiça...">
         </div>
-        <div class="full-width">
-            <label>04. DADOS, FATOS E PROVAS (O CORE DA VERDADE)</label>
-            <textarea id="p4" rows="8" placeholder="Insira aqui os detalhes fundamentais do caso ou projeto..."></textarea>
-        </div>
-        <div>
-            <label>05. A DOR OU PROBLEMA</label>
-            <input type="text" id="p5" placeholder="Qual o obstáculo principal?">
+        <div class="full">
+            <label>04. Corpus de Dados e Fatos</label>
+            <textarea id="p4" rows="8" placeholder="O core técnico do seu comando..."></textarea>
         </div>
         <div>
-            <label>06. BENEFÍCIO REAL</label>
-            <input type="text" id="p6" placeholder="Qual o objetivo da vitória?">
+            <label>05. A Dor Principal</label>
+            <input type="text" id="p5" placeholder="Ponto nevrálgico...">
         </div>
-        <button onclick="gerarV8()" class="full-width">EXECUTAR ENGENHARIA DE ELITE ⚡</button>
+        <div>
+            <label>06. Resultado Esperado</label>
+            <input type="text" id="p6" placeholder="O benefício final...">
+        </div>
+        <button onclick="gerarV8()" class="full">Ativar Engenharia de Elite</button>
     </div>
 
     <div id="resultado"></div>
 </div>
 
 <footer>
-    <span class="footer-title">CÁSSIA PROMPT V8 ELITE TECH - TERMOS E RESPONSABILIDADE</span>
+    <span class="f-title">CÁSSIA PROMPT V8 - PROTOCOLO DE SEGURANÇA</span>
     <p>
-        <strong>1. Natureza da Ferramenta:</strong> Otimizador de instruções para IA. Não substitui o julgamento profissional.<br>
-        <strong>2. Responsabilidade:</strong> Toda resposta da IA deve ser revisada. O usuário é o único responsável pelo uso final.<br>
-        <strong>3. Privacidade:</strong> Processamento local. Não armazenamos dados sensíveis (LGPD).
+        <strong>I. Natureza:</strong> Otimizador de instruções de alta fidelidade. Uso técnico profissional.<br>
+        <strong>II. Responsabilidade:</strong> Conteúdo gerado requer curadoria humana obrigatória.<br>
+        <strong>III. Privacidade:</strong> Camada de processamento local. Conformidade estrita com LGPD.
     </p>
-    <p style="margin-top: 15px; font-weight: bold; color: #444;">
-        © 2026 Cássia Prompt - V8 Elite Tech | Todos os direitos reservados.
+    <p style="margin-top: 25px; letter-spacing: 1px;">
+        © 2026 CÁSSIA PROMPT | V8 ELITE TECH
     </p>
 </footer>
 
 <script>
     function gerarV8() {
         const res = document.getElementById('resultado');
-        const fatos = document.getElementById('p4').value;
-        if(!fatos) { alert("Erro: O campo 04 (Dados e Fatos) é essencial para a precisão do V8."); return; }
+        const f = document.getElementById('p4').value;
+        if(!f) return alert("Dados insuficientes para processamento.");
         
-        const comando = `[PROTOCOLO V8 ELITE ACTIVATED]\n\nAtue como: ${document.getElementById('p1').value}\nFormato: ${document.getElementById('p2').value}\nContexto: ${fatos}\n\nInstrução Técnica: Realize uma análise profunda baseada nos fatos fornecidos. Proibido inventar dados.`;
-        
-        res.innerText = comando;
+        res.innerText = `[V8 ELITE EDITION]\n\nAtue como: ${document.getElementById('p1').value}\nObjetivo: ${document.getElementById('p2').value}\nFatos: ${f}\n\nExecute com precisão cirúrgica.`;
         res.style.display = 'block';
-        window.scrollTo(0, document.body.scrollHeight);
     }
 </script>
 

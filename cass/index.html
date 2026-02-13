@@ -1,21 +1,166 @@
-<footer style="margin-top: 50px; padding: 30px; border-top: 2px solid #b01a5a; font-family: sans-serif; font-size: 13px; color: #444; background-color: #f9f9f9; line-height: 1.6;">
-    <div style="max-width: 900px; margin: 0 auto;">
-        <p style="text-align: center; font-weight: bold; color: #b01a5a; font-size: 16px; margin-bottom: 20px;">
-            CÁSSIA PROMPT V8 ELITE TECH - TERMOS E RESPONSABILIDADE
-        </p>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cássia Prompt V8 Elite Tech</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #262626;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid #b01a5a;
+            flex-grow: 1;
+        }
+        h1 {
+            color: #ff2e8c;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ff99cc;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: #333;
+            color: white;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #b01a5a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #ff2e8c;
+            transform: scale(1.02);
+        }
+        #resultado {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #111;
+            border-left: 5px solid #ff2e8c;
+            white-space: pre-wrap;
+            display: none;
+        }
+
+        /* ESTILO DO RODAPÉ DE SEGURANÇA */
+        footer {
+            margin-top: 50px;
+            padding: 30px;
+            border-top: 2px solid #b01a5a;
+            font-size: 13px;
+            color: #cccccc;
+            background-color: #000000;
+            line-height: 1.6;
+        }
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: justify;
+        }
+        .footer-title {
+            text-align: center;
+            font-weight: bold;
+            color: #ff2e8c;
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #ff99cc;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>V8 Elite Tech</h1>
+    <p style="text-align: center; color: #aaa;">Insira os dados técnicos para gerar o comando de alta performance.</p>
+    
+    <div class="input-group">
+        <label>Qual o objetivo principal?</label>
+        <input type="text" id="objetivo" placeholder="Ex: Petição Inicial, Contrato, Recurso...">
+    </div>
+
+    <div class="input-group">
+        <label>Dados e Fatos Relevantes:</label>
+        <textarea id="dados" rows="5" placeholder="Cole aqui os detalhes técnicos..."></textarea>
+    </div>
+
+    <button onclick="gerarPrompt()">GERAR COMANDO ELITE</button>
+
+    <div id="resultado"></div>
+</div>
+
+<footer>
+    <div class="footer-content">
+        <p class="footer-title">CÁSSIA PROMPT V8 ELITE TECH - TERMOS E RESPONSABILIDADE</p>
         
-        <p><strong>1. Uso da Ferramenta:</strong> Este sistema é um otimizador de instruções para Inteligência Artificial. Ele auxilia na criação de conteúdos, mas não substitui o julgamento crítico, técnico ou profissional do usuário.</p>
+        <p><strong>1. Uso da Ferramenta:</strong> Este sistema é um otimizador de instruções para Inteligência Artificial. Ele auxilia na criação de conteúdos técnicos, mas não substitui o julgamento crítico e profissional do usuário.</p>
         
-        <p><strong>2. Responsabilidade do Usuário:</strong> Toda e qualquer resposta gerada pela IA deve ser conferida e validada pelo usuário antes de ser utilizada. O usuário é o único responsável pelas decisões, documentos ou ações tomadas com base nas respostas obtidas.</p>
+        <p><strong>2. Responsabilidade do Usuário:</strong> Toda e qualquer resposta gerada pela IA deve ser conferida e validada pelo usuário antes de sua utilização. O usuário é o único responsável pelas decisões ou documentos baseados nestes resultados.</p>
         
-        <p><strong>3. Isenção de Garantias:</strong> A tecnologia de IA pode gerar informações incorretas ou imprecisas ("alucinações"). A desenvolvedora não garante a exatidão dos resultados e não se responsabiliza por perdas, danos ou erros decorrentes do uso da ferramenta.</p>
+        <p><strong>3. Isenção de Garantias:</strong> A tecnologia de IA pode gerar informações imprecisas. A desenvolvedora não garante a exatidão absoluta e não se responsabiliza por perdas, erros ou "alucinações" do modelo de IA utilizado.</p>
         
-        <p><strong>4. Privacidade:</strong> Não coletamos seus dados. O processamento ocorre no seu navegador. Recomendamos não inserir dados sensíveis ou confidenciais diretamente na ferramenta.</p>
+        <p><strong>4. Privacidade:</strong> Operamos localmente no seu navegador. Não armazenamos seus dados. Recomendamos não inserir informações confidenciais diretamente em ferramentas de IA de terceiros.</p>
         
-        <hr style="border: 0; border-top: 1px solid #ddd; margin: 20px 0;">
-        
-        <div style="text-align: center; font-weight: bold; color: #3d0a21;">
+        <div class="copyright">
             © 2026 Cássia Prompt - V8 Elite Tech | Todos os direitos reservados.
         </div>
     </div>
 </footer>
+
+<script>
+    function gerarPrompt() {
+        const obj = document.getElementById('objetivo').value;
+        const dad = document.getElementById('dados').value;
+        const res = document.getElementById('resultado');
+
+        if(!obj || !dad) {
+            alert("Por favor, preencha os campos para o motor V8 funcionar!");
+            return;
+        }
+
+        // AQUI ESTÁ A LÓGICA DO SEU COMANDO ELITE
+        const promptFinal = `[MODO V8 ELITE TECH ATIVADO]\n\nAtue como um especialista sênior. Objetivo: ${obj}.\n\nFATOS E DADOS: ${dad}\n\nREGRAS: 1. Use linguagem técnica. 2. Seja preciso e evite termos genéricos. 3. Se houver dúvida, peça mais dados em vez de inventar. 4. Estruture o texto de forma profissional.`;
+
+        res.innerText = promptFinal;
+        res.style.display = 'block';
+        alert("Comando de Elite Gerado com Sucesso!");
+    }
+</script>
+
+</body>
+</html>

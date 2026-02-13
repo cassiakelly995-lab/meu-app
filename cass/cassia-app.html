@@ -6,22 +6,19 @@
     <title>Cássia Prompt | V8 God Mode</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #020205; color: #ffffff; margin: 0; padding: 20px; }
-        .container { max-width: 850px; margin: 0 auto; background: #080810; padding: 40px; border: 1px solid #ff2e8c; box-shadow: 0 0 50px rgba(255, 46, 140, 0.2); position: relative; }
+        .container { max-width: 850px; margin: 0 auto; background: #080810; padding: 40px; border: 1px solid #ff2e8c; box-shadow: 0 0 50px rgba(255, 46, 140, 0.2); }
         h1 { color: #ff2e8c; text-align: center; font-size: 22px; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 30px; border-bottom: 2px solid #1a1a2e; padding-bottom: 20px; }
         .aviso-v8 { background: rgba(255, 46, 140, 0.1); border: 1px solid #ff2e8c; padding: 15px; margin-bottom: 30px; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; text-align: center; color: #ff99cc; }
         label { display: block; margin-bottom: 10px; color: #ff2e8c; font-weight: bold; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; }
         input, textarea { width: 100%; padding: 15px; border: 1px solid #1a1a2e; background: #000; color: #fff; box-sizing: border-box; font-size: 14px; margin-bottom: 20px; }
         input:focus, textarea:focus { border-color: #ff2e8c; outline: none; background: #05050a; }
         
-        /* BOTÃO PRINCIPAL */
         .btn-executar { width: 100%; padding: 25px; background: #ff2e8c; color: #fff; border: none; font-weight: 900; font-size: 16px; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; transition: 0.3s; }
         .btn-executar:hover { background: #fff; color: #ff2e8c; box-shadow: 0 0 20px #fff; }
         
-        /* ÁREA DE RESULTADO E BOTÃO COPIAR */
         .result-wrapper { position: relative; margin-top: 30px; display: none; }
         #resultado { padding: 30px; background: #000; border: 1px solid #ff2e8c; color: #00ffcc; font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.6; white-space: pre-wrap; }
         .btn-copiar { position: absolute; top: 10px; right: 10px; padding: 10px 20px; background: #00ffcc; color: #000; border: none; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
-        .btn-copiar:hover { background: #fff; }
 
         footer { margin-top: 60px; padding: 30px; border-top: 1px solid #1a1a2e; font-size: 11px; color: #444; text-align: justify; line-height: 1.8; }
         .f-bold { color: #ff2e8c; font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 10px; text-align: center; font-size: 13px; }
@@ -31,24 +28,28 @@
 
 <div class="container">
     <h1>CÁSSIA PROMPT | V8 GOD MODE</h1>
-    <div class="aviso-v8">⚠️ PROTOCOLO DE ALTA PERFORMANCE: QUALIDADE MÁXIMA OU EXECUÇÃO BARRADA.</div>
+    <div class="aviso-v8">⚠️ QUALIDADE MÁXIMA EXIGIDA: DADOS RASOS SERÃO BARRADOS PELO SISTEMA.</div>
     
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
         <div style="grid-column: span 2;">
-            <label>01. AUTORIDADE ABSOLUTA (PERSONA)</label>
-            <input type="text" id="p1" placeholder="Ex: Especialista Sênior OAB, Estrategista de Vendas...">
+            <label>01. PERSONA (QUEM A IA SERÁ?)</label>
+            <input type="text" id="p1" placeholder="Ex: Especialista Sênior OAB, Gestora Jurídica...">
         </div>
         <div style="grid-column: span 2;">
-            <label>02. DADOS BRUTOS (FONTE DA VERDADE)</label>
-            <textarea id="p4" rows="8" placeholder="DETALHE OS FATOS. A PREGUIÇA AQUI GERA ERRO NO SISTEMA."></textarea>
+            <label>02. AÇÃO (O QUE VOCÊ QUER FAZER?)</label>
+            <input type="text" id="p2" placeholder="Ex: Elaborar Petição Inicial, Criar E-mail de Cobrança, Analisar Contrato...">
+        </div>
+        <div style="grid-column: span 2;">
+            <label>03. DADOS BRUTOS (FONTE ÚNICA DA VERDADE)</label>
+            <textarea id="p4" rows="8" placeholder="DETALHE OS FATOS AQUI. SEM DADOS REAIS, O V8 NÃO GERA RESULTADO."></textarea>
         </div>
         <div>
-            <label>03. RESULTADO ESPERADO</label>
-            <input type="text" id="p6" placeholder="O que define a vitória?">
+            <label>04. RESULTADO ESPERADO</label>
+            <input type="text" id="p6" placeholder="Qual o impacto final desejado?">
         </div>
         <div>
-            <label>04. PONTO CRÍTICO (RESTRIÇÃO)</label>
-            <input type="text" id="p7" placeholder="Ex: Prazo, Documento Atualizado, Tom de voz...">
+            <label>05. RESTRIÇÃO RÍGIDA</label>
+            <input type="text" id="p7" placeholder="O que não pode ser esquecido ou feito?">
         </div>
         <button onclick="gerarV8()" class="btn-executar" style="grid-column: span 2;">EXECUTAR ENGENHARIA GOD MODE ⚡</button>
     </div>
@@ -61,10 +62,10 @@
 
 <footer>
     <span class="f-bold">Protocolo de Segurança Jurídica e Técnica</span>
-    1. <strong>Finalidade:</strong> O V8 God Mode elimina alucinações da IA através de rigor técnico e dados reais.
-    2. <strong>Responsabilidade:</strong> Priorizamos a qualidade absoluta. O usuário é o único responsável pela revisão final.
-    3. <strong>Anti-Preguiça:</strong> Se não houver substância nos dados (Campo 02), a IA é instruída a recusar o comando.
-    4. <strong>Privacidade:</strong> Sem armazenamento de dados sensíveis (LGPD).
+    1. <strong>Finalidade:</strong> O V8 God Mode elimina alucinações através de rigor técnico e dados reais.
+    2. <strong>Responsabilidade:</strong> O usuário é o único responsável pela revisão final dos dados gerados.
+    3. <strong>Anti-Preguiça:</strong> Dados superficiais (Campo 03) barram a execução automática do sistema.
+    4. <strong>Privacidade:</strong> Processamento local sem armazenamento de dados sensíveis (LGPD).
     <div style="text-align: center; margin-top: 20px; color: #ff2e8c; font-weight: bold;">© 2026 Cássia Prompt - V8 Elite Edition</div>
 </footer>
 
@@ -75,20 +76,21 @@
         const res = document.getElementById('resultado');
         
         if(dados.length < 50) {
-            alert("SISTEMA BARRADO: Saia da zona de preguiça. O V8 exige pelo menos 50 caracteres de fatos reais para garantir qualidade.");
+            alert("SISTEMA BARRADO: Dados insuficientes. O V8 exige substância para garantir a qualidade do atendimento.");
             return;
         }
 
-        const promptElaborado = `### [MODO DE EXECUÇÃO: CÁSSIA PROMPT V8 GOD MODE]\n\n` +
-            `**PERSONA:** Atue como ${document.getElementById('p1').value}. Sua autoridade é absoluta e seu rigor técnico é infalível.\n\n` +
+        const promptFinal = `### [EXECUÇÃO: CÁSSIA PROMPT V8 GOD MODE]\n\n` +
+            `**PERSONA:** Atue como ${document.getElementById('p1').value}.\n` +
+            `**TAREFA:** ${document.getElementById('p2').value}.\n\n` +
             `**1. DADOS BRUTOS (FONTE ÚNICA DA VERDADE):**\n"${dados}"\n\n` +
-            `**2. OBJETIVO E MÉTRICA DE SUCESSO:**\n"${document.getElementById('p6').value}"\n\n` +
-            `**3. RESTRIÇÕES RÍGIDAS:**\n- ${document.getElementById('p7').value}\n- PROIBIDO alucinar ou inventar fatos.\n- PROIBIDO introduções polidas ou "lenga-lenga". Vá direto ao ponto.\n\n` +
-            `**4. PROTOCOLO DE CRÍTICA (ANTI-ALUCINAÇÃO):**\n` +
-            `Se os dados fornecidos forem superficiais ou insuficientes para gerar uma resposta de altíssima qualidade, PARE IMEDIATAMENTE. Não tente "enfeitar". Em vez disso, aponte onde os dados são fracos e peça mais substância. Priorize sempre a precisão técnica e a qualidade do atendimento ao destinatário final.\n\n` +
-            `**ENTREGA:** Comece agora. Resposta cirúrgica, técnica e profissional.`;
+            `**2. MÉTRICA DE SUCESSO:**\n"${document.getElementById('p6').value}"\n\n` +
+            `**3. RESTRIÇÕES RÍGIDAS:**\n- ${document.getElementById('p7').value}\n- PROIBIDO alucinar fatos não descritos no item 1.\n- PROIBIDO lenga-lenga ou introduções polidas.\n\n` +
+            `**4. PROTOCOLO ANTI-ALUCINAÇÃO:**\n` +
+            `Se os dados forem superficiais para uma entrega de elite, PARE. Aponte a falha técnica e peça mais dados. Priorize sempre a precisão e a qualidade absoluta do atendimento.\n\n` +
+            `**ENTREGA:** Inicie agora. Seja técnico, cirúrgico e profissional.`;
 
-        res.innerText = promptElaborado;
+        res.innerText = promptFinal;
         wrapper.style.display = 'block';
         window.scrollTo(0, document.body.scrollHeight);
     }
@@ -96,7 +98,7 @@
     function copiarPrompt() {
         const texto = document.getElementById('resultado').innerText;
         navigator.clipboard.writeText(texto).then(() => {
-            alert("COMANDO COPIADO! Agora cole no seu ChatGPT ou Gemini.");
+            alert("COMANDO COPIADO! Cole na sua IA de preferência.");
         });
     }
 </script>

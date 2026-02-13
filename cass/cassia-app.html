@@ -3,162 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt | God Mode Engine</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Cássia Prompt - V8 Elite Edition</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Inter:wght@400;900&display=swap');
-        :root { --neon: #00f2ff; --pink: #db2777; --bg: #030712; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: #f8fafc; overflow-x: hidden; }
-        .cyber-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); transition: 0.4s; }
-        .cyber-card:hover { border-color: var(--pink); box-shadow: 0 0 30px rgba(219, 39, 119, 0.1); }
-        .neon-border { border-left: 4px solid var(--pink); }
-        input, textarea, select { background: rgba(0,0,0,0.5) !important; border: 1px solid rgba(255,255,255,0.1) !important; color: white !important; transition: 0.3s; }
-        input:focus, textarea:focus { border-color: var(--neon) !important; outline: none; box-shadow: 0 0 15px rgba(0, 242, 255, 0.2); }
-        .btn-god { background: white; color: black; font-weight: 900; transition: 0.4s; text-transform: uppercase; letter-spacing: 0.2em; }
-        .btn-god:hover { background: var(--pink); color: white; transform: scale(1.02); box-shadow: 0 0 40px rgba(219, 39, 119, 0.4); }
+        body { font-family: sans-serif; background-color: #05050a; color: #ffffff; margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: #0c0c14; padding: 30px; border-radius: 15px; border: 1px solid #ff2e8c; }
+        h1 { color: #ff2e8c; text-align: center; font-size: 24px; text-transform: uppercase; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        label { display: block; margin-bottom: 5px; color: #ff2e8c; font-weight: bold; font-size: 12px; }
+        input, textarea, select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #222; background: #151520; color: white; box-sizing: border-box; }
+        .full-width { grid-column: span 2; }
+        button { width: 100%; padding: 20px; background: #ffffff; color: #000; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; text-transform: uppercase; }
+        #resultado { margin-top: 20px; padding: 15px; background: #000; border: 1px dashed #ff2e8c; display: none; white-space: pre-wrap; }
+        
+        /* RODAPÉ DE SEGURANÇA JURÍDICA */
+        footer { margin-top: 50px; padding: 20px; border-top: 1px solid #333; font-size: 12px; color: #888; text-align: justify; line-height: 1.5; }
+        .footer-title { color: #ff2e8c; font-weight: bold; text-align: center; display: block; margin-bottom: 10px; }
     </style>
 </head>
-<body class="min-h-screen p-4 md:p-8">
+<body>
 
-    <div id="content" class="hidden max-w-7xl mx-auto">
-        <header class="flex flex-col md:flex-row justify-between items-center mb-12 gap-4">
-            <div class="text-center md:text-left">
-                <h1 style="font-family: 'Space Grotesk';" class="text-5xl font-black italic tracking-tighter">CÁSSIA<span class="text-pink-600">PROMPT</span></h1>
-                <p class="text-[9px] font-bold text-cyan-400 tracking-[0.5em] uppercase">Advanced Neural Architect • God Mode</p>
-            </div>
-            <div class="flex gap-4">
-                <div class="text-right border-r border-white/10 pr-4">
-                    <p class="text-[10px] text-slate-500 font-bold uppercase">Análise de Dados</p>
-                    <p class="text-[10px] text-green-500 font-mono">CRÍTICA ATIVA</p>
-                </div>
-                <div class="text-right">
-                    <p class="text-[10px] text-slate-500 font-bold uppercase">Nível de Saída</p>
-                    <p class="text-[10px] text-pink-500 font-mono">ULTRA-HIGH PRECISION</p>
-                </div>
-            </div>
-        </header>
-
-        <div class="grid lg:grid-cols-2 gap-8">
-            <div class="cyber-card p-8 rounded-[2rem] space-y-5">
-                <div class="neon-border pl-4 mb-6">
-                    <h2 class="text-lg font-bold uppercase italic">Configuração de Variáveis</h2>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="col-span-2">
-                        <label class="text-[9px] font-black text-pink-500 uppercase tracking-widest block mb-2">01. Persona Master (Quem a IA se torna?)</label>
-                        <input type="text" id="persona" placeholder="Ex: Copywriter Sênior com foco em Neurovendas..." class="w-full p-3 rounded-xl text-xs">
-                    </div>
-                    <div>
-                        <label class="text-[9px] font-black text-pink-500 uppercase tracking-widest block mb-2">02. Formato Final</label>
-                        <input type="text" id="formato" placeholder="Ex: VSL, Petição, Artigo..." class="w-full p-3 rounded-xl text-xs">
-                    </div>
-                    <div>
-                        <label class="text-[9px] font-black text-pink-500 uppercase tracking-widest block mb-2">03. Público-Alvo Especial</label>
-                        <input type="text" id="alvo" placeholder="Ex: Clientes de Ticket Alto..." class="w-full p-3 rounded-xl text-xs">
-                    </div>
-                    <div class="col-span-2">
-                        <label class="text-[9px] font-black text-pink-500 uppercase tracking-widest block mb-2">04. Dados, Fatos e Provas (O Core da Verdade)</label>
-                        <textarea id="fatos" rows="4" placeholder="Insira dados brutos, números, leis ou fatos inquestionáveis aqui..." class="w-full p-3 rounded-xl text-xs resize-none"></textarea>
-                    </div>
-                    <div>
-                        <label class="text-[9px] font-black text-pink-500 uppercase tracking-widest block mb-2">05. A "Dor" ou Problema Principal</label>
-                        <input type="text" id="dor" placeholder="O que o destinatário mais teme?" class="w-full p-3 rounded-xl text-xs">
-                    </div>
-                    <div>
-                        <label class="text-[9px] font-black text-pink-500 uppercase tracking-widest block mb-2">06. Benefício Irresistível</label>
-                        <input type="text" id="beneficio" placeholder="Qual o resultado final real?" class="w-full p-3 rounded-xl text-xs">
-                    </div>
-                    <div>
-                        <label class="text-[9px] font-black text-pink-500 uppercase tracking-widest block mb-2">07. Restrições (O que NÃO fazer?)</label>
-                        <input type="text" id="restricoes" placeholder="Ex: Sem adjetivos, sem gírias..." class="w-full p-3 rounded-xl text-xs">
-                    </div>
-                    <div>
-                        <label class="text-[9px] font-black text-pink-500 uppercase tracking-widest block mb-2">08. Nível de Crítica da IA</label>
-                        <select id="critica" class="w-full p-3 rounded-xl text-xs">
-                            <option value="AGRESSIVA (Se meus dados forem fracos, pare e me avise)">Crítica Agressiva</option>
-                            <option value="MODERADA (Sugira melhorias no meio do texto)">Crítica Moderada</option>
-                            <option value="PASSIVA (Apenas siga as ordens)">Crítica Passiva</option>
-                        </select>
-                    </div>
-                </div>
-
-                <button onclick="gerarPromptGodMode()" class="w-full btn-god p-5 rounded-2xl text-xs mt-4">
-                    Executar Engenharia de Elite ⚡
-                </button>
-            </div>
-
-            <div id="resultArea" class="hidden flex flex-col h-full">
-                <div class="cyber-card p-8 rounded-[2rem] flex-grow flex flex-col border border-cyan-500/20">
-                    <div class="flex justify-between items-center mb-6">
-                        <span class="text-[10px] font-black text-cyan-400 uppercase tracking-widest italic">Prompt Estruturado de Nível Máximo</span>
-                        <button onclick="copyToClipboard()" class="text-[9px] font-bold text-white hover:text-pink-500 transition-all uppercase underline">Copiar Prompt</button>
-                    </div>
-                    <textarea id="promptFinal" class="flex-grow w-full bg-transparent border-none text-slate-300 text-xs leading-loose p-0 focus:ring-0 resize-none font-mono outline-none"></textarea>
-                </div>
-            </div>
+<div class="container">
+    <h1>Cássia Prompt | V8 Elite Edition ⚡</h1>
+    
+    <div class="grid">
+        <div class="full-width">
+            <label>01. PERSONA MASTER (QUEM A IA SE TORNA?)</label>
+            <input type="text" id="p1" placeholder="Ex: Advogado Especialista em Direito Civil...">
         </div>
+        <div>
+            <label>02. FORMATO FINAL</label>
+            <input type="text" id="p2" placeholder="Ex: Petição, Recurso, Parecer...">
+        </div>
+        <div>
+            <label>03. PÚBLICO-ALVO</label>
+            <input type="text" id="p3" placeholder="Ex: Juiz da 2ª Vara Cível...">
+        </div>
+        <div class="full-width">
+            <label>04. DADOS, FATOS E PROVAS (O CORE DA VERDADE)</label>
+            <textarea id="p4" rows="6" placeholder="Insira os fatos inquestionáveis aqui..."></textarea>
+        </div>
+        <div>
+            <label>05. A DOR OU PROBLEMA</label>
+            <input type="text" id="p5" placeholder="O que precisa ser resolvido?">
+        </div>
+        <div>
+            <label>06. BENEFÍCIO REAL</label>
+            <input type="text" id="p6" placeholder="Qual o resultado esperado?">
+        </div>
+        <button onclick="gerarV8()" class="full-width">EXECUTAR ENGENHARIA DE ELITE ⚡</button>
     </div>
 
-    <div id="error" class="text-center mt-48">
-        <h1 class="text-xl font-black text-slate-800 uppercase tracking-[1em]">Acesso Negado</h1>
-    </div>
+    <div id="resultado"></div>
+</div>
 
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('token') === 'access-cassia-2026') {
-            document.getElementById('content').classList.remove('hidden');
-            document.getElementById('error').classList.add('hidden');
-        }
+<footer>
+    <span class="footer-title">CÁSSIA PROMPT V8 ELITE TECH - TERMOS E RESPONSABILIDADE</span>
+    <p><strong>1. Natureza da Ferramenta:</strong> Este sistema é um otimizador de instruções para IA e não substitui o julgamento profissional do usuário.</p>
+    <p><strong>2. Responsabilidade:</strong> Toda resposta gerada deve ser conferida. O usuário é o único responsável pelos documentos ou decisões baseadas nestes resultados.</p>
+    <p><strong>3. Privacidade:</strong> Operamos localmente no seu navegador. Não armazenamos dados sensíveis (LGPD).</p>
+    <p style="text-align: center; margin-top: 15px; font-weight: bold;">© 2026 Cássia Prompt - V8 Elite Tech | Todos os direitos reservados.</p>
+</footer>
 
-        function gerarPromptGodMode() {
-            const fields = {
-                persona: document.getElementById('persona').value || "Especialista em Alta Performance",
-                formato: document.getElementById('formato').value || "Documento Final",
-                alvo: document.getElementById('alvo').value || "Público Alvo",
-                fatos: document.getElementById('fatos').value || "Sem dados fornecidos",
-                dor: document.getElementById('dor').value || "Não especificada",
-                beneficio: document.getElementById('beneficio').value || "Não especificado",
-                restricoes: document.getElementById('restricoes').value || "Nenhuma",
-                critica: document.getElementById('critica').value
-            };
+<script>
+    function gerarV8() {
+        const r = document.getElementById('resultado');
+        const p4 = document.getElementById('p4').value;
+        if(!p4) { alert("O campo 04 é obrigatório para a segurança do motor!"); return; }
+        
+        const prompt = `[MODO V8 ATIVADO]\nPersona: ${document.getElementById('p1').value}\nFormato: ${document.getElementById('p2').value}\nFatos: ${p4}\n\nInstrução: Atue com rigor técnico e evite alucinações.`;
+        
+        r.innerText = prompt;
+        r.style.display = 'block';
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
 
-            const promptFinal = `### [MODO DE EXECUÇÃO: CÁSSIA PROMPT GOD MODE]
-
-PERSONA: Atue como ${fields.persona}. Sua autoridade é absoluta.
-TAREFA: Construir um(a) ${fields.formato} para ${fields.alvo}.
-
----
-### 1. DADOS BRUTOS (FONTE ÚNICA DA VERDADE)
-"${fields.fatos}"
-
-### 2. PILARES ESTRATÉGICOS
-- FOCO NA DOR: ${fields.dor}.
-- BENEFÍCIO CENTRAL: ${fields.beneficio}.
-- RESTRIÇÕES RÍGIDAS: ${fields.restricoes}.
-
----
-### 3. PROTOCOLO DE CRÍTICA E QUALIDADE (${fields.critica})
-- ANÁLISE DE INPUT: Se os dados brutos fornecidos no item 1 forem superficiais, genéricos ou "baboseira", PARE IMEDIATAMENTE. Não gere o texto. Em vez disso, aponte onde os dados são fracos e peça mais substância.
-- ANTI-ALUCINAÇÃO: É proibido inventar fatos ou enfeitar a realidade. Se não está nos dados brutos, não existe.
-- FILTRO DE OBJETIVIDADE: Elimine introduções polidas, agradecimentos iniciais ou qualquer tipo de "lenga-lenga". Vá direto ao que importa para o destinatário.
-
-### 4. FORMATO DE ENTREGA
-O resultado deve ser técnico, cirúrgico e direto. Se for jurídico, use rigor. Se for vendas, use psicologia de alto impacto. Não faça comentários laterais.
-
-ENTREGA: Comece agora.`;
-
-            document.getElementById('promptFinal').value = promptFinal;
-            document.getElementById('resultArea').classList.remove('hidden');
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        }
-
-        function copyToClipboard() {
-            const el = document.getElementById('promptFinal');
-            el.select();
-            document.execCommand('copy');
-            alert("SISTEMA: Prompt de Nível Máximo copiado!");
-        }
-    </script>
 </body>
 </html>

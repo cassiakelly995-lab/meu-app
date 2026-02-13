@@ -3,105 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt | V8 Elite</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+    <title>Cássia Prompt | V8 Elite Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <style>
-        :root { --magenta: #ff007a; --cyan: #00f2ff; --bg: #050505; --card: #0c0c0c; }
-        body { background: var(--bg); color: #e0e0e0; font-family: 'Rajdhani', sans-serif; margin: 0; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
+        :root { --primary: #000; --accent: #ff007a; --secondary: #00f2ff; --bg: #f8f9fa; --card: #ffffff; }
+        body { background: var(--bg); color: #1a1a1a; font-family: 'Inter', sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; }
         
-        .header-top { border: 1px solid #222; padding: 4px 12px; font-size: 10px; letter-spacing: 2px; color: #555; margin-bottom: 10px; text-transform: uppercase; }
-        h1 { font-family: 'Orbitron', sans-serif; font-size: 22px; letter-spacing: 4px; margin: 0; color: #fff; }
-        h1 b { color: var(--magenta); }
+        /* HEADER EXECUTIVO */
+        header { width: 100%; background: var(--primary); padding: 40px 0; text-align: center; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .logo-area h1 { font-family: 'Montserrat', sans-serif; font-size: 28px; letter-spacing: 2px; text-transform: uppercase; margin: 0; }
+        .logo-area h1 b { color: var(--accent); }
+        .version-tag { font-size: 10px; background: var(--accent); color: #fff; padding: 2px 10px; border-radius: 50px; vertical-align: middle; margin-left: 10px; }
 
-        .dashboard { width: 100%; max-width: 900px; background: var(--card); border: 1px solid #1a1a1a; padding: 40px; margin-top: 30px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+        .container { width: 100%; max-width: 1000px; padding: 40px 20px; box-sizing: border-box; }
+        .card { background: var(--card); border: 1px solid #e0e0e0; border-radius: 8px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
 
-        /* UPLOAD DISCRETO */
-        .upload-area { border: 1px solid #222; padding: 15px; text-align: center; margin-bottom: 30px; cursor: pointer; background: #080808; }
-        .upload-area:hover { border-color: var(--cyan); }
-        .upload-area span { font-size: 11px; color: var(--cyan); font-weight: 600; letter-spacing: 1px; }
+        /* UPLOAD MODERNIZADO */
+        .upload-section { border: 2px dashed #d1d1d1; border-radius: 6px; padding: 30px; text-align: center; margin-bottom: 30px; cursor: pointer; transition: 0.3s; background: #fafafa; }
+        .upload-section:hover { border-color: var(--secondary); background: #f0fbff; }
+        .upload-section i { font-size: 24px; color: #666; display: block; margin-bottom: 10px; }
+        .upload-section span { font-weight: 600; color: #333; font-size: 14px; }
 
-        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .input-group { border-left: 2px solid var(--magenta); padding-left: 15px; margin-bottom: 20px; }
-        .label { font-size: 10px; color: #555; text-transform: uppercase; margin-bottom: 8px; display: block; font-weight: 600; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+        .input-group label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: #888; margin-bottom: 8px; letter-spacing: 1px; }
+        input, textarea { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 12px; font-family: 'Inter'; font-size: 15px; box-sizing: border-box; transition: 0.2s; }
+        input:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255, 0, 122, 0.1); }
+
+        /* BARRA DE INTEGRIDADE */
+        .integrity-bar { height: 6px; background: #eee; border-radius: 10px; margin-top: 10px; overflow: hidden; }
+        #fill { height: 100%; width: 0%; background: linear-gradient(to right, var(--accent), var(--secondary)); transition: 0.5s; }
+
+        /* TERMINAL DE SAÍDA PROFISSIONAL */
+        .terminal { margin-top: 40px; border-radius: 6px; overflow: hidden; border: 1px solid #000; }
+        .terminal-header { background: #000; color: #fff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 600; }
+        #output { padding: 25px; background: #fdfdfd; color: #333; font-family: 'Courier New', Courier, monospace; font-size: 14px; line-height: 1.6; min-height: 120px; white-space: pre-wrap; display: none; }
+
+        .btn-generate { width: 100%; background: var(--primary); color: #fff; border: none; padding: 18px; font-family: 'Montserrat'; font-size: 14px; font-weight: 700; cursor: pointer; border-radius: 4px; text-transform: uppercase; transition: 0.3s; margin-top: 20px; }
+        .btn-generate:hover { background: #333; transform: translateY(-2px); }
+        .btn-copy { background: var(--accent); color: #fff; border: none; padding: 6px 15px; border-radius: 4px; cursor: pointer; font-size: 11px; }
+
+        /* RODAPÉ DE SEGURANÇA JURÍDICA - LEITURA CLARA */
+        .security-footer { margin-top: 60px; width: 100%; max-width: 1000px; padding: 40px 20px; border-top: 2px solid #eee; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+        .security-box h3 { font-family: 'Montserrat'; font-size: 14px; color: var(--primary); margin-bottom: 15px; text-transform: uppercase; border-left: 4px solid var(--accent); padding-left: 10px; }
+        .security-box p { font-size: 14px; color: #555; line-height: 1.7; margin: 0; }
         
-        input, textarea { width: 100%; background: transparent; border: none; color: #fff; font-family: 'Rajdhani'; font-size: 16px; border-bottom: 1px solid #222; padding: 10px 0; box-sizing: border-box; }
-        input:focus, textarea:focus { outline: none; border-bottom-color: var(--cyan); }
-
-        .progress-box { margin-top: 25px; }
-        .bar-bg { height: 2px; background: #1a1a1a; margin-top: 10px; }
-        #bar-fill { height: 100%; width: 0%; background: var(--cyan); transition: 0.5s; }
-
-        /* TERMINAL LIMPO */
-        .terminal { margin-top: 40px; background: #000; border: 1px solid #222; }
-        .term-head { background: #080808; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a1a1a; }
-        .term-title { font-size: 10px; font-family: 'Orbitron'; color: #444; }
-        #output { padding: 25px; color: var(--cyan); font-family: 'monospace'; font-size: 13px; min-height: 100px; white-space: pre-wrap; display: none; }
-        
-        .btn-main { float: right; margin-top: 25px; background: var(--cyan); border: none; color: #000; padding: 12px 35px; font-family: 'Orbitron'; font-size: 11px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
-        .btn-copy { background: var(--magenta); border: none; color: #fff; font-size: 9px; padding: 5px 10px; cursor: pointer; font-family: 'Orbitron'; }
-
-        /* RODAPÉ DE SEGURANÇA JURÍDICA */
-        .footer-legal { margin-top: 60px; width: 100%; max-width: 900px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; padding: 30px; border-top: 1px solid #111; }
-        .legal-item { font-size: 10px; color: #444; line-height: 1.6; }
-        .legal-item b { color: #777; display: block; margin-bottom: 5px; font-size: 9px; }
-        .copyright { margin-top: 40px; font-size: 9px; color: #222; letter-spacing: 3px; }
+        .final-copyright { text-align: center; padding: 40px; font-size: 12px; color: #aaa; width: 100%; }
     </style>
 </head>
 <body>
 
-    <div class="header-top">Protocolo V8 Singularity</div>
-    <h1>CÁSSIA PROMPT | <b>ELITE</b></h1>
-
-    <div class="dashboard">
-        
-        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
-            <span id="up-status">IMPORTAR ARQUIVO PDF (OPCIONAL)</span>
-            <input type="file" id="fileInput" hidden accept="application/pdf">
+    <header>
+        <div class="logo-area">
+            <h1>Cássia Prompt <b>Elite</b> <span class="version-tag">V8</span></h1>
+            <p style="font-size: 12px; opacity: 0.7; margin-top: 10px; letter-spacing: 2px;">PROTOCOLOS DE COMANDO DE ALTA PERFORMANCE</p>
         </div>
+    </header>
 
-        <div class="input-grid">
-            <div class="input-group">
-                <span class="label">Papel do Especialista</span>
-                <input type="text" id="p1" placeholder="Ex: Analista Sênior">
+    <div class="container">
+        <div class="card">
+            <div class="upload-section" onclick="document.getElementById('fileInput').click()">
+                <i class="upload-icon">📂</i>
+                <span id="up-status">CLIQUE PARA IMPORTAR O DOCUMENTO PDF (ANÁLISE LOCAL)</span>
+                <input type="file" id="fileInput" hidden accept="application/pdf">
             </div>
-            <div class="input-group">
-                <span class="label">Objetivo do Comando</span>
-                <input type="text" id="p2" placeholder="Ex: Relatório de Impacto">
+
+            <div class="form-grid">
+                <div class="input-group">
+                    <label>01. Vetor de Autoridade</label>
+                    <input type="text" id="p1" placeholder="Ex: Advogada Especialista em Família">
+                </div>
+                <div class="input-group">
+                    <label>02. Objetivo da Tarefa</label>
+                    <input type="text" id="p2" placeholder="Ex: Elaboração de Petição Inicial">
+                </div>
+            </div>
+
+            <div class="input-group" style="margin-bottom: 10px;">
+                <label>03. Corpus de Fatos (Contexto do Caso)</label>
+                <textarea id="facts" rows="8" oninput="updateIntegrity()" placeholder="Insira os fatos brutos ou utilize o upload de PDF para extração automática..."></textarea>
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 10px; font-weight: 800; color: #aaa; text-transform: uppercase;">Rigor Factual</span>
+                    <span id="status-label" style="font-size: 10px; font-weight: 800; color: #aaa;">AGUARDANDO DADOS</span>
+                </div>
+                <div class="integrity-bar"><div id="fill"></div></div>
+            </div>
+
+            <button class="btn-generate" onclick="processV8()">Gerar Protocolo de Comando</button>
+
+            <div class="terminal">
+                <div class="terminal-header">
+                    <span>COMMAND TRIGGER</span>
+                    <button class="btn-copy" onclick="copyText()">COPIAR COMANDO</button>
+                </div>
+                <div id="output"></div>
             </div>
         </div>
-
-        <div style="margin-top: 20px;">
-            <span class="label">Base de Dados (Contexto)</span>
-            <textarea id="facts" rows="6" oninput="update()" placeholder="Insira o texto bruto ou use o PDF..."></textarea>
-            <div class="progress-box">
-                <div id="status-text" style="font-size: 9px; color: #333; text-transform: uppercase;">Densidade: nula</div>
-                <div class="bar-bg"><div id="bar-fill"></div></div>
-            </div>
-        </div>
-
-        <div class="terminal">
-            <div class="term-head">
-                <span class="term-title">Saída de Prompt</span>
-                <button class="btn-copy" onclick="copy()">Copiar</button>
-            </div>
-            <div id="output"></div>
-        </div>
-
-        <button class="btn-main" onclick="generate()">Gerar Comando</button>
     </div>
 
-    <footer class="footer-legal">
-        <div class="legal-item">
-            <b>Segurança Jurídica</b>
-            Este console processa dados localmente. A responsabilidade técnica e revisão final pertencem exclusivamente ao usuário.
+    <section class="security-footer">
+        <div class="security-box">
+            <h3>Segurança Jurídica e Técnica</h3>
+            <p>O <b>Cássia Prompt V8</b> utiliza um protocolo rigoroso de filtragem para mitigar alucinações de IA. O sistema obriga a ferramenta a se basear exclusivamente no "Corpus de Fatos" fornecido. Toda e qualquer lacuna de informação será sinalizada, proibindo a IA de inventar dados processuais ou fáticos.</p>
         </div>
-        <div class="legal-item">
-            <b>Privacidade LGPD</b>
-            Nenhum dado inserido ou extraído de documentos PDF é armazenado em servidores externos. O controle é 100% do operador.
+        <div class="security-box">
+            <h3>Privacidade e LGPD</h3>
+            <p>Este console opera via <b>Processamento Local</b>. A extração de dados de arquivos PDF ocorre inteiramente dentro do seu navegador. Nenhum documento ou dado sensível é enviado para nossos servidores ou armazenado em nuvem externa, garantindo sigilo profissional absoluto.</p>
         </div>
-    </footer>
-    <div class="copyright">CÁSSIA PROMPT © 2026 | UNIVERSAL ELITE EDITION</div>
+        <div class="security-box" style="margin-top: -20px;">
+            <h3>Responsabilidade do Operador</h3>
+            <p>A Inteligência Artificial atua como um assistente de produtividade. A revisão técnica, a fundamentação legal e a decisão final sobre o conteúdo gerado são de responsabilidade exclusiva e indelegável do profissional usuário.</p>
+        </div>
+    </section>
+
+    <div class="final-copyright">
+        © 2026 CÁSSIA PROMPT | V8 ELITE EDITION | DESENVOLVIDO PARA ALTA PERFORMANCE
+    </div>
 
     <script>
         const fileInput = document.getElementById('fileInput');
@@ -109,46 +129,53 @@
         fileInput.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (!file) return;
-            document.getElementById('up-status').innerText = "PROCESSANDO DOCUMENTO...";
+            document.getElementById('up-status').innerText = "⏳ EXTRAINDO DADOS DO PDF...";
+            
             const reader = new FileReader();
             reader.onload = async function() {
                 const typedarray = new Uint8Array(this.result);
                 const pdf = await pdfjsLib.getDocument(typedarray).promise;
-                let text = "";
+                let fullText = "";
                 for (let i = 1; i <= pdf.numPages; i++) {
                     const page = await pdf.getPage(i);
                     const content = await page.getTextContent();
-                    text += content.items.map(item => item.str).join(" ") + "\n";
+                    fullText += content.items.map(item => item.str).join(" ") + "\n";
                 }
-                document.getElementById('facts').value = text.substring(0, 15000);
-                document.getElementById('up-status').innerText = "PDF INTEGRADO COM SUCESSO";
-                update();
+                document.getElementById('facts').value = fullText.substring(0, 15000);
+                document.getElementById('up-status').innerText = "✅ DOCUMENTO INTEGRADO COM SUCESSO";
+                updateIntegrity();
             };
             reader.readAsArrayBuffer(file);
         });
 
-        function update() {
+        function updateIntegrity() {
             let len = document.getElementById('facts').value.length;
             let p = Math.min((len / 500) * 100, 100);
-            document.getElementById('bar-fill').style.width = p + "%";
-            document.getElementById('status-text').innerText = p > 50 ? "Densidade: Elite" : "Densidade: Baixa";
+            document.getElementById('fill').style.width = p + "%";
+            document.getElementById('status-label').innerText = p > 50 ? "RIGOR: ELITE (DADOS DENSOS)" : "RIGOR: INSUFICIENTE";
+            document.getElementById('status-label').style.color = p > 50 ? "#00f2ff" : "#aaa";
         }
 
-        function generate() {
-            const f = document.getElementById('facts').value;
-            if(f.length < 20) return alert("ERRO: Dados insuficientes.");
-            const output = document.getElementById('output');
-            output.innerText = `### [PROTOCOLO V8 SINGULARITY]\n\n` +
+        function processV8() {
+            const facts = document.getElementById('facts').value;
+            if(facts.length < 30) return alert("Erro: O protocolo exige uma base de dados mínima.");
+            
+            const out = document.getElementById('output');
+            out.innerText = `### [SISTEMA CÁSSIA PROMPT V8 - SINGULARITY]\n\n` +
                 `**PERSONA:** ${document.getElementById('p1').value}\n` +
                 `**MISSÃO:** ${document.getElementById('p2').value}\n\n` +
-                `**CONTEXTO BRUTO:**\n"${f}"\n\n` +
-                `**REGRAS:**\n- Proibido alucinar.\n- Use apenas os dados acima.\n- Resposta técnica e direta.`;
-            output.style.display = 'block';
+                `**BASE DE DADOS INQUESTIONÁVEL:**\n"${facts}"\n\n` +
+                `**DIRETRIZES DE SEGURANÇA:**\n` +
+                `- Proibido alucinar ou inferir fatos fora da base fornecida.\n` +
+                `- Se houver ausência de informação crítica, use: [INFORMAÇÃO NÃO CONSTA].\n` +
+                `- Resposta técnica, objetiva e livre de exageros adjetivos.`;
+            
+            out.style.display = 'block';
         }
 
-        function copy() {
+        function copyText() {
             navigator.clipboard.writeText(document.getElementById('output').innerText);
-            alert("Copiado.");
+            alert("Comando copiado com sucesso.");
         }
     </script>
 </body>

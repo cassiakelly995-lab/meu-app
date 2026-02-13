@@ -3,138 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt | V8 God Mode Ultra</title>
+    <title>Cássia Prompt | V8 Elite Singularity</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --m: #ff007a; --c: #00f2ff; --bg: #020205; }
-        body { background: var(--bg); color: #fff; font-family: 'Rajdhani', sans-serif; margin: 0; padding: 20px; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        :root { --magenta: #ff007a; --cyan: #00f2ff; --bg-dark: #0a0b10; --card-bg: rgba(20, 22, 30, 0.9); }
         
-        .panel { width: 100%; max-width: 900px; background: rgba(10, 10, 15, 0.95); border: 1px solid rgba(255, 0, 122, 0.2); padding: 40px; position: relative; backdrop-filter: blur(20px); box-shadow: 0 0 100px rgba(255, 0, 122, 0.1); }
-        
-        h1 { font-family: 'Orbitron', sans-serif; font-size: 18px; letter-spacing: 10px; text-align: center; color: #fff; text-shadow: 0 0 10px var(--m); margin-bottom: 40px; }
-        
-        .scanner-box { margin-bottom: 25px; }
-        .quality-bar { height: 4px; width: 100%; background: #111; margin-top: 5px; position: relative; }
-        #bar-fill { height: 100%; width: 0%; transition: 0.5s; background: var(--m); }
-        #quality-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--m); }
+        body { 
+            background: #020205; 
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(0, 242, 255, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 90% 90%, rgba(255, 0, 122, 0.1) 0%, transparent 30%);
+            color: #fff; font-family: 'Rajdhani', sans-serif; margin: 0; padding: 20px;
+            min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+        }
 
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        label { font-size: 11px; letter-spacing: 2px; color: var(--c); text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 5px; }
-        
-        input, textarea, select { width: 100%; background: #000; border: 1px solid #222; padding: 12px; color: #fff; font-family: 'Rajdhani'; font-size: 15px; box-sizing: border-box; }
-        input:focus, textarea:focus { border-color: var(--m); outline: none; box-shadow: 0 0 15px rgba(255, 0, 122, 0.2); }
-        
-        .btn-exec { grid-column: span 2; padding: 20px; background: transparent; border: 1px solid var(--m); color: #fff; font-family: 'Orbitron'; cursor: pointer; letter-spacing: 5px; transition: 0.4s; margin-top: 10px; }
-        .btn-exec:hover { background: var(--m); box-shadow: 0 0 30px var(--m); }
-        
-        #loading { display: none; text-align: center; font-family: 'Orbitron'; font-size: 12px; color: var(--c); margin: 20px 0; letter-spacing: 3px; }
+        /* HEADER PROTOCOLO */
+        .eng-header { border: 1px solid #444; padding: 2px 15px; font-size: 10px; letter-spacing: 3px; margin-bottom: 10px; color: #aaa; }
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 22px; letter-spacing: 5px; text-transform: uppercase; margin: 5px 0; }
+        h1 b { color: var(--magenta); font-weight: 700; }
+        .subtitle { font-size: 10px; letter-spacing: 6px; color: #666; text-transform: uppercase; margin-bottom: 30px; }
 
-        #resultado-box { display: none; margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; animation: fadeIn 1s; }
-        #prompt-area { background: #000; padding: 20px; border: 1px solid var(--c); color: var(--c); font-family: monospace; font-size: 13px; white-space: pre-wrap; position: relative; }
-        .copy-btn { position: absolute; top: -12px; right: 10px; background: var(--c); color: #000; border: none; padding: 5px 15px; font-family: 'Orbitron'; font-size: 9px; cursor: pointer; font-weight: 700; }
+        .main-dashboard {
+            width: 100%; max-width: 950px; background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px;
+            padding: 30px; box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+        }
 
-        footer { margin-top: 40px; text-align: center; font-size: 9px; letter-spacing: 2px; color: #444; text-transform: uppercase; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .section-label { font-size: 11px; color: #fff; letter-spacing: 1px; margin-bottom: 15px; display: block; font-weight: 600; }
+
+        .grid-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
+        
+        .box-input { background: rgba(0,0,0,0.4); border: 1px solid #333; padding: 15px; border-radius: 6px; }
+        .box-label { font-size: 10px; color: #00f2ff; text-transform: uppercase; margin-bottom: 8px; display: block; letter-spacing: 1px; }
+        
+        input, select, textarea { 
+            width: 100%; background: transparent; border: none; color: #fff; 
+            font-family: 'Rajdhani'; font-size: 14px; border-bottom: 1px solid #222; padding: 5px 0;
+        }
+        input:focus { outline: none; border-bottom-color: var(--cyan); }
+
+        /* QUALITY SCANNER */
+        .quality-section { border-top: 1px solid #222; padding-top: 20px; }
+        .quality-meta { font-size: 10px; color: #888; margin-bottom: 10px; line-height: 1.6; }
+        .quality-status-row { display: flex; align-items: center; gap: 10px; margin-top: 15px; }
+        .status-tag { background: #333; padding: 2px 8px; font-size: 9px; border-radius: 3px; color: #ccc; }
+        .progress-container { flex-grow: 1; height: 10px; background: #111; border-radius: 2px; overflow: hidden; }
+        #progress-fill { height: 100%; width: 0%; background: var(--cyan); transition: 1s ease; }
+
+        /* TERMINAL DE SAÍDA */
+        .terminal-box { margin-top: 30px; border: 1px solid #333; border-radius: 4px; overflow: hidden; position: relative; }
+        .terminal-header { background: #111; padding: 8px 15px; display: flex; justify-content: space-between; align-items: center; }
+        .terminal-title { font-size: 10px; color: #888; font-family: 'Orbitron'; }
+        .btn-copy { background: var(--magenta); border: none; color: #fff; font-size: 9px; padding: 5px 12px; cursor: pointer; border-radius: 2px; font-weight: bold; }
+        
+        #output { background: #000; padding: 20px; color: var(--cyan); font-family: 'monospace'; font-size: 12px; min-height: 150px; white-space: pre-wrap; display: none; }
+
+        .btn-sync { float: right; margin-top: 15px; background: var(--cyan); border: none; color: #000; padding: 8px 25px; font-family: 'Orbitron'; font-size: 11px; font-weight: 700; cursor: pointer; border-radius: 4px; }
+
+        footer { margin-top: 40px; font-size: 9px; color: #444; letter-spacing: 2px; text-transform: uppercase; text-align: center; }
     </style>
 </head>
 <body>
 
-<div class="panel">
-    <h1>CÁSSIA PROMPT <span style="color:var(--m)">V8 ULTRA</span></h1>
-    
-    <div class="grid">
-        <div style="grid-column: span 2;">
-            <label>01. Identidade de Comando</label>
-            <input type="text" id="p1" placeholder="Ex: Advogada Especialista OAB Santana...">
-        </div>
-        <div style="grid-column: span 2;">
-            <label>02. Objetivo da Missão</label>
-            <input type="text" id="p2" placeholder="Ex: Divórcio Consensual, Notificação Extrajudicial...">
-        </div>
-        
-        <div style="grid-column: span 2;" class="scanner-box">
-            <label>03. Corpus de Fatos (Fonte da Verdade)</label>
-            <textarea id="p3" rows="5" oninput="updateScanner()" placeholder="Insira os detalhes brutos do caso..."></textarea>
-            <div id="quality-label">Qualidade do Input: <span id="q-status">Pobre</span></div>
-            <div class="quality-bar"><div id="bar-fill"></div></div>
+    <div class="eng-header">ENGINEERING PROTOCOL</div>
+    <h1>CÁSSIA PROMPT | V8 <b>Singularity</b> Elite Edition</h1>
+    <div class="subtitle">SUBTITLE PROTOCOL</div>
+
+    <div class="main-dashboard">
+        <span class="section-label">01. Vetor de Autoridade</span>
+        <div class="grid-inputs">
+            <div class="box-input">
+                <span class="box-label">01. Vetor de Autoridade</span>
+                <input type="text" id="p1" placeholder="Ex: ADVOGADA CÍVEL">
+            </div>
+            <div class="box-input">
+                <span class="box-label">02. Arquitetura de Entregável</span>
+                <input type="text" id="p2" placeholder="Ex: PETIÇÃO INICIAL, ESTRATÉGIA...">
+            </div>
+            <div class="box-input">
+                <span class="box-label">03. Arquitetura de Tom</span>
+                <select id="p3">
+                    <option value="CIRÚRGICO E GÉLIDO">CIRÚRGICO E GÉLIDO</option>
+                    <option value="ESTRATÉGICO DOMINANTE">ESTRATÉGICO DOMINANTE</option>
+                </select>
+            </div>
+            <div class="box-input">
+                <span class="box-label">04. Modulação de Voz</span>
+                <select id="p4">
+                    <option value="ELITE CORPORATIVA">ELITE CORPORATIVA</option>
+                    <option value="AGRESSIVO VENCEDOR">AGRESSIVO VENCEDOR</option>
+                </select>
+            </div>
         </div>
 
-        <div>
-            <label>04. Tom de Voz</label>
-            <select id="p4">
-                <option value="Técnico e Gélido">Técnico e Gélido</option>
-                <option value="Agressivo e Vencedor">Agressivo e Vencedor</option>
-                <option value="Diplomático e Sutil">Diplomático e Sutil</option>
-            </select>
-        </div>
-        <div>
-            <label>05. Nível de Rigor</label>
-            <select id="p5">
-                <option value="God Mode (Zero Alucinação)">God Mode (Zero Alucinação)</option>
-                <option value="Estratégico (Alta Performance)">Estratégico (Alta Performance)</option>
-            </select>
+        <div class="quality-section">
+            <span class="section-label">03. Corpus de Fatos (Base da Verdade Absoluta)</span>
+            <div class="quality-meta">
+                A densidade dos dados define a qualidade técnica da IA. O input de detalhes precisos<br>
+                é o que garante a redução de alucinações e a excelência do resultado.
+            </div>
+            <textarea id="facts" rows="5" oninput="updateScanner()" placeholder="Insira os fatos aqui..."></textarea>
+            
+            <div class="quality-status-row">
+                <span style="font-size: 10px; color: #555;">#Quality label: <span style="color:var(--cyan)">status:</span></span>
+                <span class="status-tag" id="status-text">BAIXA</span>
+                <div class="progress-container"><div id="progress-fill"></div></div>
+            </div>
         </div>
 
-        <button class="btn-exec" onclick="startProcess()">EXECUTAR ENGENHARIA V8</button>
-    </div>
-
-    <div id="loading">PROCESSANDO CAMADAS DE INTELIGÊNCIA...</div>
-
-    <div id="resultado-box">
-        <div id="prompt-area">
-            <button class="copy-btn" onclick="copy()">COPIAR COMANDO</button>
-            <div id="final-text"></div>
+        <div class="terminal-box">
+            <div class="terminal-header">
+                <span class="terminal-title">04. ENUNCIADO</span>
+                <button class="btn-copy" onclick="copy()">COPY TRIGGER ➔</button>
+            </div>
+            <div id="output"></div>
         </div>
+
+        <button class="btn-sync" onclick="sync()">BTN-SYNCR</button>
     </div>
 
     <footer>
-        © 2026 CÁSSIA PROMPT | V8 ELITE EDITION | PROTEÇÃO LGPD ATIVA
+        CONSOLE PT-LLO<br>
+        CÁSSIA PROMPT ELITE EDITION - 2026
     </footer>
-</div>
 
-<script>
-    function updateScanner() {
-        let val = document.getElementById('p3').value.length;
-        let fill = document.getElementById('bar-fill');
-        let status = document.getElementById('q-status');
-        let percent = Math.min((val / 200) * 100, 100);
-        fill.style.width = percent + "%";
-        if(percent < 30) { status.innerText = "Pobre"; fill.style.background = "#ff007a"; }
-        else if(percent < 70) { status.innerText = "Aceitável"; fill.style.background = "#ffcc00"; }
-        else { status.innerText = "Elite"; fill.style.background = "#00f2ff"; }
-    }
-
-    function startProcess() {
-        if(document.getElementById('p3').value.length < 50) {
-            alert("AVISO: Fatos insuficientes para o Modo V8. Saia da mediocridade.");
-            return;
+    <script>
+        function updateScanner() {
+            let val = document.getElementById('facts').value.length;
+            let fill = document.getElementById('progress-fill');
+            let status = document.getElementById('status-text');
+            let percent = Math.min((val / 300) * 100, 100);
+            fill.style.width = percent + "%";
+            if(percent < 30) { status.innerText = "BAIXA"; }
+            else if(percent < 70) { status.innerText = "MÉDIA"; }
+            else { status.innerText = "ELITE"; }
         }
-        document.getElementById('loading').style.display = 'block';
-        document.getElementById('resultado-box').style.display = 'none';
-        
-        setTimeout(() => {
-            document.getElementById('loading').style.display = 'none';
-            generate();
-        }, 2000);
-    }
 
-    function generate() {
-        const text = `### [MODO: CÁSSIA PROMPT V8 ULTRA HORIZON]\n\n` +
-            `**PERSONA:** ${document.getElementById('p1').value}\n` +
-            `**MISSÃO:** ${document.getElementById('p2').value}\n` +
-            `**DADOS REAIS:** ${document.getElementById('p3').value}\n` +
-            `**TOM DE VOZ:** ${document.getElementById('p4').value}\n` +
-            `**RIGOR:** ${document.getElementById('p5').value}\n\n` +
-            `**DIRETRIZES DE ELITE:**\n- Priorize a qualidade do atendimento e a precisão absoluta.\n- Se os dados forem fracos, exponha a falha. Não invente.\n- Sem introduções ou lenga-lenga. Vá direto ao ponto técnico.`;
-        
-        document.getElementById('final-text').innerText = text;
-        document.getElementById('resultado-box').style.display = 'block';
-    }
+        function sync() {
+            const facts = document.getElementById('facts').value;
+            if(facts.length < 50) return alert("ERRO: DENSIDADE DE DADOS INSUFICIENTE.");
+            
+            const prompt = `### [SINGULARITY PROTOCOL V8]\n\n` +
+                `**VETOR:** ${document.getElementById('p1').value}\n` +
+                `**ARQUITETURA:** ${document.getElementById('p2').value}\n` +
+                `**TOM:** ${document.getElementById('p3').value}\n` +
+                `**CORPUS:** ${facts}\n\n` +
+                `**RIGOR:** Anti-alucinação absoluto. Proibido inventar. Direto ao ponto.`;
 
-    function copy() {
-        navigator.clipboard.writeText(document.getElementById('final-text').innerText);
-        alert("ENGENHARIA COPIADA PARA O CLIPE.");
-    }
-</script>
+            document.getElementById('output').innerText = prompt;
+            document.getElementById('output').style.display = 'block';
+        }
+
+        function copy() {
+            navigator.clipboard.writeText(document.getElementById('output').innerText);
+            alert("PROTOCOLO SINCRONIZADO.");
+        }
+    </script>
 </body>
 </html>

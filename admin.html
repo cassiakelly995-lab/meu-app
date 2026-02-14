@@ -2,25 +2,25 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>SISTEMA MESTRA V15 | CORREÇÃO TOTAL</title>
+    <title>SISTEMA MESTRA V16 | FINAL</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <style>
         body { background: #000; color: #00f2ff; font-family: sans-serif; display: flex; justify-content: center; padding: 20px; }
-        .panel { width: 100%; max-width: 450px; background: #0a0a0a; border: 2px solid #00f2ff; border-radius: 15px; padding: 25px; text-align: center; box-shadow: 0 0 20px #00f2ff44; }
+        .panel { width: 100%; max-width: 450px; background: #111; border: 2px solid #00f2ff; border-radius: 15px; padding: 25px; text-align: center; }
         input { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 15px; border-radius: 8px; margin: 15px 0; box-sizing: border-box; }
-        .btn-ativar { width: 100%; background: #00ffa3; color: #000; border: none; padding: 15px; font-weight: bold; border-radius: 8px; cursor: pointer; text-transform: uppercase; }
-        .user-card { background: #111; padding: 15px; border-radius: 10px; margin-top: 20px; border: 1px solid #222; text-align: left; }
+        .btn-ativar { width: 100%; background: #00ffa3; color: #000; border: none; padding: 15px; font-weight: bold; border-radius: 8px; cursor: pointer; }
+        .user-card { background: #000; padding: 15px; border-radius: 10px; margin-top: 20px; border: 1px solid #222; text-align: left; }
         .btn-copy { background: #0078d4; color: white; border: none; width: 100%; padding: 12px; border-radius: 5px; margin-top: 10px; cursor: pointer; font-weight: bold; }
-        .btn-del { background: #ff4d4d; color: white; border: none; padding: 5px 10px; border-radius: 4px; float: right; cursor: pointer; font-size: 0.7rem; }
+        .btn-del { background: #ff4d4d; color: white; border: none; padding: 5px 10px; border-radius: 4px; float: right; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="panel">
-    <h2>MESTRA V15 CONTROL</h2>
+    <h2>MESTRA V16 CONTROL</h2>
     <input type="text" id="nomeAdv" placeholder="NOME DA DOUTORA">
-    <button class="btn-ativar" onclick="ativar()">ATIVAR ACESSO AGORA</button>
+    <button class="btn-ativar" onclick="ativar()">ATIVAR ACESSO</button>
     <div id="lista" style="margin-top:30px"></div>
 </div>
 
@@ -29,9 +29,8 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // AQUI ESTÁ A CHAVE MESTRA: O NOME EXATO DO SEU ARQUIVO QUE ESTÁ NO GITHUB
-    const NOME_DO_ARQUIVO_DO_APP = "cassia-app.html";
-    const LINK_BASE = "https://cassiakelly995-lab.github.io/meu-app/" + NOME_DO_ARQUIVO_DO_APP;
+    // ESTA LINHA É A ÚNICA QUE IMPORTA:
+    const URL_DO_SITE = "https://cassiakelly995-lab.github.io/meu-app/cassia-app.html";
 
     function ativar() {
         const nome = document.getElementById('nomeAdv').value.trim();
@@ -48,25 +47,30 @@
         lista.innerHTML = "";
         snap.forEach((child) => {
             const id = child.key;
-            // ESTE LINK VAI COPIAR COM O FINAL .HTML E O ID DA CLIENTE
-            const linkFinal = LINK_BASE + "?id=" + id;
+            // AQUI O LINK É MONTADO EXATAMENTE COM .HTML
+            const linkFinal = URL_DO_SITE + "?id=" + id;
             lista.innerHTML += `
                 <div class="user-card">
-                    <button class="btn-del" onclick="apagar('${id}')">BLOQUEAR</button>
-                    <strong>USUÁRIA: ${id}</strong>
-                    <button class="btn-copy" onclick="copiar('${linkFinal}')">COPIAR LINK ÚNICO (WHATSAPP)</button>
+                    <button class="btn-del" onclick="apagar('${id}')">X</button>
+                    <strong>Dra. ${id}</strong>
+                    <button class="btn-copy" onclick="copiar('${linkFinal}')">COPIAR LINK (WHATSAPP)</button>
                 </div>`;
         });
     });
 
     function copiar(url) {
-        navigator.clipboard.writeText(url).then(() => {
-            alert("🔗 LINK COPIADO!\nAgora cole no WhatsApp. Ele já vai com o final .html certinho.");
-        });
+        // Tentativa de cópia com comando garantido
+        const el = document.createElement('textarea');
+        el.value = url;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        alert("🔗 LINK COPIADO COM SUCESSO!");
     }
 
     function apagar(id) {
-        if(confirm("Remover " + id + "?")) db.ref('clientes/' + id).remove();
+        if(confirm("Bloquear " + id + "?")) db.ref('clientes/' + id).remove();
     }
 </script>
 </body>

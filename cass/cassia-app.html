@@ -18,11 +18,12 @@
             --ms-border: #edebe9;
         }
 
+        /* CONFIGURAÇÃO DO MODO ALTERNATIVO (DARK) */
         [data-theme="dark"] {
-            --ms-bg: #0b0b0b;
-            --ms-card: #161616;
-            --ms-text: #f5f5f5;
-            --ms-border: #2d2d2d;
+            --ms-bg: #111111;
+            --ms-card: #1b1b1b;
+            --ms-text: #ffffff;
+            --ms-border: #333333;
         }
 
         body {
@@ -30,7 +31,7 @@
             background-color: var(--ms-bg);
             color: var(--ms-text);
             margin: 0;
-            transition: background 0.3s, color 0.3s;
+            transition: background 0.2s, color 0.2s;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -43,7 +44,6 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--ms-border);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         .main-app {
@@ -55,13 +55,11 @@
             padding: 40px;
             border-radius: 4px;
             border: 1px solid var(--ms-border);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
         .v8-accent-title {
             font-size: 2.2rem;
             font-weight: 700;
-            letter-spacing: -1px;
             color: var(--ms-blue);
             margin: 0;
         }
@@ -75,10 +73,7 @@
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            transition: 0.2s;
         }
-
-        .pdf-drop-zone:hover { background: rgba(0, 120, 212, 0.08); }
 
         .form-grid {
             display: grid;
@@ -110,8 +105,6 @@
             padding: 20px;
             width: 100%;
             font-weight: 700;
-            font-size: 1rem;
-            border-radius: 4px;
             cursor: pointer;
             margin-top: 25px;
             text-transform: uppercase;
@@ -150,7 +143,7 @@
 
 <nav class="nav-enterprise">
     <div style="font-weight: 800; font-size: 1.4rem;">CÁSSIA<span style="color:var(--ms-blue)">PROMPT</span> V8</div>
-    <button class="btn-theme" onclick="toggleMode()">ALTERNAR TEMA</button>
+    <button class="btn-theme" onclick="toggleMode()">MODO ALTERNATIVO</button>
 </nav>
 
 <div class="main-app">
@@ -212,11 +205,14 @@
         });
     }
 
-    // THEME ENGINE
+    // FUNÇÃO DO MODO ALTERNATIVO (CORRIGIDA)
     function toggleMode() {
         const d = document.documentElement;
-        const isDark = d.getAttribute('data-theme') === 'dark';
-        isDark ? d.removeAttribute('data-theme') : d.setAttribute('data-theme', 'dark');
+        if (d.getAttribute('data-theme') === 'dark') {
+            d.removeAttribute('data-theme');
+        } else {
+            d.setAttribute('data-theme', 'dark');
+        }
     }
 
     // PDF ENGINE
@@ -243,21 +239,15 @@
         const p = document.getElementById('persona').value || "Especialista";
         const o = document.getElementById('objetivo').value || "Resultado Técnico";
         const c = document.getElementById('corpus').value;
-
         if(!c) return alert("Erro: Corpus vazio.");
 
         const finalPrompt = `[CÁSSIA PROMPT V8 - SINGULARITY ENTERPRISE]
-PERSONA: ${p}. 
-OBJETIVO: ${o}.
-
+PERSONA: ${p}. OBJETIVO: ${o}.
 [PROTOCOLOS RÍGIDOS]
-- PROIBIDO: Prolixidade, saudações ou "babozeiras" educadas. 
-- ZERO ALUCINAÇÃO: Não invente fatos. Use apenas o corpus abaixo.
-- LACUNAS: Se faltar informação, escreva "[DADO AUSENTE]".
+- PROIBIDO: Prolixidade e saudações.
+- ZERO ALUCINAÇÃO: Use apenas o corpus abaixo.
 - TÉCNICA: Vá direto ao ponto jurídico.
-
-CORPUS:
-"${c}"`;
+CORPUS: "${c}"`;
 
         document.getElementById('result').innerText = finalPrompt;
         document.getElementById('outputArea').style.display = 'block';

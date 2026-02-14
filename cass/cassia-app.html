@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt V8 | Enterprise Edition</title>
+    <title>Cássia Prompt V8 | Singularity Ultra</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
@@ -11,167 +11,160 @@
     <style>
         :root {
             --ms-blue: #0078d4;
-            --ms-dark-blue: #005a9e;
-            --bg-light: #f3f2f1;
+            --bg-app: #ffffff;
+            --card-bg: #ffffff;
             --text-main: #323130;
             --border: #edebe9;
+            --input-bg: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --bg-app: #111111;
+            --card-bg: #1b1b1b;
+            --text-main: #ffffff;
+            --border: #333333;
+            --input-bg: #252525;
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background-color: var(--bg-light);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--bg-app);
             color: var(--text-main);
             margin: 0;
+            transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
         }
 
         .navbar {
             width: 100%;
-            background: white;
-            padding: 15px 50px;
-            box-sizing: border-box;
+            background: var(--card-bg);
+            padding: 15px 40px;
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-sizing: border-box;
         }
 
-        .brand {
-            font-weight: 600;
-            font-size: 1.2rem;
+        .theme-toggle {
+            cursor: pointer;
+            padding: 8px 15px;
+            border: 1px solid var(--ms-blue);
             color: var(--ms-blue);
+            background: transparent;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
         }
 
         .main-container {
             width: 90%;
-            max-width: 1100px;
-            background: white;
-            margin-top: 40px;
-            padding: 40px;
-            border-radius: 4px;
-            box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,0.132), 0 0.3px 0.9px 0 rgba(0,0,0,0.108);
+            max-width: 1200px;
+            margin: 40px 0;
+            background: var(--card-bg);
+            padding: 45px;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
         }
 
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 400;
-            margin-bottom: 25px;
-            border-bottom: 2px solid var(--ms-blue);
-            display: inline-block;
-            padding-bottom: 5px;
-        }
-
-        .grid-inputs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
+        .v8-header { border-left: 6px solid var(--ms-blue); padding-left: 20px; margin-bottom: 40px; }
+        .v8-header h1 { margin: 0; font-size: 2.2rem; letter-spacing: -1px; }
+        
+        .grid-system { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px; }
         .field-group { display: flex; flex-direction: column; }
-        label { font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; color: #605e5c; }
+        label { font-size: 0.75rem; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; color: var(--ms-blue); }
         
         input, textarea {
-            border: 1px solid #8a8886;
-            padding: 12px;
-            border-radius: 2px;
+            background: var(--input-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 14px;
+            border-radius: 4px;
             font-size: 1rem;
             outline: none;
-            transition: border 0.2s;
         }
 
         input:focus, textarea:focus { border: 2px solid var(--ms-blue); }
 
-        textarea { height: 300px; resize: vertical; line-height: 1.5; }
-
-        .btn-primary {
-            background-color: var(--ms-blue);
+        .btn-v8 {
+            background: var(--ms-blue);
             color: white;
             border: none;
-            padding: 15px 40px;
+            padding: 18px 50px;
             font-size: 1rem;
             font-weight: 600;
+            border-radius: 4px;
             cursor: pointer;
-            border-radius: 2px;
-            transition: background 0.2s;
+            transition: 0.3s;
+            text-transform: uppercase;
         }
 
-        .btn-primary:hover { background-color: var(--ms-dark-blue); }
+        .btn-v8:hover { filter: brightness(1.2); transform: translateY(-2px); }
 
-        .output-box {
-            margin-top: 30px;
-            background: #faf9f8;
-            border: 1px solid var(--border);
-            padding: 25px;
+        .output-panel {
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(0, 120, 212, 0.05);
+            border: 1px dashed var(--ms-blue);
             display: none;
         }
 
-        .footer-legal {
-            margin-top: 50px;
-            font-size: 0.75rem;
-            color: #a19f9d;
-            text-align: center;
-            max-width: 800px;
-            padding-bottom: 40px;
-        }
-
-        /* TELA DE BLOQUEIO */
+        /* BLOQUEIO DIGNO DE GOOGLE/MS */
         .lock-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #ffffff; z-index: 10000; display: flex; flex-direction: column;
+            background: var(--bg-app); z-index: 99999; display: flex; flex-direction: column;
             align-items: center; justify-content: center; text-align: center;
         }
     </style>
 </head>
 <body>
 
-<div id="appBody">
+<div id="v8App">
     <nav class="navbar">
-        <div class="brand">Cássia Prompt V8 Singularity</div>
-        <div style="font-size: 0.8rem; color: #605e5c;">Licenciado para: <span id="userNameDisplay">...</span></div>
+        <div style="font-weight: 800; font-size: 1.4rem;">CÁSSIA<span style="color: var(--ms-blue);">PROMPT</span> V8</div>
+        <button class="theme-toggle" onclick="toggleTheme()">ALTERNAR MODO</button>
     </nav>
 
     <div class="main-container">
-        <h2 class="section-title">Console de Engenharia de Prompt</h2>
-        
-        <div class="grid-inputs">
+        <div class="v8-header">
+            <h1>Singularity Ultra Edition</h1>
+            <p style="color: #888;">Protocolo de Alta Engenharia Jurídica e Mitigação de Alucinação</p>
+        </div>
+
+        <div class="grid-system">
             <div class="field-group">
-                <label>PERSONA TÉCNICA (ESPECIALISTA)</label>
-                <input type="text" id="persona" placeholder="Ex: Juiz de Direito, Especialista em Processo Civil">
+                <label>Arquitetura de Persona</label>
+                <input type="text" id="persona" placeholder="Ex: Advogado Especialista em Direito Tributário">
             </div>
             <div class="field-group">
-                <label>MATRIZ DE RESULTADO (OBJETIVO)</label>
-                <input type="text" id="objetivo" placeholder="Ex: Contestação com foco em Nulidade Citatória">
+                <label>Matriz de Objetivo</label>
+                <input type="text" id="objetivo" placeholder="Ex: Petição Inicial com foco em Danos Morais">
             </div>
         </div>
 
         <div class="field-group">
-            <label>NÚCLEO DE FATOS E ELEMENTOS JURÍDICOS (CORPUS)</label>
-            <textarea id="corpus" placeholder="Insira aqui os factos brutos ou rascunhos. A IA aplicará a engenharia V8 para eliminar redundâncias e focar no direito puro."></textarea>
+            <label>Núcleo de Fatos (Corpus Jurídico)</label>
+            <textarea id="corpus" placeholder="Insira os fatos brutos. O sistema Singularity aplicará filtros de proteção jurídica..."></textarea>
         </div>
 
-        <div style="margin-top: 25px; display: flex; justify-content: flex-end;">
-            <button class="btn-primary" onclick="executarV8()">EXECUTAR PROTOCOLO V8</button>
+        <div style="margin-top: 30px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 0.8rem; color: #888;">● Engine V8 Ativa | ● Protocolo Anti-Erro Ativado</div>
+            <button class="btn-v8" onclick="gerarSingularity()">Executar Protocolo Ultra</button>
         </div>
 
-        <div id="output" class="output-box">
-            <h4 style="margin-top:0;">PROMPT DE ALTA PERFORMANCE GERADO:</h4>
-            <div id="resultText" style="white-space: pre-wrap; font-family: 'Consolas', monospace; font-size: 0.95rem;"></div>
-            <button class="btn-primary" style="margin-top:20px; padding: 10px 20px;" onclick="copiar()">COPIAR PARA ÁREA DE TRANSFERÊNCIA</button>
+        <div id="output" class="output-panel">
+            <h4 style="margin-top:0; color: var(--ms-blue);">PROMPT DE ELITE GERADO:</h4>
+            <div id="resultText" style="white-space: pre-wrap; font-size: 1rem; line-height: 1.6;"></div>
+            <button class="btn-v8" style="margin-top:20px; font-size: 0.8rem; padding: 10px 25px;" onclick="copiar()">Copiar Comando</button>
         </div>
-    </div>
-
-    <div class="footer-legal">
-        Este software utiliza modelos de linguagem de grande escala. Os resultados devem ser validados por profissionais devidamente inscritos nos quadros da OAB. 
-        Copyright © 2026 Cássia Prompt V8 - Enterprise Edition. Todos os direitos reservados.
     </div>
 </div>
 
 <script>
-    // FIREBASE E SEGURANÇA
+    // FIREBASE E SEGURANÇA MESTRA
     const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
@@ -180,49 +173,53 @@
     const id = urlParams.get('id');
 
     if (!id) {
-        document.body.innerHTML = '<div class="lock-screen"><h1 style="color:#0078d4">Cássia Prompt V8</h1><p>Acesso Restrito. ID de autenticação não detetado.</p></div>';
+        document.body.innerHTML = '<div class="lock-screen"><h1 style="color:var(--ms-blue)">Cássia Prompt V8</h1><p>Autenticação Requerida.</p></div>';
     } else {
         db.ref('clientes/' + id).on('value', (snapshot) => {
             const data = snapshot.val();
             if (!data || data.status !== "ativo") {
-                document.body.innerHTML = '<div class="lock-screen"><h1 style="color:#d11010">⚠️ ACESSO INTERROMPIDO</h1><p>A sua licença expirou ou foi revogada pela administração <b>Cássia Prompt V8</b>.</p></div>';
-            } else {
-                document.getElementById('userNameDisplay').innerText = id;
+                document.body.innerHTML = '<div class="lock-screen"><h1 style="color:#d11010">⚠️ LICENÇA EXPIRADA</h1><p>Contacte <b>Cássia Prompt V8</b> para renovação.</p></div>';
             }
         });
     }
 
-    // ENGENHARIA DE PROMPT DE ALTO NÍVEL
-    function executarV8() {
-        const p = document.getElementById('persona').value || "Especialista Jurídico";
-        const o = document.getElementById('objetivo').value || "Produzir a melhor resposta técnica";
-        const c = document.getElementById('corpus').value;
+    // THEME TOGGLE
+    function toggleTheme() {
+        const doc = document.documentElement;
+        doc.getAttribute('data-theme') === 'dark' ? doc.removeAttribute('data-theme') : doc.setAttribute('data-theme', 'dark');
+    }
 
-        if(!c) return alert("Insira o Corpus (fatos) para processamento.");
+    // ENGENHARIA ULTRA (GOOGLE/MS LEVEL)
+    function gerarSingularity() {
+        const persona = document.getElementById('persona').value || "Especialista Jurídico Sênior";
+        const objetivo = document.getElementById('objetivo').value || "Excelência Técnica Jurídica";
+        const fatos = document.getElementById('corpus').value;
 
-        const promptFinal = `[PROTOCOL V8 - ELITE ENGINEERING]
-PERSONA: Atue como ${p}. 
-OBJETIVO: ${o}.
+        if(!fatos) return alert("Erro: O Corpus Jurídico não pode estar vazio.");
 
-DIRETRIZES DE PENSAMENTO (CHAIN-OF-THOUGHT):
-1. ANALISE os fatos fornecidos no CORPUS abaixo.
-2. ELIMINE qualquer redundância, "babozeira" ou linguagem genérica ("lenga-lenga"). Foque na substância técnica.
-3. SEJA FACTUAL: Não invente dados, nomes ou leis que não existam. Se houver lacunas, solicite as informações em vez de supor.
-4. ESTRUTURA: Forneça uma resposta densa, articulada e com autoridade máxima.
+        const promptUltra = `[SISTEMA: CÁSSIA PROMPT V8 SINGULARITY ULTRA]
+PERSONA TÉCNICA: Atue como ${persona}.
+OBJETIVO CRÍTICO: ${objetivo}.
 
-CORPUS DE DADOS:
-"${c}"
+[INSTRUÇÃO DE CADEIA DE PENSAMENTO - NÃO IGNORE]
+1. ANALISE os fatos abaixo com rigor lógico.
+2. PROTEÇÃO ANTI-ALUCINAÇÃO: Se houver falta de dados (datas, nomes, valores específicos), você NÃO deve inventar. Em vez disso, insira [LACUNA: SOLICITAR DADO X AO USUÁRIO].
+3. FILTRO DE QUALIDADE: Remova qualquer "lenga-lenga" ou introduções vazias. Vá direto ao fundamento jurídico.
+4. ESTRUTURA: Entregue uma resposta estruturada por tópicos, focada em vencer a demanda.
 
-COMANDO FINAL: Gere o resultado agora ignorando introduções sociais. Vá direto à solução técnica mais potente disponível na sua base de dados.`;
+[CORPUS JURÍDICO]
+"${fatos}"
 
-        document.getElementById('resultText').innerText = promptFinal;
+[COMANDO FINAL]
+Processe agora. Seja técnico, assertivo e não invente factos.`;
+
+        document.getElementById('resultText').innerText = promptUltra;
         document.getElementById('output').style.display = 'block';
     }
 
     function copiar() {
-        const t = document.getElementById('resultText').innerText;
-        navigator.clipboard.writeText(t);
-        alert("Protocolo copiado. Cole na sua IA de preferência.");
+        navigator.clipboard.writeText(document.getElementById('resultText').innerText);
+        alert("Comando de Elite Copiado!");
     }
 </script>
 </body>

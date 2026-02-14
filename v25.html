@@ -25,7 +25,6 @@
         main { flex: 1; display: flex; padding: 20px 40px; gap: 20px; overflow-y: auto; }
         .workspace-card { background: var(--card); width: 100%; max-width: 900px; margin: 0 auto; border-radius: 12px; border: 1px solid var(--border); padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
 
-        /* BARRA DE RIGOR */
         .rigor-container { width: 100%; height: 10px; background: rgba(0,0,0,0.1); border-radius: 10px; margin-bottom: 5px; overflow: hidden; }
         body.dark-mode .rigor-container { background: rgba(255,255,255,0.1); }
         .rigor-bar { width: 0%; height: 100%; background: var(--rigor-low); transition: 0.5s ease; }
@@ -44,6 +43,7 @@
 
         .btn-util { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 12px; }
 
+        /* RODAPÉ DE SEGURANÇA REINTEGRADO */
         footer { background: var(--card); padding: 20px 40px; border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
         .footer-box h4 { color: var(--ms-blue); margin: 0 0 5px 0; font-size: 12px; text-transform: uppercase; }
         .footer-box p { font-size: 10px; opacity: 0.7; line-height: 1.4; margin: 0; text-align: justify; }
@@ -75,7 +75,7 @@
 
         <div class="lacuna-group">
             <label>1. Contexto e Fatos</label>
-            <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="O que está acontecendo?"></textarea>
+            <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Descreva os detalhes da situação..."></textarea>
         </div>
 
         <div class="lacuna-group">
@@ -85,7 +85,7 @@
 
         <div class="lacuna-group">
             <label>3. Destino Final</label>
-            <input type="text" id="destino" oninput="atualizar()" placeholder="O que a IA deve produzir exatamente?">
+            <input type="text" id="destino" oninput="atualizar()" placeholder="Ex: Uma petição / Um relatório / Uma proposta...">
         </div>
 
         <button id="btn-exe" class="btn-exe" disabled>AGUARDANDO RIGOR MÍNIMO</button>
@@ -95,11 +95,11 @@
 <footer>
     <div class="footer-box">
         <h4>🛡️ SEGURANÇA JURÍDICA E TÉCNICA</h4>
-        <p>O Protocolo V8 impõe uma filtragem de integridade técnica para prevenir alucinações de IA. O sistema rejeita interpretações sem base fática no 'Corpus' fornecido, garantindo que o rigor da doutrina eliminando qualquer margem para "baboseiras".</p>
+        <p>O Protocolo V8 impõe uma filtragem de integridade técnica para prevenir alucinações de IA. O sistema rejeita interpretações sem base fática no 'Corpus' fornecido, garantindo rigor absoluto e eliminando "baboseiras".</p>
     </div>
     <div class="footer-box">
         <h4>🔐 PRIVACIDADE E PROTEÇÃO (LGPD)</h4>
-        <p>Este console opera em isolamento de dados High-End. Nenhuma informação inserida é utilizada para treinamento de modelos de terceiros. A criptografia de ponta a ponta assegura o sigilo profissional integral.</p>
+        <p>Este console opera em isolamento de dados High-End. Nenhuma informação é utilizada para treinamento de modelos de terceiros. A criptografia assegura o sigilo profissional integral conforme a LGPD.</p>
     </div>
 </footer>
 
@@ -151,10 +151,8 @@
     async function gerarPDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        doc.setFontSize(16); doc.text("CÁSSIA PROMPT V8 - RELATÓRIO TÉCNICO", 20, 20);
-        doc.setFontSize(10); doc.text("CONTEXTO: " + document.getElementById('fatos').value, 20, 40);
-        doc.text("BASE: " + document.getElementById('base').value, 20, 60);
-        doc.text("DESTINO: " + document.getElementById('destino').value, 20, 80);
+        doc.text("Relatório Cássia Prompt V8", 20, 20);
+        doc.text("Contexto: " + document.getElementById('fatos').value, 20, 40);
         doc.save("Relatorio_V8.pdf");
     }
 </script>

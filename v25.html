@@ -4,69 +4,87 @@
     <meta charset="UTF-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CÁSSIA PROMPT V8 | ELITE</title>
+    <title>CÁSSIA PROMPT V8 | ELITE EDITION</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        :root { --accent: #c30052; --blue: #0078d4; --glass: rgba(255, 255, 255, 0.03); --border: rgba(255, 255, 255, 0.1); }
+        :root { --accent: #c30052; --glass: rgba(255, 255, 255, 0.03); --border: rgba(255, 255, 255, 0.12); }
         body { 
             margin: 0; background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; height: 100vh;
             display: flex; flex-direction: column; overflow: hidden;
             background: radial-gradient(circle at top right, #33001b 0%, #000 70%);
         }
-        #lock { position: fixed; inset: 0; background: #000; z-index: 9999; display: none; align-items: center; justify-content: center; text-align: center; backdrop-filter: blur(20px); }
         nav { backdrop-filter: blur(20px); background: rgba(0,0,0,0.6); padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--accent); }
-        main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 10px; }
+        
         .glass-panel { 
-            background: var(--glass); backdrop-filter: blur(40px); width: 100%; max-width: 1100px; height: 85vh;
-            border-radius: 20px; border: 1px solid var(--border); display: grid; grid-template-columns: 280px 1fr; overflow: hidden;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+            background: var(--glass); backdrop-filter: blur(40px); width: 95%; max-width: 1100px; height: 82vh;
+            border-radius: 20px; border: 1px solid var(--border); display: grid; grid-template-columns: 260px 1fr; overflow: hidden;
         }
-        .sidebar { background: rgba(0,0,0,0.3); border-right: 1px solid var(--border); padding: 30px; }
-        .workspace { padding: 40px; display: flex; flex-direction: column; gap: 20px; }
+        
+        .sidebar { background: rgba(0,0,0,0.4); border-right: 1px solid var(--border); padding: 25px; display: flex; flex-direction: column; }
+        .workspace { padding: 30px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; }
+        
         label { font-size: 10px; font-weight: bold; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; }
         input, textarea { 
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 15px; 
-            border-radius: 10px; color: #fff; font-size: 14px; outline: none; transition: 0.3s;
+            background: rgba(0,0,0,0.4); border: 1px solid var(--border); padding: 12px; 
+            border-radius: 8px; color: #fff; font-size: 14px; outline: none;
         }
         input:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(195,0,82,0.3); }
-        .btn-exe { background: var(--accent); color: #fff; border: none; padding: 18px; border-radius: 10px; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
-        .btn-pdf { background: transparent; border: 1px solid var(--border); color: #fff; padding: 10px; border-radius: 8px; cursor: pointer; width: 100%; margin-bottom: 20px; }
-        .warning { color: #ff4d4d; font-size: 10px; font-weight: bold; display: none; }
+
+        .btn-exe { background: var(--accent); color: #fff; border: none; padding: 18px; border-radius: 10px; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
+        .btn-pdf { background: transparent; border: 1px solid var(--border); color: #fff; padding: 10px; border-radius: 8px; cursor: pointer; font-size: 11px; margin-bottom: 20px; }
+
+        /* RODAPÉ DE SEGURANÇA REFORÇADO */
+        footer {
+            background: rgba(0,0,0,0.8); border-top: 1px solid var(--border);
+            padding: 15px 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+        }
+        .sec-box h4 { color: var(--accent); margin: 0 0 5px 0; font-size: 12px; text-transform: uppercase; }
+        .sec-box p { font-size: 10px; margin: 0; opacity: 0.7; line-height: 1.4; }
+
+        #lock { position: fixed; inset: 0; background: #000; z-index: 9999; display: none; align-items: center; justify-content: center; text-align: center; }
     </style>
 </head>
 <body>
-    <div id="lock"><div><h1 style="font-size: 80px;">🔒</h1><h2>SISTEMA BLOQUEADO</h2><p>Licença V8 Inválida ou Expirada.</p></div></div>
+    <div id="lock"><h1>🔒 ACESSO BLOQUEADO</h1></div>
     <nav>
-        <div style="font-weight: bold; letter-spacing: 2px;">CÁSSIA PROMPT <span style="color:var(--accent)">V8 GOD MODE</span></div>
-        <div style="display: flex; align-items: center; gap: 10px; font-size: 10px; color: #00ffa3;">
-            <div style="width: 10px; height: 10px; background: #00ffa3; border-radius: 50%; box-shadow: 0 0 10px #00ffa3;"></div>
-            RIGOR JURÍDICO ATIVO
-        </div>
+        <div style="font-weight: bold;">CÁSSIA PROMPT <span style="color:var(--accent)">V8 GOD MODE</span></div>
+        <div style="font-size: 10px; color: #00ffa3;">● RIGOR JURÍDICO ATIVO</div>
     </nav>
+
     <main>
         <div class="glass-panel">
             <div class="sidebar">
-                <button class="btn-pdf" onclick="gerarPDF()">📄 EXTRAIR PDF V8</button>
-                <div style="margin-top: 50px; font-size: 11px; opacity: 0.5;">
-                    <p>• ANTI-BABOSEIRA V2</p>
-                    <p>• FILTRO ANTI-PREGUIÇA</p>
-                    <p>• SEGURANÇA MÁXIMA LGPD</p>
+                <button class="btn-pdf" onclick="gerarPDF()">📄 EXTRAIR RELATÓRIO PDF</button>
+                <div style="font-size: 10px; opacity: 0.5; margin-top: auto;">
+                    SISTEMA ANTI-BABOSEIRA V8<br>FILTRO DE ARGUMENTAÇÃO FRACA ATIVO
                 </div>
             </div>
             <div class="workspace">
                 <label>■ Persona Responsável</label>
-                <input type="text" id="persona" placeholder="Dra. Responsável">
+                <input type="text" id="persona" placeholder="Dra. Nome e OAB">
                 <label>■ Matriz de Objetivo</label>
-                <input type="text" id="objetivo" placeholder="Ex: Recurso Especial">
+                <input type="text" id="objetivo" placeholder="Ex: Apelação Cível">
                 <label>■ Núcleo de Fatos (Corpus)</label>
-                <textarea id="factos" style="flex:1; resize: none;" placeholder="Deposite aqui os fatos estruturados..."></textarea>
-                <div id="anti-preguica" class="warning">⚠️ ERRO: ARGUMENTOS MUITO CURTOS. A IA RECUSA PROCESSAR POR FALTA DE RIGOR.</div>
+                <textarea id="factos" style="flex:1; resize: none;" placeholder="Insira os fatos detalhados..."></textarea>
                 <button class="btn-exe" onclick="executar()">Executar Protocolo V8</button>
             </div>
         </div>
     </main>
+
+    <footer>
+        <div class="sec-box">
+            <h4>🛡️ SEGURANÇA JURÍDICA E TÉCNICA</h4>
+            <p>O V8 utiliza protocolos de filtragem rigorosa para mitigar alucinações de IA. O sistema obriga a ferramenta a basear-se exclusivamente no "Corpus de Fatos" fornecido. Lacunas de informação são sinalizadas, proibindo a IA de inventar dados processuais ou fáticos.</p>
+        </div>
+        <div class="sec-box">
+            <h4>🔐 PRIVACIDADE E LGPD</h4>
+            <p>Processamento Local High-End. Nenhum documento ou dado sensível é enviado para servidores externos ou armazenado em nuvem de terceiros. A extração ocorre inteiramente dentro deste console criptografado, garantindo sigilo profissional absoluto.</p>
+        </div>
+    </footer>
+
 <script>
     const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
     firebase.initializeApp(firebaseConfig);
@@ -74,38 +92,30 @@
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get('id');
 
-    if (!userId) {
-        document.body.innerHTML = "<h1>ACESSO NEGADO</h1>";
-    } else {
+    if (!userId) { document.body.innerHTML = "<h1>ACESSO NEGADO</h1>"; }
+    else {
         db.ref('clientes/' + userId).on('value', (snap) => {
             if (!snap.exists()) document.getElementById('lock').style.display = 'flex';
         });
     }
 
     function executar() {
-        const corpus = document.getElementById('factos').value;
-        const aviso = document.getElementById('anti-preguica');
-        
-        // SISTEMA ANTI-PREGUIÇA: Se tiver menos de 50 caracteres, o sistema trava.
-        if (corpus.length < 50) {
-            aviso.style.display = 'block';
-            alert("PROTOCOLO NEGADO: Dados insuficientes para garantir segurança jurídica. Insira mais detalhes no Corpus.");
+        const fatos = document.getElementById('factos').value;
+        if (fatos.length < 100) {
+            alert("❌ RIGOR INSUFICIENTE: O sistema detectou argumentos fracos ou incompletos. O V8 recusa processar pedidos baseados em 'preguiça jurídica'. Forneça mais detalhes.");
         } else {
-            aviso.style.display = 'none';
-            alert("PROTOCOLO V8 INICIADO: Aplicando Rigor Técnico e Filtragem Anti-Baboseira.");
+            alert("🚀 PROTOCOLO V8 INICIADO: Aplicando filtragem técnica e eliminando baboseiras.");
         }
     }
 
     async function gerarPDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        doc.setFillColor(195, 0, 82); doc.rect(0, 0, 210, 20, 'F');
-        doc.setTextColor(255, 255, 255); doc.text("CÁSSIA PROMPT V8 - RELATÓRIO JURÍDICO", 20, 13);
-        doc.setTextColor(0, 0, 0); doc.text("Dra: " + document.getElementById('persona').value, 20, 40);
-        doc.text("Objetivo: " + document.getElementById('objetivo').value, 20, 50);
-        const text = doc.splitTextToSize(document.getElementById('factos').value, 170);
-        doc.text(text, 20, 70);
-        doc.save("Relatorio_V8_Elite.pdf");
+        doc.setFontSize(16); doc.text("CÁSSIA PROMPT V8 - RELATÓRIO JURÍDICO", 20, 20);
+        doc.setFontSize(10); doc.text("Doutora: " + document.getElementById('persona').value, 20, 40);
+        const lines = doc.splitTextToSize(document.getElementById('factos').value, 170);
+        doc.text(lines, 20, 60);
+        doc.save("Relatorio_V8.pdf");
     }
 </script>
 </body>

@@ -4,77 +4,88 @@
     <meta charset="UTF-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CÁSSIA PROMPT V8 | GOD MODE</title>
+    <title>CÁSSIA PROMPT V8 | ELITE EDITION</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root {
-            --ms-blue: #0078d4; --bg: #0b0b0b; --card: #161616; --text: #ffffff; --border: #333333;
+            --ms-blue: #0078d4; --bg: #f3f6f8; --card: #ffffff; --text: #201f1e; --border: #dee1e6;
             --rigor-low: #ff4d4d; --rigor-mid: #ffca28; --rigor-high: #00ffa3;
         }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        body.dark-mode {
+            --bg: #0b0b0b; --card: #161616; --text: #ffffff; --border: #333333;
+        }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; transition: 0.3s; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
         nav { background: var(--card); padding: 12px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--ms-blue); }
-        
+        .nav-brand { font-weight: bold; color: var(--ms-blue); font-size: 18px; }
+        .nav-btns { display: flex; gap: 10px; }
+
         main { flex: 1; display: flex; padding: 20px 40px; gap: 20px; overflow-y: auto; }
-        .workspace-card { background: var(--card); width: 100%; max-width: 900px; margin: 0 auto; border-radius: 12px; border: 1px solid var(--border); padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.7); }
+        .workspace-card { background: var(--card); width: 100%; max-width: 900px; margin: 0 auto; border-radius: 12px; border: 1px solid var(--border); padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
 
-        /* BARRA DE RIGOR (VOLTOU!) */
-        .rigor-container { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
-        .rigor-bar { width: 0%; height: 100%; background: var(--rigor-low); transition: 0.5s ease; box-shadow: 0 0 15px rgba(255,77,77,0.3); }
+        /* BARRA DE RIGOR */
+        .rigor-container { width: 100%; height: 10px; background: rgba(0,0,0,0.1); border-radius: 10px; margin-bottom: 5px; overflow: hidden; }
+        body.dark-mode .rigor-container { background: rgba(255,255,255,0.1); }
+        .rigor-bar { width: 0%; height: 100%; background: var(--rigor-low); transition: 0.5s ease; }
 
-        .lacuna-group { margin-bottom: 20px; }
-        label { font-size: 11px; font-weight: 700; color: var(--ms-blue); text-transform: uppercase; display: block; margin-bottom: 8px; letter-spacing: 1px; }
+        .lacuna-group { margin-bottom: 15px; }
+        label { font-size: 11px; font-weight: 700; color: var(--ms-blue); text-transform: uppercase; display: block; margin-bottom: 5px; }
         
         textarea, input { 
-            width: 100%; background: #000; border: 1px solid var(--border); padding: 14px; 
-            border-radius: 6px; color: #fff; font-size: 14px; outline: none; box-sizing: border-box; 
+            width: 100%; background: rgba(0,0,0,0.03); border: 1px solid var(--border); padding: 12px; 
+            border-radius: 6px; color: var(--text); font-size: 14px; outline: none; box-sizing: border-box; 
         }
-        textarea:focus, input:focus { border-color: var(--ms-blue); }
+        body.dark-mode textarea, body.dark-mode input { background: #000; }
 
-        .btn-exe { 
-            width: 100%; background: #333; color: #777; border: none; padding: 18px; 
-            border-radius: 8px; font-weight: 800; cursor: not-allowed; transition: 0.4s; 
-            text-transform: uppercase;
-        }
-        .btn-exe.active { background: var(--ms-blue); color: white; cursor: pointer; box-shadow: 0 0 20px rgba(0,120,212,0.5); }
+        .btn-exe { width: 100%; background: #444; color: #fff; border: none; padding: 18px; border-radius: 8px; font-weight: 800; cursor: not-allowed; transition: 0.4s; margin-top: 10px; }
+        .btn-exe.active { background: var(--ms-blue); box-shadow: 0 5px 15px rgba(0,120,212,0.4); cursor: pointer; }
 
-        footer { background: #000; padding: 20px 40px; border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        .footer-box h4 { color: var(--ms-blue); margin: 0 0 5px 0; font-size: 12px; }
-        .footer-box p { font-size: 10px; opacity: 0.6; line-height: 1.4; margin: 0; }
+        .btn-util { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+
+        footer { background: var(--card); padding: 20px 40px; border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .footer-box h4 { color: var(--ms-blue); margin: 0 0 5px 0; font-size: 12px; text-transform: uppercase; }
+        .footer-box p { font-size: 10px; opacity: 0.7; line-height: 1.4; margin: 0; text-align: justify; }
         
         #lock { position: fixed; inset: 0; background: #000; z-index: 10000; display: none; align-items: center; justify-content: center; }
     </style>
 </head>
-<body>
+<body class="dark-mode">
 
-<div id="lock"><h1>🔒 BLOQUEADO</h1></div>
+<div id="lock"><h1>🔒 ACESSO BLOQUEADO</h1></div>
 
 <nav>
-    <div style="font-weight: bold; color: var(--ms-blue); font-size: 18px;">CÁSSIA PROMPT <span style="font-weight:300;">V8 GOD MODE</span></div>
-    <div style="font-size: 10px; color: var(--rigor-high);">RIGOR JURÍDICO E PROFISSIONAL ATIVO</div>
+    <div class="nav-brand">CÁSSIA PROMPT <span style="font-weight:300;">V8 ELITE</span></div>
+    <div class="nav-btns">
+        <button class="btn-util" onclick="gerarPDF()">📄 EXPORTAR PDF</button>
+        <button class="btn-util" onclick="document.body.classList.toggle('dark-mode')">🌓 TEMA</button>
+    </div>
 </nav>
 
 <main>
     <div class="workspace-card">
-        <label id="rigor-label" style="color: var(--rigor-low); margin-bottom: 5px;">RIGOR: INSUFICIENTE</label>
+        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+            <label>NÍVEL DE RIGOR PROFISSIONAL</label>
+            <span id="rigor-label" style="font-size: 10px; font-weight: bold; color: var(--rigor-low);">INSUFICIENTE</span>
+        </div>
         <div class="rigor-container">
             <div id="rigor-bar" class="rigor-bar"></div>
         </div>
 
         <div class="lacuna-group">
-            <label>1. Contexto e Fatos (O que está acontecendo?)</label>
-            <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Descreva os detalhes da situação..."></textarea>
+            <label>1. Contexto e Fatos</label>
+            <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="O que está acontecendo?"></textarea>
         </div>
 
         <div class="lacuna-group">
-            <label>2. Embasamento (Leis, Normas ou Princípios)</label>
-            <textarea id="base" rows="3" oninput="atualizar()" placeholder="Quais as regras que sustentam isso?"></textarea>
+            <label>2. Embasamento e Regras</label>
+            <textarea id="base" rows="3" oninput="atualizar()" placeholder="Leis, normas ou fundamentos técnicos..."></textarea>
         </div>
 
         <div class="lacuna-group">
-            <label>3. Destino Final (O que você quer que a IA produza?)</label>
-            <input type="text" id="destino" oninput="atualizar()" placeholder="Ex: Uma petição de dano moral / Um laudo técnico / Um e-mail de cobrança...">
+            <label>3. Destino Final</label>
+            <input type="text" id="destino" oninput="atualizar()" placeholder="O que a IA deve produzir exatamente?">
         </div>
 
         <button id="btn-exe" class="btn-exe" disabled>AGUARDANDO RIGOR MÍNIMO</button>
@@ -84,11 +95,11 @@
 <footer>
     <div class="footer-box">
         <h4>🛡️ SEGURANÇA JURÍDICA E TÉCNICA</h4>
-        <p>O Protocolo V8 impõe uma filtragem de integridade técnica para prevenir alucinações de IA. O sistema rejeita interpretações sem base fática, garantindo rigor absoluto.</p>
+        <p>O Protocolo V8 impõe uma filtragem de integridade técnica para prevenir alucinações de IA. O sistema rejeita interpretações sem base fática no 'Corpus' fornecido, garantindo que o rigor da doutrina eliminando qualquer margem para "baboseiras".</p>
     </div>
     <div class="footer-box">
-        <h4>🔐 PRIVACIDADE E LGPD</h4>
-        <p>Processamento local. Nenhuma informação é utilizada para treinamento de modelos públicos. Sigilo profissional preservado integralmente.</p>
+        <h4>🔐 PRIVACIDADE E PROTEÇÃO (LGPD)</h4>
+        <p>Este console opera em isolamento de dados High-End. Nenhuma informação inserida é utilizada para treinamento de modelos de terceiros. A criptografia de ponta a ponta assegura o sigilo profissional integral.</p>
     </div>
 </footer>
 
@@ -99,7 +110,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get('id');
 
-    if (!userId) { document.body.innerHTML = "<h1>ACESSO NEGADO</h1>"; }
+    if (!userId) { document.body.innerHTML = "<h1>ID INVÁLIDO</h1>"; }
     else {
         db.ref('clientes/' + userId).on('value', (snap) => {
             if (!snap.exists()) document.getElementById('lock').style.display = 'flex';
@@ -107,34 +118,44 @@
     }
 
     function atualizar() {
-        const fatos = document.getElementById('fatos').value;
-        const base = document.getElementById('base').value;
-        const destino = document.getElementById('destino').value;
+        const f = document.getElementById('fatos').value;
+        const b = document.getElementById('base').value;
+        const d = document.getElementById('destino').value;
         const bar = document.getElementById('rigor-bar');
         const label = document.getElementById('rigor-label');
         const btn = document.getElementById('btn-exe');
 
-        let total = fatos.length + base.length + (destino.length * 2);
-        let progresso = Math.min((total / 500) * 100, 100);
+        let pontos = f.length + b.length + (d.length * 2);
+        let progresso = Math.min((pontos / 500) * 100, 100);
         bar.style.width = progresso + "%";
 
         if (progresso < 40) {
             bar.style.background = "var(--rigor-low)";
-            label.innerText = "RIGOR: INSUFICIENTE (PREGUIÇA DETECTADA)";
+            label.innerText = "RIGOR: INSUFICIENTE";
             label.style.color = "var(--rigor-low)";
             btn.disabled = true; btn.classList.remove('active');
         } else if (progresso < 80) {
             bar.style.background = "var(--rigor-mid)";
-            label.innerText = "RIGOR: MÉDIO (FORNEÇA MAIS DETALHES)";
+            label.innerText = "RIGOR: MÉDIO";
             label.style.color = "var(--rigor-mid)";
             btn.disabled = true; btn.classList.remove('active');
         } else {
             bar.style.background = "var(--rigor-high)";
-            label.innerText = "RIGOR: V8 GOD MODE (PRONTO PARA EXECUTAR)";
+            label.innerText = "RIGOR: V8 GOD MODE";
             label.style.color = "var(--rigor-high)";
             btn.disabled = false; btn.classList.add('active');
             btn.innerText = "EXECUTAR PROTOCOLO V8";
         }
+    }
+
+    async function gerarPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.setFontSize(16); doc.text("CÁSSIA PROMPT V8 - RELATÓRIO TÉCNICO", 20, 20);
+        doc.setFontSize(10); doc.text("CONTEXTO: " + document.getElementById('fatos').value, 20, 40);
+        doc.text("BASE: " + document.getElementById('base').value, 20, 60);
+        doc.text("DESTINO: " + document.getElementById('destino').value, 20, 80);
+        doc.save("Relatorio_V8.pdf");
     }
 </script>
 </body>

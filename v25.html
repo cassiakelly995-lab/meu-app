@@ -4,161 +4,84 @@
     <meta charset="UTF-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SÍRIUS V25 | SUPREME JURÍDICO</title>
+    <title>SÍRIUS V25 | SINGULARITY</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    
     <style>
-        :root {
-            --microsoft-blue: #0078d4;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.12);
-            --text-main: #ffffff;
-            --glow: 0 0 20px rgba(0, 120, 212, 0.4);
-        }
-
+        :root { --blue: #0078d4; --glass: rgba(255, 255, 255, 0.03); --border: rgba(255, 255, 255, 0.1); }
         body { 
-            margin: 0; background: #020202; color: var(--text-main); 
-            font-family: 'Segoe UI Variable Display', 'Segoe UI', sans-serif;
-            height: 100vh; display: flex; flex-direction: column; overflow: hidden;
-            background-image: radial-gradient(circle at 100% 0%, #001a33 0%, #000 60%);
+            margin: 0; background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; height: 100vh;
+            display: flex; flex-direction: column; overflow: hidden;
+            background: radial-gradient(circle at top right, #001a33 0%, #000 70%);
         }
-
-        /* Nav Estilo Microsoft Fluent */
-        nav {
-            backdrop-filter: blur(25px); background: rgba(0,0,0,0.7);
-            padding: 18px 50px; display: flex; justify-content: space-between; 
-            align-items: center; border-bottom: 1px solid var(--border);
+        #lock { position: fixed; inset: 0; background: #000; z-index: 9999; display: none; align-items: center; justify-content: center; text-align: center; backdrop-filter: blur(20px); }
+        nav { backdrop-filter: blur(20px); background: rgba(0,0,0,0.6); padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+        main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .glass-panel { 
+            background: var(--glass); backdrop-filter: blur(40px); width: 100%; max-width: 1100px; height: 80vh;
+            border-radius: 20px; border: 1px solid var(--border); display: grid; grid-template-columns: 280px 1fr; overflow: hidden;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
         }
-
-        .sys-status { display: flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: 2px; }
-        .dot { width: 8px; height: 8px; background: #00ffa3; border-radius: 50%; box-shadow: 0 0 10px #00ffa3; }
-
-        main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 30px; }
-
-        /* O Card Glassmorphism que ninguém criou ainda */
-        .glass-panel {
-            background: var(--glass-bg); backdrop-filter: blur(40px);
-            width: 100%; max-width: 1200px; height: 80vh;
-            border-radius: 24px; border: 1px solid var(--border);
-            display: grid; grid-template-columns: 320px 1fr; overflow: hidden;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+        .sidebar { background: rgba(0,0,0,0.3); border-right: 1px solid var(--border); padding: 30px; }
+        .workspace { padding: 40px; display: flex; flex-direction: column; gap: 20px; }
+        label { font-size: 10px; font-weight: bold; color: var(--blue); text-transform: uppercase; letter-spacing: 2px; }
+        input, textarea { 
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 15px; 
+            border-radius: 10px; color: #fff; font-size: 14px; outline: none; transition: 0.3s;
         }
-
-        .sidebar { background: rgba(255,255,255,0.02); border-right: 1px solid var(--border); padding: 40px; }
-        .workspace { padding: 50px; display: flex; flex-direction: column; gap: 25px; position: relative; }
-
-        .field { display: flex; flex-direction: column; gap: 10px; }
-        label { font-size: 10px; font-weight: 700; color: var(--microsoft-blue); text-transform: uppercase; letter-spacing: 2px; }
-
-        input, textarea {
-            background: rgba(0,0,0,0.3); border: 1px solid var(--border);
-            padding: 16px; border-radius: 12px; color: #fff; font-size: 15px;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        input:focus, textarea:focus { 
-            border-color: var(--microsoft-blue); background: rgba(0, 120, 212, 0.05);
-            outline: none; box-shadow: var(--glow); transform: translateY(-2px);
-        }
-
-        /* Botão High-Performance */
-        .btn-supreme {
-            background: linear-gradient(135deg, #0078d4, #00bcf2);
-            color: white; border: none; padding: 20px; border-radius: 12px;
-            font-weight: 700; cursor: pointer; text-transform: uppercase;
-            letter-spacing: 2px; transition: 0.3s; box-shadow: var(--glow);
-        }
-        .btn-supreme:hover { transform: scale(1.02); filter: brightness(1.2); }
-
-        .btn-pdf {
-            background: transparent; border: 1px solid var(--border); color: #fff;
-            padding: 12px; border-radius: 10px; cursor: pointer; width: 100%;
-            margin-bottom: 20px; font-size: 12px; font-weight: 600;
-        }
-
-        #lock-screen { 
-            position: fixed; inset: 0; background: #000; z-index: 99999; 
-            display: none; align-items: center; justify-content: center; text-align: center;
-        }
+        input:focus { border-color: var(--blue); box-shadow: 0 0 15px rgba(0,120,212,0.3); }
+        .btn-exe { background: var(--blue); color: #fff; border: none; padding: 18px; border-radius: 10px; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-pdf { background: transparent; border: 1px solid var(--border); color: #fff; padding: 10px; border-radius: 8px; cursor: pointer; width: 100%; margin-bottom: 20px; }
     </style>
 </head>
 <body>
-
-<div id="lock-screen">
-    <div>
-        <h1 style="font-size: 100px; margin: 0;">🔒</h1>
-        <h2 style="letter-spacing: 10px;">ACESSO RESTRITO</h2>
-        <p style="opacity: 0.5;">SÍRIUS V25: Protocolo de Segurança Ativado.</p>
-    </div>
-</div>
-
-<nav>
-    <div style="font-weight: 300; font-size: 20px;">SÍRIUS <span style="font-weight: 800; color: var(--microsoft-blue);">V25</span></div>
-    <div class="sys-status"><div class="dot"></div> SISTEMA ONLINE | RIGOR TOTAL</div>
-</nav>
-
-<main>
-    <div class="glass-panel">
-        <div class="sidebar">
-            <button class="btn-pdf" onclick="baixarPDF()">📄 EXTRAIR RELATÓRIO PDF</button>
-            <div style="margin-top: 40px; border-top: 1px solid var(--border); padding-top: 20px;">
-                <label>Status LGPD</label>
-                <p style="font-size: 12px; opacity: 0.6;">Criptografia de ponta a ponta ativa. Nenhum dado é armazenado externamente.</p>
+    <div id="lock"><div><h1 style="font-size: 80px;">🔒</h1><h2>ACESSO REVOGADO</h2></div></div>
+    <nav>
+        <div style="font-weight: bold; letter-spacing: 2px;">SÍRIUS <span style="color:var(--blue)">V25</span></div>
+        <div style="width: 10px; height: 10px; background: #00ffa3; border-radius: 50%; box-shadow: 0 0 10px #00ffa3;"></div>
+    </nav>
+    <main>
+        <div class="glass-panel">
+            <div class="sidebar">
+                <button class="btn-pdf" onclick="gerarPDF()">📄 EXTRAIR PDF</button>
+                <div style="margin-top: 50px; font-size: 11px; opacity: 0.4;">PROTOCOLOS:<br>• RIGOR JURÍDICO V25<br>• LGPD ENCRYPTED</div>
             </div>
-        </div>
-        
-        <div class="workspace">
-            <div class="field">
-                <label>■ Arquitetura de Persona</label>
-                <input type="text" id="persona" placeholder="Dra. Nome da Advogada | OAB">
-            </div>
-            
-            <div class="field">
-                <label>■ Matriz de Objetivo Jurídico</label>
-                <input type="text" id="objetivo" placeholder="Ex: Contestação com Pedido de Reconvenção">
-            </div>
-
-            <div class="field" style="flex: 1;">
+            <div class="workspace">
+                <label>■ Persona Responsável</label>
+                <input type="text" id="persona" placeholder="Nome da Advogada">
+                <label>■ Matriz de Objetivo</label>
+                <input type="text" id="objetivo" placeholder="Ex: Petição Inicial">
                 <label>■ Núcleo de Fatos (Corpus)</label>
-                <textarea id="factos" style="height: 100%; resize: none;" placeholder="Deposite os fatos crus. O sistema aplicará o rigor jurídico absoluto contra baboseiras."></textarea>
+                <textarea id="factos" style="flex:1; resize: none;" placeholder="Deposite os fatos crus aqui..."></textarea>
+                <button class="btn-exe" onclick="alert('Iniciando Inteligência Sírius...')">Executar Protocolo</button>
             </div>
-
-            <button class="btn-supreme" onclick="processar()">Executar Protocolo SÍRIUS</button>
         </div>
-    </div>
-</main>
-
+    </main>
 <script>
     const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
-
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get('id');
 
     if (!userId) {
-        document.body.innerHTML = "<h1>ERROR 403: IDENTIDADE NÃO VERIFICADA</h1>";
+        document.body.innerHTML = "<h1>ID INVÁLIDO</h1>";
     } else {
         db.ref('clientes/' + userId).on('value', (snap) => {
-            if (!snap.exists()) document.getElementById('lock-screen').style.display = 'flex';
+            if (!snap.exists()) document.getElementById('lock').style.display = 'flex';
         });
     }
 
-    function processar() { alert("Processando... O rigor técnico está filtrando alucinações."); }
-
-    async function baixarPDF() {
+    async function gerarPDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        doc.setFont("helvetica", "bold");
-        doc.text("SÍRIUS V25 - RELATÓRIO DE INTELIGÊNCIA JURÍDICA", 20, 20);
-        doc.setFontSize(10);
-        doc.text("Doutora: " + document.getElementById('persona').value, 20, 40);
-        doc.text("Objetivo: " + document.getElementById('objetivo').value, 20, 50);
-        const fatos = doc.splitTextToSize(document.getElementById('factos').value, 170);
-        doc.text(fatos, 20, 70);
-        doc.save("Relatorio_Sirius_V25.pdf");
+        doc.text("SÍRIUS V25 - RELATÓRIO JURÍDICO", 20, 20);
+        doc.text("Dra: " + document.getElementById('persona').value, 20, 40);
+        doc.text("Fatos:", 20, 60);
+        const text = doc.splitTextToSize(document.getElementById('factos').value, 170);
+        doc.text(text, 20, 70);
+        doc.save("Sirius_V25_Relatorio.pdf");
     }
 </script>
 </body>

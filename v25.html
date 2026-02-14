@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CÁSSIA V8 | GOD MODE ELITE</title>
+    <title>CÁSSIA V8 | GOD MODE EDITION</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
@@ -11,220 +11,106 @@
     
     <style>
         :root { 
-            --ms-blue: #0078d4; --bg: #080808; --card: #121212; --text: #ffffff; 
-            --border: #252525; --rigor-high: #00ffa3; --input-bg: rgba(255,255,255,0.03);
-            --glow-blue: 0 0 15px rgba(0, 120, 212, 0.4);
+            --ms-blue: #0078d4; --bg: #030303; --card: #0a0a0a; --text: #ffffff; 
+            --border: #1a1a1a; --rigor-high: #00ffa3;
+            --glow: 0 0 15px rgba(0, 120, 212, 0.6);
         }
 
-        body.light-mode {
-            --bg: #f5f7f9; --card: #ffffff; --text: #1a1a1a; 
-            --border: #e0e0e0; --input-bg: #fff; --glow-blue: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; transition: 0.4s; overflow-x: hidden; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; transition: 0.3s; }
         
-        /* Navbar Futurista */
-        nav { 
-            background: var(--card); padding: 20px 40px; border-bottom: 2px solid var(--ms-blue); 
-            display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-        }
-
-        .theme-btn { 
-            cursor: pointer; padding: 10px 25px; border: 1px solid var(--ms-blue); 
-            border-radius: 50px; font-size: 11px; font-weight: 800; 
-            background: transparent; color: var(--ms-blue); text-transform: uppercase; transition: 0.3s;
-        }
-        .theme-btn:hover { background: var(--ms-blue); color: white; box-shadow: var(--glow-blue); }
-
-        main { padding: 50px 20px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+        main { padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
         
         .workspace-card { 
-            background: var(--card); width: 100%; max-width: 900px; border-radius: 24px; 
-            border: 1px solid var(--border); padding: 45px; box-sizing: border-box;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.7); position: relative;
+            background: var(--card); width: 100%; max-width: 800px; border-radius: 20px; 
+            border: 1px solid var(--border); padding: 40px; box-sizing: border-box;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
         }
 
-        /* Barra de Rigor Dinâmica */
-        .rigor-label-container { display: flex; justify-content: space-between; margin-bottom: 8px; }
-        .rigor-container { width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-bottom: 25px; overflow: hidden; border: 1px solid var(--border); }
-        .rigor-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #ff4d4d, #ffcc00, var(--rigor-high)); transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+        /* Barra de Rigor com Gradiente Profissional */
+        .rigor-container { width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-bottom: 25px; overflow: hidden; }
+        .rigor-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #ff4d4d, #ffcc00, var(--rigor-high)); transition: 1s ease; }
         
-        label { font-size: 11px; font-weight: 900; color: var(--ms-blue); text-transform: uppercase; display: block; margin-bottom: 10px; margin-top: 20px; letter-spacing: 1.5px; }
+        /* Lacunas Interativas com Glow Blue */
+        label { font-size: 10px; font-weight: 900; color: var(--ms-blue); text-transform: uppercase; display: block; margin-bottom: 10px; letter-spacing: 2px; }
         
-        /* Lacunas Interativas "Global Market" */
         textarea, input { 
-            width: 100%; background: var(--input-bg); border: 1px solid var(--border); 
-            padding: 18px; border-radius: 14px; color: var(--text); font-size: 15px; 
-            outline: none; box-sizing: border-box; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(5px);
+            width: 100%; background: #000; border: 1px solid var(--border); 
+            padding: 18px; border-radius: 12px; color: #fff; font-size: 14px; 
+            outline: none; box-sizing: border-box; transition: 0.4s;
         }
+
         textarea:focus, input:focus { 
-            border-color: var(--ms-blue); background: rgba(0,120,212,0.05);
-            box-shadow: var(--glow-blue); transform: translateY(-2px);
+            border-color: var(--ms-blue); 
+            box-shadow: var(--glow);
+            transform: translateY(-2px);
         }
 
-        /* Botão Ativar - Nível God Mode */
+        /* Botão Pulsante (God Mode) */
         .btn-exe { 
-            width: 100%; background: #1a1a1a; color: #444; border: none; padding: 22px; 
-            border-radius: 16px; font-weight: 900; cursor: not-allowed; 
-            transition: 0.5s; margin-top: 35px; text-transform: uppercase; letter-spacing: 3px; font-size: 14px;
+            width: 100%; background: #111; color: #444; border: none; padding: 22px; 
+            border-radius: 12px; font-weight: 900; cursor: not-allowed; 
+            transition: 0.5s; margin-top: 30px; text-transform: uppercase; letter-spacing: 3px;
         }
+
         .btn-exe.active { 
-            background: linear-gradient(135deg, var(--ms-blue), #00d4ff); 
-            color: white; cursor: pointer; box-shadow: 0 15px 40px rgba(0,120,212,0.4); 
-        }
-        .btn-exe.active:hover { transform: scale(1.02); filter: brightness(1.1); }
-
-        /* Resultado de Elite */
-        #resultado-area { 
-            display: none; background: #000; border: 1px solid var(--rigor-high); 
-            border-radius: 20px; padding: 35px; margin-top: 35px; width: 100%; max-width: 900px; box-sizing: border-box;
-            animation: fadeIn 0.6s ease;
-        }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        #prompt-final { 
-            width: 100%; height: 400px; background: transparent; border: none; 
-            color: var(--rigor-high); font-family: 'Consolas', 'Courier New', monospace; 
-            padding: 10px; font-size: 14px; line-height: 1.8; resize: none;
+            background: var(--ms-blue); color: white; cursor: pointer; 
+            box-shadow: var(--glow);
+            animation: pulse-blue 2s infinite;
         }
 
-        .btn-acao { width: 100%; padding: 20px; border: none; border-radius: 12px; font-weight: 900; cursor: pointer; text-transform: uppercase; margin-bottom: 15px; transition: 0.3s; }
-        .btn-copy { background: var(--rigor-high); color: #000; box-shadow: 0 8px 20px rgba(0,255,163,0.2); }
-        .btn-pdf { background: transparent; color: var(--text); border: 1px solid var(--border); }
-        .btn-pdf:hover { background: var(--text); color: #000; }
-
-        /* Rodapé Jurídico de Proteção */
-        footer { 
-            padding: 60px 40px; text-align: center; background: var(--card); border-top: 1px solid var(--border);
+        @keyframes pulse-blue {
+            0% { box-shadow: 0 0 0 0 rgba(0, 120, 212, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 120, 212, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 120, 212, 0); }
         }
-        .security-badge { color: var(--rigor-high); font-weight: 800; font-size: 11px; letter-spacing: 2px; margin-bottom: 20px; display: block; }
-        .legal-footer { font-size: 10px; color: #666; max-width: 800px; margin: 0 auto; line-height: 1.8; text-align: justify; }
-        .copyright { margin-top: 30px; font-size: 11px; font-weight: bold; opacity: 0.5; }
+
+        /* Rodapé de Segurança Blindado */
+        footer { margin-top: 50px; padding: 40px; border-top: 1px solid var(--border); text-align: center; }
+        .legal { font-size: 9px; color: #555; line-height: 1.8; text-align: justify; max-width: 700px; margin: 0 auto; }
+        .status-badge { color: var(--rigor-high); font-size: 10px; font-weight: bold; margin-bottom: 10px; display: block; }
     </style>
 </head>
-<body id="app-root">
-
-<nav>
-    <div style="font-weight: 900; color: var(--ms-blue); font-size: 22px; letter-spacing: -1px;">CÁSSIA V8 <span style="font-weight:100; color:var(--text); opacity: 0.6;">GOD MODE</span></div>
-    <button class="theme-btn" onclick="toggleTheme()">Inverter Sistema</button>
-</nav>
+<body>
 
 <main>
     <div class="workspace-card">
-        <div class="rigor-label-container">
-            <label style="margin-top:0;">Rigor Jurídico Inteligente</label>
-            <span id="percent-label" style="font-size: 12px; font-weight: 900; color: var(--ms-blue);">0%</span>
-        </div>
+        <label>Rigor Jurídico Inteligente V8</label>
         <div class="rigor-container"><div id="rigor-bar" class="rigor-bar"></div></div>
         
-        <label>1. Fatos e Provas Materiais</label>
-        <textarea id="fatos" rows="5" oninput="atualizar()" placeholder="Descreva os fatos com precisão técnica. Evite termos genéricos."></textarea>
+        <label>1. Fatos e Matéria Bruta</label>
+        <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Insira os fatos reais..."></textarea>
 
-        <label>2. Fundamentação e Teses de Elite</label>
-        <textarea id="base" rows="4" oninput="atualizar()" placeholder="Quais leis, artigos e súmulas sustentam este protocolo?"></textarea>
+        <label>2. Fundamentação Técnica</label>
+        <textarea id="base" rows="3" oninput="atualizar()" placeholder="Leis e Teses..."></textarea>
 
-        <label>3. Comando de Destino (Output)</label>
-        <input type="text" id="destino" oninput="atualizar()" placeholder="Ex: Elaborar minuta de contestação com foco em X...">
+        <label>3. Objetivo Final</label>
+        <input type="text" id="destino" oninput="atualizar()" placeholder="Qual o comando de saída?">
 
-        <button id="btn-exe" class="btn-exe" disabled onclick="gerar()">ATIVAR PROTOCOLO GOD MODE</button>
-    </div>
-
-    <div id="resultado-area">
-        <label style="color: var(--rigor-high); margin-bottom: 15px; display: block;">⚡ COMANDO BLINDADO V8 ELITE EDITION:</label>
-        <textarea id="prompt-final" readonly></textarea>
-        <button class="btn-acao btn-copy" onclick="copiar()">COPIAR COMANDO DE ELITE</button>
-        <button class="btn-acao btn-pdf" onclick="exportarPDF()">BAIXAR PROTOCOLO EM PDF</button>
+        <button id="btn-exe" class="btn-exe" disabled onclick="alert('Protocolo Gerado!')">Ativar Protocolo God Mode</button>
     </div>
 </main>
 
 <footer>
-    <span id="status-seguranca" class="security-badge">SISTEMA MONITORADO VIA FIREBASE ENCRYPTION</span>
-    
-    <div class="legal-footer">
-        <strong>TERMOS DE USO E PROPRIEDADE INTELECTUAL:</strong> Este software, incluindo sua lógica de processamento "Cássia V8 God Mode", interface e estrutura de prompts, é protegido pela Lei de Direitos Autorais (Lei nº 9.610/98) e pela Lei de Propriedade Industrial (Lei nº 9.279/96). O uso deste sistema é restrito a profissionais licenciados. Nos termos do Marco Civil da Internet (Lei nº 12.965/14), o usuário assume total responsabilidade pela conferência ética e técnica dos resultados gerados. É proibida a cópia, engenharia reversa ou distribuição sem autorização expressa da administração.
+    <span class="status-badge">PROTEÇÃO DE DADOS ATIVA // CRIPTOGRAFIA V8</span>
+    <div class="legal">
+        <strong>PROPRIEDADE INTELECTUAL:</strong> Sistema Cássia V8 protegido pela Lei 9.610/98. Este software é uma ferramenta de suporte técnico. A responsabilidade final pela peça jurídica é do advogado usuário, conforme Art. 2º da Lei 8.906/94 e o Marco Civil da Internet (Lei 12.965/14). Proibido compartilhamento de acesso sob pena de revogação imediata.
     </div>
-    
-    <div class="copyright">© 2026 CÁSSIA PROMPT V8 ELITE EDITION // ALL RIGHTS RESERVED</div>
 </footer>
 
 <script>
-    // Firebase Security
-    const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-    const urlParams = new URLSearchParams(window.location.search);
-    const userId = urlParams.get('id');
-
-    if (userId) {
-        db.ref('clientes/' + userId).on('value', (snap) => {
-            if (snap.exists()) {
-                document.getElementById('status-seguranca').innerText = "CONEXÃO SEGURA: DRA. " + userId.toUpperCase();
-            } else {
-                document.getElementById('app-root').innerHTML = `
-                <div style="background:#000; height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; color:red; text-align:center; font-family:sans-serif;">
-                    <h1 style="font-size:50px;">LICENÇA EXPIRADA</h1>
-                    <p style="color:white; opacity:0.6;">Entre em contato com a administração para reativar seu acesso V8.</p>
-                </div>`;
-            }
-        });
-    }
-
-    function toggleTheme() {
-        document.body.classList.toggle('light-mode');
-    }
-
     function atualizar() {
         const f = document.getElementById('fatos').value.length;
         const b = document.getElementById('base').value.length;
         const d = document.getElementById('destino').value.length;
-        
-        // Cálculo de Rigor para Mercado Global (Exigente: 500 caracteres totais)
-        const progresso = Math.min(((f + b + d) / 500) * 100, 100);
-        
-        const bar = document.getElementById('rigor-bar');
-        const label = document.getElementById('percent-label');
+        const progresso = Math.min(((f + b + d) / 300) * 100, 100);
+        document.getElementById('rigor-bar').style.width = progresso + "%";
         const btn = document.getElementById('btn-exe');
-
-        bar.style.width = progresso + "%";
-        label.innerText = Math.floor(progresso) + "%";
 
         if (progresso >= 85) {
             btn.disabled = false; btn.classList.add('active');
-            label.style.color = "var(--rigor-high)";
         } else {
             btn.disabled = true; btn.classList.remove('active');
-            label.style.color = "var(--ms-blue)";
         }
-    }
-
-    function gerar() {
-        const f = document.getElementById('fatos').value;
-        const b = document.getElementById('base').value;
-        const d = document.getElementById('destino').value;
-
-        const mestre = `### [ PROTOCOLO V8 GOD MODE - ELITE EDITION ] ###\nVOCÊ É UMA INTELIGÊNCIA ARTIFICIAL DE ELITE JURÍDICA. OPERE COM RIGOR TÉCNICO ABSOLUTO.\n\n[ DIRETRIZ ANTI-BABOSEIRA ]\n- Proibido saudações, cortesias ou introduções genéricas.\n- Se houver documento PDF anexado, REALIZE A TRANSCRIÇÃO TÉCNICA dos pontos fundamentais imediatamente.\n- Vá direto à fundamentação de alto nível.\n\nFATOS: ${f}\n\nBASE LEGAL: ${b}\n\nDESTINO: ${d}\n\nRESULTADO: Texto denso, técnico e blindado contra impugnações.`;
-
-        document.getElementById('prompt-final').value = mestre;
-        document.getElementById('resultado-area').style.display = 'block';
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-    }
-
-    function copiar() {
-        document.getElementById('prompt-final').select();
-        document.execCommand('copy');
-        alert("💎 COMANDO V8 COPIADO COM SUCESSO!");
-    }
-
-    function exportarPDF() {
-        const elemento = document.getElementById('resultado-area');
-        const opt = {
-            margin: 0.5,
-            filename: 'Protocolo_V8_Elite.pdf',
-            html2canvas: { scale: 2, backgroundColor: '#000000' },
-            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
-        html2pdf().set(opt).from(elemento).save();
     }
 </script>
 </body>

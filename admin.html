@@ -2,49 +2,43 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>SISTEMA MESTRA V11 | CONTROL CENTER</title>
+    <title>SISTEMA MESTRA V12 | FINAL</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <style>
-        body { background: #000; color: #00f2ff; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; padding: 20px; }
-        .panel { width: 100%; max-width: 500px; background: #0a0a0a; border: 2px solid #00f2ff; border-radius: 15px; padding: 30px; box-shadow: 0 0 30px rgba(0,242,255,0.3); text-align: center; }
-        h2 { text-transform: uppercase; letter-spacing: 3px; margin-bottom: 25px; }
-        input { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-sizing: border-box; outline: none; font-size: 1rem; }
-        .btn-main { width: 100%; background: #00ffa3; color: #000; border: none; padding: 18px; font-weight: 800; border-radius: 8px; cursor: pointer; text-transform: uppercase; }
-        .monitor { margin-top: 40px; border-top: 1px solid #222; padding-top: 20px; text-align: left; }
-        .card { background: #111; padding: 20px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #222; }
-        .btn-copy { width: 100%; background: #0078d4; color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: 700; margin-top: 15px; text-transform: uppercase; }
-        .btn-revogar { background: #ff4d4d; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; float: right; }
+        body { background: #000; color: #00f2ff; font-family: sans-serif; display: flex; justify-content: center; padding: 20px; }
+        .panel { width: 100%; max-width: 450px; background: #0a0a0a; border: 2px solid #00f2ff; border-radius: 15px; padding: 25px; box-shadow: 0 0 20px #00f2ff44; text-align: center; }
+        input { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 8px; margin: 15px 0; box-sizing: border-box; }
+        button { width: 100%; background: #00ffa3; color: #000; border: none; padding: 15px; font-weight: bold; border-radius: 8px; cursor: pointer; text-transform: uppercase; }
+        .user-card { background: #111; padding: 15px; border-radius: 10px; margin-top: 20px; border: 1px solid #222; text-align: left; }
+        .btn-copy { background: #0078d4; color: white; border: none; width: 100%; padding: 12px; border-radius: 5px; margin-top: 10px; cursor: pointer; font-weight: bold; }
+        .btn-del { background: #ff4d4d; color: white; border: none; padding: 5px; border-radius: 4px; float: right; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="panel">
-    <h2>SISTEMA MESTRA V11</h2>
-    <input type="text" id="nomeAdv" placeholder="NOME DA DOUTORA (Ex: Helen)">
-    <button class="btn-main" onclick="ativar()">ATIVAR ACESSO IMEDIATO</button>
+    <h2 style="margin:0">SISTEMA MESTRA V12</h2>
+    <input type="text" id="nomeAdv" placeholder="NOME DA DOUTORA">
+    <button onclick="ativar()">ATIVAR E GERAR LINK</button>
 
-    <div class="monitor">
-        <p style="color: #888; font-size: 0.8rem; letter-spacing: 1px;">LICENÇAS ATIVAS:</p>
-        <div id="lista"></div>
-    </div>
+    <div id="lista" style="margin-top:30px"></div>
 </div>
 
 <script>
-    // CONFIGURAÇÃO FIREBASE
     const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // AQUI ESTÁ O SEGREDO: O NOME COMPLETO DO FICHEIRO PARA ACABAR COM O ERRO 404
-    const ENDERECO_REAL = "https://cassiakelly995-lab.github.io/meu-app/cassia-app.html";
+    // AQUI ESTÁ A CORREÇÃO REAL:
+    const base = "https://cassiakelly995-lab.github.io/meu-app/cassia-app.html";
 
     function ativar() {
         const nome = document.getElementById('nomeAdv').value.trim();
-        if(!nome) return alert("Por favor, digite o nome!");
-        const id = nome.replace(/\s+/g, '_'); 
-        db.ref('clientes/' + id).set({ nome: nome, status: "ativo" }).then(() => {
-            alert("SISTEMA: Acesso ativado!");
+        if(!nome) return;
+        const id = nome.replace(/\s+/g, '_');
+        db.ref('clientes/' + id).set({ nome: nome }).then(() => {
+            alert("Ativado!");
             document.getElementById('nomeAdv').value = "";
         });
     }
@@ -54,25 +48,24 @@
         lista.innerHTML = "";
         snap.forEach((child) => {
             const id = child.key;
-            // O link gerado agora contém obrigatoriamente o .html
-            const linkFinal = ENDERECO_REAL + "?id=" + id;
+            // FORÇANDO O .HTML NO LINK DO BOTÃO
+            const linkFinal = base + "?id=" + id;
             lista.innerHTML += `
-                <div class="card">
-                    <button class="btn-revogar" onclick="remover('${id}')">BLOQUEAR</button>
-                    <span><strong>${id}</strong></span><br>
-                    <button class="btn-copy" onclick="copiar('${linkFinal}')">COPIAR LINK ÚNICO (WHATSAPP)</button>
+                <div class="user-card">
+                    <button class="btn-del" onclick="apagar('${id}')">BLOQUEAR</button>
+                    <strong>${id}</strong>
+                    <button class="btn-copy" onclick="copiar('${linkFinal}')">COPIAR LINK (WHATSAPP)</button>
                 </div>`;
         });
     });
 
     function copiar(url) {
-        navigator.clipboard.writeText(url).then(() => {
-            alert("LINK COPIADO COM SUCESSO!");
-        });
+        navigator.clipboard.writeText(url);
+        alert("Link copiado! Pode enviar.");
     }
 
-    function remover(id) {
-        if(confirm("Bloquear " + id + "?")) db.ref('clientes/' + id).remove();
+    function apagar(id) {
+        db.ref('clientes/' + id).remove();
     }
 </script>
 </body>

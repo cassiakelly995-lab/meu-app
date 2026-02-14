@@ -2,80 +2,75 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>SISTEMA MESTRA V20 | CONTROLE DE ACESSOS</title>
+    <title>MESTRA V21 | CONTROLE DE PROMPTS</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <style>
-        body { background: #000; color: #00f2ff; font-family: sans-serif; display: flex; justify-content: center; padding: 20px; }
-        .panel { width: 100%; max-width: 450px; background: #0a0a0a; border: 2px solid #00f2ff; border-radius: 15px; padding: 25px; text-align: center; box-shadow: 0 0 20px #00f2ff44; }
-        h2 { color: #00f2ff; text-transform: uppercase; margin-bottom: 20px; }
+        body { background: #000; color: #ff007a; font-family: sans-serif; display: flex; justify-content: center; padding: 20px; }
+        .panel { width: 100%; max-width: 450px; background: #0a0a0a; border: 2px solid #ff007a; border-radius: 15px; padding: 25px; text-align: center; box-shadow: 0 0 20px #ff007a44; }
+        h2 { text-transform: uppercase; margin-bottom: 20px; color: #fff; }
         input { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 15px; border-radius: 8px; margin: 10px 0; box-sizing: border-box; }
-        .btn-ativar { width: 100%; background: #00ffa3; color: #000; border: none; padding: 15px; font-weight: bold; border-radius: 8px; cursor: pointer; text-transform: uppercase; margin-bottom: 20px; }
+        .btn-ativar { width: 100%; background: #ff007a; color: #fff; border: none; padding: 15px; font-weight: bold; border-radius: 8px; cursor: pointer; text-transform: uppercase; }
         .user-card { background: #111; padding: 15px; border-radius: 10px; margin-top: 15px; border: 1px solid #222; text-align: left; position: relative; }
         .btn-copy { background: #0078d4; color: white; border: none; width: 100%; padding: 12px; border-radius: 5px; margin-top: 10px; cursor: pointer; font-weight: bold; }
-        .btn-del { background: #ff4d4d; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; position: absolute; right: 15px; top: 15px; }
+        .btn-del { background: #ff4d4d; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; position: absolute; right: 15px; top: 15px; }
     </style>
 </head>
 <body>
 
 <div class="panel">
-    <h2>MESTRA V20 - ADMIN</h2>
+    <h2>CONTROLE DE ACESSOS V21</h2>
     <input type="text" id="nomeAdv" placeholder="NOME DA DOUTORA">
-    <button class="btn-ativar" onclick="ativar()">ATIVAR ACESSO AGORA</button>
-    <hr style="border: 0.5px solid #222;">
-    <div id="lista"></div>
+    <button class="btn-ativar" onclick="ativar()">ATIVAR ACESSO AO PROMPT</button>
+    <div id="lista" style="margin-top:20px"></div>
 </div>
 
 <script>
-    // Configuração oficial do seu Firebase
     const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // LINK QUE VAI PARA O SEU PROMPT (V8 ELITE TECH)
-    const linkBase = "https://cassiakelly995-lab.github.io/meu-app/index.html";
+    // LINK QUE APONTA PARA O SEU SISTEMA DE PROMPT (V8 ELITE TECH)
+    const urlSistema = "https://cassiakelly995-lab.github.io/meu-app/index.html";
 
     function ativar() {
         const nome = document.getElementById('nomeAdv').value.trim();
         if(!nome) return alert("Digite o nome!");
         const id = nome.replace(/\s+/g, '_');
-        
-        db.ref('clientes/' + id).set({ nome: nome, status: "ativo" }).then(() => {
+        db.ref('clientes/' + id).set({ nome: nome }).then(() => {
             alert("✅ ACESSO ATIVADO!");
             document.getElementById('nomeAdv').value = "";
         });
     }
 
-    // Monitora as advogadas e gera os botões
     db.ref('clientes').on('value', (snap) => {
         const lista = document.getElementById('lista');
         lista.innerHTML = "";
-        
         snap.forEach((child) => {
             const id = child.key;
-            const linkFinal = linkBase + "?id=" + id;
-            
+            const linkFinal = urlSistema + "?id=" + id;
             lista.innerHTML += `
                 <div class="user-card">
                     <button class="btn-del" onclick="bloquear('${id}')">BLOQUEAR</button>
-                    <strong>Dra. ${id}</strong>
-                    <button class="btn-copy" onclick="copiar('${linkFinal}')">COPIAR LINK ÚNICO</button>
+                    <strong style="color: #fff">Dra. ${id}</strong>
+                    <button class="btn-copy" onclick="copiar('${linkFinal}')">COPIAR LINK DO PROMPT</button>
                 </div>`;
         });
     });
 
     function copiar(url) {
-        navigator.clipboard.writeText(url).then(() => {
-            alert("🔗 LINK COPIADO!\nCole no WhatsApp da cliente.");
-        });
+        const temp = document.createElement('input');
+        document.body.appendChild(temp);
+        temp.value = url;
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        alert("🔗 LINK COPIADO!");
     }
 
-    // FUNÇÃO DE BLOQUEIO REAL
     function bloquear(id) {
         if(confirm("Deseja BLOQUEAR o acesso de " + id + "?")) {
-            db.ref('clientes/' + id).remove().then(() => {
-                alert("🚫 ACESSO EXCLUÍDO!");
-            });
+            db.ref('clientes/' + id).remove().then(() => alert("🚫 BLOQUEADO!"));
         }
     }
 </script>

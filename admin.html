@@ -2,92 +2,81 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>SISTEMA MESTRA V19 | CONTROLO TOTAL</title>
+    <title>SISTEMA MESTRA V20 | CONTROLE DE ACESSOS</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <style>
         body { background: #000; color: #00f2ff; font-family: sans-serif; display: flex; justify-content: center; padding: 20px; }
         .panel { width: 100%; max-width: 450px; background: #0a0a0a; border: 2px solid #00f2ff; border-radius: 15px; padding: 25px; text-align: center; box-shadow: 0 0 20px #00f2ff44; }
-        input { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 15px; border-radius: 8px; margin: 15px 0; box-sizing: border-box; }
-        .btn-ativar { width: 100%; background: #00ffa3; color: #000; border: none; padding: 15px; font-weight: bold; border-radius: 8px; cursor: pointer; text-transform: uppercase; }
-        .user-card { background: #111; padding: 15px; border-radius: 10px; margin-top: 20px; border: 1px solid #222; text-align: left; position: relative; }
+        h2 { color: #00f2ff; text-transform: uppercase; margin-bottom: 20px; }
+        input { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 15px; border-radius: 8px; margin: 10px 0; box-sizing: border-box; }
+        .btn-ativar { width: 100%; background: #00ffa3; color: #000; border: none; padding: 15px; font-weight: bold; border-radius: 8px; cursor: pointer; text-transform: uppercase; margin-bottom: 20px; }
+        .user-card { background: #111; padding: 15px; border-radius: 10px; margin-top: 15px; border: 1px solid #222; text-align: left; position: relative; }
         .btn-copy { background: #0078d4; color: white; border: none; width: 100%; padding: 12px; border-radius: 5px; margin-top: 10px; cursor: pointer; font-weight: bold; }
-        .btn-del { background: #ff4d4d; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; position: absolute; right: 15px; top: 15px; z-index: 10; }
+        .btn-del { background: #ff4d4d; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; position: absolute; right: 15px; top: 15px; }
     </style>
 </head>
 <body>
 
 <div class="panel">
-    <h2>MESTRA V19 CONTROL</h2>
+    <h2>MESTRA V20 - ADMIN</h2>
     <input type="text" id="nomeAdv" placeholder="NOME DA DOUTORA">
-    <button class="btn-ativar" onclick="ativar()">ATIVAR ACESSO</button>
-    <div id="lista" style="margin-top:30px"></div>
+    <button class="btn-ativar" onclick="ativar()">ATIVAR ACESSO AGORA</button>
+    <hr style="border: 0.5px solid #222;">
+    <div id="lista"></div>
 </div>
 
 <script>
-    // Configuração do teu Firebase
+    // Configuração oficial do seu Firebase
     const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // LINK BASE CORRETO COM .HTML
-    const baseLink = "https://cassiakelly995-lab.github.io/meu-app/cassia-app.html";
+    // LINK QUE VAI PARA O SEU PROMPT (V8 ELITE TECH)
+    const linkBase = "https://cassiakelly995-lab.github.io/meu-app/index.html";
 
     function ativar() {
         const nome = document.getElementById('nomeAdv').value.trim();
         if(!nome) return alert("Digite o nome!");
         const id = nome.replace(/\s+/g, '_');
         
-        // Salva no Firebase
-        db.ref('clientes/' + id).set({
-            nome: nome,
-            status: "ativo"
-        }).then(() => {
-            alert("✅ ACESSO CRIADO!");
+        db.ref('clientes/' + id).set({ nome: nome, status: "ativo" }).then(() => {
+            alert("✅ ACESSO ATIVADO!");
             document.getElementById('nomeAdv').value = "";
-        }).catch(e => alert("Erro ao salvar: " + e.message));
+        });
     }
 
-    // LISTA E MONITORIZA EM TEMPO REAL
+    // Monitora as advogadas e gera os botões
     db.ref('clientes').on('value', (snap) => {
         const lista = document.getElementById('lista');
         lista.innerHTML = "";
         
-        if(!snap.exists()) {
-            lista.innerHTML = "<p style='color:#666'>Nenhuma advogada ativa.</p>";
-            return;
-        }
-
         snap.forEach((child) => {
             const id = child.key;
-            const linkFinal = baseLink + "?id=" + id;
+            const linkFinal = linkBase + "?id=" + id;
             
             lista.innerHTML += `
                 <div class="user-card">
-                    <button class="btn-del" onclick="apagarUsuario('${id}')">BLOQUEAR</button>
-                    <strong style="display:block; margin-bottom:5px;">● ${id}</strong>
-                    <button class="btn-copy" onclick="copiarLink('${linkFinal}')">COPIAR LINK (WHATSAPP)</button>
+                    <button class="btn-del" onclick="bloquear('${id}')">BLOQUEAR</button>
+                    <strong>Dra. ${id}</strong>
+                    <button class="btn-copy" onclick="copiar('${linkFinal}')">COPIAR LINK ÚNICO</button>
                 </div>`;
         });
     });
 
-    // FUNÇÃO DE BLOQUEAR (REMOVER DO FIREBASE) - CORRIGIDA!
-    function apagarUsuario(idParaApagar) {
-        if(confirm("Deseja realmente BLOQUEAR e APAGAR o acesso de: " + idParaApagar + "?")) {
-            db.ref('clientes/' + idParaApagar).remove()
-            .then(() => {
-                alert("🚫 ACESSO REVOGADO COM SUCESSO!");
-            })
-            .catch((error) => {
-                alert("Erro ao apagar: " + error.message);
-            });
-        }
+    function copiar(url) {
+        navigator.clipboard.writeText(url).then(() => {
+            alert("🔗 LINK COPIADO!\nCole no WhatsApp da cliente.");
+        });
     }
 
-    function copiarLink(url) {
-        navigator.clipboard.writeText(url).then(() => {
-            alert("🔗 LINK COPIADO!\nJá pode enviar.");
-        });
+    // FUNÇÃO DE BLOQUEIO REAL
+    function bloquear(id) {
+        if(confirm("Deseja BLOQUEAR o acesso de " + id + "?")) {
+            db.ref('clientes/' + id).remove().then(() => {
+                alert("🚫 ACESSO EXCLUÍDO!");
+            });
+        }
     }
 </script>
 </body>

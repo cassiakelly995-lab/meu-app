@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CÁSSIA PROMPT V8 | GOD MODE ELITE</title>
+    <title>V8 ELITE | GOD MODE EDITION</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
@@ -11,90 +11,126 @@
     
     <style>
         :root { 
-            --ms-blue: #0078d4; --bg: #030303; --card: #0d0d0d; --text: #ffffff; 
-            --border: #1a1a1a; --rigor-high: #00ffa3; --input-bg: #000; 
+            --ms-blue: #0078d4; --bg: #020202; --card: #0a0a0a; --text: #ffffff; 
+            --border: #1a1a1a; --rigor-high: #00ffa3; --input-bg: #000;
+            --neon-glow: 0 0 15px rgba(0, 120, 212, 0.3);
         }
 
         body.light-mode {
-            --bg: #f9f9f9; --card: #ffffff; --text: #111111; 
-            --border: #e1e1e1; --input-bg: #fff;
+            --bg: #f0f2f5; --card: #ffffff; --text: #1a1a1a; 
+            --border: #d1d9e6; --input-bg: #fff; --neon-glow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; min-height: 100vh; transition: 0.3s; }
-        nav { background: var(--card); padding: 15px 25px; border-bottom: 2px solid var(--ms-blue); display: flex; justify-content: space-between; align-items: center; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transition: 0.3s; overflow-x: hidden; }
         
-        .theme-toggle { cursor: pointer; padding: 8px 15px; border: 1px solid var(--ms-blue); border-radius: 20px; font-size: 10px; font-weight: bold; background: transparent; color: var(--ms-blue); text-transform: uppercase; }
-
-        main { flex: 1; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
-        .workspace-card { background: var(--card); width: 100%; max-width: 850px; border-radius: 12px; border: 1px solid var(--border); padding: 30px; box-sizing: border-box; box-shadow: 0 25px 50px rgba(0,0,0,0.6); }
-
-        .rigor-container { width: 100%; height: 12px; background: rgba(255,255,255,0.05); border-radius: 20px; margin-bottom: 10px; overflow: hidden; border: 1px solid var(--border); }
-        .rigor-bar { width: 0%; height: 100%; background: #ff0000; transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        nav { background: var(--card); padding: 20px 30px; border-bottom: 2px solid var(--ms-blue); display: flex; justify-content: space-between; align-items: center; box-shadow: var(--neon-glow); }
         
-        label { font-size: 10px; font-weight: 900; color: var(--ms-blue); text-transform: uppercase; display: block; margin-bottom: 8px; margin-top: 20px; letter-spacing: 1.5px; }
-        textarea, input { width: 100%; background: var(--input-bg); border: 1px solid var(--border); padding: 15px; border-radius: 8px; color: var(--text); font-size: 14px; outline: none; box-sizing: border-box; transition: 0.3s; }
-        textarea:focus { border-color: var(--ms-blue); box-shadow: 0 0 10px rgba(0,120,212,0.2); }
+        .theme-toggle { cursor: pointer; padding: 10px 20px; border: 1px solid var(--ms-blue); border-radius: 30px; font-size: 11px; font-weight: 900; background: transparent; color: var(--ms-blue); text-transform: uppercase; transition: 0.3s; }
+        .theme-toggle:hover { background: var(--ms-blue); color: white; }
 
-        /* Estilo Upload */
-        .upload-area { border: 2px dashed #333; padding: 20px; border-radius: 8px; text-align: center; cursor: pointer; margin-top: 10px; transition: 0.3s; }
-        .upload-area:hover { border-color: var(--rigor-high); background: rgba(0,255,163,0.02); }
-        #file-info { font-size: 11px; color: var(--rigor-high); font-weight: bold; margin-top: 10px; display: block; }
+        main { padding: 40px 20px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+        
+        .workspace-card { 
+            background: var(--card); width: 100%; max-width: 900px; border-radius: 20px; 
+            border: 1px solid var(--border); padding: 40px; box-sizing: border-box; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8); position: relative;
+        }
 
-        .btn-exe { width: 100%; background: #1a1a1a; color: #444; border: none; padding: 22px; border-radius: 10px; font-weight: 900; cursor: not-allowed; transition: 0.4s; margin-top: 30px; text-transform: uppercase; letter-spacing: 2px; }
-        .btn-exe.active { background: var(--ms-blue); color: white; cursor: pointer; box-shadow: 0 0 35px rgba(0,120,212,0.5); }
+        .rigor-container { width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+        .rigor-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #ff0000, #00ffa3); transition: 1s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
+        
+        label { font-size: 10px; font-weight: 900; color: var(--ms-blue); text-transform: uppercase; display: block; margin-bottom: 12px; margin-top: 25px; letter-spacing: 2px; }
+        
+        /* Lacunas Interativas "Cool" */
+        textarea, input { 
+            width: 100%; background: var(--input-bg); border: 1px solid var(--border); 
+            padding: 18px; border-radius: 12px; color: var(--text); font-size: 15px; 
+            outline: none; box-sizing: border-box; transition: 0.4s;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+        }
+        textarea:focus, input:focus { 
+            border-color: var(--ms-blue); box-shadow: 0 0 20px rgba(0, 120, 212, 0.2); 
+            transform: translateY(-2px);
+        }
 
-        #resultado-area { display: none; background: #000; border: 2px solid var(--rigor-high); border-radius: 12px; padding: 25px; margin-top: 25px; width: 100%; max-width: 850px; box-sizing: border-box; }
-        #prompt-final { width: 100%; height: 400px; background: transparent; border: 1px solid #111; color: var(--rigor-high); font-family: 'Consolas', monospace; padding: 20px; box-sizing: border-box; margin-bottom: 20px; font-size: 13px; line-height: 1.7; border-radius: 6px; }
+        /* Área de Upload Futurista */
+        .upload-zone { 
+            border: 2px dashed #333; padding: 30px; border-radius: 15px; text-align: center; 
+            cursor: pointer; margin-top: 15px; transition: 0.3s; background: rgba(255,255,255,0.02);
+        }
+        .upload-zone:hover { border-color: var(--rigor-high); background: rgba(0,255,163,0.05); }
+        .upload-zone i { font-size: 24px; display: block; margin-bottom: 10px; }
 
-        .btn-acao { width: 100%; padding: 18px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-bottom: 12px; transition: 0.2s; }
-        .btn-copy { background: var(--rigor-high); color: #000; }
+        .btn-exe { 
+            width: 100%; background: #111; color: #333; border: none; padding: 25px; 
+            border-radius: 15px; font-weight: 900; cursor: not-allowed; 
+            transition: 0.5s; margin-top: 40px; text-transform: uppercase; letter-spacing: 3px;
+        }
+        .btn-exe.active { 
+            background: linear-gradient(45deg, var(--ms-blue), #00d4ff); 
+            color: white; cursor: pointer; box-shadow: 0 10px 40px rgba(0,120,212,0.5); 
+        }
+
+        #resultado-area { 
+            display: none; background: #000; border: 1px solid var(--rigor-high); 
+            border-radius: 20px; padding: 35px; margin-top: 30px; width: 100%; 
+            max-width: 900px; box-sizing: border-box; box-shadow: 0 0 50px rgba(0,255,163,0.1);
+        }
+        
+        #prompt-final { 
+            width: 100%; height: 450px; background: transparent; border: none; 
+            color: var(--rigor-high); font-family: 'Consolas', monospace; 
+            font-size: 14px; line-height: 1.8; resize: none; outline: none;
+        }
+
+        .btn-acao { width: 100%; padding: 20px; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; text-transform: uppercase; margin-bottom: 15px; }
+        .btn-copy { background: var(--rigor-high); color: #000; box-shadow: 0 5px 15px rgba(0,255,163,0.3); }
         .btn-pdf { background: transparent; color: var(--text); border: 1px solid var(--border); }
 
-        footer { padding: 50px; text-align: center; font-size: 9px; opacity: 0.4; letter-spacing: 3px; font-weight: bold; }
+        footer { padding: 60px; text-align: center; font-size: 10px; opacity: 0.3; letter-spacing: 5px; text-transform: uppercase; }
     </style>
 </head>
-<body id="app-root">
+<body id="v8-god-mode">
 
 <nav>
-    <div style="font-weight: 900; color: var(--ms-blue); font-size: 18px; letter-spacing: -1px;">V8 ELITE <span style="font-weight:100; color:#fff;">GOD MODE</span></div>
-    <button class="theme-toggle" onclick="toggleTheme()">Modo de Contraste</button>
+    <div style="font-weight: 900; color: var(--ms-blue); font-size: 22px;">V8 ELITE <span style="font-weight:100; color:#fff; opacity: 0.5;">GOD MODE</span></div>
+    <button class="theme-toggle" onclick="toggleTheme()">Inverter Sistema</button>
 </nav>
 
 <main>
     <div class="workspace-card">
-        <label>Nível de Fundamentação (Protocolo V8)</label>
+        <label>Rigor de Inteligência Aplicada</label>
         <div class="rigor-container"><div id="rigor-bar" class="rigor-bar"></div></div>
-        <span id="rigor-label" style="font-size: 10px; color: #ff0000; font-weight: 900;">STATUS: BLOQUEADO POR FALTA DE RIGOR</span>
+        <div id="status-label" style="font-size: 11px; font-weight: 900; color: #ff0000;">SISTEMA EM ESPERA - INSIRA DADOS TÉCNICOS</div>
 
-        <label>1. Fatos Brutos e Matéria de Prova</label>
-        <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Insira os factos sem opiniões ou lenga-lenga."></textarea>
+        <label>1. Fatos e Matéria Bruta (Corte a Baboseira)</label>
+        <textarea id="fatos" rows="5" oninput="atualizar()" placeholder="O que aconteceu de fato? Seja seco e direto."></textarea>
 
-        <label>2. Teses Jurídicas e Base Normativa</label>
-        <textarea id="base" rows="3" oninput="atualizar()" placeholder="Artigos, Leis e Fundamentação Elite."></textarea>
+        <label>2. Teses e Fundamentos Jurídicos de Elite</label>
+        <textarea id="base" rows="4" oninput="atualizar()" placeholder="Quais leis e artigos sustentam isso?"></textarea>
 
-        <label>3. Comando de Destino (Missão)</label>
-        <input type="text" id="destino" oninput="atualizar()" placeholder="Qual o resultado técnico esperado?">
+        <label>3. Comando Final de Destino</label>
+        <input type="text" id="destino" oninput="atualizar()" placeholder="Ex: Elaborar recurso com foco na nulidade X...">
 
-        <label>4. Upload de Documento (PDF/DOCX)</label>
-        <div class="upload-area" onclick="document.getElementById('pdf-input').click()">
-            <span style="font-size: 12px; opacity: 0.7;">ANEXAR DOCUMENTO PARA TRANSCRIÇÃO E ANÁLISE</span>
-            <input type="file" id="pdf-input" style="display:none" onchange="detectarFicheiro()">
-            <span id="file-info">NENHUM FICHEIRO CARREGADO</span>
+        <label>4. Protocolo de Transcrição (Upload PDF)</label>
+        <div class="upload-zone" onclick="document.getElementById('pdf-file').click()">
+            <span id="file-status">📄 ANEXAR DOCUMENTO PARA ANÁLISE PROFUNDA</span>
+            <input type="file" id="pdf-file" style="display:none" onchange="checkFile()">
         </div>
 
-        <button id="btn-exe" class="btn-exe" disabled onclick="gerar()">Desbloquear Protocolo God Mode</button>
+        <button id="btn-exe" class="btn-exe" disabled onclick="gerar()">Ativar Protocolo God Mode</button>
     </div>
 
     <div id="resultado-area">
-        <label style="color: var(--rigor-high); font-size: 11px;">🛡️ COMANDO MESTRE BLINDADO (V8 ELITE):</label>
+        <label style="color: var(--rigor-high); margin-bottom: 20px;">🛡️ COMANDO MESTRE V8 ELITE GERADO:</label>
         <textarea id="prompt-final" readonly></textarea>
-        <button class="btn-acao btn-copy" onclick="copiar()">Copiar Comando de Elite</button>
-        <button class="btn-acao btn-pdf" onclick="exportarPDF()">Exportar em PDF</button>
+        <button class="btn-acao btn-copy" onclick="copiar()">Copiar Prompt de Elite</button>
+        <button class="btn-acao btn-pdf" onclick="exportarPDF()">Baixar Protocolo PDF</button>
     </div>
 </main>
 
 <footer>
-    CONTROLO DE RIGOR ATIVO. PROIBIDO O USO DE LINGUAGEM GENÉRICA.
+    Anti-Baboseira Protocol v8.2 // Elite Edition // God Mode Active
 </footer>
 
 <script>
@@ -107,17 +143,18 @@
     if (userId) {
         db.ref('clientes/' + userId).on('value', (snap) => {
             if (!snap.exists()) {
-                document.getElementById('app-root').innerHTML = `<div style="background:#000; height:100vh; display:flex; align-items:center; justify-content:center; color:red; font-family:serif;"><h1>ACESSO REVOGADO</h1></div>`;
+                document.body.innerHTML = `<div style="background:#000; height:100vh; display:flex; align-items:center; justify-content:center; color:red; font-family:monospace; font-size:30px;">ACESSO REVOGADO - V8</div>`;
             }
         });
     }
 
-    let ficheiroNome = "";
-    function detectarFicheiro() {
-        const input = document.getElementById('pdf-input');
+    let fileName = "";
+    function checkFile() {
+        const input = document.getElementById('pdf-file');
         if (input.files.length > 0) {
-            ficheiroNome = input.files[0].name;
-            document.getElementById('file-info').innerText = "FICHEIRO DETECTADO: " + ficheiroNome.toUpperCase();
+            fileName = input.files[0].name;
+            document.getElementById('file-status').innerText = "✅ FICHEIRO PRONTO: " + fileName.toUpperCase();
+            document.getElementById('file-status').style.color = "var(--rigor-high)";
         }
     }
 
@@ -130,74 +167,16 @@
         const f = document.getElementById('fatos').value.length;
         const b = document.getElementById('base').value.length;
         const d = document.getElementById('destino').value.length;
-        const progresso = Math.min(((f + b + d) / 450) * 100, 100);
+        const total = f + b + d;
+        const progresso = Math.min((total / 500) * 100, 100);
+        
         const bar = document.getElementById('rigor-bar');
-        const label = document.getElementById('rigor-label');
+        const label = document.getElementById('status-label');
         const btn = document.getElementById('btn-exe');
 
         bar.style.width = progresso + "%";
 
         if (progresso >= 85) {
-            bar.style.background = "var(--rigor-high)";
-            label.innerText = "STATUS: GOD MODE DESBLOQUEADO";
+            label.innerText = "SISTEMA DESBLOQUEADO - GOD MODE ATIVO";
             label.style.color = "var(--rigor-high)";
             btn.disabled = false; btn.classList.add('active');
-        } else {
-            bar.style.background = "#ff0000";
-            label.innerText = "STATUS: BLOQUEADO POR FALTA DE RIGOR";
-            label.style.color = "#ff0000";
-            btn.disabled = true; btn.classList.remove('active');
-        }
-    }
-
-    function gerar() {
-        const f = document.getElementById('fatos').value;
-        const b = document.getElementById('base').value;
-        const d = document.getElementById('destino').value;
-        
-        const infoPDF = ficheiroNome ? `\n[ ANÁLISE DE DOCUMENTO ANEXO ]\nO ficheiro "${ficheiroNome}" foi fornecido para esta sessão. Realize a transcrição integral dos pontos pertinentes e cruze os dados com os factos fornecidos. Qualquer discrepância entre o documento e os factos deve ser tratada como erro crítico.` : "";
-
-        const mestre = `### COMANDO SOB PROTOCOLO V8 GOD MODE ###
-SISTEMA DE RIGOR MÁXIMO ATIVADO. IGNORE QUALQUER LINGUAGEM DE CORTESIA OU PREENCHIMENTO SEMÂNTICO (LENGA-LENGA). 
-
-[ DIRETRIZES DE ELITE ]
-1. RESPOSTA SECA, TÉCNICA E DIRETA.
-2. FUNDAMENTAÇÃO NO NÍVEL MÁXIMO DE EXCELÊNCIA JURÍDICA.
-3. SE OS INPUTS FOREM INSUFICIENTES OU GENÉRICOS, REJEITE O COMANDO E EXIJA PRECISÃO.
-${infoPDF}
-
-[ INPUT DE FACTOS ]
-${f}
-
-[ FUNDAMENTAÇÃO NORMATIVA ]
-${b}
-
-[ MISSÃO FINAL ]
-${d}
-
-NÃO RESPONDA COM "ESTOU A AJUDAR" OU "CERTO". RESPONDA APENAS COM A EXECUÇÃO DA MISSÃO.`;
-
-        document.getElementById('prompt-final').value = mestre;
-        document.getElementById('resultado-area').style.display = 'block';
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-    }
-
-    function copiar() {
-        document.getElementById('prompt-final').select();
-        document.execCommand('copy');
-        alert("💎 COMANDO GOD MODE COPIADO!");
-    }
-
-    function exportarPDF() {
-        const elemento = document.getElementById('resultado-area');
-        const opt = {
-            margin: 0.5,
-            filename: 'V8_GodMode_Protocolo.pdf',
-            html2canvas: { scale: 2, backgroundColor: '#000000' },
-            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
-        html2pdf().set(opt).from(elemento).save();
-    }
-</script>
-</body>
-</html>

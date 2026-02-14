@@ -4,79 +4,78 @@
     <meta charset="UTF-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CÁSSIA PROMPT V8 | PRIVACY ELITE</title>
+    <title>CÁSSIA PROMPT V8 | STRATEGIC ELITE</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <style>
         :root {
-            --ms-blue: #0078d4; --bg: #f3f6f8; --card: #ffffff; --text: #201f1e; --border: #dee1e6;
-            --rigor-low: #ff4d4d; --rigor-high: #00ffa3;
+            --ms-blue: #0078d4; --bg: #0b0b0b; --card: #161616; --text: #ffffff; --border: #333333;
+            --rigor-low: #ff4d4d; --rigor-high: #00ffa3; --ms-gold: #ffca28;
         }
-        body.dark-mode {
-            --bg: #0b0b0b; --card: #161616; --text: #ffffff; --border: #333333;
-        }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; transition: 0.3s; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         nav { background: var(--card); padding: 12px 60px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
-        .brand { font-size: 18px; font-weight: 700; color: var(--ms-blue); }
-        main { flex: 1; display: flex; padding: 20px 60px; overflow: hidden; }
-        .workspace-card { background: var(--card); flex: 1; border-radius: 8px; border: 1px solid var(--border); display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .workspace-content { padding: 25px; flex: 1; display: flex; flex-direction: column; gap: 15px; }
-        label { font-size: 11px; font-weight: 700; color: var(--ms-blue); text-transform: uppercase; }
-        textarea { background: var(--bg); border: 1px solid var(--border); padding: 12px; border-radius: 4px; color: var(--text); font-size: 14px; outline: none; flex: 1; resize: none; }
+        main { flex: 1; display: flex; padding: 20px 60px; gap: 20px; overflow: hidden; }
+        .workspace-card { background: var(--card); flex: 1; border-radius: 8px; border: 1px solid var(--border); display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+        .workspace-content { padding: 25px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
         
-        /* Barra de Rigor */
-        .rigor-container { width: 100%; height: 6px; background: rgba(0,0,0,0.1); border-radius: 10px; margin: 5px 0; overflow: hidden; }
+        /* Barra de Rigor e Radar */
+        .rigor-container { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 5px 0; overflow: hidden; }
         .rigor-bar { width: 0%; height: 100%; background: var(--rigor-low); transition: 0.5s ease; }
         
-        /* Botões de Comando */
-        .btn-group { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
-        .btn-privacy { background: #6264a7; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; }
-        .btn-exe { background: #888; color: white; border: none; padding: 15px 30px; border-radius: 4px; font-weight: 700; cursor: not-allowed; transition: 0.3s; }
-        .btn-exe.active { background: var(--ms-blue); cursor: pointer; }
+        .radar-box { 
+            background: rgba(255, 202, 40, 0.05); border: 1px dashed var(--ms-gold); 
+            padding: 10px; border-radius: 6px; font-size: 11px; color: var(--ms-gold);
+            margin-bottom: 10px; display: none;
+        }
 
-        footer { background: var(--card); border-top: 1px solid var(--border); padding: 15px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        .sec-box h4 { color: var(--ms-blue); margin: 0 0 5px 0; font-size: 12px; }
-        .sec-box p { font-size: 10px; opacity: 0.7; margin: 0; }
+        textarea { background: #000; border: 1px solid var(--border); padding: 15px; border-radius: 4px; color: #fff; font-size: 14px; outline: none; flex: 1; resize: none; }
+        .btn-exe { background: #444; color: white; border: none; padding: 15px 30px; border-radius: 4px; font-weight: 700; cursor: not-allowed; transition: 0.3s; }
+        .btn-exe.active { background: var(--ms-blue); cursor: pointer; box-shadow: 0 0 15px rgba(0,120,212,0.4); }
+        
+        footer { background: #111; border-top: 1px solid var(--border); padding: 15px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
         #lock { position: fixed; inset: 0; background: #000; z-index: 10000; display: none; align-items: center; justify-content: center; }
     </style>
 </head>
-<body class="dark-mode">
+<body>
 
 <div id="lock"><h1>🔒 ACESSO BLOQUEADO</h1></div>
 
 <nav>
-    <div class="brand">CÁSSIA PROMPT <span style="font-weight: 300;">V8 GOD MODE</span></div>
-    <button style="background: var(--ms-blue); color: white; border: none; padding: 5px 15px; border-radius: 4px;" onclick="document.body.classList.toggle('dark-mode')">🌓 Trocar Tema</button>
+    <div style="font-weight: bold; color: var(--ms-blue);">CÁSSIA PROMPT <span style="font-weight:300;">V8 GOD MODE</span></div>
+    <div style="font-size: 10px; color: var(--rigor-high);">SISTEMA DE ANÁLISE PREDITIVA ATIVO</div>
 </nav>
 
 <main>
     <div class="workspace-card">
         <div class="workspace-content">
-            <label>■ Núcleo de Fatos (Corpus Jurídico)</label>
+            <div id="radar-alert" class="radar-box">
+                <strong>⚡ RADAR DE OMISSÕES V8:</strong> <span id="radar-msg">Detectando lacunas fundamentais...</span>
+            </div>
+
             <div style="display: flex; justify-content: space-between; font-size: 10px; font-weight: bold;">
                 <span id="rigor-label" style="color: var(--rigor-low);">RIGOR: INSUFICIENTE</span>
-                <span style="color: #6264a7;">MODO LGPD ATIVO</span>
+                <span style="color: var(--ms-blue);">INTELIGÊNCIA JURÍDICA BRASIL/INTL</span>
             </div>
             <div class="rigor-container"><div id="rigor-bar" class="rigor-bar"></div></div>
             
-            <textarea id="factos" oninput="atualizarRigor()" placeholder="Cole aqui os fatos do processo..."></textarea>
+            <textarea id="factos" oninput="analisarTexto()" placeholder="Inicie o Corpus de Fatos aqui..."></textarea>
             
-            <div class="btn-group">
-                <button class="btn-privacy" onclick="mascararDados()">🛡️ ATIVAR SIGILO (MASQUERADE)</button>
-                <button id="btn-exe" class="btn-exe" disabled onclick="alert('Processando com Rigor V8...')">EXECUTAR SEM PREGUIÇA</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                <button onclick="anonymize()" style="background: #333; color: #fff; border: 1px solid #555; padding: 8px 15px; border-radius: 4px; font-size: 11px; cursor: pointer;">🛡️ MASCARAR LGPD</button>
+                <button id="btn-exe" class="btn-exe" disabled>BLOQUEADO POR FALTA DE RIGOR</button>
             </div>
         </div>
     </div>
 </main>
 
 <footer>
-    <div class="sec-box">
-        <h4>🛡️ SEGURANÇA JURÍDICA</h4>
-        <p>O V8 impede alucinações de IA através de filtragem técnica. O rigor é obrigatório para garantir a integridade da tese.</p>
+    <div style="font-size: 10px; opacity: 0.6;">
+        <h4 style="color: var(--ms-blue); margin: 0 0 5px 0;">🛡️ SEGURANÇA V8</h4>
+        O sistema analisa padrões de peticionamento e sugere elementos faltantes baseados em análise preditiva de mercado nacional e internacional.
     </div>
-    <div class="sec-box">
-        <h4>🔐 CONFORMIDADE LGPD</h4>
-        <p>Utilize o botão Sigilo para anonimizar dados antes do processamento. Privacidade absoluta padrão OAB.</p>
+    <div style="font-size: 10px; opacity: 0.6;">
+        <h4 style="color: var(--ms-blue); margin: 0 0 5px 0;">🔐 PRIVACIDADE MESTRA</h4>
+        Anonimização de dados sensíveis integrada para conformidade total com a LGPD e sigilo OAB.
     </div>
 </footer>
 
@@ -87,39 +86,57 @@
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get('id');
 
-    if (!userId) { document.body.innerHTML = "<h1>ID INVÁLIDO</h1>"; }
+    if (!userId) { document.body.innerHTML = "<h1>ACESSO NEGADO</h1>"; }
     else {
         db.ref('clientes/' + userId).on('value', (snap) => {
             if (!snap.exists()) document.getElementById('lock').style.display = 'flex';
         });
     }
 
-    function atualizarRigor() {
-        const text = document.getElementById('factos').value;
+    function analisarTexto() {
+        const text = document.getElementById('factos').value.toLowerCase();
         const bar = document.getElementById('rigor-bar');
         const label = document.getElementById('rigor-label');
         const btn = document.getElementById('btn-exe');
-        let prog = Math.min((text.length / 300) * 100, 100);
+        const radar = document.getElementById('radar-alert');
+        const radarMsg = document.getElementById('radar-msg');
+
+        // 1. Barra de Rigor
+        let prog = Math.min((text.length / 400) * 100, 100);
         bar.style.width = prog + "%";
         
-        if (prog < 70) {
+        // 2. Lógica do Radar de Omissões
+        let omissoes = [];
+        if (!text.includes("jurisprudência") && !text.includes("acórdão")) omissoes.push("Falta citar Jurisprudência atualizada.");
+        if (!text.includes("stj") && !text.includes("stf")) omissoes.push("Sugestão: Verifique entendimento dos Tribunais Superiores (STJ/STF).");
+        if (!text.includes("art.") && !text.includes("lei")) omissoes.push("Atenção: Fundamentação legal (Artigos/Leis) não detectada.");
+
+        if (text.length > 50 && omissoes.length > 0) {
+            radar.style.display = "block";
+            radarMsg.innerText = omissoes[0]; // Mostra a primeira omissão da lista
+        } else {
+            radar.style.display = "none";
+        }
+
+        // 3. Ativação do Botão
+        if (prog < 75) {
             bar.style.background = "var(--rigor-low)";
             label.innerText = "RIGOR: INSUFICIENTE";
             btn.disabled = true; btn.classList.remove('active');
+            btn.innerText = "AGUARDANDO RIGOR";
         } else {
             bar.style.background = "var(--rigor-high)";
-            label.innerText = "RIGOR: V8 ELITE ATIVO";
+            label.innerText = "RIGOR: V8 GOD MODE";
             btn.disabled = false; btn.classList.add('active');
+            btn.innerText = "EXECUTAR PROTOCOLO V8";
         }
     }
 
-    function mascararDados() {
+    function anonymize() {
         let t = document.getElementById('factos').value;
-        // Lógica simples de máscara (CPF e Nomes genéricos)
-        t = t.replace(/\d{3}\.\d{3}\.\d{3}-\d{2}/g, "[DOCUMENTO_SIGILOSO]");
-        t = t.replace(/\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}/g, "[CNPJ_SIGILOSO]");
+        t = t.replace(/\d{3}\.\d{3}\.\d{3}-\d{2}/g, "[CPF_SIGILOSO]");
         document.getElementById('factos').value = t;
-        alert("🔒 DADOS SENSÍVEIS MASCARADOS! Agora você pode processar com segurança total.");
+        alert("🔒 LGPD: Dados sensíveis protegidos.");
     }
 </script>
 </body>

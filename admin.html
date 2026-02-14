@@ -2,25 +2,24 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>ADM | CONTROLE DE ACESSOS</title>
+    <title>ADM | CONTROLE V8 SINGULARITY</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <style>
-        body { background: #000; color: #00f2ff; font-family: sans-serif; padding: 20px; display: flex; justify-content: center; }
-        .panel { width: 100%; max-width: 450px; background: #0a0a0a; border: 2px solid #00f2ff; border-radius: 15px; padding: 25px; text-align: center; }
+        body { background: #000; color: #00f2ff; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; padding: 20px; }
+        .panel { width: 100%; max-width: 450px; background: #0a0a0a; border: 2px solid #00f2ff; border-radius: 15px; padding: 25px; text-align: center; box-shadow: 0 0 20px rgba(0,242,255,0.2); }
         input { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 15px; border-radius: 8px; margin: 10px 0; box-sizing: border-box; }
         .btn-ativar { width: 100%; background: #00ffa3; color: #000; border: none; padding: 15px; font-weight: bold; border-radius: 8px; cursor: pointer; text-transform: uppercase; }
         .user-card { background: #111; padding: 15px; border-radius: 10px; margin-top: 15px; border: 1px solid #222; text-align: left; position: relative; }
-        .btn-copy { background: #0078d4; color: white; border: none; width: 100%; padding: 10px; border-radius: 5px; margin-top: 10px; cursor: pointer; }
-        .btn-del { background: #ff4d4d; color: white; border: none; padding: 8px; border-radius: 5px; cursor: pointer; float: right; font-weight: bold; }
+        .btn-copy { background: #0078d4; color: white; border: none; width: 100%; padding: 12px; border-radius: 5px; margin-top: 10px; cursor: pointer; font-weight: bold; }
+        .btn-del { background: #ff4d4d; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; position: absolute; right: 15px; top: 15px; font-weight: bold; }
     </style>
 </head>
 <body>
-
 <div class="panel">
-    <h2>PAINEL DE CONTROLE V22</h2>
+    <h2>MESTRA V8 ADMIN</h2>
     <input type="text" id="nomeAdv" placeholder="NOME DA DOUTORA">
-    <button class="btn-ativar" onclick="ativar()">ATIVAR NOVA LICENÇA</button>
+    <button class="btn-ativar" onclick="ativar()">ATIVAR ACESSO V8</button>
     <div id="lista"></div>
 </div>
 
@@ -29,15 +28,15 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // LINK QUE VAI PARA O SEU INDEX.HTML
-    const urlSistema = "https://cassiakelly995-lab.github.io/meu-app/index.html";
+    // AQUI ESTÁ O SEGREDO: APONTANDO PARA O ARQUIVO BONITO
+    const urlSistema = "https://cassiakelly995-lab.github.io/meu-app/cassia-app.html";
 
     function ativar() {
         const nome = document.getElementById('nomeAdv').value.trim();
-        if(!nome) return;
+        if(!nome) return alert("Digite o nome!");
         const id = nome.replace(/\s+/g, '_');
         db.ref('clientes/' + id).set({ nome: nome }).then(() => {
-            alert("ATIVADO!");
+            alert("✅ ACESSO ATIVADO!");
             document.getElementById('nomeAdv').value = "";
         });
     }
@@ -51,19 +50,19 @@
             lista.innerHTML += `
                 <div class="user-card">
                     <button class="btn-del" onclick="bloquear('${id}')">BLOQUEAR</button>
-                    <strong>Dra. ${id}</strong><br>
-                    <button class="btn-copy" onclick="copiar('${linkFinal}')">COPIAR LINK</button>
+                    <strong>Dra. ${id}</strong>
+                    <button class="btn-copy" onclick="copiar('${linkFinal}')">COPIAR LINK DO CONSOLE</button>
                 </div>`;
         });
     });
 
     function copiar(url) {
-        navigator.clipboard.writeText(url).then(() => alert("LINK NA MÃO!"));
+        navigator.clipboard.writeText(url).then(() => alert("🔗 LINK COPIADO!"));
     }
 
     function bloquear(id) {
-        if(confirm("Bloquear acesso de " + id + "?")) {
-            db.ref('clientes/' + id).set(null); // ISSO APAGA NO BANCO E BLOQUEIA O SITE
+        if(confirm("Bloquear " + id + "?")) {
+            db.ref('clientes/' + id).set(null).then(() => alert("🚫 BLOQUEADO!"));
         }
     }
 </script>

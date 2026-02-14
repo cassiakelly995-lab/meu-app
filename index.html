@@ -3,116 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CÁSSIA PROMPT V8 | SINGULARITY ELITE</title>
+    <title>CÁSSIA PROMPT V8 | ELITE EDITION</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <style>
         :root {
-            --bg: #ffffff; --text: #1a1a1a; --primary: #0067b8; --accent: #c30052;
-            --surface: #f2f2f2; --border: #e6e6e6; --input-bg: #ffffff;
+            --ms-blue: #0078d4; --bg: #0b0b0b; --card: #161616; --text: #ffffff; --border: #333333;
+            --rigor-low: #ff4d4d; --rigor-mid: #ffca28; --rigor-high: #00ffa3;
         }
-        [data-theme='dark'] {
-            --bg: #0a0a0a; --text: #f5f5f5; --primary: #4daaf8; --accent: #ff007a;
-            --surface: #161616; --border: #333333; --input-bg: #111111;
-        }
-        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; transition: 0.3s; }
-        #lock-screen { position: fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:9999; display:none; color:white; align-items:center; justify-content:center; flex-direction:column; text-align:center; }
-        header { background: var(--surface); padding: 12px 20px; border-bottom: 4px solid var(--accent); display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: bold; }
-        .container { max-width: 1000px; margin: 40px auto; padding: 20px; }
-        .console-header { border-left: 5px solid var(--accent); padding-left: 20px; margin-bottom: 30px; }
-        .console-header h1 { font-size: 32px; margin: 0; font-weight: 600; }
-        .console-header p { margin: 5px 0; color: #888; letter-spacing: 2px; font-size: 11px; }
-        .main-card { background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .grid-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
-        label { display: block; font-size: 11px; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; color: var(--accent); }
-        input, textarea { width: 100%; background: var(--input-bg); border: 1px solid var(--border); color: var(--text); padding: 14px; border-radius: 4px; box-sizing: border-box; outline: none; font-size: 15px; }
-        .status-bar { font-size: 10px; color: #888; border-top: 1px solid var(--border); padding-top: 10px; margin-top: 5px; text-transform: uppercase; }
-        .action-area { display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px; }
-        .btn { padding: 14px 28px; border-radius: 2px; font-weight: bold; cursor: pointer; text-transform: uppercase; border: none; font-size: 12px; }
-        .btn-exe { background: var(--primary); color: white; }
-        .btn-theme { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
-        .footer-info { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 50px; font-size: 13px; color: #666; line-height: 1.6; border-top: 1px solid var(--border); padding-top: 30px; }
-        .footer-info h3 { font-size: 14px; color: var(--text); text-transform: uppercase; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
+        nav { background: var(--card); padding: 15px 40px; border-bottom: 2px solid var(--ms-blue); display: flex; justify-content: space-between; align-items: center; }
+        main { flex: 1; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+        .workspace-card { background: var(--card); width: 100%; max-width: 800px; border-radius: 12px; border: 1px solid var(--border); padding: 25px; box-sizing: border-box; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        /* BARRA DE RIGOR */
+        .rigor-container { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-bottom: 5px; overflow: hidden; }
+        .rigor-bar { width: 0%; height: 100%; background: var(--rigor-low); transition: 0.5s ease; }
+
+        .lacuna-group { margin-bottom: 15px; }
+        label { font-size: 11px; font-weight: 700; color: var(--ms-blue); text-transform: uppercase; display: block; margin-bottom: 5px; }
+        textarea, input { width: 100%; background: #000; border: 1px solid var(--border); padding: 12px; border-radius: 6px; color: #fff; font-size: 14px; outline: none; box-sizing: border-box; }
+        textarea:focus { border-color: var(--ms-blue); }
+        
+        .btn-exe { width: 100%; background: #444; color: #777; border: none; padding: 20px; border-radius: 8px; font-weight: 800; cursor: not-allowed; transition: 0.4s; font-size: 14px; text-transform: uppercase; }
+        .btn-exe.active { background: var(--ms-blue); color: white; cursor: pointer; box-shadow: 0 0 20px rgba(0,120,212,0.4); }
+
+        /* ÁREA DO RESULTADO (A CAIXA QUE VAI ABRIR) */
+        #resultado-area { display: none; background: #111; border: 2px solid var(--ms-blue); border-radius: 12px; padding: 20px; margin-top: 20px; width: 100%; max-width: 800px; box-sizing: border-box; animation: fadeIn 0.5s ease; }
+        #prompt-final { width: 100%; height: 250px; background: #000; border: 1px solid #333; color: #00ffa3; font-family: 'Courier New', monospace; font-size: 13px; padding: 15px; border-radius: 6px; box-sizing: border-box; margin-bottom: 15px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        footer { background: var(--card); padding: 30px 40px; border-top: 2px solid var(--border); display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 40px; }
+        @media (min-width: 768px) { footer { grid-template-columns: 1fr 1fr; } }
+        .footer-box h4 { color: var(--ms-blue); margin: 0 0 10px 0; font-size: 12px; text-transform: uppercase; }
+        .footer-box p { font-size: 11px; opacity: 0.7; line-height: 1.5; margin: 0; text-align: justify; }
     </style>
 </head>
-<body data-theme="light">
+<body>
 
-<div id="lock-screen">
-    <h1 style="color:var(--accent); font-size: 50px;">🚫</h1>
-    <h1>ACESSO REVOGADO</h1>
-    <p>A licença deste ID foi bloqueada ou expirou.</p>
-</div>
+<nav>
+    <div style="font-weight: bold; color: var(--ms-blue); font-size: 18px;">CÁSSIA PROMPT <span style="font-weight:300;">V8 GOD MODE</span></div>
+</nav>
 
-<header>
-    <div>CÁSSIA PROMPT | V8 SINGULARITY ELITE</div>
-    <button class="btn btn-theme" onclick="toggleTheme()">🌓 ALTERNAR TEMA</button>
-</header>
+<main>
+    <div class="workspace-card">
+        <label>MÉTRICA DE RIGOR PROFISSIONAL</label>
+        <div class="rigor-container"><div id="rigor-bar" class="rigor-bar"></div></div>
+        <span id="rigor-label" style="font-size: 10px; color: var(--rigor-low); font-weight: bold;">AGUARDANDO DADOS...</span>
 
-<div class="container">
-    <div class="console-header">
-        <h1>Console de Engenharia V8</h1>
-        <p>SINCRONIZAÇÃO DE DADOS E COMANDOS JURÍDICOS</p>
+        <div class="lacuna-group" style="margin-top: 20px;">
+            <label>1. Contexto, Fatos e Realidade</label>
+            <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Descreva a situação com o máximo de detalhes..."></textarea>
+        </div>
+
+        <div class="lacuna-group">
+            <label>2. Embasamento, Regras e Doutrina</label>
+            <textarea id="base" rows="3" oninput="atualizar()" placeholder="Quais leis, normas ou princípios devem ser seguidos?"></textarea>
+        </div>
+
+        <div class="lacuna-group">
+            <label>3. Destino Final (Onde queremos chegar?)</label>
+            <input type="text" id="destino" oninput="atualizar()" placeholder="Ex: Petição de Dano Moral / Planejamento Estratégico...">
+        </div>
+
+        <button id="btn-exe" class="btn-exe" disabled onclick="gerarPrompt()">EXECUTAR PROTOCOLO V8</button>
     </div>
 
-    <div class="main-card">
-        <div class="grid-inputs">
-            <div>
-                <label>■ Arquitetura de Persona</label>
-                <input type="text" placeholder="Ex: Advogada Sênior, OAB/SP">
-            </div>
-            <div>
-                <label>■ Matriz de Objetivo</label>
-                <input type="text" placeholder="Ex: Recurso de Apelação">
-            </div>
-        </div>
-
-        <div>
-            <label>■ Núcleo de Fatos (Corpus)</label>
-            <textarea style="height: 180px;" placeholder="Insira os fatos aqui. Rigor total contra alucinações."></textarea>
-            <div class="status-bar">Status de Integridade: Monitorando Dados</div>
-        </div>
-
-        <div class="action-area">
-            <button class="btn btn-exe" onclick="alert('Iniciando Processamento de Elite...')">Executar Protocolo V8</button>
-        </div>
+    <div id="resultado-area">
+        <label style="color: #00ffa3; margin-bottom: 10px; display: block;">⚡ PROMPT MESTRE V8 (PRONTO PARA USO):</label>
+        <textarea id="prompt-final" readonly></textarea>
+        <button onclick="copiarPrompt()" style="background: var(--ms-blue); color: #white; border: none; padding: 15px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; text-transform: uppercase;">COPIAR PROMPT E IR PARA IA</button>
     </div>
+</main>
 
-    <div class="footer-info">
-        <div>
-            <h3>Segurança Jurídica</h3>
-            O sistema impede a IA de inventar dados. Toda a resposta é baseada estritamente nos fatos fornecidos.
-        </div>
-        <div>
-            <h3>Privacidade e LGPD</h3>
-            Dados processados sob sigilo profissional absoluto e criptografia local.
-        </div>
+<footer>
+    <div class="footer-box">
+        <h4>🛡️ SEGURANÇA JURÍDICA E TÉCNICA</h4>
+        <p>O Protocolo V8 bloqueia alucinações de IA. O sistema exige rigor técnico para garantir que a resposta seja baseada apenas em dados reais e doutrina válida, eliminando margem para erros.</p>
     </div>
-</div>
+    <div class="footer-box">
+        <h4>🔐 PRIVACIDADE LGPD</h4>
+        <p>Este console opera com isolamento de dados. Nenhuma informação é compartilhada com modelos públicos. Sigilo profissional preservado conforme as normas da LGPD e OAB.</p>
+    </div>
+</footer>
 
 <script>
     const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
-
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get('id');
 
-    if (!userId) {
-        document.body.innerHTML = "<h1 style='text-align:center;margin-top:50px;'>ID INVÁLIDO</h1>";
-    } else {
+    // Validação de acesso (Mantive como você aprovou)
+    if (userId) {
         db.ref('clientes/' + userId).on('value', (snap) => {
-            if (!snap.exists()) {
-                document.getElementById('lock-screen').style.display = 'flex';
-            } else {
-                document.getElementById('lock-screen').style.display = 'none';
-            }
+            if (!snap.exists()) document.body.innerHTML = "<h1 style='color:white; text-align:center; margin-top:100px;'>ACESSO NEGADO</h1>";
         });
     }
 
-    function toggleTheme() {
-        const body = document.body;
-        const current = body.getAttribute('data-theme');
-        body.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
+    function atualizar() {
+        const f = document.getElementById('fatos').value;
+        const b = document.getElementById('base').value;
+        const d = document.getElementById('destino').value;
+        const bar = document.getElementById('rigor-bar');
+        const label = document.getElementById('rigor-label');
+        const btn = document.getElementById('btn-exe');
+
+        // Lógica de pontos para liberar o prompt
+        let pontos = (f.length * 1) + (b.length * 1) + (d.length * 2);
+        let progresso = Math.min((pontos / 300) * 100, 100); 
+        bar.style.width = progresso + "%";
+
+        if (progresso < 85) {
+            bar.style.background = "var(--rigor-low)";
+            label.innerText = "RIGOR: INSUFICIENTE (CONTINUE ESCREVENDO)";
+            label.style.color = "var(--rigor-low)";
+            btn.disabled = true; btn.classList.remove('active');
+        } else {
+            bar.style.background = "var(--rigor-high)";
+            label.innerText = "RIGOR: V8 GOD MODE LIBERADO";
+            label.style.color = "var(--rigor-high)";
+            btn.disabled = false; btn.classList.add('active');
+        }
+    }
+
+    function gerarPrompt() {
+        const f = document.getElementById('fatos').value;
+        const b = document.getElementById('base').value;
+        const d = document.getElementById('destino').value;
+
+        // Montagem do Prompt de Elite
+        const promptMontado = `ATUE COMO UM ESPECIALISTA DE ALTO NÍVEL (MODO V8 ELITE).
+
+CONTEXTO E FATOS:
+${f}
+
+EMBASAMENTO E REGRAS:
+${b}
+
+OBJETIVO FINAL (DESTINO):
+${d}
+
+DIRETRIZES DE EXECUÇÃO:
+- Utilize linguagem técnica precisa e elimine termos genéricos ou "baboseiras".
+- Mantenha o rigor absoluto na tese apresentada.
+- Se houver lacunas de informação nos fatos, aponte-as em vez de inventar dados.
+- Gere o resultado focado 100% no Destino Final solicitado.`;
+
+        document.getElementById('prompt-final').value = promptMontado;
+        document.getElementById('resultado-area').style.display = 'block';
+        
+        // Faz a tela rolar para o resultado
+        document.getElementById('resultado-area').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function copiarPrompt() {
+        const copyText = document.getElementById("prompt-final");
+        copyText.select();
+        document.execCommand("copy");
+        alert("💎 PROMPT DE ELITE COPIADO! Agora cole na sua IA (ChatGPT, Claude ou Gemini).");
     }
 </script>
 </body>

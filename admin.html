@@ -2,25 +2,25 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>SISTEMA MESTRA V12 | FINAL</title>
+    <title>SISTEMA MESTRA V13 | BLINDADO</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <style>
         body { background: #000; color: #00f2ff; font-family: sans-serif; display: flex; justify-content: center; padding: 20px; }
         .panel { width: 100%; max-width: 450px; background: #0a0a0a; border: 2px solid #00f2ff; border-radius: 15px; padding: 25px; box-shadow: 0 0 20px #00f2ff44; text-align: center; }
-        input { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 8px; margin: 15px 0; box-sizing: border-box; }
-        button { width: 100%; background: #00ffa3; color: #000; border: none; padding: 15px; font-weight: bold; border-radius: 8px; cursor: pointer; text-transform: uppercase; }
+        input { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 15px; border-radius: 8px; margin: 15px 0; box-sizing: border-box; font-size: 1rem; }
+        .btn-ativar { width: 100%; background: #00ffa3; color: #000; border: none; padding: 15px; font-weight: bold; border-radius: 8px; cursor: pointer; text-transform: uppercase; }
         .user-card { background: #111; padding: 15px; border-radius: 10px; margin-top: 20px; border: 1px solid #222; text-align: left; }
-        .btn-copy { background: #0078d4; color: white; border: none; width: 100%; padding: 12px; border-radius: 5px; margin-top: 10px; cursor: pointer; font-weight: bold; }
-        .btn-del { background: #ff4d4d; color: white; border: none; padding: 5px; border-radius: 4px; float: right; cursor: pointer; }
+        .btn-copy { background: #0078d4; color: white; border: none; width: 100%; padding: 12px; border-radius: 5px; margin-top: 10px; cursor: pointer; font-weight: bold; text-transform: uppercase; }
+        .btn-del { background: #ff4d4d; color: white; border: none; padding: 5px 10px; border-radius: 4px; float: right; cursor: pointer; font-size: 0.7rem; }
     </style>
 </head>
 <body>
 
 <div class="panel">
-    <h2 style="margin:0">SISTEMA MESTRA V12</h2>
+    <h2 style="margin:0">MESTRA V13 CONTROL</h2>
     <input type="text" id="nomeAdv" placeholder="NOME DA DOUTORA">
-    <button onclick="ativar()">ATIVAR E GERAR LINK</button>
+    <button class="btn-ativar" onclick="ativar()">ATIVAR E GERAR LINK</button>
 
     <div id="lista" style="margin-top:30px"></div>
 </div>
@@ -30,15 +30,15 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // AQUI ESTÁ A CORREÇÃO REAL:
-    const base = "https://cassiakelly995-lab.github.io/meu-app/cassia-app.html";
+    // A CORREÇÃO ABSOLUTA ESTÁ NESTA LINHA ABAIXO:
+    const baseLink = "https://cassiakelly995-lab.github.io/meu-app/cassia-app.html";
 
     function ativar() {
         const nome = document.getElementById('nomeAdv').value.trim();
-        if(!nome) return;
+        if(!nome) return alert("Digite um nome!");
         const id = nome.replace(/\s+/g, '_');
-        db.ref('clientes/' + id).set({ nome: nome }).then(() => {
-            alert("Ativado!");
+        db.ref('clientes/' + id).set({ nome: nome, status: "ativo" }).then(() => {
+            alert("Acesso Ativado!");
             document.getElementById('nomeAdv').value = "";
         });
     }
@@ -48,24 +48,27 @@
         lista.innerHTML = "";
         snap.forEach((child) => {
             const id = child.key;
-            // FORÇANDO O .HTML NO LINK DO BOTÃO
-            const linkFinal = base + "?id=" + id;
+            // AQUI NÓS FORÇAMOS O .HTML NO LINK GERADO
+            const linkFinal = baseLink + "?id=" + id;
             lista.innerHTML += `
                 <div class="user-card">
                     <button class="btn-del" onclick="apagar('${id}')">BLOQUEAR</button>
-                    <strong>${id}</strong>
-                    <button class="btn-copy" onclick="copiar('${linkFinal}')">COPIAR LINK (WHATSAPP)</button>
+                    <strong>● ${id}</strong>
+                    <button class="btn-copy" onclick="copiar('${linkFinal}')">COPIAR LINK ÚNICO PARA WHATSAPP</button>
                 </div>`;
         });
     });
 
     function copiar(url) {
-        navigator.clipboard.writeText(url);
-        alert("Link copiado! Pode enviar.");
+        navigator.clipboard.writeText(url).then(() => {
+            alert("✅ LINK COPIADO!\nAgora cole no WhatsApp da Doutora.");
+        });
     }
 
     function apagar(id) {
-        db.ref('clientes/' + id).remove();
+        if(confirm("Bloquear acesso de " + id + "?")) {
+            db.ref('clientes/' + id).remove();
+        }
     }
 </script>
 </body>

@@ -2,30 +2,30 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>SISTEMA MESTRA V8 | CONTROL CENTER</title>
+    <title>SISTEMA MESTRA V10 | CONTROL CENTER</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <style>
         body { background: #000; color: #00f2ff; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; padding: 20px; }
-        .panel { width: 100%; max-width: 500px; background: #0a0a0a; border: 2px solid #00f2ff; border-radius: 15px; padding: 30px; box-shadow: 0 0 30px rgba(0,242,255,0.2); text-align: center; }
-        h2 { text-transform: uppercase; letter-spacing: 3px; margin-bottom: 25px; }
+        .panel { width: 100%; max-width: 500px; background: #0a0a0a; border: 2px solid #00f2ff; border-radius: 15px; padding: 30px; box-shadow: 0 0 30px rgba(0,242,255,0.3); text-align: center; }
+        h2 { text-transform: uppercase; letter-spacing: 3px; margin-bottom: 25px; text-shadow: 0 0 10px #00f2ff; }
         input { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-sizing: border-box; outline: none; font-size: 1rem; }
-        .btn-main { width: 100%; background: #00ffa3; color: #000; border: none; padding: 18px; font-weight: 800; border-radius: 8px; cursor: pointer; text-transform: uppercase; }
+        .btn-main { width: 100%; background: #00ffa3; color: #000; border: none; padding: 18px; font-weight: 800; border-radius: 8px; cursor: pointer; text-transform: uppercase; box-shadow: 0 0 15px #00ffa366; }
         .monitor { margin-top: 40px; border-top: 1px solid #222; padding-top: 20px; text-align: left; }
-        .card { background: #111; padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #222; }
-        .btn-copy { width: 100%; background: #0078d4; color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: 700; margin-top: 10px; }
+        .card { background: #111; padding: 20px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #222; }
+        .btn-copy { width: 100%; background: #0078d4; color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: 700; margin-top: 15px; text-transform: uppercase; }
         .btn-revogar { background: #ff4d4d; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; float: right; }
     </style>
 </head>
 <body>
 
 <div class="panel">
-    <h2>SISTEMA MESTRA V8</h2>
-    <input type="text" id="nomeAdv" placeholder="NOME DA DOUTORA">
-    <button class="btn-main" onclick="ativar()">ATIVAR E GERAR LINK</button>
+    <h2>SISTEMA MESTRA V10</h2>
+    <input type="text" id="nomeAdv" placeholder="NOME DA DOUTORA (Ex: Helen)">
+    <button class="btn-main" onclick="ativar()">ATIVAR ACESSO IMEDIATO</button>
 
     <div class="monitor">
-        <p style="color: #888; font-size: 0.8rem;">USUÁRIAS ATIVAS:</p>
+        <p style="color: #888; font-size: 0.8rem; letter-spacing: 1px;">LICENÇAS ATIVAS NO FIREBASE:</p>
         <div id="lista"></div>
     </div>
 </div>
@@ -36,15 +36,15 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // AQUI ESTÁ O SEGREDO: O LINK APONTA PARA O FICHEIRO CERTO
-    const urlCorreta = "https://cassiakelly995-lab.github.io/meu-app/cassia-app.html";
+    // A CORREÇÃO QUE VOCÊ PRECISA: O LINK COM O NOME COMPLETO DO FICHEIRO
+    const LINK_CORRETO_DO_APP = "https://cassiakelly995-lab.github.io/meu-app/cassia-app.html";
 
     function ativar() {
         const nome = document.getElementById('nomeAdv').value.trim();
-        if(!nome) return alert("Escreva o nome!");
+        if(!nome) return alert("Por favor, digite o nome!");
         const id = nome.replace(/\s+/g, '_'); 
         db.ref('clientes/' + id).set({ nome: nome, status: "ativo" }).then(() => {
-            alert("Ativado!");
+            alert("SISTEMA: Acesso ativado com sucesso!");
             document.getElementById('nomeAdv').value = "";
         });
     }
@@ -54,24 +54,25 @@
         lista.innerHTML = "";
         snap.forEach((child) => {
             const id = child.key;
-            // O Link gerado agora inclui obrigatoriamente o .html
-            const linkFinal = urlCorreta + "?id=" + id;
+            // O segredo está aqui: forçar o .html no link copiado
+            const linkFinal = LINK_CORRETO_DO_APP + "?id=" + id;
             lista.innerHTML += `
                 <div class="card">
                     <button class="btn-revogar" onclick="remover('${id}')">BLOQUEAR</button>
-                    <span><strong>${id}</strong></span>
-                    <button class="btn-copy" onclick="copiar('${linkFinal}')">COPIAR LINK (WHATSAPP)</button>
+                    <span><strong>${id}</strong></span><br>
+                    <button class="btn-copy" onclick="copiar('${linkFinal}')">COPIAR LINK ÚNICO (WHATSAPP)</button>
                 </div>`;
         });
     });
 
     function copiar(url) {
-        navigator.clipboard.writeText(url);
-        alert("LINK COPIADO! Pode colar no WhatsApp.");
+        navigator.clipboard.writeText(url).then(() => {
+            alert("LINK COPIADO!\nAgora cole no WhatsApp da Dra.");
+        });
     }
 
     function remover(id) {
-        if(confirm("Bloquear " + id + "?")) db.ref('clientes/' + id).remove();
+        if(confirm("Deseja bloquear o acesso de " + id + "?")) db.ref('clientes/' + id).remove();
     }
 </script>
 </body>

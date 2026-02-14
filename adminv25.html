@@ -2,58 +2,70 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>ADM | CÁSSIA PROMPT V8</title>
+    <title>ADM | GESTOR DE ACESSO V8</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <style>
-        :root { --bg-admin: #000; --panel-bg: rgba(255,255,255,0.02); --text-main: #0078d4; --card-user: rgba(255,255,255,0.05); --input-bg: #0a0a0a; --text-white: #fff; }
-        body.light-mode { --bg-admin: #f4f4f4; --panel-bg: #ffffff; --text-main: #005a9e; --card-user: #f9f9f9; --input-bg: #fff; --text-white: #333; }
-        body { background: var(--bg-admin); color: var(--text-main); font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; transition: 0.3s; }
-        .panel { width: 100%; max-width: 400px; background: var(--panel-bg); border: 1px solid #c30052; border-radius: 20px; padding: 30px; backdrop-filter: blur(10px); box-shadow: 0 0 30px rgba(195,0,82,0.2); }
-        h2 { text-align: center; color: var(--text-white); }
-        input { width: 100%; background: var(--input-bg); border: 1px solid #333; color: var(--text-white); padding: 15px; border-radius: 10px; margin: 15px 0; box-sizing: border-box; }
+        :root { --bg: #000; --panel: rgba(255,255,255,0.02); --text: #0078d4; --danger: #ff4d4d; }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; padding: 20px; }
+        .panel { width: 100%; max-width: 450px; background: var(--panel); border: 1px solid #c30052; border-radius: 20px; padding: 30px; backdrop-filter: blur(10px); box-shadow: 0 0 30px rgba(195,0,82,0.2); }
+        h2 { text-align: center; color: #fff; letter-spacing: 2px; }
+        input { width: 100%; background: #0a0a0a; border: 1px solid #333; color: #fff; padding: 15px; border-radius: 10px; margin: 15px 0; box-sizing: border-box; }
         .btn-ativar { width: 100%; background: #c30052; color: #fff; border: none; padding: 15px; font-weight: bold; border-radius: 10px; cursor: pointer; text-transform: uppercase; }
-        .card-user { background: var(--card-user); padding: 15px; border-radius: 12px; margin-top: 15px; border: 1px solid #ddd; }
+        .card-user { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-top: 15px; border: 1px solid #222; position: relative; }
         .btn-copy { background: #0078d4; color: #fff; border: none; width: 100%; padding: 10px; border-radius: 6px; margin-top: 10px; cursor: pointer; font-weight: bold; }
-        .theme-toggle { margin-bottom: 15px; padding: 8px 15px; border-radius: 20px; border: 1px solid #c30052; background: transparent; color: #c30052; cursor: pointer; font-size: 10px; font-weight: bold; }
-        .footer-legal { max-width: 400px; margin-top: 30px; font-size: 9px; text-align: center; color: #666; text-transform: uppercase; }
+        .btn-del { position: absolute; top: 10px; right: 10px; color: var(--danger); background: none; border: none; cursor: pointer; font-size: 10px; font-weight: bold; border: 1px solid var(--danger); padding: 2px 5px; border-radius: 4px; }
+        .dra-name { color: #fff; font-weight: bold; font-size: 14px; }
     </style>
 </head>
 <body>
-<button class="theme-toggle" onclick="toggleTheme()">ALTERAR MODO VISUAL</button>
 <div class="panel">
-    <h2>PROMPT <span style="color:#c30052">V8</span></h2>
-    <input type="text" id="nomeAdv" placeholder="NOME DA DOUTORA">
-    <button class="btn-ativar" onclick="ativar()">ATIVAR ACESSO V8</button>
+    <h2>GESTOR <span style="color:#c30052">V8 ELITE</span></h2>
+    <input type="text" id="nomeAdv" placeholder="NOME COMPLETO DA DOUTORA">
+    <button class="btn-ativar" onclick="ativar()">ATIVAR E GERAR LINK V8</button>
     <div id="lista"></div>
 </div>
-<div class="footer-legal">CONTEÚDO PROTEGIDO PELO PROTOCOLO V8. CONFERÊNCIA JURÍDICA OBRIGATÓRIA.</div>
+
 <script>
-    if (localStorage.getItem('theme-admin') === 'light') document.body.classList.add('light-mode');
-    function toggleTheme() {
-        document.body.classList.toggle('light-mode');
-        localStorage.setItem('theme-admin', document.body.classList.contains('light-mode') ? 'light' : 'dark');
-    }
     const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
     const urlSistema = "https://cassiakelly995-lab.github.io/meu-app/v25.html";
+
     function ativar() {
         const nome = document.getElementById('nomeAdv').value.trim();
         if(!nome) return alert("Digite o nome!");
         const id = nome.replace(/\s+/g, '_');
-        db.ref('clientes/' + id).set({ nome: nome }).then(() => { alert("✅ ATIVADA!"); document.getElementById('nomeAdv').value = ""; });
+        db.ref('clientes/' + id).set({ nome: nome }).then(() => {
+            alert("✅ LICENÇA ATIVADA!");
+            document.getElementById('nomeAdv').value = "";
+        });
     }
+
     db.ref('clientes').on('value', (snap) => {
         const lista = document.getElementById('lista');
         lista.innerHTML = "";
         snap.forEach((child) => {
             const id = child.key;
             const linkFinal = urlSistema + "?id=" + id;
-            lista.innerHTML += `<div class="card-user"><span style="color:var(--text-white);">Dra. ${id}</span><button class="btn-copy" onclick="copiar('${linkFinal}')">COPIAR LINK</button></div>`;
+            lista.innerHTML += `
+                <div class="card-user">
+                    <button class="btn-del" onclick="bloquear('${id}')">BLOQUEAR ACESSO</button>
+                    <span class="dra-name">Dra. ${id.replace(/_/g, ' ')}</span>
+                    <button class="btn-copy" onclick="copiar('${linkFinal}')">COPIAR LINK V8</button>
+                </div>`;
         });
     });
-    function copiar(url) { navigator.clipboard.writeText(url).then(() => alert("🔗 COPIADO!")); }
+
+    function copiar(url) { 
+        navigator.clipboard.writeText(url).then(() => alert("🔗 LINK COPIADO PARA O WHATSAPP!")); 
+    }
+
+    function bloquear(id) { 
+        if(confirm("⚠ DESEJA BLOQUEAR O ACESSO DE " + id + "? O link dela parará de funcionar na hora.")) {
+            db.ref('clientes/' + id).set(null); 
+        }
+    }
 </script>
 </body>
 </html>

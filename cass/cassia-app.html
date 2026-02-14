@@ -3,174 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt | V8 Elite</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <title>Cássia Prompt V8 - God Mode</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
     <style>
-        :root { --ms-blue: #0078d4; --ms-bg: #f3f2f1; --ms-card: #ffffff; --ms-text: #323130; --accent: #ff007a; }
-        body { background-color: var(--ms-bg); color: var(--ms-text); font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; }
-        
-        /* BARRA SUPERIOR EXECUTIVA */
-        .top-bar { width: 100%; height: 48px; background: #000; display: flex; align-items: center; padding: 0 20px; box-sizing: border-box; color: #fff; font-size: 12px; letter-spacing: 1px; font-weight: 600; }
-
-        .app-container { width: 100%; max-width: 1100px; padding: 60px 20px; box-sizing: border-box; }
-        
-        .main-header { margin-bottom: 40px; text-align: left; border-left: 6px solid var(--accent); padding-left: 25px; }
-        .main-header h1 { font-size: 32px; font-weight: 800; margin: 0; letter-spacing: -1px; color: #000; }
-        .main-header p { margin: 5px 0 0; color: #605e5c; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; }
-
-        /* CARDS DO SISTEMA */
-        .fluent-card { background: var(--ms-card); border-radius: 4px; border: 1px solid #edebe9; box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,0.132), 0 0.3px 0.9px 0 rgba(0,0,0,0.108); padding: 40px; margin-bottom: 25px; }
-
-        /* LACUNAS ELABORADAS */
-        .module-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px; }
-        .module-box { display: flex; flex-direction: column; }
-        .module-box label { font-size: 13px; font-weight: 700; color: #323130; margin-bottom: 12px; display: flex; align-items: center; }
-        .module-box label i { color: var(--accent); margin-right: 8px; font-style: normal; }
-
-        input, textarea, select { border: 1px solid #8a8886; border-radius: 2px; padding: 12px 15px; font-size: 15px; font-family: 'Inter'; color: #323130; background: #fff; transition: all 0.2s; }
-        input:hover, textarea:hover { border-color: #323130; }
-        input:focus, textarea:focus { outline: none; border-color: var(--ms-blue); box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2); }
-
-        /* UPLOAD DISCRETO E SOFISTICADO */
-        .ms-upload { border: 1px solid #edebe9; background: #faf9f8; padding: 20px; border-radius: 2px; text-align: center; cursor: pointer; transition: 0.2s; margin-bottom: 30px; }
-        .ms-upload:hover { background: #f3f2f1; border-color: #d2d0ce; }
-        .ms-upload span { font-size: 13px; font-weight: 600; color: var(--ms-blue); }
-
-        /* TERMINAL DE SAÍDA */
-        .output-console { margin-top: 40px; border: 1px solid #d2d0ce; border-radius: 2px; }
-        .console-header { background: #faf9f8; padding: 12px 20px; border-bottom: 1px solid #edebe9; display: flex; justify-content: space-between; align-items: center; }
-        .console-header span { font-size: 11px; font-weight: 700; color: #605e5c; text-transform: uppercase; }
-        #output { padding: 30px; background: #fff; color: #323130; font-family: 'Consolas', monospace; font-size: 14px; line-height: 1.6; min-height: 150px; white-space: pre-wrap; display: none; border-top: 1px solid #f3f2f1; }
-
-        /* BOTÃO MICROSOFT STYLE */
-        .btn-ms { background-color: var(--ms-blue); color: #fff; border: none; padding: 15px 30px; font-size: 14px; font-weight: 600; border-radius: 2px; cursor: pointer; transition: 0.2s; float: right; margin-top: 20px; }
-        .btn-ms:hover { background-color: #005a9e; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
-        .btn-copy { background: transparent; border: 1px solid var(--ms-blue); color: var(--ms-blue); padding: 5px 15px; font-size: 11px; font-weight: 600; cursor: pointer; }
-        .btn-copy:hover { background: var(--ms-blue); color: #fff; }
-
-        /* SEGURANÇA JURÍDICA MANTIDA */
-        .security-section { margin-top: 60px; padding-top: 40px; border-top: 1px solid #d2d0ce; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        .sec-card h3 { font-size: 14px; font-weight: 700; color: #000; text-transform: uppercase; margin-bottom: 15px; }
-        .sec-card p { font-size: 13.5px; color: #605e5c; line-height: 1.7; margin: 0; }
-
-        .integrity-container { margin-top: 15px; }
-        .integrity-label { font-size: 10px; font-weight: 700; color: #a19f9d; text-transform: uppercase; margin-bottom: 5px; display: block; }
-        .integrity-bar { height: 4px; background: #edebe9; width: 100%; position: relative; }
-        #fill { height: 100%; width: 0%; background: var(--accent); transition: 0.5s; }
+        /* Design Luxo Elite Edition */
+        body { background: #050505; color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .v8-card { border: 1px solid #c9a227; background: #111; padding: 25px; border-radius: 15px; max-width: 600px; width: 100%; box-shadow: 0 0 15px rgba(201, 162, 39, 0.3); }
+        h1 { color: #c9a227; text-align: center; font-size: 1.8em; text-transform: uppercase; letter-spacing: 2px; }
+        .status-badge { text-align: center; font-size: 0.8em; color: #00f2ff; margin-bottom: 20px; }
+        textarea { width: 100%; height: 150px; background: #000; color: #fff; border: 1px solid #333; border-radius: 8px; padding: 10px; box-sizing: border-box; resize: none; }
+        .btn-processar { background: linear-gradient(45deg, #c9a227, #f1d592); border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; color: #000; }
+        #resultado { margin-top: 20px; padding: 15px; background: #1a1a1a; border-radius: 8px; border-left: 4px solid #c9a227; display: none; }
+        .bloqueio-tela { position: fixed; top:0; left:0; width: 100%; height: 100%; background: #000; color: red; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; text-align: center; }
     </style>
 </head>
 <body>
 
-    <div class="top-bar">CÁSSIA PROMPT | V8 SINGULARITY ELITE</div>
-
-    <div class="app-container">
+    <div id="conteudoApp" class="v8-card">
+        <h1>Cássia Prompt V8</h1>
+        <div class="status-badge">SISTEMA MONITORADO: ELITE EDITION</div>
         
-        <div class="main-header">
-            <h1>Console de Engenharia V8</h1>
-            <p>Sincronização de Dados e Comandos</p>
+        <p>Insira os fatos ou o rascunho da peça:</p>
+        <textarea id="textoEntrada" placeholder="Descreva os detalhes do caso aqui..."></textarea>
+        
+        <button class="btn-processar" onclick="processarV8()">EXECUTAR GOD MODE (AI)</button>
+        
+        <div id="resultado">
+            <strong style="color:#c9a227">PROMPT ESTRUTURADO:</strong>
+            <p id="textoFinal"></p>
         </div>
-
-        <div class="fluent-card">
-            <div class="ms-upload" onclick="document.getElementById('fileInput').click()">
-                <span id="up-status"> IMPORTAR DOCUMENTO PDF PARA ANÁLISE LOCAL</span>
-                <input type="file" id="fileInput" hidden accept="application/pdf">
-            </div>
-
-            <div class="module-grid">
-                <div class="module-box">
-                    <label><i>■</i> ARQUITETURA DE PERSONA</label>
-                    <input type="text" id="p1" placeholder="Ex: Advogada Sênior, OAB/SP">
-                </div>
-                <div class="module-box">
-                    <label><i>■</i> MATRIZ DE OBJETIVO</label>
-                    <input type="text" id="p2" placeholder="Ex: Recurso de Apelação Cível">
-                </div>
-            </div>
-
-            <div class="module-box" style="margin-top: 30px;">
-                <label><i>■</i> NÚCLEO DE FATOS (CORPUS)</label>
-                <textarea id="facts" rows="10" oninput="update()" placeholder="Aguardando inserção de dados estruturados ou extração de PDF..."></textarea>
-                <div class="integrity-container">
-                    <span id="status-text" class="integrity-label">STATUS DE INTEGRIDADE: DADOS AUSENTES</span>
-                    <div class="integrity-bar"><div id="fill"></div></div>
-                </div>
-            </div>
-
-            <button class="btn-ms" onclick="generate()">EXECUTAR PROTOCOLO V8</button>
-
-            <div class="output-console">
-                <div class="console-header">
-                    <span>PROMPT ESTRUTURADO</span>
-                    <button class="btn-copy" onclick="copy()">COPIAR</button>
-                </div>
-                <div id="output"></div>
-            </div>
-        </div>
-
-        <div class="security-section">
-            <div class="sec-card">
-                <h3>Segurança Jurídica e Técnica</h3>
-                <p>O Cássia Prompt V8 utiliza um protocolo rigoroso de filtragem para mitigar alucinações de IA. O sistema obriga a ferramenta a se basear exclusivamente no "Corpus de Fatos" fornecido. Toda e qualquer lacuna de informação será sinalizada, proibindo a IA de inventar dados processuais ou fáticos.</p>
-            </div>
-            <div class="sec-card">
-                <h3>Privacidade e LGPD</h3>
-                <p>Este console opera via Processamento Local. A extração de dados de arquivos PDF ocorre inteiramente dentro do seu navegador. Nenhum documento ou dado sensível é enviado para nossos servidores ou armazenado em nuvem externa, garantindo sigilo profissional absoluto.</p>
-            </div>
-            <div class="sec-card">
-                <h3>Responsabilidade do Operador</h3>
-                <p>A Inteligência Artificial atua como um assistente de produtividade. A revisão técnica, a fundamentação legal e a decisão final sobre o conteúdo gerado são de responsabilidade exclusiva e indelegável do profissional usuário.</p>
-            </div>
-        </div>
-
     </div>
 
     <script>
-        const fileInput = document.getElementById('fileInput');
-        
-        fileInput.addEventListener('change', async (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-            document.getElementById('up-status').innerText = " PROCESSANDO NÚCLEO...";
-            const reader = new FileReader();
-            reader.onload = async function() {
-                const typedarray = new Uint8Array(this.result);
-                const pdf = await pdfjsLib.getDocument(typedarray).promise;
-                let text = "";
-                for (let i = 1; i <= pdf.numPages; i++) {
-                    const page = await pdf.getPage(i);
-                    const content = await page.getTextContent();
-                    text += content.items.map(item => item.str).join(" ") + "\n";
+        // CONFIGURAÇÃO FIREBASE - CONECTADO AO SEU PAINEL
+        const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // VALIDAÇÃO DE ACESSO
+        const urlParams = new URLSearchParams(window.location.search);
+        const clienteId = urlParams.get('id');
+
+        if (!clienteId) {
+            document.body.innerHTML = "<div class='bloqueio-tela'><h1>ERRO DE IDENTIFICAÇÃO</h1><p>ID do usuário não encontrado. Solicite seu link oficial.</p></div>";
+        } else {
+            db.ref('clientes/' + clienteId).on('value', (snapshot) => {
+                const dados = snapshot.val();
+                if (!dados || dados.status !== "ativo") {
+                    document.body.innerHTML = `
+                        <div class='bloqueio-tela'>
+                            <h1 style="font-size: 3em;">⚠️</h1>
+                            <h1>ACESSO INTERROMPIDO</h1>
+                            <p>O seu período de licença expirou ou não foi identificado.</p>
+                            <p style="color:white">Fale com <strong>Cássia Franciane</strong> para regularizar.</p>
+                        </div>`;
                 }
-                document.getElementById('facts').value = text.substring(0, 15000);
-                document.getElementById('up-status').innerText = " DOCUMENTO SINCRONIZADO";
-                update();
-            };
-            reader.readAsArrayBuffer(file);
-        });
-
-        function update() {
-            let len = document.getElementById('facts').value.length;
-            let p = Math.min((len / 500) * 100, 100);
-            document.getElementById('fill').style.width = p + "%";
-            document.getElementById('status-text').innerText = p > 50 ? "STATUS DE INTEGRIDADE: ELITE" : "STATUS DE INTEGRIDADE: BAIXA";
+            });
         }
 
-        function generate() {
-            const f = document.getElementById('facts').value;
-            if(f.length < 20) return alert("ERRO: O sistema requer dados.");
-            const output = document.getElementById('output');
-            output.innerText = `### [SINGULARITY V8 ELITE]\n\n` +
-                `**PERSONA:** ${document.getElementById('p1').value}\n` +
-                `**MISSÃO:** ${document.getElementById('p2').value}\n\n` +
-                `**CORPUS DE FATOS:**\n"${f}"\n\n` +
-                `**REGRAS:**\n1. Use apenas a base acima.\n2. Se faltar dado, use [LACUNA].\n3. Tom técnico e preciso.`;
-            output.style.display = 'block';
-        }
-
-        function copy() {
-            navigator.clipboard.writeText(document.getElementById('output').innerText);
-            alert("Comando copiado.");
+        // LÓGICA DO PROMPT V8
+        function processarV8() {
+            const input = document.getElementById('textoEntrada').value;
+            if(!input) return alert("Insira os fatos!");
+            
+            const resultadoDiv = document.getElementById('resultado');
+            const textoFinal = document.getElementById('textoFinal');
+            
+            // Aqui entra a sua engenharia de prompt v8
+            const promptMestre = "Atue como um Advogado Sênior. Estruture o seguinte caso com base na V8 God Mode: " + input;
+            
+            textoFinal.innerText = promptMestre;
+            resultadoDiv.style.display = 'block';
+            alert("V8 God Mode processado com sucesso!");
         }
     </script>
 </body>

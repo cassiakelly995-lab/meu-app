@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CÁSSIA PROMPT V8 | STRATEGIC ELITE</title>
+    <title>CÁSSIA PROMPT V8 | UNIVERSAL</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <style>
@@ -14,129 +14,97 @@
         }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         nav { background: var(--card); padding: 12px 60px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
-        main { flex: 1; display: flex; padding: 20px 60px; gap: 20px; overflow: hidden; }
-        .workspace-card { background: var(--card); flex: 1; border-radius: 8px; border: 1px solid var(--border); display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
-        .workspace-content { padding: 25px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+        main { flex: 1; display: flex; padding: 20px 60px; gap: 20px; overflow-y: auto; }
+        .workspace-card { background: var(--card); width: 100%; max-width: 900px; margin: 0 auto; border-radius: 8px; border: 1px solid var(--border); padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
         
-        /* Barra de Rigor e Radar */
-        .rigor-container { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 5px 0; overflow: hidden; }
-        .rigor-bar { width: 0%; height: 100%; background: var(--rigor-low); transition: 0.5s ease; }
-        
+        /* Sistema de Lacunas */
+        .lacuna-group { margin-bottom: 20px; }
+        label { font-size: 11px; font-weight: 700; color: var(--ms-blue); text-transform: uppercase; display: block; margin-bottom: 8px; }
+        textarea { width: 100%; background: #000; border: 1px solid var(--border); padding: 12px; border-radius: 4px; color: #fff; font-size: 14px; outline: none; resize: none; box-sizing: border-box; }
+        textarea:focus { border-color: var(--ms-blue); }
+
         .radar-box { 
-            background: rgba(255, 202, 40, 0.05); border: 1px dashed var(--ms-gold); 
-            padding: 10px; border-radius: 6px; font-size: 11px; color: var(--ms-gold);
-            margin-bottom: 10px; display: none;
+            background: rgba(255, 202, 40, 0.1); border: 1px solid var(--ms-gold); 
+            padding: 12px; border-radius: 6px; font-size: 12px; color: var(--ms-gold);
+            margin-bottom: 20px; display: none;
         }
 
-        textarea { background: #000; border: 1px solid var(--border); padding: 15px; border-radius: 4px; color: #fff; font-size: 14px; outline: none; flex: 1; resize: none; }
-        .btn-exe { background: #444; color: white; border: none; padding: 15px 30px; border-radius: 4px; font-weight: 700; cursor: not-allowed; transition: 0.3s; }
+        .btn-exe { width: 100%; background: #444; color: white; border: none; padding: 18px; border-radius: 4px; font-weight: 700; cursor: not-allowed; transition: 0.3s; margin-top: 10px; }
         .btn-exe.active { background: var(--ms-blue); cursor: pointer; box-shadow: 0 0 15px rgba(0,120,212,0.4); }
-        
-        footer { background: #111; border-top: 1px solid var(--border); padding: 15px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        #lock { position: fixed; inset: 0; background: #000; z-index: 10000; display: none; align-items: center; justify-content: center; }
+
+        footer { background: #111; border-top: 1px solid var(--border); padding: 15px 60px; display: flex; justify-content: space-between; font-size: 10px; opacity: 0.6; }
     </style>
 </head>
 <body>
 
-<div id="lock"><h1>🔒 ACESSO BLOQUEADO</h1></div>
-
 <nav>
     <div style="font-weight: bold; color: var(--ms-blue);">CÁSSIA PROMPT <span style="font-weight:300;">V8 GOD MODE</span></div>
-    <div style="font-size: 10px; color: var(--rigor-high);">SISTEMA DE ANÁLISE PREDITIVA ATIVO</div>
+    <div style="font-size: 10px; color: var(--rigor-high);">INTERFACE UNIVERSAL ATIVA</div>
 </nav>
 
 <main>
     <div class="workspace-card">
-        <div class="workspace-content">
-            <div id="radar-alert" class="radar-box">
-                <strong>⚡ RADAR DE OMISSÕES V8:</strong> <span id="radar-msg">Detectando lacunas fundamentais...</span>
-            </div>
-
-            <div style="display: flex; justify-content: space-between; font-size: 10px; font-weight: bold;">
-                <span id="rigor-label" style="color: var(--rigor-low);">RIGOR: INSUFICIENTE</span>
-                <span style="color: var(--ms-blue);">INTELIGÊNCIA JURÍDICA BRASIL/INTL</span>
-            </div>
-            <div class="rigor-container"><div id="rigor-bar" class="rigor-bar"></div></div>
-            
-            <textarea id="factos" oninput="analisarTexto()" placeholder="Inicie o Corpus de Fatos aqui..."></textarea>
-            
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                <button onclick="anonymize()" style="background: #333; color: #fff; border: 1px solid #555; padding: 8px 15px; border-radius: 4px; font-size: 11px; cursor: pointer;">🛡️ MASCARAR LGPD</button>
-                <button id="btn-exe" class="btn-exe" disabled>BLOQUEADO POR FALTA DE RIGOR</button>
-            </div>
+        <div id="radar-alert" class="radar-box">
+            <strong>⚠️ ALERTA DE ESTRATÉGIA:</strong> <span id="radar-msg"></span>
         </div>
+
+        <div class="lacuna-group">
+            <label>1. O QUE ACONTECEU? (FATOS CRUS)</label>
+            <textarea id="fatos" rows="4" oninput="validar()" placeholder="Ex: O cliente foi demitido sem justa causa no dia..."></textarea>
+        </div>
+
+        <div class="lacuna-group">
+            <label>2. QUAL A FUNDAMENTAÇÃO? (LEIS/SÚMULAS)</label>
+            <textarea id="direito" rows="3" oninput="validar()" placeholder="Ex: Artigo 482 da CLT, Súmula tal do TST..."></textarea>
+        </div>
+
+        <div class="lacuna-group">
+            <label>3. O QUE VOCÊ QUER? (PEDIDOS)</label>
+            <textarea id="pedidos" rows="2" oninput="validar()" placeholder="Ex: Requer a condenação em danos morais de R$..."></textarea>
+        </div>
+
+        <button id="btn-exe" class="btn-exe" disabled>PREENCHA AS LACUNAS PARA LIBERAR</button>
     </div>
 </main>
 
 <footer>
-    <div style="font-size: 10px; opacity: 0.6;">
-        <h4 style="color: var(--ms-blue); margin: 0 0 5px 0;">🛡️ SEGURANÇA V8</h4>
-        O sistema analisa padrões de peticionamento e sugere elementos faltantes baseados em análise preditiva de mercado nacional e internacional.
-    </div>
-    <div style="font-size: 10px; opacity: 0.6;">
-        <h4 style="color: var(--ms-blue); margin: 0 0 5px 0;">🔐 PRIVACIDADE MESTRA</h4>
-        Anonimização de dados sensíveis integrada para conformidade total com a LGPD e sigilo OAB.
-    </div>
+    <div>🛡️ SEGURANÇA JURÍDICA: Filtragem técnica ativa contra alucinações.</div>
+    <div>🔐 PRIVACIDADE: LGPD Compliant. Dados não armazenados.</div>
 </footer>
 
 <script>
-    const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-    const urlParams = new URLSearchParams(window.location.search);
-    const userId = urlParams.get('id');
-
-    if (!userId) { document.body.innerHTML = "<h1>ACESSO NEGADO</h1>"; }
-    else {
-        db.ref('clientes/' + userId).on('value', (snap) => {
-            if (!snap.exists()) document.getElementById('lock').style.display = 'flex';
-        });
-    }
-
-    function analisarTexto() {
-        const text = document.getElementById('factos').value.toLowerCase();
-        const bar = document.getElementById('rigor-bar');
-        const label = document.getElementById('rigor-label');
-        const btn = document.getElementById('btn-exe');
+    function validar() {
+        const fatos = document.getElementById('fatos').value;
+        const direito = document.getElementById('direito').value;
+        const pedidos = document.getElementById('pedidos').value;
         const radar = document.getElementById('radar-alert');
         const radarMsg = document.getElementById('radar-msg');
+        const btn = document.getElementById('btn-exe');
 
-        // 1. Barra de Rigor
-        let prog = Math.min((text.length / 400) * 100, 100);
-        bar.style.width = prog + "%";
-        
-        // 2. Lógica do Radar de Omissões
         let omissoes = [];
-        if (!text.includes("jurisprudência") && !text.includes("acórdão")) omissoes.push("Falta citar Jurisprudência atualizada.");
-        if (!text.includes("stj") && !text.includes("stf")) omissoes.push("Sugestão: Verifique entendimento dos Tribunais Superiores (STJ/STF).");
-        if (!text.includes("art.") && !text.includes("lei")) omissoes.push("Atenção: Fundamentação legal (Artigos/Leis) não detectada.");
+        
+        // Lógica de Radar
+        if (fatos.length > 10 && (direito.length < 5)) omissoes.push("Você narrou os fatos, mas esqueceu da fundamentação legal (Leis/Artigos).");
+        if (direito.length > 5 && (pedidos.length < 5)) omissoes.push("Falta especificar o que você deseja pedir com base nessa lei.");
+        if (fatos.length > 20 && !fatos.includes("data") && !fatos.includes("/")) omissoes.push("Atenção: Datas são essenciais para análise de prescrição.");
 
-        if (text.length > 50 && omissoes.length > 0) {
+        if (omissoes.length > 0) {
             radar.style.display = "block";
-            radarMsg.innerText = omissoes[0]; // Mostra a primeira omissão da lista
+            radarMsg.innerText = omissoes[0];
         } else {
             radar.style.display = "none";
         }
 
-        // 3. Ativação do Botão
-        if (prog < 75) {
-            bar.style.background = "var(--rigor-low)";
-            label.innerText = "RIGOR: INSUFICIENTE";
-            btn.disabled = true; btn.classList.remove('active');
-            btn.innerText = "AGUARDANDO RIGOR";
+        // Liberação do Botão (Mínimo de preenchimento em todas as lacunas)
+        if (fatos.length > 20 && direito.length > 10 && pedidos.length > 5) {
+            btn.disabled = false;
+            btn.classList.add('active');
+            btn.innerText = "EXECUTAR PROTOCOLO V8 (MODO COMPLETO)";
         } else {
-            bar.style.background = "var(--rigor-high)";
-            label.innerText = "RIGOR: V8 GOD MODE";
-            btn.disabled = false; btn.classList.add('active');
-            btn.innerText = "EXECUTAR PROTOCOLO V8";
+            btn.disabled = true;
+            btn.classList.remove('active');
+            btn.innerText = "PREENCHA AS LACUNAS PARA LIBERAR";
         }
-    }
-
-    function anonymize() {
-        let t = document.getElementById('factos').value;
-        t = t.replace(/\d{3}\.\d{3}\.\d{3}-\d{2}/g, "[CPF_SIGILOSO]");
-        document.getElementById('factos').value = t;
-        alert("🔒 LGPD: Dados sensíveis protegidos.");
     }
 </script>
 </body>

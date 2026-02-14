@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cássia Prompt V8 - Painel Mestra</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <style>
+        body { background: #050505; color: #00f2ff; font-family: 'Segoe UI', sans-serif; text-align: center; padding: 20px; }
+        .container { border: 2px solid #00f2ff; padding: 30px; border-radius: 20px; max-width: 500px; margin: auto; box-shadow: 0 0 25px #00f2ff; background: #111; }
+        h1 { text-shadow: 0 0 10px #00f2ff; font-size: 1.5em; }
+        input { padding: 12px; border-radius: 8px; border: 1px solid #00f2ff; width: 80%; background: #000; color: #fff; margin-bottom: 20px; outline: none; }
+        button { padding: 12px 25px; cursor: pointer; font-weight: bold; border-radius: 8px; border: none; transition: 0.3s; }
+        .btn-ativar { background: #00ff88; color: #000; width: 85%; margin-bottom: 20px; box-shadow: 0 0 10px #00ff88; }
+        .btn-bloquear { background: #ff4444; color: white; padding: 5px 10px; font-size: 0.8em; }
+        #listaClientes { margin-top: 30px; text-align: left; border-top: 1px solid #333; padding-top: 20px; }
+        .cliente-item { display: flex; justify-content: space-between; align-items: center; background: #222; padding: 10px; margin-bottom: 5px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SISTEMA MESTRA V8</h1>
+        <p>Controle de Acessos Elite Edition</p>
+        
+        <input type="text" id="nomeCliente" placeholder="Nome da Advogada (ex: Dra_Ana)">
+        <button class="btn-ativar" onclick="liberar()">GERAR E ATIVAR ACESSO</button>
+        
+        <div id="listaClientes"></div>
+    </div>
+
+    <script>
+        // Configuração do seu Banco de Dados (Firebase)
+        const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // Função para liberar acesso
+        function liberar() {
+            const input = document.getElementById('nomeCliente');
+            const nome = input.value.trim().replace(/\s+/g, '_');
+            if(nome) {
+                db.ref('clientes/' + nome).set({ status: "ativo" })
+                .then(() => {
+                    alert("✅ Sucesso! Acesso liberado para: " + nome);
+                    input.value = "";
+                });
+            } else {
+                alert("Digite um nome primeiro!");
+            }
+        }
+
+        // Monitorar a lista em tempo real
+        db.ref('clientes').on('value', (snapshot) => {
+            const lista = document.getElementById('listaClientes');
+            lista.innerHTML = "<h3>Monitor de Usuárias:</h3>";
+            snapshot.forEach((item) => {
+                const status = item.val().status;
+                const corStatus = status === 'ativo' ? '#00ff88' : '#ff4444';
+                lista.innerHTML += `
+                    <div class="cliente-item">
+                        <span style="color:${corStatus}">● ${item.key} (${status})</span>
+                        <button class="btn-bloquear" onclick="bloquear('${item.key}')">BLOQUEAR</button>
+                    </div>`;
+            });
+        });
+
+        // Função para bloquear
+        function bloquear(nome) {
+            if(confirm("Deseja travar o acesso de " + nome + "?")) {
+                db.ref('clientes/' + nome).update({ status: "bloqueado" });
+            }
+        }
+    </script>
+</body>
+</html>

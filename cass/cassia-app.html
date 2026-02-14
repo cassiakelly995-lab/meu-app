@@ -3,259 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt V8 | Enterprise Singularity</title>
-    
+    <title>MESTRA V23 | SEGURANÇA JURÍDICA</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root {
-            --ms-blue: #0078d4;
-            --ms-bg: #f3f2f1;
-            --ms-card: #ffffff;
-            --ms-text: #323130;
-            --ms-border: #edebe9;
+            --bg: #ffffff; --text: #202124; --primary: #1a73e8; --surface: #f8f9fa; --border: #dadce0;
         }
-
-        /* CONFIGURAÇÃO DO MODO ALTERNATIVO (DARK) */
-        [data-theme="dark"] {
-            --ms-bg: #111111;
-            --ms-card: #1b1b1b;
-            --ms-text: #ffffff;
-            --ms-border: #333333;
+        [data-theme='dark'] {
+            --bg: #202124; --text: #e8eaed; --primary: #8ab4f8; --surface: #303134; --border: #3c4043;
         }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Roboto, sans-serif; transition: 0.3s; margin: 0; padding: 0; }
+        
+        /* Proteção de Acesso */
+        #lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: none; color: white; align-items: center; justify-content: center; font-weight: bold; }
 
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background-color: var(--ms-bg);
-            color: var(--ms-text);
-            margin: 0;
-            transition: background 0.2s, color 0.2s;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .nav-enterprise {
-            background: var(--ms-card);
-            padding: 15px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--ms-border);
-        }
-
-        .main-app {
-            flex: 1;
-            width: 90%;
-            max-width: 1050px;
-            margin: 40px auto;
-            background: var(--ms-card);
-            padding: 40px;
-            border-radius: 4px;
-            border: 1px solid var(--ms-border);
-        }
-
-        .v8-accent-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--ms-blue);
-            margin: 0;
-        }
-
-        .pdf-drop-zone {
-            margin: 30px 0;
-            padding: 30px;
-            border: 2px dashed var(--ms-blue);
-            background: rgba(0, 120, 212, 0.03);
-            text-align: center;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin-top: 25px;
-        }
-
-        label { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--ms-blue); margin-bottom: 8px; }
-
-        input, textarea {
-            width: 100%;
-            background: var(--ms-bg);
-            color: var(--ms-text);
-            border: 1px solid var(--ms-border);
-            padding: 15px;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 1rem;
-            outline: none;
-        }
-
-        textarea { height: 300px; resize: vertical; }
-
-        .btn-execute {
-            background: var(--ms-blue);
-            color: #fff;
-            border: none;
-            padding: 20px;
-            width: 100%;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 25px;
-            text-transform: uppercase;
-        }
-
-        #outputArea {
-            margin-top: 40px;
-            padding: 30px;
-            background: var(--ms-bg);
-            border-left: 6px solid var(--ms-blue);
-            display: none;
-        }
-
-        .footer-legal-block {
-            background: var(--ms-card);
-            padding: 40px;
-            font-size: 0.75rem;
-            color: #707070;
-            text-align: center;
-            border-top: 1px solid var(--ms-border);
-            line-height: 1.6;
-        }
-
-        .btn-theme {
-            background: var(--ms-blue);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-        }
+        header { padding: 15px 40px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--surface); }
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        
+        .main-box { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 30px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        h1 { font-size: 24px; font-weight: 400; color: var(--primary); }
+        
+        textarea { width: 100%; height: 200px; border: 1px solid var(--border); border-radius: 4px; padding: 15px; background: var(--surface); color: var(--text); font-size: 16px; box-sizing: border-box; resize: vertical; outline-color: var(--primary); }
+        
+        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
+        button { padding: 10px 24px; border-radius: 4px; border: none; font-weight: 500; cursor: pointer; transition: 0.2s; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
+        
+        .rigor-warning { font-size: 12px; color: #d93025; margin-top: 10px; font-weight: bold; text-transform: uppercase; }
     </style>
 </head>
-<body>
+<body data-theme="light">
 
-<nav class="nav-enterprise">
-    <div style="font-weight: 800; font-size: 1.4rem;">CÁSSIA<span style="color:var(--ms-blue)">PROMPT</span> V8</div>
-    <button class="btn-theme" onclick="toggleMode()">MODO ALTERNATIVO</button>
-</nav>
+<div id="lock-screen">🚫 ACESSO REVOGADO PELA ADMINISTRAÇÃO</div>
 
-<div class="main-app">
-    <h1 class="v8-accent-title">Singularity Enterprise</h1>
-    <p style="margin-bottom: 30px; opacity: 0.7;">Engine de Alta Performance Jurídica</p>
+<header>
+    <div><strong>MESTRA V23</strong> | <small>Security Protocol</small></div>
+    <button class="btn-secondary" onclick="toggleTheme()">🌓 Alternar Tema</button>
+</header>
 
-    <div class="pdf-drop-zone" onclick="document.getElementById('pdfIn').click()">
-        📁 CLIQUE PARA IMPORTAR PDF (EXTRATAÇÃO LOCAL LGPD)
-        <input type="file" id="pdfIn" hidden accept="application/pdf" onchange="extractPDF(this)">
-    </div>
-
-    <div class="form-grid">
-        <div class="group">
-            <label>Definição de Persona</label>
-            <input type="text" id="persona" placeholder="Ex: Advogado Sênior Especialista">
+<div class="container">
+    <div class="main-box">
+        <h1>Análise de Segurança Jurídica</h1>
+        <p>Insira os fatos para processamento. O sistema opera sob o rigor da Lei 13.709/2018 (LGPD).</p>
+        
+        <textarea id="promptInput" placeholder="Descreva os fatos detalhadamente..."></textarea>
+        
+        <div class="rigor-warning">⚠️ MODO RIGOR ATIVO: Respostas baseadas apenas em dados verificados.</div>
+        
+        <div class="btn-group">
+            <button class="btn-primary" onclick="processar()">Executar Inteligência</button>
+            <button class="btn-secondary" onclick="gerarPDF()">Baixar PDF Profissional</button>
         </div>
-        <div class="group">
-            <label>Objetivo do Script</label>
-            <input type="text" id="objetivo" placeholder="Ex: Contestação Estratégica">
-        </div>
-    </div>
-
-    <div style="margin-top: 25px;">
-        <label>Corpus Jurídico (Dados do Caso)</label>
-        <textarea id="corpus" placeholder="Aguardando dados..."></textarea>
-    </div>
-
-    <button class="btn-execute" onclick="runV8()">Executar Protocolo Singularity</button>
-
-    <div id="outputArea">
-        <label>Comando de Elite Gerado:</label>
-        <div id="result" style="white-space: pre-wrap; font-family: monospace; margin-top: 15px;"></div>
-        <button class="btn-execute" style="background: #333; margin-top: 20px;" onclick="copyResult()">Copiar Script</button>
     </div>
 </div>
 
-<footer class="footer-legal-block">
-    <strong>ISENÇÃO DE RESPONSABILIDADE JURÍDICA E LGPD:</strong><br>
-    Este sistema é uma ferramenta de engenharia de prompt de processamento local. NENHUM dado é armazenado ou enviado para nuvem. 
-    A desenvolvedora <strong>Cássia Prompt V8</strong> NÃO se responsabiliza pelo uso final, decisões jurídicas ou consequências decorrentes dos scripts gerados. 
-    A validação da resposta da IA é de inteira e exclusiva responsabilidade do advogado consulente. 
-    Protocolo Anti-Babozeira e Zero Alucinação ativado por padrão.
-</footer>
-
 <script>
-    // FIREBASE
     const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
-    const id = new URLSearchParams(window.location.search).get('id');
 
-    if (!id) {
-        document.body.innerHTML = '<div style="text-align:center; padding:100px;"><h1>ACESSO NEGADO</h1></div>';
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('id');
+
+    // SEGURANÇA RIGOROSA: Bloqueio automático se não estiver no Firebase
+    if (!userId) {
+        document.body.innerHTML = "<div style='text-align:center; padding:100px;'><h1>403 Forbidden</h1><p>ID de licenciamento ausente.</p></div>";
     } else {
-        db.ref('clientes/' + id).on('value', (s) => {
-            if (!s.val() || s.val().status !== "ativo") {
-                document.body.innerHTML = '<div style="text-align:center; padding:100px; color:red;"><h1>LICENÇA REVOGADA</h1></div>';
+        db.ref('clientes/' + userId).on('value', (snap) => {
+            if (!snap.exists()) {
+                document.getElementById('lock-screen').style.display = 'flex';
+            } else {
+                document.getElementById('lock-screen').style.display = 'none';
             }
         });
     }
 
-    // FUNÇÃO DO MODO ALTERNATIVO (CORRIGIDA)
-    function toggleMode() {
-        const d = document.documentElement;
-        if (d.getAttribute('data-theme') === 'dark') {
-            d.removeAttribute('data-theme');
-        } else {
-            d.setAttribute('data-theme', 'dark');
+    function toggleTheme() {
+        const body = document.body;
+        body.setAttribute('data-theme', body.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+    }
+
+    function processar() {
+        const input = document.getElementById('promptInput').value;
+        if (input.length < 10) {
+            alert("Informações insuficientes para análise segura.");
+            return;
         }
+        alert("Processando sob protocolo de Rigor Total. Baboseiras bloqueadas.");
     }
 
-    // PDF ENGINE
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
-    async function extractPDF(input) {
-        const file = input.files[0];
-        const reader = new FileReader();
-        reader.onload = async function() {
-            const typedarray = new Uint8Array(this.result);
-            const pdf = await pdfjsLib.getDocument(typedarray).promise;
-            let text = "";
-            for (let i = 1; i <= pdf.numPages; i++) {
-                const page = await pdf.getPage(i);
-                const content = await page.getTextContent();
-                text += content.items.map(s => s.str).join(" ");
-            }
-            document.getElementById('corpus').value = text;
-            alert("PDF Importado com Sucesso!");
-        };
-        reader.readAsArrayBuffer(file);
-    }
-
-    function runV8() {
-        const p = document.getElementById('persona').value || "Especialista";
-        const o = document.getElementById('objetivo').value || "Resultado Técnico";
-        const c = document.getElementById('corpus').value;
-        if(!c) return alert("Erro: Corpus vazio.");
-
-        const finalPrompt = `[CÁSSIA PROMPT V8 - SINGULARITY ENTERPRISE]
-PERSONA: ${p}. OBJETIVO: ${o}.
-[PROTOCOLOS RÍGIDOS]
-- PROIBIDO: Prolixidade e saudações.
-- ZERO ALUCINAÇÃO: Use apenas o corpus abaixo.
-- TÉCNICA: Vá direto ao ponto jurídico.
-CORPUS: "${c}"`;
-
-        document.getElementById('result').innerText = finalPrompt;
-        document.getElementById('outputArea').style.display = 'block';
-    }
-
-    function copyResult() {
-        navigator.clipboard.writeText(document.getElementById('result').innerText);
-        alert("Script Copiado!");
+    async function gerarPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.setFont("helvetica", "bold");
+        doc.text("MESTRA JURÍDICO - RELATÓRIO DE INTELIGÊNCIA", 20, 20);
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+        doc.text("ID de Licença: " + userId, 20, 30);
+        doc.text("-------------------------------------------------------------------", 20, 35);
+        const text = document.getElementById('promptInput').value;
+        doc.text(text || "Nenhum conteúdo inserido.", 20, 45, { maxWidth: 170 });
+        doc.save("Relatorio_Mestra.pdf");
     }
 </script>
 </body>

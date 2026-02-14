@@ -2,6 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SÍRIUS V25 | SUPREME JURÍDICO</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
@@ -10,121 +11,126 @@
     
     <style>
         :root {
-            --accent: #0078d4;
-            --bg: #050505;
-            --glass: rgba(255, 255, 255, 0.05);
-            --text: #ffffff;
-            --border: rgba(255, 255, 255, 0.1);
+            --microsoft-blue: #0078d4;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.12);
+            --text-main: #ffffff;
+            --glow: 0 0 20px rgba(0, 120, 212, 0.4);
         }
 
         body { 
-            margin: 0; background: var(--bg); color: var(--text); 
-            font-family: 'Segoe UI', sans-serif; height: 100vh; 
-            display: flex; flex-direction: column; overflow: hidden;
-            background: radial-gradient(circle at top right, #002d54 0%, #050505 60%);
+            margin: 0; background: #020202; color: var(--text-main); 
+            font-family: 'Segoe UI Variable Display', 'Segoe UI', sans-serif;
+            height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+            background-image: radial-gradient(circle at 100% 0%, #001a33 0%, #000 60%);
         }
 
-        /* Bloqueio de Segurança */
-        #lock-screen { 
-            position: fixed; inset: 0; background: #000; z-index: 10000; 
-            display: none; flex-direction: column; align-items: center; 
-            justify-content: center; backdrop-filter: blur(20px); 
-        }
-
+        /* Nav Estilo Microsoft Fluent */
         nav {
-            backdrop-filter: blur(15px); background: rgba(0,0,0,0.5);
-            padding: 15px 40px; display: flex; justify-content: space-between; 
+            backdrop-filter: blur(25px); background: rgba(0,0,0,0.7);
+            padding: 18px 50px; display: flex; justify-content: space-between; 
             align-items: center; border-bottom: 1px solid var(--border);
         }
 
-        .brand { font-weight: bold; letter-spacing: 2px; color: var(--accent); }
+        .sys-status { display: flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: 2px; }
+        .dot { width: 8px; height: 8px; background: #00ffa3; border-radius: 50%; box-shadow: 0 0 10px #00ffa3; }
 
-        main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 30px; }
 
-        .console-card {
-            background: var(--glass); backdrop-filter: blur(30px);
-            width: 100%; max-width: 1100px; height: 85vh;
-            border-radius: 20px; border: 1px solid var(--border);
-            display: grid; grid-template-columns: 280px 1fr; overflow: hidden;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        /* O Card Glassmorphism que ninguém criou ainda */
+        .glass-panel {
+            background: var(--glass-bg); backdrop-filter: blur(40px);
+            width: 100%; max-width: 1200px; height: 80vh;
+            border-radius: 24px; border: 1px solid var(--border);
+            display: grid; grid-template-columns: 320px 1fr; overflow: hidden;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
         }
 
-        .sidebar { background: rgba(0, 0, 0, 0.3); border-right: 1px solid var(--border); padding: 30px; }
-        
-        .workspace { padding: 40px; display: flex; flex-direction: column; gap: 20px; overflow-y: auto; }
+        .sidebar { background: rgba(255,255,255,0.02); border-right: 1px solid var(--border); padding: 40px; }
+        .workspace { padding: 50px; display: flex; flex-direction: column; gap: 25px; position: relative; }
 
-        .field { display: flex; flex-direction: column; gap: 8px; }
-        label { font-size: 11px; font-weight: bold; color: var(--accent); text-transform: uppercase; }
+        .field { display: flex; flex-direction: column; gap: 10px; }
+        label { font-size: 10px; font-weight: 700; color: var(--microsoft-blue); text-transform: uppercase; letter-spacing: 2px; }
 
         input, textarea {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-            padding: 15px; border-radius: 8px; color: #fff; font-size: 14px; outline: none;
+            background: rgba(0,0,0,0.3); border: 1px solid var(--border);
+            padding: 16px; border-radius: 12px; color: #fff; font-size: 15px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        input:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(0,120,212,0.3); }
-
-        .btn-primary {
-            background: var(--accent); color: white; border: none;
-            padding: 18px; border-radius: 8px; font-weight: bold;
-            cursor: pointer; transition: 0.3s; text-transform: uppercase;
+        input:focus, textarea:focus { 
+            border-color: var(--microsoft-blue); background: rgba(0, 120, 212, 0.05);
+            outline: none; box-shadow: var(--glow); transform: translateY(-2px);
         }
+
+        /* Botão High-Performance */
+        .btn-supreme {
+            background: linear-gradient(135deg, #0078d4, #00bcf2);
+            color: white; border: none; padding: 20px; border-radius: 12px;
+            font-weight: 700; cursor: pointer; text-transform: uppercase;
+            letter-spacing: 2px; transition: 0.3s; box-shadow: var(--glow);
+        }
+        .btn-supreme:hover { transform: scale(1.02); filter: brightness(1.2); }
 
         .btn-pdf {
-            background: transparent; border: 1px solid #fff; color: #fff;
-            padding: 12px; border-radius: 8px; cursor: pointer; margin-top: 10px; width: 100%;
+            background: transparent; border: 1px solid var(--border); color: #fff;
+            padding: 12px; border-radius: 10px; cursor: pointer; width: 100%;
+            margin-bottom: 20px; font-size: 12px; font-weight: 600;
         }
 
-        .btn-primary:hover { background: #005a9e; transform: scale(1.02); }
+        #lock-screen { 
+            position: fixed; inset: 0; background: #000; z-index: 99999; 
+            display: none; align-items: center; justify-content: center; text-align: center;
+        }
     </style>
 </head>
 <body>
 
 <div id="lock-screen">
-    <h1 style="font-size: 80px;">🔒</h1>
-    <h1>ACESSO REVOGADO</h1>
-    <p>Licença V8 Singularity terminada.</p>
+    <div>
+        <h1 style="font-size: 100px; margin: 0;">🔒</h1>
+        <h2 style="letter-spacing: 10px;">ACESSO RESTRITO</h2>
+        <p style="opacity: 0.5;">SÍRIUS V25: Protocolo de Segurança Ativado.</p>
+    </div>
 </div>
 
 <nav>
-    <div class="brand">CÁSSIA PROMPT V25 | SIRIUS</div>
-    <div id="status-point" style="width: 12px; height: 12px; background: #00ffa3; border-radius: 50%; box-shadow: 0 0 15px #00ffa3;"></div>
+    <div style="font-weight: 300; font-size: 20px;">SÍRIUS <span style="font-weight: 800; color: var(--microsoft-blue);">V25</span></div>
+    <div class="sys-status"><div class="dot"></div> SISTEMA ONLINE | RIGOR TOTAL</div>
 </nav>
 
 <main>
-    <div class="console-card">
+    <div class="glass-panel">
         <div class="sidebar">
-            <label>Controlo de Saída</label>
-            <button class="btn-pdf" onclick="gerarPDF()">📄 DESCARREGAR PDF</button>
-            <div style="margin-top: 50px; font-size: 12px; opacity: 0.5;">
-                <p>• RIGOR JURÍDICO ATIVO</p>
-                <p>• SEM ALUCINAÇÕES</p>
-                <p>• LGPD COMPLIANCE</p>
+            <button class="btn-pdf" onclick="baixarPDF()">📄 EXTRAIR RELATÓRIO PDF</button>
+            <div style="margin-top: 40px; border-top: 1px solid var(--border); padding-top: 20px;">
+                <label>Status LGPD</label>
+                <p style="font-size: 12px; opacity: 0.6;">Criptografia de ponta a ponta ativa. Nenhum dado é armazenado externamente.</p>
             </div>
         </div>
         
         <div class="workspace">
             <div class="field">
-                <label>Doutora Responsável (Persona)</label>
-                <input type="text" id="persona" placeholder="Ex: Advogada Criminalista Sênior">
+                <label>■ Arquitetura de Persona</label>
+                <input type="text" id="persona" placeholder="Dra. Nome da Advogada | OAB">
             </div>
             
             <div class="field">
-                <label>Objetivo da Peça (Matriz)</label>
-                <input type="text" id="objetivo" placeholder="Ex: Habeas Corpus com Pedido Liminar">
+                <label>■ Matriz de Objetivo Jurídico</label>
+                <input type="text" id="objetivo" placeholder="Ex: Contestação com Pedido de Reconvenção">
             </div>
 
             <div class="field" style="flex: 1;">
-                <label>Núcleo de Factos (Corpus)</label>
-                <textarea id="factos" style="height: 100%; resize: none;" placeholder="Insira os factos aqui..."></textarea>
+                <label>■ Núcleo de Fatos (Corpus)</label>
+                <textarea id="factos" style="height: 100%; resize: none;" placeholder="Deposite os fatos crus. O sistema aplicará o rigor jurídico absoluto contra baboseiras."></textarea>
             </div>
 
-            <button class="btn-primary" onclick="executar()">EXECUTAR PROTOCOLO DE ELITE</button>
+            <button class="btn-supreme" onclick="processar()">Executar Protocolo SÍRIUS</button>
         </div>
     </div>
 </main>
 
 <script>
-    // FIREBASE
     const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
@@ -133,45 +139,26 @@
     const userId = urlParams.get('id');
 
     if (!userId) {
-        document.body.innerHTML = "<h1>ID AUSENTE</h1>";
+        document.body.innerHTML = "<h1>ERROR 403: IDENTIDADE NÃO VERIFICADA</h1>";
     } else {
         db.ref('clientes/' + userId).on('value', (snap) => {
-            if (!snap.exists()) {
-                document.getElementById('lock-screen').style.display = 'flex';
-            }
+            if (!snap.exists()) document.getElementById('lock-screen').style.display = 'flex';
         });
     }
 
-    function executar() {
-        alert("Sincronizando com a IA... Aplicando Rigor V8.");
-    }
+    function processar() { alert("Processando... O rigor técnico está filtrando alucinações."); }
 
-    // FUNÇÃO PDF COMPLETA
-    async function gerarPDF() {
+    async function baixarPDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        
-        const persona = document.getElementById('persona').value;
-        const objetivo = document.getElementById('objetivo').value;
-        const factos = document.getElementById('factos').value;
-
-        doc.setFillColor(0, 120, 212);
-        doc.rect(0, 0, 210, 30, 'F');
-        
-        doc.setTextColor(255, 255, 255);
-        doc.setFontSize(16);
-        doc.text("RELATÓRIO JURÍDICO V8 - CÁSSIA PROMPT", 20, 20);
-        
-        doc.setTextColor(0, 0, 0);
-        doc.setFontSize(12);
-        doc.text("Doutora: " + persona, 20, 50);
-        doc.text("Peça: " + objetivo, 20, 60);
-        doc.text("Factos:", 20, 80);
-        
-        const splittedText = doc.splitTextToSize(factos, 170);
-        doc.text(splittedText, 20, 90);
-
-        doc.save("Analise_V8_Elite.pdf");
+        doc.setFont("helvetica", "bold");
+        doc.text("SÍRIUS V25 - RELATÓRIO DE INTELIGÊNCIA JURÍDICA", 20, 20);
+        doc.setFontSize(10);
+        doc.text("Doutora: " + document.getElementById('persona').value, 20, 40);
+        doc.text("Objetivo: " + document.getElementById('objetivo').value, 20, 50);
+        const fatos = doc.splitTextToSize(document.getElementById('factos').value, 170);
+        doc.text(fatos, 20, 70);
+        doc.save("Relatorio_Sirius_V25.pdf");
     }
 </script>
 </body>

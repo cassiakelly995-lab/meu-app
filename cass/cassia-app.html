@@ -3,219 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt V8 | Singularity Ultra</title>
+    <title>Cássia Prompt V8 | Singularity Enterprise</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
 
     <style>
         :root {
-            --brand: #0078d4;
-            --bg: #f8f9fa;
-            --card: #ffffff;
-            --text: #201f1e;
-            --accent: #e1dfdd;
+            --ms-blue: #0078d4;
+            --ms-bg: #f3f2f1;
+            --ms-card: #ffffff;
+            --ms-text: #323130;
+            --ms-border: #edebe9;
         }
 
         [data-theme="dark"] {
-            --bg: #111111;
-            --card: #1b1b1b;
-            --text: #ffffff;
-            --accent: #323130;
+            --ms-bg: #111111;
+            --ms-card: #1b1b1b;
+            --ms-text: #ffffff;
+            --ms-border: #333333;
         }
 
         body {
-            font-family: 'Segoe UI Variable', 'Segoe UI', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--ms-bg);
+            color: var(--ms-text);
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: 0.3s ease;
+            transition: 0.2s ease;
+            min-height: 100vh;
         }
 
-        .header-bar {
+        .navbar {
             width: 100%;
-            background: var(--card);
-            padding: 15px 50px;
+            background: var(--ms-card);
+            padding: 12px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--accent);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-bottom: 1px solid var(--ms-border);
+            box-sizing: border-box;
         }
 
         .main-container {
             width: 95%;
-            max-width: 1000px;
-            margin: 50px 0;
-            background: var(--card);
+            max-width: 1100px;
+            margin: 40px 0;
+            background: var(--ms-card);
             padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid var(--ms-border);
         }
 
-        .v8-title {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(90deg, var(--brand), #00bcf2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
+        .v8-header { border-left: 5px solid var(--ms-blue); padding-left: 20px; margin-bottom: 35px; }
+        .v8-header h1 { margin: 0; font-size: 2rem; font-weight: 600; }
 
-        .status-pill {
-            display: inline-block;
-            padding: 4px 12px;
-            background: #dff6dd;
-            color: #107c10;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
+        .upload-zone {
+            border: 2px dashed var(--ms-blue);
+            padding: 20px;
+            text-align: center;
             margin-bottom: 30px;
+            border-radius: 4px;
+            background: rgba(0, 120, 212, 0.05);
+            cursor: pointer;
         }
 
-        .input-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
         .group { display: flex; flex-direction: column; }
-        label { font-size: 0.8rem; font-weight: 700; color: var(--brand); text-transform: uppercase; margin-bottom: 8px; }
+        label { font-size: 0.8rem; font-weight: 600; margin-bottom: 8px; color: var(--ms-blue); text-transform: uppercase; }
 
         input, textarea {
-            background: var(--bg);
-            color: var(--text);
-            border: 1px solid var(--accent);
-            padding: 15px;
-            border-radius: 8px;
+            background: var(--ms-bg);
+            color: var(--ms-text);
+            border: 1px solid var(--ms-border);
+            padding: 14px;
+            border-radius: 2px;
             font-size: 1rem;
             outline: none;
-            transition: 0.2s;
         }
 
-        input:focus, textarea:focus { border: 2px solid var(--brand); box-shadow: 0 0 10px rgba(0,120,212,0.1); }
-
-        textarea { height: 250px; resize: none; }
+        textarea { height: 280px; resize: vertical; }
 
         .btn-v8 {
-            background: var(--brand);
+            background: var(--ms-blue);
             color: white;
             border: none;
-            padding: 18px 40px;
-            border-radius: 8px;
-            font-weight: 700;
+            padding: 16px 40px;
+            font-weight: 600;
             cursor: pointer;
             width: 100%;
-            margin-top: 20px;
-            transition: 0.3s;
+            margin-top: 15px;
+            text-transform: uppercase;
         }
 
-        .btn-v8:hover { background: #005a9e; transform: translateY(-2px); }
+        .btn-v8:hover { background: #005a9e; }
 
-        #output {
-            margin-top: 40px;
-            padding: 25px;
-            background: var(--bg);
-            border-radius: 8px;
-            border-left: 5px solid var(--brand);
-            display: none;
+        .footer-disclaimer {
+            margin-top: auto;
+            padding: 40px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #605e5c;
+            max-width: 900px;
+            line-height: 1.6;
         }
 
-        .lock-screen {
-            position: fixed; inset: 0; background: white; z-index: 1000;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
+        #output { margin-top: 30px; padding: 25px; background: rgba(0, 120, 212, 0.05); border: 1px solid var(--ms-blue); display: none; }
     </style>
 </head>
 <body>
 
-<div id="appContainer">
-    <nav class="header-bar">
-        <div style="font-weight: 900; letter-spacing: -1px;">CÁSSIA<span style="color: var(--brand);">PROMPT</span></div>
-        <button onclick="document.documentElement.toggleAttribute('data-theme')" style="background:none; border:1px solid var(--accent); color:var(--text); padding:5px 15px; border-radius:5px; cursor:pointer;">Alternar Tema</button>
-    </nav>
+<nav class="navbar">
+    <div style="font-weight: 700; font-size: 1.2rem;">CÁSSIA PROMPT V8 <span style="font-weight: 300;">| Enterprise</span></div>
+    <button onclick="document.documentElement.toggleAttribute('data-theme')" style="padding: 8px 15px; cursor: pointer; background: var(--ms-blue); color: white; border: none; border-radius: 2px;">ALTERAR MODO</button>
+</nav>
 
-    <div class="main-container">
-        <div class="v8-title">Singularity Ultra Edition</div>
-        <div class="status-pill">PROTOCOL V8 ACTIVE | ZERO HALLUCINATION MODE</div>
+<div class="main-container">
+    <div class="v8-header">
+        <h1>Protocolo Singularity</h1>
+        <p>Engenharia de Prompt de Alta Performance e Baixa Latência</p>
+    </div>
 
-        <div class="input-grid">
-            <div class="group">
-                <label>Arquitetura da Persona</label>
-                <input type="text" id="persona" placeholder="Ex: Advogado Especialista em Direito Civil">
-            </div>
-            <div class="group">
-                <label>Matriz de Objetivo</label>
-                <input type="text" id="objetivo" placeholder="Ex: Contestação com Foco em Nulidade">
-            </div>
-        </div>
+    <div class="upload-zone" onclick="document.getElementById('pdfInput').click()">
+        📥 CLIQUE PARA IMPORTAR PDF (PROCESSAMENTO LOCAL LGPD)
+        <input type="file" id="pdfInput" hidden accept=".pdf" onchange="processPDF(this)">
+    </div>
 
+    <div class="input-grid">
         <div class="group">
-            <label>Núcleo de Fatos (Corpus)</label>
-            <textarea id="corpus" placeholder="Insira aqui os elementos do caso. O Protocolo V8 eliminará qualquer conteúdo irrelevante..."></textarea>
+            <label>Arquitetura de Persona</label>
+            <input type="text" id="persona" placeholder="Ex: Advogado Sênior Especialista">
         </div>
-
-        <button class="btn-v8" onclick="gerarV8()">EXECUTAR ENGENHARIA SINGULARITY</button>
-
-        <div id="output">
-            <label style="color: var(--brand);">Script de Alta Performance Gerado:</label>
-            <div id="result" style="white-space: pre-wrap; margin-top: 15px; font-size: 0.95rem; line-height: 1.6;"></div>
-            <button class="btn-v8" style="background:#201f1e; font-size: 0.8rem;" onclick="copiar()">COPIAR SCRIPT</button>
+        <div class="group">
+            <label>Matriz de Objetivo</label>
+            <input type="text" id="objetivo" placeholder="Ex: Contestação com Foco em Danos">
         </div>
+    </div>
+
+    <div class="group">
+        <label>Núcleo de Fatos (Corpus)</label>
+        <textarea id="corpus" placeholder="Aguardando dados ou extração de PDF..."></textarea>
+    </div>
+
+    <button class="btn-v8" onclick="executarV8()">EXECUTAR PROTOCOLO V8</button>
+
+    <div id="output">
+        <label>SCRIPT V8 GERADO:</label>
+        <div id="resultText" style="white-space: pre-wrap; margin-top: 10px; font-family: monospace;"></div>
+        <button class="btn-v8" style="background:#323130; margin-top:15px;" onclick="copiar()">COPIAR RESULTADO</button>
     </div>
 </div>
 
+<div class="footer-disclaimer">
+    <strong>AVISO DE RESPONSABILIDADE E PRIVACIDADE (LGPD):</strong><br>
+    Este sistema opera via <strong>Processamento Local</strong>: nenhum dado do seu PDF ou texto é armazenado em nossos servidores ou utilizado para treinamento de terceiros. 
+    A <strong>Cássia Prompt V8</strong> não se responsabiliza pelo uso, interpretação ou consequências jurídicas das respostas geradas pela IA através destes prompts. 
+    O resultado é uma ferramenta auxiliar de engenharia; a validação técnica e jurídica é de inteira responsabilidade do profissional consulente. 
+    Proibido o uso para geração de conteúdos prolixos ou "babozeiras" sem fundamentação.
+</div>
+
 <script>
-    // FIREBASE SECURITY
+    // FIREBASE
     const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
     const id = new URLSearchParams(window.location.search).get('id');
-
     if (!id) {
-        document.body.innerHTML = '<div class="lock-screen"><h1>Cássia Prompt V8</h1><p>Erro: ID de licenciamento ausente.</p></div>';
+        document.body.innerHTML = '<h1>ACESSO NEGADO</h1>';
     } else {
         db.ref('clientes/' + id).on('value', (snap) => {
             if (!snap.val() || snap.val().status !== "ativo") {
-                document.body.innerHTML = '<div class="lock-screen"><h1>⚠️ ACESSO REVOGADO</h1><p>Contacte <b>Cássia Prompt V8</b> para renovar sua licença.</p></div>';
+                document.body.innerHTML = '<h1 style="color:red; text-align:center; margin-top:100px;">LICENÇA REVOGADA - FALE COM CÁSSIA PROMPT V8</h1>';
             }
         });
     }
 
-    function gerarV8() {
-        const p = document.getElementById('persona').value || "Especialista Jurídico";
-        const o = document.getElementById('objetivo').value || "Máxima Eficácia Técnica";
+    // PDF ENGINE (LOCAL)
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+    async function processPDF(input) {
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = async function() {
+            const typedarray = new Uint8Array(this.result);
+            const pdf = await pdfjsLib.getDocument(typedarray).promise;
+            let fullText = "";
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const text = await page.getTextContent();
+                fullText += text.items.map(s => s.str).join(" ");
+            }
+            document.getElementById('corpus').value = fullText;
+            alert("PDF Processado Localmente com Sucesso!");
+        };
+        reader.readAsArrayBuffer(file);
+    }
+
+    function executarV8() {
+        const p = document.getElementById('persona').value || "Especialista";
+        const o = document.getElementById('objetivo').value || "Resultado Técnico";
         const c = document.getElementById('corpus').value;
 
-        if(!c) return alert("Erro: O Corpus está vazio.");
+        if(!c) return alert("Insira os dados.");
 
-        const script = `[SISTEMA: CÁSSIA PROMPT V8 - SINGULARITY ULTRA]
-PERSONA: ${p}.
-OBJETIVO: ${o}.
+        const promptV8 = `[CÁSSIA PROMPT V8 - SINGULARITY MODE]
+PERSONA: ${p}. OBJETIVO: ${o}.
 
-[RESTRIÇÕES RÍGIDAS - CONTROLE DE QUALIDADE]
-1. PROIBIDO: Introduções genéricas, "babozeiras" sociais ou termos como "espero que isso ajude". Vá direto ao ponto.
-2. ZERO ALUCINAÇÃO: Não invente fatos, leis, jurisprudência ou detalhes que não constem no corpus. 
-3. LACUNAS: Se faltar um dado crucial para a peça, escreva "[DADO AUSENTE: SOLICITAR AO ADVOGADO]".
-4. TÉCNICA: Use linguagem jurídica de alto nível, focada em convencimento magistral.
+[PROTOCOLO ANTI-BABOZEIRA]
+- Ignore qualquer saudação, introdução ou conversa fiada.
+- Se os dados forem insuficientes, aponte as lacunas. Não invente nada.
+- Use linguagem técnica de alto impacto. 
+- Sem prolixidade. Vá direto ao núcleo jurídico.
 
 CORPUS:
-"${c}"
+"${c}"`;
 
-EXECUTE AGORA NO MODO SINGULARITY.`;
-
-        document.getElementById('result').innerText = script;
+        document.getElementById('resultText').innerText = promptV8;
         document.getElementById('output').style.display = 'block';
     }
 
     function copiar() {
-        navigator.clipboard.writeText(document.getElementById('result').innerText);
-        alert("Script copiado com sucesso!");
+        navigator.clipboard.writeText(document.getElementById('resultText').innerText);
+        alert("Copiado!");
     }
 </script>
 </body>

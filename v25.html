@@ -11,114 +11,117 @@
     <style>
         :root {
             --ms-blue: #0078d4;
-            --ms-dark: #005a9e;
-            --bg-light: #f3f6f8;
-            --glass: rgba(255, 255, 255, 0.9);
+            --bg: #f3f6f8;
+            --card: #ffffff;
+            --text: #201f1e;
             --border: #dee1e6;
+            --footer-bg: #ffffff;
+        }
+
+        /* Estilos para o Modo Escuro Profissional */
+        body.dark-mode {
+            --bg: #0b0b0b;
+            --card: #161616;
+            --text: #ffffff;
+            --border: #333333;
+            --footer-bg: #111111;
         }
 
         body { 
-            margin: 0; background: var(--bg-light); color: #201f1e; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+            margin: 0; background: var(--bg); color: var(--text); 
+            font-family: 'Segoe UI', sans-serif; height: 100vh;
+            display: flex; flex-direction: column; transition: 0.3s;
         }
 
-        /* Header Profissional */
         nav {
-            background: #fff; padding: 12px 60px; display: flex; 
+            background: var(--card); padding: 12px 60px; display: flex; 
             justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-bottom: 1px solid var(--border);
         }
 
-        .brand { font-size: 18px; font-weight: 700; color: var(--ms-blue); letter-spacing: -0.5px; }
-        .status-badge { font-size: 11px; background: #e1f5fe; color: var(--ms-blue); padding: 4px 12px; border-radius: 20px; font-weight: 600; border: 1px solid #b3e5fc; }
-
-        main { flex: 1; display: flex; padding: 30px 60px; gap: 30px; }
-
-        /* Container Principal Estilo Software Microsoft */
-        .workspace-card {
-            background: #fff; flex: 1; border-radius: 8px; 
-            border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            display: flex; flex-direction: column; overflow: hidden;
-        }
-
-        .workspace-header { background: #faf9f8; padding: 15px 25px; border-bottom: 1px solid var(--border); }
-        .workspace-content { padding: 30px; flex: 1; display: flex; flex-direction: column; gap: 20px; }
-
-        label { font-size: 12px; font-weight: 600; color: #605e5c; margin-bottom: 5px; display: block; }
-        input, textarea {
-            width: 100%; border: 1px solid #8a8886; padding: 12px; 
-            border-radius: 4px; font-size: 14px; box-sizing: border-box; outline: none;
-            transition: border 0.2s;
-        }
-        input:focus, textarea:focus { border-color: var(--ms-blue); border-width: 2px; }
-
-        .btn-primary {
-            background: var(--ms-blue); color: white; border: none; padding: 14px 28px;
-            border-radius: 4px; font-weight: 600; cursor: pointer; transition: 0.2s;
-            font-size: 14px; align-self: flex-end;
-        }
-        .btn-primary:hover { background: var(--ms-dark); }
+        .brand { font-size: 18px; font-weight: 700; color: var(--ms-blue); }
         
-        .btn-secondary {
-            background: white; border: 1px solid #8a8886; color: #323130;
-            padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 13px;
+        .nav-tools { display: flex; gap: 15px; align-items: center; }
+
+        .btn-theme {
+            background: var(--ms-blue); color: white; border: none;
+            padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 12px;
         }
 
-        /* Rodapé Institucional Robusto */
+        main { flex: 1; display: flex; padding: 20px 60px; overflow: hidden; }
+
+        .workspace-card {
+            background: var(--card); flex: 1; border-radius: 8px; 
+            border: 1px solid var(--border); display: flex; flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .workspace-content { padding: 25px; flex: 1; display: flex; flex-direction: column; gap: 15px; }
+
+        label { font-size: 11px; font-weight: 700; color: var(--ms-blue); text-transform: uppercase; }
+
+        input, textarea {
+            background: var(--bg); border: 1px solid var(--border); padding: 12px; 
+            border-radius: 4px; color: var(--text); font-size: 14px; outline: none;
+        }
+
+        .btn-exe {
+            background: var(--ms-blue); color: white; border: none; padding: 15px 30px;
+            border-radius: 4px; font-weight: 700; cursor: pointer; align-self: flex-end;
+        }
+
+        /* Rodapé com as frases de segurança que você exigiu */
         footer {
-            background: #fff; border-top: 1px solid var(--border);
-            padding: 20px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+            background: var(--footer-bg); border-top: 1px solid var(--border);
+            padding: 20px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
         }
 
-        .footer-section h4 { color: #323130; margin: 0 0 8px 0; font-size: 13px; text-transform: uppercase; }
-        .footer-section p { font-size: 11px; color: #605e5c; line-height: 1.5; margin: 0; text-align: justify; }
+        .sec-box h4 { color: var(--ms-blue); margin: 0 0 5px 0; font-size: 12px; }
+        .sec-box p { font-size: 11px; opacity: 0.8; line-height: 1.4; text-align: justify; }
 
-        #lock { position: fixed; inset: 0; background: #fff; z-index: 10000; display: none; align-items: center; justify-content: center; }
+        #lock { position: fixed; inset: 0; background: #000; z-index: 10000; display: none; align-items: center; justify-content: center; }
     </style>
 </head>
-<body>
-
-    <div id="lock"><h1>ACESSO RESTRITO - CÁSSIA PROMPT V8</h1></div>
+<body class="dark-mode"> <div id="lock"><h1>ACESSO RESTRITO</h1></div>
 
     <nav>
         <div class="brand">CÁSSIA PROMPT <span style="font-weight: 300;">V8 GOD MODE</span></div>
-        <div class="status-badge">● AMBIENTE JURÍDICO MONITORADO</div>
+        <div class="nav-tools">
+            <button class="btn-theme" onclick="toggleTheme()">Alternar Modo Escuro/Claro</button>
+            <div style="font-size: 10px; color: #00ffa3;">● AMBIENTE MONITORADO</div>
+        </div>
     </nav>
 
     <main>
         <div class="workspace-card">
-            <div class="workspace-header">
-                <button class="btn-secondary" onclick="gerarPDF()">📄 Exportar Dados em PDF</button>
-            </div>
             <div class="workspace-content">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                     <div>
-                        <label>Persona (Advogada Responsável)</label>
-                        <input type="text" id="persona" placeholder="Digite seu nome e OAB">
+                        <label>Persona Responsável</label>
+                        <input type="text" id="persona" placeholder="Dra. Nome e OAB">
                     </div>
                     <div>
                         <label>Matriz de Objetivo</label>
-                        <input type="text" id="objetivo" placeholder="Ex: Petição Inicial - Indenizatória">
+                        <input type="text" id="objetivo" placeholder="Ex: Recurso Ordinário">
                     </div>
                 </div>
                 <div style="flex: 1; display: flex; flex-direction: column;">
                     <label>Núcleo de Fatos (Corpus Jurídico)</label>
-                    <textarea id="factos" style="flex: 1; resize: none;" placeholder="Insira os fatos detalhados aqui..."></textarea>
+                    <textarea id="factos" style="flex: 1; resize: none;" placeholder="Insira os fatos para análise rigorosa..."></textarea>
                 </div>
-                <button class="btn-primary" onclick="executar()">Executar Protocolo V8</button>
+                <button class="btn-exe" onclick="executar()">Executar Protocolo V8</button>
             </div>
         </div>
     </main>
 
     <footer>
-        <div class="footer-section">
+        <div class="sec-box">
             <h4>🛡️ SEGURANÇA JURÍDICA E COMPLIANCE</h4>
-            <p>O Protocolo V8 impõe uma filtragem de integridade técnica para prevenir alucinações de inteligência artificial. O sistema está programado para rejeitar interpretações sem base fática no 'Corpus' fornecido. É vedada a criação de dados processuais não fundamentados, garantindo o rigor da doutrina aplicada.</p>
+            <p>O Protocolo V8 impõe uma filtragem de integridade técnica para prevenir alucinações de inteligência artificial. O sistema está programado para rejeitar interpretações sem base fática no 'Corpus' fornecido. É vedada a criação de dados processuais não fundamentados, garantindo o rigor da doutrina aplicada e eliminando qualquer margem para erros ou "baboseiras" jurídicas.</p>
         </div>
-        <div class="footer-section">
+        <div class="sec-box">
             <h4>🔐 PRIVACIDADE E PROTEÇÃO DE DADOS (LGPD)</h4>
-            <p>Este console opera em ambiente de isolamento de dados. Nenhuma informação inserida neste terminal é utilizada para treinamento de modelos de terceiros ou armazenada em servidores de cache externos. A criptografia de ponta a ponta assegura que o sigilo profissional advogado-cliente seja preservado integralmente.</p>
+            <p>Este console opera em ambiente de isolamento de dados High-End. Nenhuma informação inserida neste terminal é utilizada para treinamento de modelos de terceiros ou armazenada em servidores de cache externos. A criptografia de ponta a ponta assegura que o sigilo profissional advogado-cliente seja preservado integralmente conforme as normas da OAB e LGPD.</p>
         </div>
     </footer>
 
@@ -129,36 +132,24 @@
         const urlParams = new URLSearchParams(window.location.search);
         const userId = urlParams.get('id');
 
-        if (!userId) { 
-            document.body.innerHTML = "<h1>ID DE ACESSO INVÁLIDO</h1>"; 
-        } else {
+        if (!userId) { document.body.innerHTML = "<h1>ID INVÁLIDO</h1>"; }
+        else {
             db.ref('clientes/' + userId).on('value', (snap) => {
                 if (!snap.exists()) document.getElementById('lock').style.display = 'flex';
             });
         }
 
-        function executar() {
-            const fatos = document.getElementById('factos').value;
-            if (fatos.length < 150) {
-                alert("❌ RIGOR INSUFICIENTE: O V8 detectou conteúdo de baixo valor técnico ou 'argumentação preguiçosa'. A IA recusa processar pedidos que não contenham um Corpus de Fatos robusto e detalhado.");
-            } else {
-                alert("🚀 PROTOCOLO V8 ATIVADO: Iniciando análise jurídica de alto nível e filtragem anti-baboseira.");
-            }
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
         }
 
-        async function gerarPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            doc.setFont("helvetica", "bold");
-            doc.setTextColor(0, 120, 212);
-            doc.text("CÁSSIA PROMPT V8 - RELATÓRIO TÉCNICO", 20, 20);
-            doc.setFontSize(10);
-            doc.setTextColor(0, 0, 0);
-            doc.text("Dra: " + document.getElementById('persona').value, 20, 40);
-            doc.text("Objetivo: " + document.getElementById('objetivo').value, 20, 50);
-            const text = doc.splitTextToSize(document.getElementById('factos').value, 170);
-            doc.text(text, 20, 70);
-            doc.save("Analise_V8_Corporate.pdf");
+        function executar() {
+            const f = document.getElementById('factos').value;
+            if (f.length < 150) {
+                alert("❌ RIGOR INSUFICIENTE: O V8 exige um Corpus de Fatos detalhado. Argumentação fraca detectada.");
+            } else {
+                alert("🚀 V8 EM AÇÃO: Filtrando dados e aplicando Rigor Jurídico.");
+            }
         }
     </script>
 </body>

@@ -4,117 +4,136 @@
     <meta charset="UTF-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CÁSSIA PROMPT V8 | UNIVERSAL ELITE</title>
+    <title>CÁSSIA PROMPT V8 | GOD MODE</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <style>
         :root {
             --ms-blue: #0078d4; --bg: #0b0b0b; --card: #161616; --text: #ffffff; --border: #333333;
-            --rigor-low: #ff4d4d; --rigor-high: #00ffa3; --ms-gold: #ffca28;
+            --rigor-low: #ff4d4d; --rigor-mid: #ffca28; --rigor-high: #00ffa3;
         }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
-        nav { background: var(--card); padding: 12px 60px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
-        main { flex: 1; display: flex; padding: 20px 60px; gap: 20px; overflow-y: auto; }
-        .workspace-card { background: var(--card); width: 100%; max-width: 850px; margin: 0 auto; border-radius: 12px; border: 1px solid var(--border); padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
-        /* Lacunas Universais */
-        .lacuna-group { margin-bottom: 25px; }
-        label { font-size: 11px; font-weight: 700; color: var(--ms-blue); text-transform: uppercase; display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-        .icon { font-style: normal; font-size: 14px; }
+        nav { background: var(--card); padding: 12px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--ms-blue); }
+        
+        main { flex: 1; display: flex; padding: 20px 40px; gap: 20px; overflow-y: auto; }
+        .workspace-card { background: var(--card); width: 100%; max-width: 900px; margin: 0 auto; border-radius: 12px; border: 1px solid var(--border); padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.7); }
+
+        /* BARRA DE RIGOR (VOLTOU!) */
+        .rigor-container { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
+        .rigor-bar { width: 0%; height: 100%; background: var(--rigor-low); transition: 0.5s ease; box-shadow: 0 0 15px rgba(255,77,77,0.3); }
+
+        .lacuna-group { margin-bottom: 20px; }
+        label { font-size: 11px; font-weight: 700; color: var(--ms-blue); text-transform: uppercase; display: block; margin-bottom: 8px; letter-spacing: 1px; }
         
         textarea, input { 
             width: 100%; background: #000; border: 1px solid var(--border); padding: 14px; 
             border-radius: 6px; color: #fff; font-size: 14px; outline: none; box-sizing: border-box; 
-            transition: 0.3s;
         }
-        textarea:focus, input:focus { border-color: var(--ms-blue); box-shadow: 0 0 10px rgba(0,120,212,0.2); }
-
-        .radar-box { 
-            background: rgba(255, 202, 40, 0.1); border: 1px solid var(--ms-gold); 
-            padding: 15px; border-radius: 8px; font-size: 13px; color: var(--ms-gold);
-            margin-bottom: 25px; display: none; animation: slideIn 0.3s ease;
-        }
+        textarea:focus, input:focus { border-color: var(--ms-blue); }
 
         .btn-exe { 
-            width: 100%; background: #333; color: #777; border: none; padding: 20px; 
+            width: 100%; background: #333; color: #777; border: none; padding: 18px; 
             border-radius: 8px; font-weight: 800; cursor: not-allowed; transition: 0.4s; 
-            text-transform: uppercase; letter-spacing: 2px;
+            text-transform: uppercase;
         }
-        .btn-exe.active { background: var(--ms-blue); color: white; cursor: pointer; box-shadow: 0 5px 20px rgba(0,120,212,0.4); }
+        .btn-exe.active { background: var(--ms-blue); color: white; cursor: pointer; box-shadow: 0 0 20px rgba(0,120,212,0.5); }
 
-        @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-        footer { background: #000; padding: 15px 60px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 10px; opacity: 0.5; }
+        footer { background: #000; padding: 20px 40px; border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .footer-box h4 { color: var(--ms-blue); margin: 0 0 5px 0; font-size: 12px; }
+        .footer-box p { font-size: 10px; opacity: 0.6; line-height: 1.4; margin: 0; }
+        
+        #lock { position: fixed; inset: 0; background: #000; z-index: 10000; display: none; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
 
+<div id="lock"><h1>🔒 BLOQUEADO</h1></div>
+
 <nav>
-    <div style="font-weight: bold; color: var(--ms-blue); font-size: 20px;">CÁSSIA PROMPT <span style="font-weight:300;">V8 GOD MODE</span></div>
-    <div style="font-size: 10px; color: var(--rigor-high); border: 1px solid var(--rigor-high); padding: 4px 10px; border-radius: 4px;">PROTOCOLOS UNIVERSAIS ATIVOS</div>
+    <div style="font-weight: bold; color: var(--ms-blue); font-size: 18px;">CÁSSIA PROMPT <span style="font-weight:300;">V8 GOD MODE</span></div>
+    <div style="font-size: 10px; color: var(--rigor-high);">RIGOR JURÍDICO E PROFISSIONAL ATIVO</div>
 </nav>
 
 <main>
     <div class="workspace-card">
-        <div id="radar-alert" class="radar-box">
-            <strong>⚠️ ANALISADOR V8:</strong> <span id="radar-msg">Aguardando dados...</span>
+        <label id="rigor-label" style="color: var(--rigor-low); margin-bottom: 5px;">RIGOR: INSUFICIENTE</label>
+        <div class="rigor-container">
+            <div id="rigor-bar" class="rigor-bar"></div>
         </div>
 
         <div class="lacuna-group">
-            <label><i class="icon">📝</i> 1. CONTEXTO E FATOS (O QUE ESTÁ ACONTECENDO?)</label>
-            <textarea id="fatos" rows="4" oninput="validar()" placeholder="Descreva a situação detalhadamente..."></textarea>
+            <label>1. Contexto e Fatos (O que está acontecendo?)</label>
+            <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Descreva os detalhes da situação..."></textarea>
         </div>
 
         <div class="lacuna-group">
-            <label><i class="icon">📖</i> 2. FUNDAMENTOS E REGRAS (EM QUE VOCÊ SE BASEIA?)</label>
-            <textarea id="base" rows="3" oninput="validar()" placeholder="Ex: Leis, normas técnicas, artigos, manuais ou princípios..."></textarea>
+            <label>2. Embasamento (Leis, Normas ou Princípios)</label>
+            <textarea id="base" rows="3" oninput="atualizar()" placeholder="Quais as regras que sustentam isso?"></textarea>
         </div>
 
         <div class="lacuna-group">
-            <label><i class="icon">🎯</i> 3. DESTINO FINAL (ONDE VOCÊ QUER CHEGAR?)</label>
-            <input type="text" id="destino" oninput="validar()" placeholder="Ex: Uma petição inicial vitoriosa / Um laudo técnico irrefutável / Uma carta de demissão justa...">
+            <label>3. Destino Final (O que você quer que a IA produza?)</label>
+            <input type="text" id="destino" oninput="atualizar()" placeholder="Ex: Uma petição de dano moral / Um laudo técnico / Um e-mail de cobrança...">
         </div>
 
-        <button id="btn-exe" class="btn-exe" disabled>BLOQUEADO: INSIRA O RIGOR NECESSÁRIO</button>
+        <button id="btn-exe" class="btn-exe" disabled>AGUARDANDO RIGOR MÍNIMO</button>
     </div>
 </main>
 
 <footer>
-    <div>SISTEMA ANTI-BABOSEIRA V8: OBRIGATÓRIO PARA QUALQUER PROFISSÃO.</div>
-    <div>🔒 AMBIENTE CRIPTOGRAFADO E LGPD COMPLIANT.</div>
+    <div class="footer-box">
+        <h4>🛡️ SEGURANÇA JURÍDICA E TÉCNICA</h4>
+        <p>O Protocolo V8 impõe uma filtragem de integridade técnica para prevenir alucinações de IA. O sistema rejeita interpretações sem base fática, garantindo rigor absoluto.</p>
+    </div>
+    <div class="footer-box">
+        <h4>🔐 PRIVACIDADE E LGPD</h4>
+        <p>Processamento local. Nenhuma informação é utilizada para treinamento de modelos públicos. Sigilo profissional preservado integralmente.</p>
+    </div>
 </footer>
 
 <script>
-    function validar() {
+    const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('id');
+
+    if (!userId) { document.body.innerHTML = "<h1>ACESSO NEGADO</h1>"; }
+    else {
+        db.ref('clientes/' + userId).on('value', (snap) => {
+            if (!snap.exists()) document.getElementById('lock').style.display = 'flex';
+        });
+    }
+
+    function atualizar() {
         const fatos = document.getElementById('fatos').value;
         const base = document.getElementById('base').value;
         const destino = document.getElementById('destino').value;
-        const radar = document.getElementById('radar-alert');
-        const radarMsg = document.getElementById('radar-msg');
+        const bar = document.getElementById('rigor-bar');
+        const label = document.getElementById('rigor-label');
         const btn = document.getElementById('btn-exe');
 
-        let avisos = [];
-        
-        // Radar de Inteligência para QUALQUER profissional
-        if (fatos.length > 5 && fatos.length < 50) avisos.push("O contexto está muito raso. Dê mais detalhes para a IA não inventar dados.");
-        if (fatos.length > 50 && base.length < 10) avisos.push("Falta o embasamento. Sem regras ou fundamentos, o resultado será genérico.");
-        if (base.length > 10 && destino.length < 5) avisos.push("Defina o destino. A IA precisa saber exatamente o que você quer produzir.");
+        let total = fatos.length + base.length + (destino.length * 2);
+        let progresso = Math.min((total / 500) * 100, 100);
+        bar.style.width = progresso + "%";
 
-        if (avisos.length > 0) {
-            radar.style.display = "block";
-            radarMsg.innerText = avisos[0];
+        if (progresso < 40) {
+            bar.style.background = "var(--rigor-low)";
+            label.innerText = "RIGOR: INSUFICIENTE (PREGUIÇA DETECTADA)";
+            label.style.color = "var(--rigor-low)";
+            btn.disabled = true; btn.classList.remove('active');
+        } else if (progresso < 80) {
+            bar.style.background = "var(--rigor-mid)";
+            label.innerText = "RIGOR: MÉDIO (FORNEÇA MAIS DETALHES)";
+            label.style.color = "var(--rigor-mid)";
+            btn.disabled = true; btn.classList.remove('active');
         } else {
-            radar.style.display = "none";
-        }
-
-        // Liberação com Rigor Universal
-        if (fatos.length > 60 && base.length > 20 && destino.length > 10) {
-            btn.disabled = false;
-            btn.classList.add('active');
-            btn.innerText = "EXECUTAR PROTOCOLO V8 (MODO ELITE)";
-        } else {
-            btn.disabled = true;
-            btn.classList.remove('active');
-            btn.innerText = "AGUARDANDO RIGOR MÍNIMO...";
+            bar.style.background = "var(--rigor-high)";
+            label.innerText = "RIGOR: V8 GOD MODE (PRONTO PARA EXECUTAR)";
+            label.style.color = "var(--rigor-high)";
+            btn.disabled = false; btn.classList.add('active');
+            btn.innerText = "EXECUTAR PROTOCOLO V8";
         }
     }
 </script>

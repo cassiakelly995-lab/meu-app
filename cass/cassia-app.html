@@ -3,81 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cássia Prompt V8 - God Mode</title>
-    
+    <title>CÁSSIA PROMPT V8 - GOD MODE ELITE</title>
+
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
     <style>
-        /* Design Luxo Elite Edition */
-        body { background: #050505; color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .v8-card { border: 1px solid #c9a227; background: #111; padding: 25px; border-radius: 15px; max-width: 600px; width: 100%; box-shadow: 0 0 15px rgba(201, 162, 39, 0.3); }
-        h1 { color: #c9a227; text-align: center; font-size: 1.8em; text-transform: uppercase; letter-spacing: 2px; }
-        .status-badge { text-align: center; font-size: 0.8em; color: #00f2ff; margin-bottom: 20px; }
-        textarea { width: 100%; height: 150px; background: #000; color: #fff; border: 1px solid #333; border-radius: 8px; padding: 10px; box-sizing: border-box; resize: none; }
-        .btn-processar { background: linear-gradient(45deg, #c9a227, #f1d592); border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; color: #000; }
-        #resultado { margin-top: 20px; padding: 15px; background: #1a1a1a; border-radius: 8px; border-left: 4px solid #c9a227; display: none; }
-        .bloqueio-tela { position: fixed; top:0; left:0; width: 100%; height: 100%; background: #000; color: red; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; text-align: center; }
+        :root { --gold: #c9a227; --dark: #050505; --neon: #00f2ff; }
+        body { background-color: var(--dark); color: #fff; font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        
+        /* Layout God Mode Elite */
+        .v8-header { text-align: center; padding: 40px 20px; width: 100%; background: linear-gradient(180deg, #111 0%, #050505 100%); border-bottom: 1px solid var(--gold); }
+        .v8-header h1 { font-size: 2.5rem; color: var(--gold); margin: 0; letter-spacing: 4px; text-shadow: 0 0 15px rgba(201, 162, 39, 0.5); }
+        .v8-header p { color: var(--neon); font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; }
+
+        .container { max-width: 900px; width: 90%; padding: 30px; }
+        .input-area { background: #111; border: 1px solid #333; border-radius: 15px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        textarea { width: 100%; height: 250px; background: transparent; border: none; color: #fff; font-size: 1.1rem; resize: none; outline: none; line-height: 1.6; }
+        
+        .btn-v8 { background: linear-gradient(45deg, #c9a227, #f1d592); color: #000; border: none; padding: 18px 40px; font-size: 1.1rem; font-weight: 800; border-radius: 8px; cursor: pointer; width: 100%; transition: 0.3s; text-transform: uppercase; margin-top: 20px; box-shadow: 0 0 20px rgba(201, 162, 39, 0.4); }
+        .btn-v8:hover { transform: scale(1.02); box-shadow: 0 0 30px rgba(201, 162, 39, 0.6); }
+
+        .output-area { margin-top: 30px; display: none; background: #1a1a1a; border: 1px solid var(--gold); border-radius: 10px; padding: 20px; position: relative; }
+        .output-area h3 { color: var(--gold); margin-top: 0; }
+        #promptGerado { white-space: pre-wrap; color: #ddd; font-size: 1rem; }
+        
+        .copy-btn { position: absolute; top: 10px; right: 10px; background: var(--neon); border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.8rem; font-weight: bold; }
+
+        /* Estilo da Tela de Bloqueio */
+        .bloqueio-total { position: fixed; top:0; left:0; width:100%; height:100%; background: #000; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .bloqueio-total h1 { color: #ff4444; font-size: 3rem; margin-bottom: 10px; }
+        .bloqueio-total p { color: #fff; font-size: 1.2rem; }
     </style>
 </head>
 <body>
 
-    <div id="conteudoApp" class="v8-card">
-        <h1>Cássia Prompt V8</h1>
-        <div class="status-badge">SISTEMA MONITORADO: ELITE EDITION</div>
-        
-        <p>Insira os fatos ou o rascunho da peça:</p>
-        <textarea id="textoEntrada" placeholder="Descreva os detalhes do caso aqui..."></textarea>
-        
-        <button class="btn-processar" onclick="processarV8()">EXECUTAR GOD MODE (AI)</button>
-        
-        <div id="resultado">
-            <strong style="color:#c9a227">PROMPT ESTRUTURADO:</strong>
-            <p id="textoFinal"></p>
+    <div id="appContent" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+        <div class="v8-header">
+            <h1>V8 GOD MODE</h1>
+            <p>SISTEMA DE ENGENHARIA JURÍDICA ELITE</p>
+        </div>
+
+        <div class="container">
+            <div class="input-area">
+                <textarea id="userInput" placeholder="Digite os fatos, argumentos ou rascunho da peça aqui..."></textarea>
+            </div>
+            <button class="btn-v8" onclick="gerarPromptV8()">ATIVAR COMANDO V8</button>
+
+            <div class="output-area" id="output">
+                <button class="copy-btn" onclick="copiar()">COPIAR PROMPT</button>
+                <h3>PROMPT ESTRUTURADO (COPIE E COLE NA IA):</h3>
+                <div id="promptGerado"></div>
+            </div>
         </div>
     </div>
 
     <script>
-        // CONFIGURAÇÃO FIREBASE - CONECTADO AO SEU PAINEL
+        // --- CONFIGURAÇÃO DE SEGURANÇA CÁSSIA ---
         const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // VALIDAÇÃO DE ACESSO
         const urlParams = new URLSearchParams(window.location.search);
-        const clienteId = urlParams.get('id');
+        const idCliente = urlParams.get('id');
 
-        if (!clienteId) {
-            document.body.innerHTML = "<div class='bloqueio-tela'><h1>ERRO DE IDENTIFICAÇÃO</h1><p>ID do usuário não encontrado. Solicite seu link oficial.</p></div>";
+        if (!idCliente) {
+            bloquearAcesso("ACESSO NÃO IDENTIFICADO", "Use o link oficial fornecido por Cássia Franciane.");
         } else {
-            db.ref('clientes/' + clienteId).on('value', (snapshot) => {
-                const dados = snapshot.val();
-                if (!dados || dados.status !== "ativo") {
-                    document.body.innerHTML = `
-                        <div class='bloqueio-tela'>
-                            <h1 style="font-size: 3em;">⚠️</h1>
-                            <h1>ACESSO INTERROMPIDO</h1>
-                            <p>O seu período de licença expirou ou não foi identificado.</p>
-                            <p style="color:white">Fale com <strong>Cássia Franciane</strong> para regularizar.</p>
-                        </div>`;
+            db.ref('clientes/' + idCliente).on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (!data || data.status !== "ativo") {
+                    bloquearAcesso("ACESSO EXPIRADO", "Regularize sua licença com Cássia Franciane.");
                 }
             });
         }
 
-        // LÓGICA DO PROMPT V8
-        function processarV8() {
-            const input = document.getElementById('textoEntrada').value;
-            if(!input) return alert("Insira os fatos!");
-            
-            const resultadoDiv = document.getElementById('resultado');
-            const textoFinal = document.getElementById('textoFinal');
-            
-            // Aqui entra a sua engenharia de prompt v8
-            const promptMestre = "Atue como um Advogado Sênior. Estruture o seguinte caso com base na V8 God Mode: " + input;
-            
-            textoFinal.innerText = promptMestre;
-            resultadoDiv.style.display = 'block';
-            alert("V8 God Mode processado com sucesso!");
+        function bloquearAcesso(titulo, msg) {
+            document.body.innerHTML = `
+                <div class="bloqueio-total">
+                    <h1>⚠️</h1>
+                    <h1 style="color: #ff4444;">${titulo}</h1>
+                    <p>${msg}</p>
+                    <p style="margin-top:20px; color: var(--gold);">PROJETO CÁSSIA PROMPT V8</p>
+                </div>`;
+        }
+
+        // --- ENGENHARIA DE PROMPT V8 ORIGINAL ---
+        function gerarPromptV8() {
+            const fatos = document.getElementById('userInput').value;
+            if(!fatos) return alert("Por favor, insira os dados do caso.");
+
+            const v8Template = `[COMANDO V8 GOD MODE]
+Atue como um Advogado Especialista e Consultor Jurídico de alto nível.
+OBJETIVO: Transformar os fatos abaixo em uma peça jurídica impecável com técnica de persuasão avançada.
+
+FATOS DO CASO:
+${fatos}
+
+ESTRUTURA EXIGIDA:
+1. ANÁLISE TÉCNICA: Identifique vulnerabilidades e teses vencedoras.
+2. FUNDAMENTAÇÃO: Aplique a legislação vigente e jurisprudência dominante.
+3. REDAÇÃO ELITE: Use linguagem formal, mas assertiva (sem juridiquês desnecessário).
+4. PEDIDOS E REQUERIMENTOS: Especifique cada ponto com precisão.
+
+Execute agora em modo ELITE EDITION.`;
+
+            document.getElementById('promptGerado').innerText = v8Template;
+            document.getElementById('output').style.display = 'block';
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
+        function copiar() {
+            const texto = document.getElementById('promptGerado').innerText;
+            navigator.clipboard.writeText(texto);
+            alert("Prompt V8 copiado! Agora é só colar na sua IA de preferência.");
         }
     </script>
 </body>

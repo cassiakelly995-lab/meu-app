@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CÁSSIA PROMPT V8 | UNIVERSAL</title>
+    <title>CÁSSIA PROMPT V8 | UNIVERSAL ELITE</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <style>
@@ -15,95 +15,106 @@
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         nav { background: var(--card); padding: 12px 60px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
         main { flex: 1; display: flex; padding: 20px 60px; gap: 20px; overflow-y: auto; }
-        .workspace-card { background: var(--card); width: 100%; max-width: 900px; margin: 0 auto; border-radius: 8px; border: 1px solid var(--border); padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+        .workspace-card { background: var(--card); width: 100%; max-width: 850px; margin: 0 auto; border-radius: 12px; border: 1px solid var(--border); padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
-        /* Sistema de Lacunas */
-        .lacuna-group { margin-bottom: 20px; }
-        label { font-size: 11px; font-weight: 700; color: var(--ms-blue); text-transform: uppercase; display: block; margin-bottom: 8px; }
-        textarea { width: 100%; background: #000; border: 1px solid var(--border); padding: 12px; border-radius: 4px; color: #fff; font-size: 14px; outline: none; resize: none; box-sizing: border-box; }
-        textarea:focus { border-color: var(--ms-blue); }
+        /* Lacunas Universais */
+        .lacuna-group { margin-bottom: 25px; }
+        label { font-size: 11px; font-weight: 700; color: var(--ms-blue); text-transform: uppercase; display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+        .icon { font-style: normal; font-size: 14px; }
+        
+        textarea, input { 
+            width: 100%; background: #000; border: 1px solid var(--border); padding: 14px; 
+            border-radius: 6px; color: #fff; font-size: 14px; outline: none; box-sizing: border-box; 
+            transition: 0.3s;
+        }
+        textarea:focus, input:focus { border-color: var(--ms-blue); box-shadow: 0 0 10px rgba(0,120,212,0.2); }
 
         .radar-box { 
             background: rgba(255, 202, 40, 0.1); border: 1px solid var(--ms-gold); 
-            padding: 12px; border-radius: 6px; font-size: 12px; color: var(--ms-gold);
-            margin-bottom: 20px; display: none;
+            padding: 15px; border-radius: 8px; font-size: 13px; color: var(--ms-gold);
+            margin-bottom: 25px; display: none; animation: slideIn 0.3s ease;
         }
 
-        .btn-exe { width: 100%; background: #444; color: white; border: none; padding: 18px; border-radius: 4px; font-weight: 700; cursor: not-allowed; transition: 0.3s; margin-top: 10px; }
-        .btn-exe.active { background: var(--ms-blue); cursor: pointer; box-shadow: 0 0 15px rgba(0,120,212,0.4); }
+        .btn-exe { 
+            width: 100%; background: #333; color: #777; border: none; padding: 20px; 
+            border-radius: 8px; font-weight: 800; cursor: not-allowed; transition: 0.4s; 
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        .btn-exe.active { background: var(--ms-blue); color: white; cursor: pointer; box-shadow: 0 5px 20px rgba(0,120,212,0.4); }
 
-        footer { background: #111; border-top: 1px solid var(--border); padding: 15px 60px; display: flex; justify-content: space-between; font-size: 10px; opacity: 0.6; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        footer { background: #000; padding: 15px 60px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 10px; opacity: 0.5; }
     </style>
 </head>
 <body>
 
 <nav>
-    <div style="font-weight: bold; color: var(--ms-blue);">CÁSSIA PROMPT <span style="font-weight:300;">V8 GOD MODE</span></div>
-    <div style="font-size: 10px; color: var(--rigor-high);">INTERFACE UNIVERSAL ATIVA</div>
+    <div style="font-weight: bold; color: var(--ms-blue); font-size: 20px;">CÁSSIA PROMPT <span style="font-weight:300;">V8 GOD MODE</span></div>
+    <div style="font-size: 10px; color: var(--rigor-high); border: 1px solid var(--rigor-high); padding: 4px 10px; border-radius: 4px;">PROTOCOLOS UNIVERSAIS ATIVOS</div>
 </nav>
 
 <main>
     <div class="workspace-card">
         <div id="radar-alert" class="radar-box">
-            <strong>⚠️ ALERTA DE ESTRATÉGIA:</strong> <span id="radar-msg"></span>
+            <strong>⚠️ ANALISADOR V8:</strong> <span id="radar-msg">Aguardando dados...</span>
         </div>
 
         <div class="lacuna-group">
-            <label>1. O QUE ACONTECEU? (FATOS CRUS)</label>
-            <textarea id="fatos" rows="4" oninput="validar()" placeholder="Ex: O cliente foi demitido sem justa causa no dia..."></textarea>
+            <label><i class="icon">📝</i> 1. CONTEXTO E FATOS (O QUE ESTÁ ACONTECENDO?)</label>
+            <textarea id="fatos" rows="4" oninput="validar()" placeholder="Descreva a situação detalhadamente..."></textarea>
         </div>
 
         <div class="lacuna-group">
-            <label>2. QUAL A FUNDAMENTAÇÃO? (LEIS/SÚMULAS)</label>
-            <textarea id="direito" rows="3" oninput="validar()" placeholder="Ex: Artigo 482 da CLT, Súmula tal do TST..."></textarea>
+            <label><i class="icon">📖</i> 2. FUNDAMENTOS E REGRAS (EM QUE VOCÊ SE BASEIA?)</label>
+            <textarea id="base" rows="3" oninput="validar()" placeholder="Ex: Leis, normas técnicas, artigos, manuais ou princípios..."></textarea>
         </div>
 
         <div class="lacuna-group">
-            <label>3. O QUE VOCÊ QUER? (PEDIDOS)</label>
-            <textarea id="pedidos" rows="2" oninput="validar()" placeholder="Ex: Requer a condenação em danos morais de R$..."></textarea>
+            <label><i class="icon">🎯</i> 3. DESTINO FINAL (ONDE VOCÊ QUER CHEGAR?)</label>
+            <input type="text" id="destino" oninput="validar()" placeholder="Ex: Uma petição inicial vitoriosa / Um laudo técnico irrefutável / Uma carta de demissão justa...">
         </div>
 
-        <button id="btn-exe" class="btn-exe" disabled>PREENCHA AS LACUNAS PARA LIBERAR</button>
+        <button id="btn-exe" class="btn-exe" disabled>BLOQUEADO: INSIRA O RIGOR NECESSÁRIO</button>
     </div>
 </main>
 
 <footer>
-    <div>🛡️ SEGURANÇA JURÍDICA: Filtragem técnica ativa contra alucinações.</div>
-    <div>🔐 PRIVACIDADE: LGPD Compliant. Dados não armazenados.</div>
+    <div>SISTEMA ANTI-BABOSEIRA V8: OBRIGATÓRIO PARA QUALQUER PROFISSÃO.</div>
+    <div>🔒 AMBIENTE CRIPTOGRAFADO E LGPD COMPLIANT.</div>
 </footer>
 
 <script>
     function validar() {
         const fatos = document.getElementById('fatos').value;
-        const direito = document.getElementById('direito').value;
-        const pedidos = document.getElementById('pedidos').value;
+        const base = document.getElementById('base').value;
+        const destino = document.getElementById('destino').value;
         const radar = document.getElementById('radar-alert');
         const radarMsg = document.getElementById('radar-msg');
         const btn = document.getElementById('btn-exe');
 
-        let omissoes = [];
+        let avisos = [];
         
-        // Lógica de Radar
-        if (fatos.length > 10 && (direito.length < 5)) omissoes.push("Você narrou os fatos, mas esqueceu da fundamentação legal (Leis/Artigos).");
-        if (direito.length > 5 && (pedidos.length < 5)) omissoes.push("Falta especificar o que você deseja pedir com base nessa lei.");
-        if (fatos.length > 20 && !fatos.includes("data") && !fatos.includes("/")) omissoes.push("Atenção: Datas são essenciais para análise de prescrição.");
+        // Radar de Inteligência para QUALQUER profissional
+        if (fatos.length > 5 && fatos.length < 50) avisos.push("O contexto está muito raso. Dê mais detalhes para a IA não inventar dados.");
+        if (fatos.length > 50 && base.length < 10) avisos.push("Falta o embasamento. Sem regras ou fundamentos, o resultado será genérico.");
+        if (base.length > 10 && destino.length < 5) avisos.push("Defina o destino. A IA precisa saber exatamente o que você quer produzir.");
 
-        if (omissoes.length > 0) {
+        if (avisos.length > 0) {
             radar.style.display = "block";
-            radarMsg.innerText = omissoes[0];
+            radarMsg.innerText = avisos[0];
         } else {
             radar.style.display = "none";
         }
 
-        // Liberação do Botão (Mínimo de preenchimento em todas as lacunas)
-        if (fatos.length > 20 && direito.length > 10 && pedidos.length > 5) {
+        // Liberação com Rigor Universal
+        if (fatos.length > 60 && base.length > 20 && destino.length > 10) {
             btn.disabled = false;
             btn.classList.add('active');
-            btn.innerText = "EXECUTAR PROTOCOLO V8 (MODO COMPLETO)";
+            btn.innerText = "EXECUTAR PROTOCOLO V8 (MODO ELITE)";
         } else {
             btn.disabled = true;
             btn.classList.remove('active');
-            btn.innerText = "PREENCHA AS LACUNAS PARA LIBERAR";
+            btn.innerText = "AGUARDANDO RIGOR MÍNIMO...";
         }
     }
 </script>

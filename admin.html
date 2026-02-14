@@ -2,98 +2,83 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>MESTRA V8 | GERENCIADOR DE ACESSOS</title>
+    <title>SISTEMA MESTRA V8 | ADMIN</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <style>
-        body { background-color: #000; color: #00ff00; font-family: 'Courier New', monospace; padding: 20px; }
-        .container { max-width: 800px; margin: auto; border: 1px solid #00ff00; padding: 20px; box-shadow: 0 0 20px rgba(0,255,0,0.2); }
-        h2 { text-align: center; border-bottom: 1px solid #00ff00; padding-bottom: 10px; }
-        input { background: #000; border: 1px solid #00ff00; color: #00ff00; padding: 10px; width: 70%; margin-bottom: 10px; outline: none; }
-        button { background: #00ff00; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; }
-        .user-card { border: 1px solid #333; padding: 15px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .btn-link { background: #0078d4; color: white; padding: 5px 10px; font-size: 0.8rem; border-radius: 3px; }
-        .status-ativo { color: #00ff00; font-weight: bold; }
-        .status-off { color: #ff0000; }
+        body { background-color: #050505; color: #00f2ff; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; padding: 20px; }
+        .panel { width: 100%; max-width: 500px; background: #111; border: 2px solid #00f2ff; border-radius: 15px; padding: 25px; box-shadow: 0 0 20px #00f2ff44; box-sizing: border-box; }
+        h2 { text-align: center; text-transform: uppercase; margin-top: 0; }
+        input { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 5px; margin: 15px 0; box-sizing: border-box; outline: none; }
+        .btn-gerar { width: 100%; background: #00ffa3; color: #000; border: none; padding: 15px; font-weight: bold; border-radius: 5px; cursor: pointer; text-transform: uppercase; }
+        .monitor { margin-top: 25px; border-top: 1px solid #333; padding-top: 15px; }
+        .user-row { background: #1a1a1a; padding: 15px; border-radius: 8px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 10px; }
+        .btn-link { background: #0078d4; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: bold; }
+        .btn-block { background: #ff4d4d; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>SISTEMA MESTRA V8 - CONTROLE</h2>
+<div class="panel">
+    <h2>SISTEMA MESTRA V8</h2>
+    <p style="text-align: center; color: #00ffa3; font-size: 0.8rem;">Controle de Acessos Elite Edition</p>
     
-    <div style="text-align: center; margin-bottom: 30px;">
-        <input type="text" id="nomeAdvogada" placeholder="NOME DA ADVOGADA (Ex: Dra Helen Cristina)">
-        <button onclick="ativarAcesso()">GERAR E ATIVAR ACESSO</button>
-    </div>
+    <input type="text" id="nomeAdv" placeholder="Nome da Advogada (ex: Dra Helen Cristina)">
+    <button class="btn-gerar" onclick="ativar()">GERAR E ATIVAR ACESSO</button>
 
-    <div id="listaUsuarios">
-        </div>
+    <div class="monitor">
+        <p>Monitor de Usuárias:</p>
+        <div id="lista"></div>
+    </div>
 </div>
 
 <script>
-    // CONFIGURAÇÃO DO SEU FIREBASE (MANTENHA A SUA)
     const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // URL BASE DO SEU APP NO GITHUB
-    const urlBase = "https://cassiakelly995-lab.github.io/meu-app/cassia-app.html";
+    // URL CORRETA DO SEU ARQUIVO NO GITHUB
+    const baseLink = "https://cassiakelly995-lab.github.io/meu-app/cassia-app.html";
 
-    function ativarAcesso() {
-        const nomeOriginal = document.getElementById('nomeAdvogada').value;
-        if (nomeOriginal.trim() === "") return alert("Digite o nome!");
+    function ativar() {
+        const nome = document.getElementById('nomeAdv').value.trim();
+        if(!nome) return alert("Digite um nome!");
+        const id = nome.replace(/\s+/g, '_'); // Transforma espaços em sublinhados
 
-        // CRIA O ID LIMPO (Troca espaços por _)
-        const idLimpo = nomeOriginal.trim().replace(/\s+/g, '_');
-
-        // SALVA NO FIREBASE
-        db.ref('clientes/' + idLimpo).set({
-            nome: nomeOriginal,
-            status: "ativo",
-            dataAtivacao: new Date().toLocaleString()
-        }).then(() => {
-            alert("SISTEMA MESTRA: Acesso ativado para " + idLimpo);
-            document.getElementById('nomeAdvogada').value = "";
+        db.ref('clientes/' + id).set({ nome: nome, status: "ativo" }).then(() => {
+            alert("Acesso Ativado para " + nome);
+            document.getElementById('nomeAdv').value = "";
         });
     }
 
-    // ATUALIZA A LISTA COM BOTÃO DE LINK ÚNICO
-    db.ref('clientes').on('value', (snapshot) => {
-        const lista = document.getElementById('listaUsuarios');
-        lista.innerHTML = "<h3>USUÁRIAS MONITORADAS:</h3>";
-        
-        snapshot.forEach((item) => {
-            const user = item.val();
-            const userId = item.key;
-            const linkCompleto = `${urlBase}?id=${userId}`;
-
+    db.ref('clientes').on('value', (snap) => {
+        const lista = document.getElementById('lista');
+        lista.innerHTML = "";
+        snap.forEach((child) => {
+            const id = child.key;
+            const user = child.val();
+            const linkFinal = `${baseLink}?id=${id}`;
             lista.innerHTML += `
-                <div class="user-card">
-                    <div>
-                        <strong>${user.nome}</strong><br>
-                        <span class="status-ativo">● ATIVO</span> | ID: ${userId}
+                <div class="user-row">
+                    <div style="display:flex; justify-content:space-between;">
+                        <span>● ${user.nome} (ativo)</span>
+                        <button class="btn-block" onclick="bloquear('${id}')">BLOQUEAR</button>
                     </div>
-                    <div>
-                        <button class="btn-link" onclick="copiarLink('${linkCompleto}')">COPIAR LINK ÚNICO</button>
-                        <button style="background: red; color: white; padding: 5px;" onclick="remover('${userId}')">X</button>
-                    </div>
-                </div>
-            `;
+                    <button class="btn-link" onclick="copiar('${linkFinal}')">COPIAR LINK ÚNICO PARA WHATSAPP</button>
+                </div>`;
         });
     });
 
-    function copiarLink(url) {
+    function copiar(url) {
         navigator.clipboard.writeText(url);
-        alert("LINK COPIADO COM SUCESSO!\n\nAgora é só colar no WhatsApp da cliente.");
+        alert("Link copiado com sucesso! Agora é só colar no WhatsApp da Doutora.");
     }
 
-    function remover(id) {
-        if(confirm("Deseja revogar o acesso de " + id + "?")) {
+    function bloquear(id) {
+        if(confirm("Bloquear acesso de " + id + "?")) {
             db.ref('clientes/' + id).remove();
         }
     }
 </script>
-
 </body>
 </html>

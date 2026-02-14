@@ -46,7 +46,7 @@
         
         label { font-size: 10px; font-weight: 800; color: var(--ms-blue); text-transform: uppercase; display: block; margin-bottom: 8px; margin-top: 15px; }
         
-        /* Lacunas Interativas e Pulsantes */
+        /* Lacunas Interativas Pulsantes */
         textarea, input { 
             width: 100%; background: var(--input-bg); border: 2px solid var(--border); 
             padding: 15px; border-radius: 8px; color: var(--text); font-size: 14px; 
@@ -78,13 +78,14 @@
 
         .btn-acao { width: 100%; padding: 18px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-bottom: 10px; }
         .btn-copy { background: var(--rigor-high); color: #000; }
-        .btn-pdf { background: transparent; color: var(--text); border: 1px solid var(--border); }
+        .btn-pdf { background: transparent; color: var(--rigor-high); border: 1px solid var(--rigor-high); margin-top: 5px; }
 
         footer { 
-            padding: 40px; text-align: center; font-size: 9px; opacity: 0.6; 
-            text-transform: uppercase; letter-spacing: 2px; border-top: 1px solid var(--border);
+            padding: 40px; text-align: center; font-size: 10px; opacity: 0.8; 
+            line-height: 1.6; border-top: 1px solid var(--border); background: var(--card);
         }
-        #status-seguranca { color: var(--rigor-high); font-weight: bold; margin-top: 10px; display: block; }
+        .legal-text { font-size: 9px; color: #888; margin-top: 15px; text-align: justify; padding: 0 20px; }
+        #status-seguranca { color: var(--rigor-high); font-weight: bold; display: block; margin-bottom: 10px; }
     </style>
 </head>
 <body id="app-body">
@@ -99,48 +100,56 @@
         <label>Nível de Rigor do Protocolo</label>
         <div class="rigor-container"><div id="rigor-bar" class="rigor-bar"></div></div>
         
-        <label>1. Fatos e Matéria de Prova</label>
-        <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="O que aconteceu? (Sem lenga-lenga)"></textarea>
+        <label>1. Fatos e Matéria de Prova (Anti-Baboseira)</label>
+        <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Insira os factos reais aqui..."></textarea>
 
-        <label>2. Fundamentação Técnica</label>
-        <textarea id="base" rows="3" oninput="atualizar()" placeholder="Artigos, Leis e Súmulas..."></textarea>
+        <label>2. Fundamentação Técnica de Elite</label>
+        <textarea id="base" rows="3" oninput="atualizar()" placeholder="Leis, Artigos e Súmulas..."></textarea>
 
-        <label>3. Objetivo Final</label>
-        <input type="text" id="destino" oninput="atualizar()" placeholder="O que a IA deve entregar?">
+        <label>3. Objetivo Final do Comando</label>
+        <input type="text" id="destino" oninput="atualizar()" placeholder="O que a IA deve entregar agora?">
 
-        <button id="btn-exe" class="btn-exe" disabled onclick="gerar()">Executar Protocolo God Mode</button>
+        <button id="btn-exe" class="btn-exe" disabled onclick="gerar()">Ativar Protocolo God Mode</button>
     </div>
 
     <div id="resultado-area">
-        <label style="color: var(--rigor-high);">🛡️ PROMPT MESTRE (ANTI-BABOSEIRA):</label>
+        <label style="color: var(--rigor-high);">🛡️ PROMPT MESTRE V8 GERADO:</label>
         <textarea id="prompt-final" readonly></textarea>
         <button class="btn-acao btn-copy" onclick="copiar()">Copiar Comando V8</button>
-        <button class="btn-acao btn-pdf" onclick="exportarPDF()">Baixar Protocolo PDF</button>
+        <button class="btn-acao btn-pdf" onclick="exportarPDF()">📥 Baixar Protocolo em PDF</button>
     </div>
 </main>
 
 <footer>
-    Protocolo V8 Elite Edition. Rigor Técnico Mandatório.
-    <span id="status-seguranca">VERIFICANDO LICENÇA...</span>
+    <span id="status-seguranca">VERIFICANDO SEGURANÇA DO CANAL...</span>
+    
+    <div class="legal-text">
+        <strong>AVISO DE PROTEÇÃO LEGAL:</strong> Este sistema e sua estrutura de "Rigor V8" são protegidos pela Lei de Direitos Autorais (Lei nº 9.610/98). 
+        O acesso é pessoal e intransferível. A reprodução, engenharia reversa ou compartilhamento de acessos sem autorização sujeita o infrator às sanções civis e penais. 
+        Nos termos da Lei nº 12.965/14 (Marco Civil da Internet), este software é uma ferramenta de automação de comandos, sendo a conferência técnica e jurídica dos resultados de inteira responsabilidade do profissional usuário.
+    </div>
+    <div style="margin-top:20px; font-weight:bold; color:var(--ms-blue);">© 2026 CÁSSIA PROMPT V8 ELITE EDITION</div>
 </footer>
 
 <script>
-    // Configurações do Firebase
     const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get('id');
 
-    // Segurança no Rodapé
+    // Validação de Segurança no Rodapé
     if (userId) {
         db.ref('clientes/' + userId).on('value', (snap) => {
             if (snap.exists()) {
-                document.getElementById('status-seguranca').innerText = "LICENÇA ATIVA: " + userId.replace(/_/g, ' ');
+                document.getElementById('status-seguranca').innerText = "CANAL CRIPTOGRAFADO PARA: DRA. " + userId.replace(/_/g, ' ').toUpperCase();
             } else {
                 document.getElementById('app-body').innerHTML = `
-                <div style="background:#000; height:100vh; display:flex; align-items:center; justify-content:center; color:red; text-align:center;">
-                    <h1>ACESSO REVOGADO<br><span style="font-size:14px; color:white;">O link deste usuário foi apagado pela administração.</span></h1>
+                <div style="background:#000; height:100vh; display:flex; align-items:center; justify-content:center; color:red; text-align:center; padding:20px;">
+                    <div>
+                        <h1>ACESSO REVOGADO</h1>
+                        <p style="color:white">Este link foi desativado por violação de termos ou expiração de licença.</p>
+                    </div>
                 </div>`;
             }
         });
@@ -155,10 +164,8 @@
         const b = document.getElementById('base').value.length;
         const d = document.getElementById('destino').value.length;
         const progresso = Math.min(((f + b + d) / 350) * 100, 100);
-        
         document.getElementById('rigor-bar').style.width = progresso + "%";
         const btn = document.getElementById('btn-exe');
-
         if (progresso >= 85) {
             document.getElementById('rigor-bar').style.background = "var(--rigor-high)";
             btn.disabled = false; btn.classList.add('active');
@@ -169,24 +176,11 @@
     }
 
     function gerar() {
-        const fatos = document.getElementById('fatos').value;
-        const base = document.getElementById('base').value;
-        const destino = document.getElementById('destino').value;
+        const f = document.getElementById('fatos').value;
+        const b = document.getElementById('base').value;
+        const d = document.getElementById('destino').value;
 
-        const mestre = `[ PROTOCOLO V8 - RIGOR ABSOLUTO ]
-VOCÊ É UM ANALISTA JURÍDICO DE ELITE. ATUE SOB RIGOR MÁXIMO ANTI-BABOSEIRA.
-
-DIRETRIZES:
-1. É PROIBIDO o uso de qualquer saudação ou conversa fiada. Vá direto ao ponto.
-2. SE O USUÁRIO ANEXOU UM PDF, PARE TUDO E REALIZE A TRANSCRIÇÃO TÉCNICA DO CONTEÚDO AGORA.
-3. CRUZE OS DADOS DO PDF COM OS FATOS ABAIXO:
-
-FATOS: ${fatos}
-BASE: ${base}
-OBJETIVO: ${destino}
-
-FUNDAMENTAÇÃO: Utilize o nível máximo de fundamentação jurídica. Se houver contradição no documento, aponte-a imediatamente. 
-RESPOSTA: Formatação técnica, densa e profissional.`;
+        const mestre = `[ PROTOCOLO V8 GOD MODE - ELITE ]\nATUE COMO UM ESPECIALISTA DE ALTO RIGOR. SEJA DIRETO E ANTI-BABOSEIRA.\n\nSE HOUVER DOCUMENTO PDF ANEXADO, REALIZE A TRANSCRIÇÃO TÉCNICA IMEDIATA ANTES DE PROSSEGUIR.\n\nFATOS: ${f}\n\nBASE: ${b}\n\nOBJETIVO: ${d}\n\nRESULTADO: Resposta técnica, densa e fundamentada. Proibido introduções genéricas.`;
 
         document.getElementById('prompt-final').value = mestre;
         document.getElementById('resultado-area').style.display = 'block';
@@ -203,7 +197,8 @@ RESPOSTA: Formatação técnica, densa e profissional.`;
         const elemento = document.getElementById('resultado-area');
         const opt = {
             margin: 0.5,
-            filename: 'Protocolo_V8.pdf',
+            filename: 'V8_Protocolo_Elite.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2, backgroundColor: '#000000' },
             jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
         };

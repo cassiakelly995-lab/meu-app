@@ -125,18 +125,28 @@
             display: none;
         }
 
+        .footer-legal {
+            margin-top: 40px;
+            font-size: 0.75rem;
+            color: #a19f9d;
+            text-align: center;
+            max-width: 800px;
+            line-height: 1.5;
+            padding-bottom: 50px;
+        }
+
         .lock-screen {
-            position: fixed; inset: 0; background: white; z-index: 1000;
+            position: fixed; inset: 0; background: var(--bg); z-index: 1000;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
     </style>
 </head>
 <body>
 
-<div id="appContainer">
+<div id="appContainer" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
     <nav class="header-bar">
-        <div style="font-weight: 900; letter-spacing: -1px;">CÁSSIA<span style="color: var(--brand);">PROMPT</span></div>
-        <button onclick="document.documentElement.toggleAttribute('data-theme')" style="background:none; border:1px solid var(--accent); color:var(--text); padding:5px 15px; border-radius:5px; cursor:pointer;">Alternar Tema</button>
+        <div style="font-weight: 900; letter-spacing: -1px; font-size: 1.2rem;">CÁSSIA<span style="color: var(--brand);">PROMPT</span></div>
+        <button onclick="document.documentElement.toggleAttribute('data-theme')" style="background:none; border:1px solid var(--accent); color:var(--text); padding:5px 15px; border-radius:5px; cursor:pointer; font-weight: 600;">Alternar Tema</button>
     </nav>
 
     <div class="main-container">
@@ -163,14 +173,21 @@
 
         <div id="output">
             <label style="color: var(--brand);">Script de Alta Performance Gerado:</label>
-            <div id="result" style="white-space: pre-wrap; margin-top: 15px; font-size: 0.95rem; line-height: 1.6;"></div>
+            <div id="result" style="white-space: pre-wrap; margin-top: 15px; font-size: 0.95rem; line-height: 1.6; font-family: 'Consolas', monospace;"></div>
             <button class="btn-v8" style="background:#201f1e; font-size: 0.8rem;" onclick="copiar()">COPIAR SCRIPT</button>
         </div>
+    </div>
+
+    <div class="footer-legal">
+        <strong>SEGURANÇA JURÍDICA E LGPD:</strong><br>
+        O Cássia Prompt V8 opera sob protocolos rigorosos de filtragem para mitigar alucinações de IA. 
+        Este console utiliza processamento local; a extração de dados ocorre inteiramente no navegador do usuário. 
+        Os resultados gerados são ferramentas auxiliares e devem ser validados por profissionais devidamente inscritos na OAB. 
+        Copyright © 2026 Cássia Prompt V8.
     </div>
 </div>
 
 <script>
-    // FIREBASE SECURITY
     const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
@@ -182,7 +199,7 @@
     } else {
         db.ref('clientes/' + id).on('value', (snap) => {
             if (!snap.val() || snap.val().status !== "ativo") {
-                document.body.innerHTML = '<div class="lock-screen"><h1>⚠️ ACESSO REVOGADO</h1><p>Contacte <b>Cássia Prompt V8</b> para renovar sua licença.</p></div>';
+                document.body.innerHTML = '<div class="lock-screen"><h1 style="color:#d11010">⚠️ ACESSO REVOGADO</h1><p>Contacte o administrador para renovar sua licença.</p></div>';
             }
         });
     }

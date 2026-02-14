@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>MESTRA V14 | SISTEMA BLINDADO</title>
+    <title>SISTEMA MESTRA V15 | CORREÇÃO TOTAL</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <style>
@@ -18,28 +18,27 @@
 <body>
 
 <div class="panel">
-    <h2>MESTRA V14 CONTROL</h2>
+    <h2>MESTRA V15 CONTROL</h2>
     <input type="text" id="nomeAdv" placeholder="NOME DA DOUTORA">
-    <button class="btn-ativar" onclick="ativar()">ATIVAR ACESSO</button>
+    <button class="btn-ativar" onclick="ativar()">ATIVAR ACESSO AGORA</button>
     <div id="lista" style="margin-top:30px"></div>
 </div>
 
 <script>
-    // Configuração do seu Firebase
     const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // ESTA É A LINHA QUE MATA O ERRO 404 - O NOME EXATO DO ARQUIVO NO GITHUB
-    const arquivoReal = "cassia-app.html";
-    const baseLink = "https://cassiakelly995-lab.github.io/meu-app/" + arquivoReal;
+    // AQUI ESTÁ A CHAVE MESTRA: O NOME EXATO DO SEU ARQUIVO QUE ESTÁ NO GITHUB
+    const NOME_DO_ARQUIVO_DO_APP = "cassia-app.html";
+    const LINK_BASE = "https://cassiakelly995-lab.github.io/meu-app/" + NOME_DO_ARQUIVO_DO_APP;
 
     function ativar() {
         const nome = document.getElementById('nomeAdv').value.trim();
         if(!nome) return alert("Digite o nome!");
         const id = nome.replace(/\s+/g, '_');
         db.ref('clientes/' + id).set({ nome: nome }).then(() => {
-            alert("✅ Cadastrada!");
+            alert("✅ ACESSO CRIADO!");
             document.getElementById('nomeAdv').value = "";
         });
     }
@@ -49,12 +48,12 @@
         lista.innerHTML = "";
         snap.forEach((child) => {
             const id = child.key;
-            // O link aqui é montado somando o endereço + o arquivo + o ID
-            const linkFinal = baseLink + "?id=" + id;
+            // ESTE LINK VAI COPIAR COM O FINAL .HTML E O ID DA CLIENTE
+            const linkFinal = LINK_BASE + "?id=" + id;
             lista.innerHTML += `
                 <div class="user-card">
                     <button class="btn-del" onclick="apagar('${id}')">BLOQUEAR</button>
-                    <strong>● ${id}</strong>
+                    <strong>USUÁRIA: ${id}</strong>
                     <button class="btn-copy" onclick="copiar('${linkFinal}')">COPIAR LINK ÚNICO (WHATSAPP)</button>
                 </div>`;
         });
@@ -62,12 +61,12 @@
 
     function copiar(url) {
         navigator.clipboard.writeText(url).then(() => {
-            alert("🔗 LINK COPIADO!\nEnvie para a doutora.");
+            alert("🔗 LINK COPIADO!\nAgora cole no WhatsApp. Ele já vai com o final .html certinho.");
         });
     }
 
     function apagar(id) {
-        if(confirm("Bloquear " + id + "?")) db.ref('clientes/' + id).remove();
+        if(confirm("Remover " + id + "?")) db.ref('clientes/' + id).remove();
     }
 </script>
 </body>

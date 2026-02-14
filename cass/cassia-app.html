@@ -10,216 +10,212 @@
 
     <style>
         :root {
-            --ms-blue: #0078d4;
-            --bg-app: #ffffff;
-            --card-bg: #ffffff;
-            --text-main: #323130;
-            --border: #edebe9;
-            --input-bg: #ffffff;
+            --brand: #0078d4;
+            --bg: #f8f9fa;
+            --card: #ffffff;
+            --text: #201f1e;
+            --accent: #e1dfdd;
         }
 
         [data-theme="dark"] {
-            --bg-app: #111111;
-            --card-bg: #1b1b1b;
-            --text-main: #ffffff;
-            --border: #333333;
-            --input-bg: #252525;
+            --bg: #111111;
+            --card: #1b1b1b;
+            --text: #ffffff;
+            --accent: #323130;
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background-color: var(--bg-app);
-            color: var(--text-main);
+            font-family: 'Segoe UI Variable', 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
             margin: 0;
-            transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
+            transition: 0.3s ease;
         }
 
-        .navbar {
+        .header-bar {
             width: 100%;
-            background: var(--card-bg);
-            padding: 15px 40px;
-            border-bottom: 1px solid var(--border);
+            background: var(--card);
+            padding: 15px 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-sizing: border-box;
-        }
-
-        .theme-toggle {
-            cursor: pointer;
-            padding: 8px 15px;
-            border: 1px solid var(--ms-blue);
-            color: var(--ms-blue);
-            background: transparent;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            border-bottom: 1px solid var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .main-container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 40px 0;
-            background: var(--card-bg);
-            padding: 45px;
-            border-radius: 8px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            border: 1px solid var(--border);
+            width: 95%;
+            max-width: 1000px;
+            margin: 50px 0;
+            background: var(--card);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
         }
 
-        .v8-header { border-left: 6px solid var(--ms-blue); padding-left: 20px; margin-bottom: 40px; }
-        .v8-header h1 { margin: 0; font-size: 2.2rem; letter-spacing: -1px; }
-        
-        .grid-system { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px; }
-        .field-group { display: flex; flex-direction: column; }
-        label { font-size: 0.75rem; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; color: var(--ms-blue); }
-        
+        .v8-title {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--brand), #00bcf2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #dff6dd;
+            color: #107c10;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .group { display: flex; flex-direction: column; }
+        label { font-size: 0.8rem; font-weight: 700; color: var(--brand); text-transform: uppercase; margin-bottom: 8px; }
+
         input, textarea {
-            background: var(--input-bg);
-            color: var(--text-main);
-            border: 1px solid var(--border);
-            padding: 14px;
-            border-radius: 4px;
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--accent);
+            padding: 15px;
+            border-radius: 8px;
             font-size: 1rem;
             outline: none;
+            transition: 0.2s;
         }
 
-        input:focus, textarea:focus { border: 2px solid var(--ms-blue); }
+        input:focus, textarea:focus { border: 2px solid var(--brand); box-shadow: 0 0 10px rgba(0,120,212,0.1); }
+
+        textarea { height: 250px; resize: none; }
 
         .btn-v8 {
-            background: var(--ms-blue);
+            background: var(--brand);
             color: white;
             border: none;
-            padding: 18px 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 4px;
+            padding: 18px 40px;
+            border-radius: 8px;
+            font-weight: 700;
             cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
             transition: 0.3s;
-            text-transform: uppercase;
         }
 
-        .btn-v8:hover { filter: brightness(1.2); transform: translateY(-2px); }
+        .btn-v8:hover { background: #005a9e; transform: translateY(-2px); }
 
-        .output-panel {
+        #output {
             margin-top: 40px;
-            padding: 30px;
-            background: rgba(0, 120, 212, 0.05);
-            border: 1px dashed var(--ms-blue);
+            padding: 25px;
+            background: var(--bg);
+            border-radius: 8px;
+            border-left: 5px solid var(--brand);
             display: none;
         }
 
-        /* BLOQUEIO DIGNO DE GOOGLE/MS */
         .lock-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-app); z-index: 99999; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; text-align: center;
+            position: fixed; inset: 0; background: white; z-index: 1000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
     </style>
 </head>
 <body>
 
-<div id="v8App">
-    <nav class="navbar">
-        <div style="font-weight: 800; font-size: 1.4rem;">CÁSSIA<span style="color: var(--ms-blue);">PROMPT</span> V8</div>
-        <button class="theme-toggle" onclick="toggleTheme()">ALTERNAR MODO</button>
+<div id="appContainer">
+    <nav class="header-bar">
+        <div style="font-weight: 900; letter-spacing: -1px;">CÁSSIA<span style="color: var(--brand);">PROMPT</span></div>
+        <button onclick="document.documentElement.toggleAttribute('data-theme')" style="background:none; border:1px solid var(--accent); color:var(--text); padding:5px 15px; border-radius:5px; cursor:pointer;">Alternar Tema</button>
     </nav>
 
     <div class="main-container">
-        <div class="v8-header">
-            <h1>Singularity Ultra Edition</h1>
-            <p style="color: #888;">Protocolo de Alta Engenharia Jurídica e Mitigação de Alucinação</p>
-        </div>
+        <div class="v8-title">Singularity Ultra Edition</div>
+        <div class="status-pill">PROTOCOL V8 ACTIVE | ZERO HALLUCINATION MODE</div>
 
-        <div class="grid-system">
-            <div class="field-group">
-                <label>Arquitetura de Persona</label>
-                <input type="text" id="persona" placeholder="Ex: Advogado Especialista em Direito Tributário">
+        <div class="input-grid">
+            <div class="group">
+                <label>Arquitetura da Persona</label>
+                <input type="text" id="persona" placeholder="Ex: Advogado Especialista em Direito Civil">
             </div>
-            <div class="field-group">
+            <div class="group">
                 <label>Matriz de Objetivo</label>
-                <input type="text" id="objetivo" placeholder="Ex: Petição Inicial com foco em Danos Morais">
+                <input type="text" id="objetivo" placeholder="Ex: Contestação com Foco em Nulidade">
             </div>
         </div>
 
-        <div class="field-group">
-            <label>Núcleo de Fatos (Corpus Jurídico)</label>
-            <textarea id="corpus" placeholder="Insira os fatos brutos. O sistema Singularity aplicará filtros de proteção jurídica..."></textarea>
+        <div class="group">
+            <label>Núcleo de Fatos (Corpus)</label>
+            <textarea id="corpus" placeholder="Insira aqui os elementos do caso. O Protocolo V8 eliminará qualquer conteúdo irrelevante..."></textarea>
         </div>
 
-        <div style="margin-top: 30px; display: flex; justify-content: space-between; align-items: center;">
-            <div style="font-size: 0.8rem; color: #888;">● Engine V8 Ativa | ● Protocolo Anti-Erro Ativado</div>
-            <button class="btn-v8" onclick="gerarSingularity()">Executar Protocolo Ultra</button>
-        </div>
+        <button class="btn-v8" onclick="gerarV8()">EXECUTAR ENGENHARIA SINGULARITY</button>
 
-        <div id="output" class="output-panel">
-            <h4 style="margin-top:0; color: var(--ms-blue);">PROMPT DE ELITE GERADO:</h4>
-            <div id="resultText" style="white-space: pre-wrap; font-size: 1rem; line-height: 1.6;"></div>
-            <button class="btn-v8" style="margin-top:20px; font-size: 0.8rem; padding: 10px 25px;" onclick="copiar()">Copiar Comando</button>
+        <div id="output">
+            <label style="color: var(--brand);">Script de Alta Performance Gerado:</label>
+            <div id="result" style="white-space: pre-wrap; margin-top: 15px; font-size: 0.95rem; line-height: 1.6;"></div>
+            <button class="btn-v8" style="background:#201f1e; font-size: 0.8rem;" onclick="copiar()">COPIAR SCRIPT</button>
         </div>
     </div>
 </div>
 
 <script>
-    // FIREBASE E SEGURANÇA MESTRA
+    // FIREBASE SECURITY
     const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id');
+    const id = new URLSearchParams(window.location.search).get('id');
 
     if (!id) {
-        document.body.innerHTML = '<div class="lock-screen"><h1 style="color:var(--ms-blue)">Cássia Prompt V8</h1><p>Autenticação Requerida.</p></div>';
+        document.body.innerHTML = '<div class="lock-screen"><h1>Cássia Prompt V8</h1><p>Erro: ID de licenciamento ausente.</p></div>';
     } else {
-        db.ref('clientes/' + id).on('value', (snapshot) => {
-            const data = snapshot.val();
-            if (!data || data.status !== "ativo") {
-                document.body.innerHTML = '<div class="lock-screen"><h1 style="color:#d11010">⚠️ LICENÇA EXPIRADA</h1><p>Contacte <b>Cássia Prompt V8</b> para renovação.</p></div>';
+        db.ref('clientes/' + id).on('value', (snap) => {
+            if (!snap.val() || snap.val().status !== "ativo") {
+                document.body.innerHTML = '<div class="lock-screen"><h1>⚠️ ACESSO REVOGADO</h1><p>Contacte <b>Cássia Prompt V8</b> para renovar sua licença.</p></div>';
             }
         });
     }
 
-    // THEME TOGGLE
-    function toggleTheme() {
-        const doc = document.documentElement;
-        doc.getAttribute('data-theme') === 'dark' ? doc.removeAttribute('data-theme') : doc.setAttribute('data-theme', 'dark');
-    }
+    function gerarV8() {
+        const p = document.getElementById('persona').value || "Especialista Jurídico";
+        const o = document.getElementById('objetivo').value || "Máxima Eficácia Técnica";
+        const c = document.getElementById('corpus').value;
 
-    // ENGENHARIA ULTRA (GOOGLE/MS LEVEL)
-    function gerarSingularity() {
-        const persona = document.getElementById('persona').value || "Especialista Jurídico Sênior";
-        const objetivo = document.getElementById('objetivo').value || "Excelência Técnica Jurídica";
-        const fatos = document.getElementById('corpus').value;
+        if(!c) return alert("Erro: O Corpus está vazio.");
 
-        if(!fatos) return alert("Erro: O Corpus Jurídico não pode estar vazio.");
+        const script = `[SISTEMA: CÁSSIA PROMPT V8 - SINGULARITY ULTRA]
+PERSONA: ${p}.
+OBJETIVO: ${o}.
 
-        const promptUltra = `[SISTEMA: CÁSSIA PROMPT V8 SINGULARITY ULTRA]
-PERSONA TÉCNICA: Atue como ${persona}.
-OBJETIVO CRÍTICO: ${objetivo}.
+[RESTRIÇÕES RÍGIDAS - CONTROLE DE QUALIDADE]
+1. PROIBIDO: Introduções genéricas, "babozeiras" sociais ou termos como "espero que isso ajude". Vá direto ao ponto.
+2. ZERO ALUCINAÇÃO: Não invente fatos, leis, jurisprudência ou detalhes que não constem no corpus. 
+3. LACUNAS: Se faltar um dado crucial para a peça, escreva "[DADO AUSENTE: SOLICITAR AO ADVOGADO]".
+4. TÉCNICA: Use linguagem jurídica de alto nível, focada em convencimento magistral.
 
-[INSTRUÇÃO DE CADEIA DE PENSAMENTO - NÃO IGNORE]
-1. ANALISE os fatos abaixo com rigor lógico.
-2. PROTEÇÃO ANTI-ALUCINAÇÃO: Se houver falta de dados (datas, nomes, valores específicos), você NÃO deve inventar. Em vez disso, insira [LACUNA: SOLICITAR DADO X AO USUÁRIO].
-3. FILTRO DE QUALIDADE: Remova qualquer "lenga-lenga" ou introduções vazias. Vá direto ao fundamento jurídico.
-4. ESTRUTURA: Entregue uma resposta estruturada por tópicos, focada em vencer a demanda.
+CORPUS:
+"${c}"
 
-[CORPUS JURÍDICO]
-"${fatos}"
+EXECUTE AGORA NO MODO SINGULARITY.`;
 
-[COMANDO FINAL]
-Processe agora. Seja técnico, assertivo e não invente factos.`;
-
-        document.getElementById('resultText').innerText = promptUltra;
+        document.getElementById('result').innerText = script;
         document.getElementById('output').style.display = 'block';
     }
 
     function copiar() {
-        navigator.clipboard.writeText(document.getElementById('resultText').innerText);
-        alert("Comando de Elite Copiado!");
+        navigator.clipboard.writeText(document.getElementById('result').innerText);
+        alert("Script copiado com sucesso!");
     }
 </script>
 </body>

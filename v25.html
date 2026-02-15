@@ -25,7 +25,6 @@
 
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; transition: 0.3s; overflow-x: hidden; }
         
-        /* LOGO EM OURO ESTILIZADA */
         .gold-logo {
             font-size: 28px; font-weight: 900; letter-spacing: 5px;
             background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
@@ -44,7 +43,6 @@
         main { padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
         .workspace-card { background: var(--card); width: 100%; max-width: 800px; border-radius: 24px; border: 1px solid var(--border); padding: 45px; box-sizing: border-box; box-shadow: var(--glow); position: relative; overflow: hidden; }
 
-        /* EFEITO DE SCANNER NO CARD */
         .workspace-card::before {
             content: ""; position: absolute; top: -100%; left: 0; width: 100%; height: 50%;
             background: linear-gradient(to bottom, transparent, rgba(191, 149, 63, 0.05), transparent);
@@ -70,8 +68,25 @@
         
         #prompt-final { width: 100%; height: 380px; background: #000; color: #fcf6ba; border: 1px solid #bf953f; padding: 25px; border-radius: 15px; font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.5; }
 
-        footer { margin-top: 60px; padding: 40px; border-top: 1px solid var(--border); text-align: center; }
-        .footer-legal { color: #bf953f; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 8px; }
+        footer { 
+            margin-top: 60px; 
+            padding: 40px; 
+            border-top: 1px solid var(--border); 
+            text-align: center; 
+            background: linear-gradient(to top, rgba(191,149,63,0.05), transparent);
+        }
+        .footer-legal { 
+            color: #bf953f; 
+            font-size: 11px; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            letter-spacing: 3px; 
+            display: block; 
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px rgba(191,149,63,0.3);
+            animation: pulse 2s infinite alternate;
+        }
+        @keyframes pulse { from { opacity: 0.7; } to { opacity: 1; text-shadow: 0 0 15px rgba(191,149,63,0.6); } }
         .footer-notice { color: var(--text); font-size: 9px; opacity: 0.5; text-transform: uppercase; letter-spacing: 1px; }
     </style>
 </head>
@@ -89,39 +104,39 @@
 
 <main>
     <div class="workspace-card">
-        <label>Status: God Mode Ativado</label>
+        <label>Status: Rigor Absoluto Ativado</label>
         <div class="rigor-container"><div id="rigor-bar" class="rigor-bar"></div></div>
         
-        <label>1. Dados Brutos & Contexto</label>
-        <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Insira o conteúdo para processamento..."></textarea>
+        <label>1. Entrada de Dados & Contexto</label>
+        <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Insira o texto bruto para análise..."></textarea>
 
         <label>2. Parâmetros de Rigor Nível 10</label>
-        <textarea id="base" rows="3" oninput="atualizar()" placeholder="Normas, leis ou critérios de excelência..."></textarea>
+        <textarea id="base" rows="3" oninput="atualizar()" placeholder="Quais leis ou critérios de excelência seguir?"></textarea>
 
         <label>3. Missão / Objetivo Final</label>
-        <input type="text" id="destino" oninput="atualizar()" placeholder="O que deseja alcançar?">
+        <input type="text" id="destino" oninput="atualizar()" placeholder="O que deseja entregar?">
 
-        <label>4. Documentação Adicional</label>
+        <label>4. Documentação Técnica</label>
         <div class="upload-area" onclick="document.getElementById('pdf-file').click()">
-            <span style="font-size: 11px; opacity: 0.8; letter-spacing: 1px;">📄 IDENTIFICAR PDF PARA ANÁLISE TÉCNICA</span>
+            <span style="font-size: 11px; opacity: 0.8; letter-spacing: 1px;">📄 IDENTIFICAR PDF PARA PROCESSAMENTO</span>
             <input type="file" id="pdf-file" style="display:none" onchange="checkFile()">
             <span id="file-name" style="display:block; margin-top:10px; color:#bf953f; font-size:11px; font-weight:bold;"></span>
         </div>
 
-        <button id="btn-exe" class="btn-exe" disabled onclick="gerar()">Processar com Rigor Absoluto</button>
+        <button id="btn-exe" class="btn-exe" disabled onclick="gerar()">Executar Protocolo God Mode</button>
     </div>
 
     <div id="resultado-area">
-        <label style="color: #fcf6ba;">💎 PROTOCOLO DE ALTA PERFORMANCE GERADO:</label>
+        <label style="color: #fcf6ba;">💎 DIAMANTE LAPIDADO (PROMPT DE ELITE):</label>
         <textarea id="prompt-final" readonly></textarea>
         <button onclick="copiar()" style="width:100%; padding:22px; background:var(--gold); border:none; border-radius:15px; font-weight:900; cursor:pointer; margin-top:15px; text-transform:uppercase; letter-spacing:2px; color:#000;">Copiar Comando V8 Elite</button>
     </div>
 </main>
 
 <footer>
-    <span id="status-seguranca" class="footer-legal">AUTENTICANDO...</span>
-    <span class="footer-notice">Uso sob responsabilidade exclusiva do usuário licenciado.</span><br>
-    <span class="footer-notice">Sistema Zero-Log: Não armazena dados em conformidade com a LGPD.</span>
+    <span id="status-seguranca" class="footer-legal">VERIFICANDO LICENÇA...</span>
+    <span class="footer-notice">O uso deste sistema é de responsabilidade exclusiva do usuário licenciado.</span><br>
+    <span class="footer-notice">Sistema em conformidade com a LGPD: Nenhum dado é armazenado ou gravado.</span>
 </footer>
 
 <script>
@@ -135,9 +150,9 @@
         db.ref('clientes/' + userId).on('value', (snap) => {
             if (snap.exists()) {
                 document.getElementById('loader').style.display = 'none';
-                document.getElementById('status-seguranca').innerText = "LICENCIADO PARA: " + userId.replace(/_/g, ' ').toUpperCase();
+                document.getElementById('status-seguranca').innerText = "SISTEMA LICENCIADO: " + userId.replace(/_/g, ' ').toUpperCase();
             } else {
-                document.body.innerHTML = `<div style="background:#000; height:100vh; display:flex; align-items:center; justify-content:center; color:#bf953f; text-align:center; font-family:serif;"><h1>🛡️ ACESSO REVOGADO</h1></div>`;
+                document.body.innerHTML = `<div style="background:#000; height:100vh; display:flex; flex-direction:center; align-items:center; justify-content:center; color:#bf953f; text-align:center;"><h1>🛡️ ACESSO REVOGADO</h1></div>`;
             }
         });
     }
@@ -157,10 +172,10 @@
         const f = document.getElementById('fatos').value.length;
         const b = document.getElementById('base').value.length;
         const d = document.getElementById('destino').value.length;
-        const prog = Math.min(((f + b + d) / 150) * 100, 100);
+        const prog = Math.min(((f + b + d) / 180) * 100, 100);
         document.getElementById('rigor-bar').style.width = prog + "%";
         const btn = document.getElementById('btn-exe');
-        if (prog >= 30) { btn.disabled = false; btn.classList.add('active'); } 
+        if (prog >= 35) { btn.disabled = false; btn.classList.add('active'); } 
         else { btn.disabled = true; btn.classList.remove('active'); }
     }
 
@@ -170,20 +185,20 @@
         const d = document.getElementById('destino').value;
         
         const mestre = `### [ PROTOCOLO CÁSSIA V8 - ELITE ] ###
-IDENTIDADE: Consultor Nível 10 - Revisor Gramatical e Estratégico.
-DIRETRIZ: Erro Zero. Tolerância Zero para preguiça ou dados dúbios.
+IDENTIDADE: Consultor Nível 10 - Revisor Estratégico e Mestre em Lógica.
+DIRETRIZ CRÍTICA: Tolerância Zero para erros gramaticais, preguiça ou dados dúbios.
 
-${fileName ? `DOCUMENTO ANEXO: "${fileName}" (Extrair inteligência).\n` : ''}
-ENTRADA: ${f}
-REGRAS: ${b}
-MISSÃO: ${d}
+${fileName ? `DOCUMENTO BASE: "${fileName}" (Extrair inteligência técnica).\n` : ''}
+ENTRADA BRUTA: ${f}
+REGRAS DE RIGOR: ${b}
+MISSÃO FINAL: ${d}
 
-ETAPAS:
-1. SANEAMENTO: Corrigir ortografia e concordância do texto bruto.
-2. FILTRAGEM: Eliminar redundâncias e "baboseiras".
-3. CONSTRUÇÃO: Entregar resultado com vocabulário de alta performance.
+ETAPAS DE PROCESSAMENTO:
+1. SANEAMENTO: Corrija IMEDIATAMENTE ortografia, concordância e pontuação do texto bruto.
+2. FILTRAGEM: Elimine "baboseiras", gírias e informações sem base real.
+3. SOFISTICAÇÃO: Desenvolva o resultado com vocabulário de alto nível e autoridade absoluta.
 
-RESPOSTA: Perfeição técnica e autoridade máxima.`;
+RESPOSTA ESPERADA: Perfeição técnica, sem erros, focada em solução de elite.`;
 
         document.getElementById('prompt-final').value = mestre;
         document.getElementById('resultado-area').style.display = 'block';
@@ -193,7 +208,7 @@ RESPOSTA: Perfeição técnica e autoridade máxima.`;
     function copiar() {
         document.getElementById('prompt-final').select();
         document.execCommand('copy');
-        alert("💎 DIAMANTE COPIADO! COMANDO PRONTO PARA USO.");
+        alert("💎 DIAMANTE LAPIDADO! COMANDO COPIADO COM SUCESSO.");
     }
 </script>
 </body>

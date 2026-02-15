@@ -11,25 +11,14 @@
     
     <style>
         :root { 
-            --bg: #030303; --card: rgba(15, 15, 15, 0.8); --text: #ffffff; 
+            --bg: #030303; --card: rgba(15, 15, 15, 0.9); --text: #ffffff; 
             --border: rgba(191, 149, 63, 0.3);
             --gold: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
         }
 
-        body { 
-            margin: 0; 
-            background: var(--bg); 
-            color: var(--text); 
-            font-family: 'Segoe UI', sans-serif; 
-            background-image: radial-gradient(circle at 50% 50%, #1a150a 0%, #030303 100%); 
-            min-height: 100vh; 
-        }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; background-image: radial-gradient(circle at 50% 50%, #1a150a 0%, #030303 100%); min-height: 100vh; }
         
-        .gold-logo {
-            font-size: 28px; font-weight: 900; letter-spacing: 5px;
-            background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-transform: uppercase; filter: drop-shadow(0 2px 10px rgba(191, 149, 63, 0.3));
-        }
+        .gold-logo { font-size: 28px; font-weight: 900; letter-spacing: 5px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; filter: drop-shadow(0 2px 10px rgba(191, 149, 63, 0.3)); }
 
         #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; z-index: 9999; flex-direction: column; }
         .spinner { border: 2px solid rgba(191, 149, 63, 0.1); border-top: 2px solid #bf953f; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
@@ -39,48 +28,37 @@
 
         main { padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
         
-        /* CARD LIMPO - SEM ANIMAÇÃO DE FUNDO */
+        /* CARD ESTÁTICO DE ELITE - SEM LUZ SE MEXENDO */
         .workspace-card { 
             background: var(--card); 
             width: 100%; max-width: 850px; 
             border-radius: 30px; 
             border: 1px solid var(--border); 
             padding: 50px; 
-            backdrop-filter: blur(20px); 
             box-shadow: 0 25px 50px rgba(0,0,0,0.6);
             position: relative;
         }
 
-        #toast {
-            visibility: hidden; min-width: 250px; background: var(--gold); color: #000;
-            text-align: center; border-radius: 50px; padding: 16px; position: fixed;
-            z-index: 1000; right: 30px; top: 30px; font-weight: 900; font-size: 12px;
-            text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        #toast.show { visibility: visible; animation: slideIn 0.5s, fadeOut 0.5s 2.5s; }
-        @keyframes slideIn { from { right: -300px; } to { right: 30px; } }
-        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
-
         label { font-size: 10px; font-weight: 900; color: #bf953f; text-transform: uppercase; display: block; margin-bottom: 12px; letter-spacing: 2px; }
         textarea, input { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; color: var(--text); font-size: 15px; outline: none; box-sizing: border-box; margin-bottom: 25px; }
-        textarea:focus, input:focus { border-color: #bf953f; background: rgba(255,255,255,0.06); }
+
+        /* UPLOAD DE PDF - MANTIDO */
+        .upload-area { border: 1px dashed #444; border-radius: 15px; padding: 25px; text-align: center; cursor: pointer; transition: 0.3s; margin-bottom: 25px; background: rgba(255,255,255,0.02); }
+        .upload-area:hover { border-color: #bf953f; background: rgba(191, 149, 63, 0.05); }
 
         .btn-exe { width: 100%; background: #111; color: #444; border: 1px solid #222; padding: 25px; border-radius: 18px; font-weight: 900; cursor: not-allowed; transition: 0.5s; text-transform: uppercase; letter-spacing: 4px; }
         .btn-exe.active { background: var(--gold); color: #000; cursor: pointer; border: none; }
         
-        #processing-msg { display: none; color: #bf953f; font-size: 11px; font-weight: bold; margin: 20px 0; text-transform: uppercase; letter-spacing: 2px; }
-
         #resultado-area { display: none; width: 100%; max-width: 850px; margin-top: 40px; }
         #prompt-final { width: 100%; height: 350px; background: rgba(0,0,0,0.5); color: #fcf6ba; border: 1px solid var(--border); padding: 25px; border-radius: 20px; font-family: 'Consolas', monospace; }
 
+        /* RODA PÉ RIGOR DE JUSTIÇA - RESTAURADO E MANTIDO */
         footer { margin-top: 60px; padding: 40px; text-align: center; border-top: 1px solid rgba(191,149,63,0.1); }
         .footer-legal { color: #bf953f; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; display: block; margin-bottom: 10px; }
         .footer-notice { color: #666; font-size: 9px; text-transform: uppercase; letter-spacing: 1px; }
     </style>
 </head>
 <body>
-
-<div id="toast">💎 Diamante Lapidado com Sucesso!</div>
 
 <div id="loader">
     <div class="spinner"></div>
@@ -89,7 +67,7 @@
 
 <nav>
     <div class="gold-logo">CÁSSIA V8</div>
-    <div id="status-user" style="color: #bf953f; font-size: 9px; font-weight: bold; border: 1px solid #bf953f; padding: 5px 15px; border-radius: 50px;">AUTENTICADO</div>
+    <div id="status-user" style="color: #bf953f; font-size: 9px; font-weight: bold; border: 1px solid #bf953f; padding: 5px 15px; border-radius: 50px;">ONLINE</div>
 </nav>
 
 <main>
@@ -97,16 +75,22 @@
         <label>Rigor Inteligente God Mode</label>
         
         <label>1. Entrada de Dados Brutos</label>
-        <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Insira o texto para análise..."></textarea>
+        <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="O que a IA deve analisar?"></textarea>
 
         <label>2. Normas de Rigor Nível 10</label>
         <textarea id="base" rows="2" oninput="atualizar()" placeholder="Diretrizes de perfeição..."></textarea>
 
         <label>3. Missão / Objetivo</label>
-        <input type="text" id="destino" oninput="atualizar()" placeholder="Resultado esperado?">
+        <input type="text" id="destino" oninput="atualizar()" placeholder="Qual o resultado esperado?">
 
-        <button id="btn-exe" class="btn-exe" disabled onclick="iniciarProcesso()">Executar Protocolo God Mode</button>
-        <center><div id="processing-msg">⚙️ PROCESSANDO COM RIGOR ABSOLUTO...</div></center>
+        <label>4. Documentação PDF</label>
+        <div class="upload-area" onclick="document.getElementById('pdf-file').click()">
+            <span style="font-size: 11px; opacity: 0.8; letter-spacing: 1px;">📄 CLIQUE PARA IDENTIFICAR PDF PARA TRANSCRIÇÃO</span>
+            <input type="file" id="pdf-file" style="display:none" onchange="checkFile()">
+            <span id="file-name" style="display:block; margin-top:10px; color:#bf953f; font-size:11px; font-weight:bold;"></span>
+        </div>
+
+        <button id="btn-exe" class="btn-exe" disabled onclick="gerar()">Processar com Rigor Absoluto</button>
     </div>
 
     <div id="resultado-area">
@@ -117,8 +101,9 @@
 </main>
 
 <footer>
-    <span id="footer-user" class="footer-legal">LICENCIADO</span>
-    <span class="footer-notice">Sistema Zero-Log (LGPD). Uso restrito.</span>
+    <span id="footer-user" class="footer-legal">LICENCIADO PARA: CASSIA</span>
+    <span class="footer-notice">USO SOB RESPONSABILIDADE EXCLUSIVA DO USUÁRIO LICENCIADO</span><br>
+    <span class="footer-notice">SISTEMA ZERO-LOG: EM CONFORMIDADE COM A LGPD</span>
 </footer>
 
 <script>
@@ -140,23 +125,20 @@
         });
     }
 
-    function atualizar() {
-        const f = document.getElementById('fatos').value.length;
-        const b = document.getElementById('base').value.length;
-        const d = document.getElementById('destino').value.length;
-        const btn = document.getElementById('btn-exe');
-        if ((f + b + d) > 30) { btn.disabled = false; btn.classList.add('active'); } 
-        else { btn.disabled = true; btn.classList.remove('active'); }
+    let fileName = "";
+    function checkFile() {
+        const input = document.getElementById('pdf-file');
+        if (input.files.length > 0) {
+            fileName = input.files[0].name;
+            document.getElementById('file-name').innerText = "PDF DETECTADO: " + fileName.toUpperCase();
+        }
     }
 
-    function iniciarProcesso() {
-        document.getElementById('btn-exe').style.display = 'none';
-        document.getElementById('processing-msg').style.display = 'block';
-        setTimeout(() => {
-            gerar();
-            document.getElementById('processing-msg').style.display = 'none';
-            document.getElementById('btn-exe').style.display = 'block';
-        }, 2000);
+    function atualizar() {
+        const f = document.getElementById('fatos').value.length;
+        const btn = document.getElementById('btn-exe');
+        if (f > 10) { btn.disabled = false; btn.classList.add('active'); } 
+        else { btn.disabled = true; btn.classList.remove('active'); }
     }
 
     function gerar() {
@@ -171,9 +153,7 @@
     function copiar() {
         document.getElementById('prompt-final').select();
         document.execCommand('copy');
-        var x = document.getElementById("toast");
-        x.className = "show";
-        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        alert("💎 DIAMANTE LAPIDADO! COMANDO COPIADO.");
     }
 </script>
 </body>

@@ -68,17 +68,17 @@
 
 <main>
     <div class="workspace-card">
-        <label>Rigor Inteligente V8 - God Mode</label>
+        <label>Rigor Absoluto V8 - God Mode</label>
         <div class="rigor-container"><div id="rigor-bar" class="rigor-bar"></div></div>
         
-        <label>1. Contexto ou Dados Brutos</label>
-        <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Insira fatos, textos ou problemas..."></textarea>
+        <label>1. Entrada de Dados (Contexto)</label>
+        <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Insira o texto bruto aqui..."></textarea>
 
-        <label>2. Parâmetros de Rigor (Regras ou Critérios)</label>
-        <textarea id="base" rows="3" oninput="atualizar()" placeholder="Quais normas o sistema deve obedecer?"></textarea>
+        <label>2. Normas e Parâmetros de Rigor</label>
+        <textarea id="base" rows="3" oninput="atualizar()" placeholder="Quais regras de conteúdo o sistema deve seguir?"></textarea>
 
-        <label>3. Objetivo Final</label>
-        <input type="text" id="destino" oninput="atualizar()" placeholder="O que você quer entregar?">
+        <label>3. Missão / Objetivo Final</label>
+        <input type="text" id="destino" oninput="atualizar()" placeholder="O que deve ser entregue?">
 
         <label>4. Documentação PDF</label>
         <div class="upload-area" onclick="document.getElementById('pdf-file').click()">
@@ -87,13 +87,13 @@
             <span id="file-name" style="display:block; margin-top:10px; color:var(--rigor-high); font-size:11px;"></span>
         </div>
 
-        <button id="btn-exe" class="btn-exe" disabled onclick="gerar()">Processar com Rigor Absoluto</button>
+        <button id="btn-exe" class="btn-exe" disabled onclick="gerar()">Executar Processamento de Elite</button>
     </div>
 
     <div id="resultado-area">
-        <label style="color: var(--rigor-high);">🛡️ COMANDO DE ALTA PERFORMANCE GERADO:</label>
+        <label style="color: var(--rigor-high);">🛡️ COMANDO CORRIGIDO E DE ALTA PERFORMANCE:</label>
         <textarea id="prompt-final" readonly></textarea>
-        <button onclick="copiar()" style="width:100%; padding:20px; background:var(--rigor-high); border:none; border-radius:10px; font-weight:bold; cursor:pointer; margin-top:10px; text-transform:uppercase;">Copiar Comando Elite</button>
+        <button onclick="copiar()" style="width:100%; padding:20px; background:var(--rigor-high); border:none; border-radius:10px; font-weight:bold; cursor:pointer; margin-top:10px; text-transform:uppercase;">Copiar Comando sem Erros</button>
     </div>
 </main>
 
@@ -115,7 +115,6 @@
         db.ref('clientes/' + userId).on('value', (snap) => {
             if (snap.exists()) {
                 document.getElementById('loader').style.display = 'none';
-                // MANTÉM O NOME DO USUÁRIO NO RODAPÉ
                 document.getElementById('status-seguranca').innerText = "SISTEMA LICENCIADO: " + userId.replace(/_/g, ' ').toUpperCase();
             } else {
                 document.body.innerHTML = `<div style="background:#000; height:100vh; display:flex; align-items:center; justify-content:center; color:red; text-align:center;"><h1>🛡️ ACESSO REVOGADO</h1></div>`;
@@ -141,7 +140,7 @@
         const prog = Math.min(((f + b + d) / 200) * 100, 100);
         document.getElementById('rigor-bar').style.width = prog + "%";
         const btn = document.getElementById('btn-exe');
-        if (prog >= 50) { btn.disabled = false; btn.classList.add('active'); } 
+        if (prog >= 40) { btn.disabled = false; btn.classList.add('active'); } 
         else { btn.disabled = true; btn.classList.remove('active'); }
     }
 
@@ -151,18 +150,21 @@
         const d = document.getElementById('destino').value;
         
         const mestre = `### [ PROTOCOLO CÁSSIA V8 - ELITE UNIVERSAL ] ###
-IDENTIDADE: Consultor Nível 10 - Especialista em Lógica e Veracidade.
-DIRETRIZ: Bloqueio total de informações falsas, dúbias ou "baboseiras" sem evidência.
+IDENTIDADE: Consultor Nível 10 - Revisor Gramatical e Analista Estratégico.
+DIRETRIZ CRÍTICA: Tolerância Zero para erros ortográficos, preguiça intelectual ou argumentos dúbios.
 
 ${fileName ? `DOCUMENTO: "${fileName}" (Transcrever conteúdo fielmente).\n` : ''}
-DADOS: ${f}
-CRITÉRIOS: ${b}
-MISSÃO: ${d}
+TEXTO BRUTO: ${f}
+REGRAS/PARÂMETROS: ${b}
+MISSÃO FINAL: ${d}
 
-ETAPAS:
-1. DESTRUTURAÇÃO: Filtragem contra dados duvidosos.
-2. RIGOR: Vocabulário técnico de alta performance.
-3. RESULTADO: Solução de autoridade máxima.`;
+ETAPAS OBRIGATÓRIAS:
+1. SANEAMENTO GRAMATICAL: Corrija IMEDIATAMENTE qualquer erro de ortografia, pontuação ou concordância do texto bruto.
+2. FILTRAGEM ANTI-PREGUIÇA: Não resuma se o contexto exigir profundidade. Desenvolva cada ponto com máxima sofisticação.
+3. RIGOR TÉCNICO: Elimine "baboseiras" e informações sem base.
+4. PRODUÇÃO FINAL: Entregue o resultado impecável, como se fosse escrito por um mestre da língua portuguesa e da lógica.
+
+RESPOSTA: Perfeição técnica, autoridade máxima e erro zero.`;
 
         document.getElementById('prompt-final').value = mestre;
         document.getElementById('resultado-area').style.display = 'block';
@@ -172,7 +174,7 @@ ETAPAS:
     function copiar() {
         document.getElementById('prompt-final').select();
         document.execCommand('copy');
-        alert("💎 COMANDO COPIADO!");
+        alert("💎 PROMPT DE ALTA PERFORMANCE COPIADO!");
     }
 </script>
 </body>

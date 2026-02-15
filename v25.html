@@ -6,46 +6,41 @@
     <title>CÁSSIA V8 | GOD MODE ELITE</title>
     
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2592/2592231.png">
-    
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     
     <style>
         :root { 
-            --ms-blue: #0078d4; --bg: #030303; --card: #0a0a0a; --text: #ffffff; 
+            --bg: #030303; --card: #0a0a0a; --text: #ffffff; 
             --border: #1a1a1a; --gold: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
         }
-
-        body.light-mode {
-            --bg: #f5f7f9; --card: #ffffff; --text: #111; --border: #ddd;
-        }
-
+        body.light-mode { --bg: #f5f7f9; --card: #ffffff; --text: #111; --border: #ddd; }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; transition: 0.3s; overflow-x: hidden; }
         
-        .gold-logo {
-            font-size: 28px; font-weight: 900; letter-spacing: 5px;
-            background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-transform: uppercase; display: inline-block; padding: 10px 0;
-        }
+        .gold-logo { font-size: 28px; font-weight: 900; letter-spacing: 5px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; padding: 10px 0; display: inline-block; }
 
         #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; z-index: 9999; flex-direction: column; }
-        .spinner { border: 4px solid rgba(255,255,255,0.1); border-left-color: #bf953f; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin-bottom: 20px; }
+        .spinner { border: 4px solid rgba(255,255,255,0.1); border-left-color: #bf953f; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
         nav { background: var(--card); padding: 15px 30px; border-bottom: 2px solid #bf953f; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
-        .theme-btn { cursor: pointer; padding: 10px 20px; border: 1px solid #bf953f; border-radius: 50px; font-size: 10px; font-weight: 800; background: transparent; color: #bf953f; text-transform: uppercase; transition: 0.3s; }
-        .theme-btn:hover { background: #bf953f; color: #000; }
+        .theme-btn { cursor: pointer; padding: 10px 20px; border: 1px solid #bf953f; border-radius: 50px; font-size: 10px; font-weight: 800; background: transparent; color: #bf953f; text-transform: uppercase; }
 
         main { padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
-        .workspace-card { background: var(--card); width: 100%; max-width: 800px; border-radius: 24px; border: 1px solid var(--border); padding: 45px; box-sizing: border-box; box-shadow: 0 0 20px rgba(191, 149, 63, 0.1); position: relative; }
+        .workspace-card { background: var(--card); width: 100%; max-width: 800px; border-radius: 24px; border: 1px solid var(--border); padding: 45px; box-sizing: border-box; box-shadow: 0 0 30px rgba(191, 149, 63, 0.1); position: relative; }
 
+        /* A BARRA DE RIGOR VOLTOU */
+        .rigor-container { width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-bottom: 30px; overflow: hidden; border: 1px solid rgba(191,149,63,0.2); }
+        .rigor-bar { width: 0%; height: 100%; background: var(--gold); transition: 0.5s ease; }
+        
         label { font-size: 10px; font-weight: 900; color: #bf953f; text-transform: uppercase; display: block; margin-bottom: 12px; letter-spacing: 2px; }
-        textarea, input { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--border); padding: 20px; border-radius: 15px; color: var(--text); font-size: 15px; outline: none; box-sizing: border-box; margin-bottom: 25px; }
+        textarea, input { width: 100%; background: rgba(0,0,0,0.2); border: 1px solid var(--border); padding: 20px; border-radius: 15px; color: var(--text); font-size: 15px; outline: none; box-sizing: border-box; margin-bottom: 25px; transition: 0.3s; }
+        textarea:focus { border-color: #bf953f; background: rgba(0,0,0,0.4); }
 
-        .upload-area { border: 1px dashed #444; border-radius: 15px; padding: 25px; text-align: center; cursor: pointer; transition: 0.3s; margin-bottom: 25px; background: rgba(255,255,255,0.02); }
-        .upload-area:hover { border-color: #bf953f; background: rgba(191, 149, 63, 0.05); }
+        .upload-area { border: 1px dashed #444; border-radius: 15px; padding: 25px; text-align: center; cursor: pointer; margin-bottom: 25px; background: rgba(255,255,255,0.02); }
+        .upload-area:hover { border-color: #bf953f; }
 
-        .btn-exe { width: 100%; background: #111; color: #333; border: none; padding: 25px; border-radius: 15px; font-weight: 900; cursor: not-allowed; transition: 0.5s; text-transform: uppercase; letter-spacing: 4px; font-size: 14px; }
+        .btn-exe { width: 100%; background: #111; color: #333; border: none; padding: 25px; border-radius: 15px; font-weight: 900; cursor: not-allowed; transition: 0.5s; text-transform: uppercase; letter-spacing: 4px; }
         .btn-exe.active { background: var(--gold); color: #000; cursor: pointer; box-shadow: 0 10px 30px rgba(179, 135, 40, 0.4); }
 
         #resultado-area { display: none; margin-top: 35px; width: 100%; max-width: 800px; }
@@ -53,55 +48,56 @@
 
         footer { margin-top: 60px; padding: 40px; border-top: 1px solid var(--border); text-align: center; }
         .footer-legal { color: #bf953f; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 8px; }
-        .footer-notice { color: var(--text); font-size: 9px; opacity: 0.5; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-notice { color: var(--text); font-size: 9px; opacity: 0.5; text-transform: uppercase; }
     </style>
 </head>
 <body id="app-body">
 
 <div id="loader">
     <div class="spinner"></div>
-    <div style="color: #bf953f; font-weight: bold; letter-spacing: 3px; font-size: 12px;">SISTEMA CÁSSIA V8 ELITE</div>
+    <div style="color: #bf953f; font-weight: bold; letter-spacing: 3px; font-size: 12px; margin-top: 20px;">SISTEMA CÁSSIA V8 ELITE</div>
 </div>
 
 <nav>
     <div class="gold-logo">CÁSSIA V8</div>
-    <button class="theme-btn" onclick="toggleTheme()">Inverter Tema</button>
+    <button class="theme-btn" onclick="toggleTheme()">Inverter Modo</button>
 </nav>
 
 <main>
     <div class="workspace-card">
-        <label>Status: God Mode Ativado</label>
+        <label>Nível de Rigor do Comando</label>
+        <div class="rigor-container"><div id="rigor-bar" class="rigor-bar"></div></div>
         
-        <label>1. Dados Brutos & Contexto</label>
-        <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Insira o conteúdo para processamento..."></textarea>
+        <label>1. Dados Brutos & Fatos</label>
+        <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Cole aqui o conteúdo bagunçado..."></textarea>
 
-        <label>2. Parâmetros de Rigor Nível 10</label>
-        <textarea id="base" rows="3" oninput="atualizar()" placeholder="Normas, leis ou critérios de excelência..."></textarea>
+        <label>2. Parâmetros de Rigor Nível 10 (Gramática e Baboseira)</label>
+        <textarea id="base" rows="3" oninput="atualizar()" placeholder="Ex: Tolerância zero para erros e gírias..."></textarea>
 
         <label>3. Missão / Objetivo Final</label>
-        <input type="text" id="destino" oninput="atualizar()" placeholder="O que deseja alcançar?">
+        <input type="text" id="destino" oninput="atualizar()" placeholder="Qual o resultado final desejado?">
 
-        <label>4. Documentação Adicional</label>
+        <label>4. Documentação Adicional (PDF)</label>
         <div class="upload-area" onclick="document.getElementById('pdf-file').click()">
-            <span style="font-size: 11px; opacity: 0.8; letter-spacing: 1px;">📄 IDENTIFICAR PDF PARA ANÁLISE TÉCNICA</span>
+            <span style="font-size: 11px; opacity: 0.8;">📄 IDENTIFICAR PDF PARA ANÁLISE TÉCNICA</span>
             <input type="file" id="pdf-file" style="display:none" onchange="checkFile()">
             <span id="file-name" style="display:block; margin-top:10px; color:#bf953f; font-size:11px; font-weight:bold;"></span>
         </div>
 
-        <button id="btn-exe" class="btn-exe" disabled onclick="gerar()">Processar com Rigor Absoluto</button>
+        <button id="btn-exe" class="btn-exe" disabled onclick="gerar()">Executar Processamento de Elite</button>
     </div>
 
     <div id="resultado-area">
-        <label style="color: #fcf6ba;">💎 PROTOCOLO DE ALTA PERFORMANCE GERADO:</label>
+        <label style="color: #fcf6ba;">💎 PROTOCOLO GOD MODE GERADO:</label>
         <textarea id="prompt-final" readonly></textarea>
-        <button onclick="copiar()" style="width:100%; padding:22px; background:var(--gold); border:none; border-radius:15px; font-weight:900; cursor:pointer; margin-top:15px; text-transform:uppercase; letter-spacing:2px; color:#000;">Copiar Comando V8 Elite</button>
+        <button onclick="copiar()" style="width:100%; padding:22px; background:var(--gold); border:none; border-radius:15px; font-weight:900; cursor:pointer; margin-top:15px; text-transform:uppercase; color:#000;">Copiar Diamante</button>
     </div>
 </main>
 
 <footer>
-    <span id="status-seguranca" class="footer-legal">AUTENTICANDO...</span>
-    <span class="footer-notice">Uso sob responsabilidade exclusiva do usuário licenciado.</span><br>
-    <span class="footer-notice">Sistema Zero-Log: Não armazena dados em conformidade com a LGPD.</span>
+    <span id="status-seguranca" class="footer-legal">VERIFICANDO LICENÇA...</span>
+    <span class="footer-notice">USO SOB RESPONSABILIDADE EXCLUSIVA DO USUÁRIO LICENCIADO</span><br>
+    <span class="footer-notice">SISTEMA ZERO-LOG: EM TOTAL CONFORMIDADE COM A LGPD</span>
 </footer>
 
 <script>
@@ -116,7 +112,7 @@
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('status-seguranca').innerText = "LICENCIADO PARA: " + userId.replace(/_/g, ' ').toUpperCase();
             } else {
-                document.body.innerHTML = `<div style="background:#000; height:100vh; display:flex; align-items:center; justify-content:center; color:#bf953f; text-align:center;"><h1>🛡️ ACESSO REVOGADO</h1></div>`;
+                document.body.innerHTML = `<div style="background:#000; height:100vh; display:flex; align-items:center; justify-content:center; color:#bf953f;"><h1>🛡️ ACESSO REVOGADO</h1></div>`;
             }
         });
     }
@@ -134,8 +130,14 @@
 
     function atualizar() {
         const f = document.getElementById('fatos').value.length;
+        const b = document.getElementById('base').value.length;
+        const d = document.getElementById('destino').value.length;
+        const total = f + b + d;
+        const prog = Math.min((total / 150) * 100, 100);
+        document.getElementById('rigor-bar').style.width = prog + "%";
+        
         const btn = document.getElementById('btn-exe');
-        if (f > 10) { btn.disabled = false; btn.classList.add('active'); } 
+        if (prog >= 30) { btn.disabled = false; btn.classList.add('active'); } 
         else { btn.disabled = true; btn.classList.remove('active'); }
     }
 
@@ -143,7 +145,23 @@
         const f = document.getElementById('fatos').value;
         const b = document.getElementById('base').value;
         const d = document.getElementById('destino').value;
-        const mestre = `### [ PROTOCOLO CÁSSIA V8 ] ###\nIDENTIDADE: Consultor Nível 10.\n\n${fileName ? `DOCUMENTO: ${fileName}\n` : ''}ENTRADA: ${f}\nRIGOR: ${b}\nMISSÃO: ${d}\n\nRESULTADO: Perfeição técnica absoluta.`;
+        
+        const mestre = `### [ PROTOCOLO CÁSSIA V8 - GOD MODE ] ###
+IDENTIDADE: Consultor Nível 10 - Revisor Gramatical Estratégico.
+DIRETRIZ CRÍTICA: Tolerância Zero para erros, gírias ou preguiça mental.
+
+${fileName ? `ARQUIVO TÉCNICO: "${fileName}"\n` : ''}
+TEXTO BRUTO: ${f}
+REGRAS DE RIGOR: ${b}
+MISSÃO FINAL: ${d}
+
+ETAPAS OBRIGATÓRIAS:
+1. SANEAMENTO: Corrigir IMEDIATAMENTE toda a gramática e concordância.
+2. FILTRAGEM: Eliminar todas as "baboseiras", gírias e informalidades.
+3. SOFISTICAÇÃO: Transformar a entrada em um conteúdo de autoridade absoluta.
+
+RESPOSTA: Perfeição técnica e erro zero.`;
+
         document.getElementById('prompt-final').value = mestre;
         document.getElementById('resultado-area').style.display = 'block';
     }
@@ -151,7 +169,7 @@
     function copiar() {
         document.getElementById('prompt-final').select();
         document.execCommand('copy');
-        alert("💎 DIAMANTE COPIADO!");
+        alert("💎 DIAMANTE COPIADO COM RIGOR MÁXIMO!");
     }
 </script>
 </body>

@@ -29,7 +29,6 @@
         main { padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
         .workspace-card { background: var(--card); width: 100%; max-width: 800px; border-radius: 24px; border: 1px solid var(--border); padding: 45px; box-sizing: border-box; box-shadow: 0 0 30px rgba(191, 149, 63, 0.1); position: relative; }
 
-        /* BARRA DE RIGOR MÁXIMO */
         .rigor-container { width: 100%; height: 12px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-bottom: 30px; overflow: hidden; border: 1px solid rgba(191,149,63,0.3); }
         .rigor-bar { width: 0%; height: 100%; background: var(--gold); transition: 0.8s cubic-bezier(0.19, 1, 0.22, 1); box-shadow: 0 0 10px #bf953f; }
         
@@ -38,7 +37,7 @@
         textarea:focus { border-color: #bf953f; background: rgba(0,0,0,0.4); }
 
         .upload-area { border: 1px dashed #444; border-radius: 15px; padding: 25px; text-align: center; cursor: pointer; margin-bottom: 25px; background: rgba(255,255,255,0.02); transition: 0.3s; }
-        .upload-area:hover { border-color: #bf953f; background: rgba(191,149,63,0.05); }
+        .upload-area:hover { border-color: #bf953f; background: rgba(191, 149, 63, 0.05); }
 
         .btn-exe { width: 100%; background: #111; color: #333; border: none; padding: 25px; border-radius: 15px; font-weight: 900; cursor: not-allowed; transition: 0.5s; text-transform: uppercase; letter-spacing: 4px; font-size: 14px; }
         .btn-exe.active { background: var(--gold); color: #000; cursor: pointer; box-shadow: 0 10px 30px rgba(179, 135, 40, 0.4); }
@@ -68,14 +67,14 @@
         <label>Status do Rigor: God Mode</label>
         <div class="rigor-container"><div id="rigor-bar" class="rigor-bar"></div></div>
         
-        <label>1. Dados Brutos & Conteúdo a Ser Lapidado</label>
-        <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Cole aqui o texto ou informações brutas que precisam de correção e rigor..."></textarea>
+        <label>1. Núcleo Criativo & Dados Brutos</label>
+        <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Expresse aqui sua ideia ou insira o conteúdo para ser lapidado..."></textarea>
 
         <label>2. Parâmetros de Rigor Nível 10 (Normas e Leis)</label>
-        <textarea id="base" rows="3" oninput="atualizar()" placeholder="Especifique as diretrizes gramaticais, jurídicas ou técnicas obrigatórias..."></textarea>
+        <textarea id="base" rows="3" oninput="atualizar()" placeholder="Diretrizes gramaticais, jurídicas ou técnicas obrigatórias..."></textarea>
 
         <label>3. Missão / Objetivo Final de Alta Performance</label>
-        <input type="text" id="destino" oninput="atualizar()" placeholder="Qual o resultado final que define o seu sucesso?">
+        <input type="text" id="destino" oninput="atualizar()" placeholder="Qual o resultado final desejado para este comando?">
 
         <label>4. Inteligência de PDF</label>
         <div class="upload-area" onclick="document.getElementById('pdf-file').click()">
@@ -142,4 +141,45 @@
     }
 
     function gerar() {
-        const f = document.getElementById('fatos').value
+        const f = document.getElementById('fatos').value;
+        const b = document.getElementById('base').value;
+        const d = document.getElementById('destino').value;
+        
+        const mestre = `### [ PROTOCOLO DE ELITE CÁSSIA V8 - GOD MODE ] ###
+
+ATUAÇÃO: Você é um Consultor Nível 10, Revisor Gramatical de alta performance e Estrategista.
+CONTEXTO: O material abaixo foi fornecido como ideia/dado bruto e precisa de lapidação total e rigorosa.
+
+--- DIRETRIZES DE RIGOR ABSOLUTO ---
+1. REVISÃO GRAMATICAL: Analise e corrija IMEDIATAMENTE pontuação, concordância, ortografia e sintaxe. O resultado deve ser impecável.
+2. FILTRAGEM DE "BABOSEIRA": Elimine redundâncias, gírias e qualquer conteúdo que não agregue valor técnico ou intelectual.
+3. ESTILO DE RESPOSTA: Use um tom de autoridade, sofisticado e preciso. Proibido respostas genéricas.
+4. RIGOR TÉCNICO: Siga estritamente as diretrizes de: ${b}
+
+--- DADOS PARA PROCESSAMENTO ---
+${fileName ? `DOCUMENTO DE REFERÊNCIA: "${fileName}" (Extraia o máximo de inteligência técnica).\n` : ''}
+IDEIA/DADO BRUTO: ${f}
+
+--- MISSÃO FINAL (OBJETIVO) ---
+OBJETIVO: ${d}
+
+--- FORMATO DE ENTREGA ---
+- Entregue o resultado final lapidado com clareza absoluta.
+- Garanta que cada parágrafo exale profissionalismo e precisão.
+- Se houver inconsistências nos dados, aponte-as com rigor.
+
+"A inteligência é o ouro, o rigor é o cadeado. Execute agora."`;
+
+        document.getElementById('prompt-final').value = mestre;
+        document.getElementById('resultado-area').style.display = 'block';
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    function copiar() {
+        document.getElementById('prompt-final').select();
+        document.execCommand('copy');
+        alert("💎 DIAMANTE LAPIDADO E COPIADO COM RIGOR MÁXIMO!");
+    }
+</script>
+</body>
+</html>

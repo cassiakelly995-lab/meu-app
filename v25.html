@@ -68,17 +68,17 @@
         <div class="rigor-container"><div id="rigor-bar" class="rigor-bar"></div></div>
         
         <label>1. Núcleo Criativo & Dados Brutos</label>
-        <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Expresse aqui sua ideia ou insira o conteúdo para ser lapidado..."></textarea>
+        <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Expresse aqui sua ideia..."></textarea>
 
         <label>2. Parâmetros de Rigor Nível 10 (Normas e Leis)</label>
-        <textarea id="base" rows="3" oninput="atualizar()" placeholder="Diretrizes gramaticais, jurídicas ou técnicas obrigatórias..."></textarea>
+        <textarea id="base" rows="3" oninput="atualizar()" placeholder="Diretrizes obrigatórias..."></textarea>
 
         <label>3. Missão / Objetivo Final de Alta Performance</label>
-        <input type="text" id="destino" oninput="atualizar()" placeholder="Qual o resultado final desejado para este comando?">
+        <input type="text" id="destino" oninput="atualizar()" placeholder="O que a IA deve fazer agora?">
 
         <label>4. Inteligência de PDF</label>
         <div class="upload-area" onclick="document.getElementById('pdf-file').click()">
-            <span style="font-size: 11px; opacity: 0.8; letter-spacing: 1px;">📄 CLIQUE PARA IDENTIFICAR PDF PARA TRANSCRIÇÃO E RIGOR</span>
+            <span style="font-size: 11px; opacity: 0.8; letter-spacing: 1px;">📄 CLIQUE PARA IDENTIFICAR PDF</span>
             <input type="file" id="pdf-file" style="display:none" onchange="checkFile()">
             <span id="file-name" style="display:block; margin-top:10px; color:#bf953f; font-size:11px; font-weight:bold;"></span>
         </div>
@@ -87,9 +87,9 @@
     </div>
 
     <div id="resultado-area">
-        <label style="color: #fcf6ba;">💎 SUPER PROMPT DE ELITE GERADO (GOD MODE):</label>
+        <label style="color: #fcf6ba;">💎 COMANDO DE EXECUÇÃO IMEDIATA GERADO:</label>
         <textarea id="prompt-final" readonly></textarea>
-        <button onclick="copiar()" style="width:100%; padding:22px; background:var(--gold); border:none; border-radius:15px; font-weight:900; cursor:pointer; margin-top:15px; text-transform:uppercase; color:#000;">Copiar Diamante Lapidado</button>
+        <button onclick="copiar()" style="width:100%; padding:22px; background:var(--gold); border:none; border-radius:15px; font-weight:900; cursor:pointer; margin-top:15px; text-transform:uppercase; color:#000;">Copiar e Executar</button>
     </div>
 </main>
 
@@ -145,30 +145,22 @@
         const b = document.getElementById('base').value;
         const d = document.getElementById('destino').value;
         
-        const mestre = `### [ PROTOCOLO DE ELITE CÁSSIA V8 - GOD MODE ] ###
+        const mestre = `ORDEM DE EXECUÇÃO IMEDIATA - PROTOCOLO CÁSSIA V8 (GOD MODE)
 
-ATUAÇÃO: Você é um Consultor Nível 10, Revisor Gramatical de alta performance e Estrategista.
-CONTEXTO: O material abaixo foi fornecido como ideia/dado bruto e precisa de lapidação total e rigorosa.
+VOCÊ DEVE AGIR AGORA como um Consultor Nível 10 e Estrategista. NÃO dê explicações, APENAS EXECUTE o que segue com RIGOR ABSOLUTO.
 
---- DIRETRIZES DE RIGOR ABSOLUTO ---
-1. REVISÃO GRAMATICAL: Analise e corrija IMEDIATAMENTE pontuação, concordância, ortografia e sintaxe. O resultado deve ser impecável.
-2. FILTRAGEM DE "BABOSEIRA": Elimine redundâncias, gírias e qualquer conteúdo que não agregue valor técnico ou intelectual.
-3. ESTILO DE RESPOSTA: Use um tom de autoridade, sofisticado e preciso. Proibido respostas genéricas.
-4. RIGOR TÉCNICO: Siga estritamente as diretrizes de: ${b}
+SUA MISSÃO OBRIGATÓRIA: ${d}
 
---- DADOS PARA PROCESSAMENTO ---
-${fileName ? `DOCUMENTO DE REFERÊNCIA: "${fileName}" (Extraia o máximo de inteligência técnica).\n` : ''}
-IDEIA/DADO BRUTO: ${f}
+DIRETRIZES DE RIGOR GRAMATICAL E TÉCNICO:
+1. REVISÃO TOTAL: Corrija qualquer erro de gramática, pontuação ou sintaxe dos dados brutos.
+2. FILTRO DE BABOSEIRA: Remova 100% de qualquer conteúdo irrelevante, redundante ou informal.
+3. RIGOR TÉCNICO: Aplique estritamente estas normas: ${b}
 
---- MISSÃO FINAL (OBJETIVO) ---
-OBJETIVO: ${d}
+BASE DE DADOS PARA PROCESSAMENTO:
+${fileName ? `REFERÊNCIA TÉCNICA (PDF): "${fileName}"\n` : ''}
+ENTRADA/IDEIA BRUTA: ${f}
 
---- FORMATO DE ENTREGA ---
-- Entregue o resultado final lapidado com clareza absoluta.
-- Garanta que cada parágrafo exale profissionalismo e precisão.
-- Se houver inconsistências nos dados, aponte-as com rigor.
-
-"A inteligência é o ouro, o rigor é o cadeado. Execute agora."`;
+A resposta deve ser entregue lapidada, profissional e com autoridade máxima. Comece a execução agora.`;
 
         document.getElementById('prompt-final').value = mestre;
         document.getElementById('resultado-area').style.display = 'block';
@@ -178,7 +170,7 @@ OBJETIVO: ${d}
     function copiar() {
         document.getElementById('prompt-final').select();
         document.execCommand('copy');
-        alert("💎 DIAMANTE LAPIDADO E COPIADO COM RIGOR MÁXIMO!");
+        alert("💎 DIAMANTE COPIADO! COLE NA IA PARA EXECUÇÃO IMEDIATA.");
     }
 </script>
 </body>

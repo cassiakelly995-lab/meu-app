@@ -3,62 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V8 ELITE | PROTOCOLO</title>
+    <title>V8 ELITE | COMMAND ENGINE</title>
     <style>
-        :root { --bg: #030303; --card: #0a0a0a; --gold: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); }
-        body { background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .container { background: var(--card); border: 1px solid #1a1a1a; padding: 40px; border-radius: 15px; width: 100%; max-width: 700px; text-align: center; }
-        .gold-text { background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; font-size: 24px; }
-        label { display: block; color: #888; font-size: 10px; text-transform: uppercase; margin: 20px 0 10px; text-align: left; }
-        textarea, input { width: 100%; background: #000; border: 1px solid #222; color: #fff; padding: 15px; border-radius: 8px; box-sizing: border-box; }
-        .btn-ativar { width: 100%; padding: 20px; background: var(--gold); border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 30px; text-transform: uppercase; color: #000; }
-        #v8-conteudo, #msg-bloqueio { display: none; }
-        footer { font-size: 9px; opacity: 0.5; margin-top: 40px; text-transform: uppercase; }
+        :root { 
+            --bg: #030303; --card: #0a0a0a; --text: #ffffff; 
+            --border: #1a1a1a; --gold: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+        }
+        body.light-mode { --bg: #f5f7f9; --card: #ffffff; --text: #111; --border: #ddd; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; transition: 0.3s; overflow-x: hidden; }
+        
+        nav { background: var(--card); padding: 15px 30px; border-bottom: 2px solid #bf953f; display: flex; justify-content: space-between; align-items: center; }
+        .theme-btn { cursor: pointer; padding: 10px 20px; border: 1px solid #bf953f; border-radius: 50px; font-size: 10px; font-weight: 800; background: transparent; color: #bf953f; text-transform: uppercase; }
+
+        main { padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
+        .workspace-card { background: var(--card); width: 100%; max-width: 800px; border-radius: 24px; border: 1px solid var(--border); padding: 45px; box-sizing: border-box; }
+
+        .gold-logo { font-size: 28px; font-weight: 900; letter-spacing: 5px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; text-align: center; display: block; margin-bottom: 10px; }
+        
+        label { font-size: 10px; font-weight: 900; color: #bf953f; text-transform: uppercase; display: block; margin-bottom: 12px; letter-spacing: 2px; }
+        textarea, input { width: 100%; background: rgba(0,0,0,0.2); border: 1px solid var(--border); padding: 20px; border-radius: 15px; color: var(--text); font-size: 15px; outline: none; margin-bottom: 25px; box-sizing: border-box; }
+
+        .upload-area { border: 1px dashed #444; border-radius: 15px; padding: 25px; text-align: center; cursor: pointer; margin-bottom: 25px; background: rgba(255,255,255,0.02); }
+
+        .btn-exe { width: 100%; background: var(--gold); color: #000; border: none; padding: 25px; border-radius: 15px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; font-size: 14px; }
+        
+        #resultado-area { display: none; margin-top: 35px; width: 100%; max-width: 800px; }
+        #prompt-final { width: 100%; height: 400px; background: #000; color: #fcf6ba; border: 1px solid #bf953f; padding: 25px; border-radius: 15px; }
+
+        footer { margin-top: 60px; padding: 20px; text-align: center; }
+        .footer-notice { color: var(--text); font-size: 9px; opacity: 0.5; text-transform: uppercase; letter-spacing: 1px; }
+        
+        #bloqueio { display: none; padding: 100px; text-align: center; }
     </style>
 </head>
 <body>
 
-    <div id="msg-bloqueio" style="padding: 100px;">
-        <h1 style="color: #ff4d4d;">🚫 ACESSO REVOGADO</h1>
-        <p>Esta licença não é mais válida.</p>
-    </div>
+<div id="bloqueio">
+    <h1 style="color: #ff4d4d;">🚫 ACESSO REVOGADO</h1>
+    <p>Licença expirada. Contate a administração.</p>
+</div>
 
-    <div id="v8-conteudo" class="container">
-        <div class="gold-text">V8 ELITE</div>
-        <div style="font-size: 9px; color: #444; margin-bottom: 30px;">PROTOCOLO ELITE EDITION</div>
+<div id="app-v8">
+    <nav>
+        <div class="gold-logo">V8 ELITE</div>
+        <button class="theme-btn" onclick="document.body.classList.toggle('light-mode')">Inverter Cores</button>
+    </nav>
 
-        <label>Qual a sua missão obrigatória?</label>
-        <input type="text" placeholder="Ex: Redigir uma petição de urgência...">
+    <main>
+        <div class="workspace-card">
+            <span class="gold-logo" style="font-size: 24px;">V8 ELITE</span>
+            <div style="font-size: 9px; color: #666; text-align: center; margin-bottom: 30px;">PROTOCOLO ELITE EDITION</div>
 
-        <label>Base de Dados / Diretrizes Técnicas (Opcional)</label>
-        <textarea rows="3" placeholder="Cole aqui as diretrizes..."></textarea>
+            <label>Qual a sua missão obrigatória?</label>
+            <input type="text" id="destino" placeholder="Ex: Redigir uma petição de urgência...">
 
-        <label>Fatos ou Idéia Bruta</label>
-        <textarea rows="5" placeholder="Descreva os detalhes do caso..."></textarea>
+            <label>Base de Dados / Diretrizes Técnicas (Opcional)</label>
+            <textarea id="base" rows="3" placeholder="Cole aqui leis ou regras específicas..."></textarea>
 
-        <button class="btn-ativar">ATIVAR PROTOCOLO MODO ELITE</button>
+            <label>Fatos ou Idéia Bruta</label>
+            <textarea id="fatos" rows="5" placeholder="Descreva os detalhes do caso..."></textarea>
+
+            <label>Referência de Documento (Upload PDF)</label>
+            <div class="upload-area" onclick="document.getElementById('pdf-file').click()">
+                <span style="font-size: 11px; opacity: 0.8;">📄 CLIQUE PARA IDENTIFICAR ARQUIVO</span>
+                <input type="file" id="pdf-file" style="display:none" onchange="document.getElementById('file-name').innerText = 'ARQUIVO: ' + this.files[0].name.toUpperCase()">
+                <span id="file-name" style="display:block; margin-top:10px; color:#bf953f; font-size:11px; font-weight:bold;"></span>
+            </div>
+
+            <button class="btn-exe" onclick="gerar()">Ativar Protocolo MODO ELITE</button>
+        </div>
+
+        <div id="resultado-area">
+            <label>💎 COMANDO DE EXECUÇÃO GERADO:</label>
+            <textarea id="prompt-final" readonly></textarea>
+            <button onclick="navigator.clipboard.writeText(document.getElementById('prompt-final').value); alert('💎 COPIADO!')" style="width:100%; padding:20px; background:var(--gold); border:none; border-radius:15px; font-weight:900; margin-top:10px; cursor:pointer;">COPIAR DIAMANTE POLIDO</button>
+        </div>
 
         <footer>
-            A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. ESTE PROGRAMA APENAS GERA O PROMPT.
+            <div class="footer-notice">V8 ELITE EDITION | PROTEÇÃO DE DADOS ATIVADA</div>
+            <div class="footer-notice" style="margin-top:10px;">A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. ESTE PROGRAMA APENAS GERA O PROMPT.</div>
         </footer>
-    </div>
+    </main>
+</div>
 
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const idUser = urlParams.get('id');
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const idUser = urlParams.get('id');
 
-        // REGRA DA HELEN: NUNCA BLOQUEIA
-        if (idUser === "Helen_cristina") {
-            document.getElementById('v8-conteudo').style.display = 'block';
+    // BLINDAGEM HELEN CRISTINA - NÃO MEXER
+    if (idUser === "Helen_cristina") {
+        document.getElementById('app-v8').style.display = 'block';
+    } else {
+        const ativos = JSON.parse(localStorage.getItem('v8_acessos_ativos')) || [];
+        if (ativos.find(acc => acc.id === idUser)) {
+            document.getElementById('app-v8').style.display = 'block';
         } else {
-            // Verifica se o ID está na sua lista de autorizados do ADM
-            const ativos = JSON.parse(localStorage.getItem('v8_acessos_ativos')) || [];
-            if (ativos.find(acc => acc.id === idUser)) {
-                document.getElementById('v8-conteudo').style.display = 'block';
-            } else {
-                document.getElementById('msg-bloqueio').style.display = 'block';
-            }
+            document.getElementById('bloqueio').style.display = 'block';
+            document.getElementById('app-v8').style.display = 'none';
         }
-    </script>
+    }
+
+    function gerar() {
+        const f = document.getElementById('fatos').value;
+        const b = document.getElementById('base').value;
+        const d = document.getElementById('destino').value;
+        
+        // PROMPT DE RIGOR TÉCNICO EXTREMO (ANTI-BESTEIRA)
+        const mestre = `ORDEM DE EXECUÇÃO IMEDIATA - PROTOCOLO V8 (MODO ELITE)
+ATUE COMO UM ESTRATEGISTA TIER 10. RIGOR ABSOLUTO NA GRAMÁTICA E SINTAXE.
+MISSÃO: ${d}
+DIRETRIZES: ${b}
+ENTRADA: ${f}
+REMOVA QUALQUER REDUNDÂNCIA OU ERRO DE CONCORDÂNCIA. EXECUTE COM PRECISÃO CIRÚRGICA.`;
+
+        document.getElementById('prompt-final').value = mestre;
+        document.getElementById('resultado-area').style.display = 'block';
+    }
+</script>
 </body>
 </html>

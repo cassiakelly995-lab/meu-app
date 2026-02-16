@@ -10,56 +10,62 @@
             --bg: #050505; --card: #0a0a0a; --text: #ffffff; 
             --border: #1a1a1a; 
             --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
+            --glow: 0 0 30px rgba(191, 149, 63, 0.1);
         }
         
         body.light-mode { --bg: #fdfdfd; --card: #ffffff; --text: #050505; --border: #e0e0e0; }
         
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; transition: 0.4s; overflow-x: hidden; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', 'Segoe UI', sans-serif; transition: 0.4s; overflow-x: hidden; }
 
-        nav { background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); padding: 20px 40px; border-bottom: 1px solid #bf953f; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        /* Barra de Navegação Elite */
+        nav { background: rgba(0,0,0,0.9); backdrop-filter: blur(15px); padding: 20px 40px; border-bottom: 1px solid #bf953f; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
         
         .logo-v8 { font-size: 24px; font-weight: 900; letter-spacing: 6px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
 
-        .btn-top { cursor: pointer; padding: 8px 15px; border: 1px solid #bf953f; border-radius: 50px; font-size: 9px; font-weight: 900; background: transparent; color: #bf953f; text-transform: uppercase; margin-left: 10px; }
+        .btn-top { cursor: pointer; padding: 10px 20px; border: 1px solid #bf953f; border-radius: 50px; font-size: 10px; font-weight: 900; background: transparent; color: #bf953f; text-transform: uppercase; letter-spacing: 1px; margin-left: 10px; transition: 0.3s; }
+        .btn-top:hover { background: var(--gold); color: #000; }
 
         main { padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
-        .glass-panel { background: var(--card); width: 100%; max-width: 850px; border-radius: 30px; border: 1px solid var(--border); padding: 40px; box-sizing: border-box; box-shadow: 0 0 30px rgba(191,149,63,0.1); position: relative; }
+        .glass-panel { background: var(--card); width: 100%; max-width: 850px; border-radius: 30px; border: 1px solid var(--border); padding: 45px; box-sizing: border-box; box-shadow: var(--glow); position: relative; }
 
-        /* BARRA DE PROGRESSO COM PORCENTAGEM REAIS */
-        .progress-container { margin-bottom: 35px; }
-        .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .progress-label { font-size: 10px; font-weight: 900; color: #bf953f; letter-spacing: 2px; text-transform: uppercase; }
-        .progress-percent { font-family: 'Consolas', monospace; color: #fcf6ba; font-size: 14px; font-weight: bold; }
-        .progress-bar-bg { width: 100%; height: 6px; background: #111; border-radius: 10px; overflow: hidden; border: 1px solid #222; }
-        .progress-bar-fill { width: 0%; height: 100%; background: var(--gold); transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        /* Monitor de Telemetria (Porcentagem) */
+        .progress-container { margin-bottom: 40px; }
+        .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .progress-label { font-size: 10px; font-weight: 900; color: #bf953f; letter-spacing: 2px; text-transform: uppercase; opacity: 0.8; }
+        .progress-percent { font-family: 'Consolas', monospace; color: #fcf6ba; font-size: 16px; font-weight: bold; text-shadow: 0 0 10px rgba(191,149,63,0.3); }
+        .progress-bar-bg { width: 100%; height: 8px; background: #111; border-radius: 20px; overflow: hidden; border: 1px solid #222; }
+        .progress-bar-fill { width: 0%; height: 100%; background: var(--gold); transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
 
-        label { font-size: 10px; font-weight: 800; color: #bf953f; text-transform: uppercase; display: block; margin-bottom: 12px; letter-spacing: 2px; }
+        label { font-size: 11px; font-weight: 800; color: #bf953f; text-transform: uppercase; display: block; margin-bottom: 15px; letter-spacing: 2px; }
         
-        textarea, input { width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 18px; border-radius: 12px; color: var(--text); font-size: 15px; outline: none; margin-bottom: 25px; box-sizing: border-box; }
-        textarea:focus { border-color: #bf953f; }
+        textarea, input { width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 20px; border-radius: 15px; color: var(--text); font-size: 16px; outline: none; margin-bottom: 30px; box-sizing: border-box; transition: 0.3s; }
+        textarea:focus { border-color: #bf953f; background: rgba(255,255,255,0.05); }
 
-        .btn-prime { width: 100%; background: var(--gold); color: #000; border: none; padding: 25px; border-radius: 15px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; font-size: 15px; transition: 0.5s; }
-        .btn-prime.ready { animation: pulseGlow 1.5s infinite; }
+        /* Ativação do Protocolo */
+        .btn-prime { width: 100%; background: var(--gold); color: #000; border: none; padding: 28px; border-radius: 18px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 5px; font-size: 16px; transition: 0.5s; box-shadow: 0 10px 30px rgba(191,149,63,0.2); }
+        .btn-prime.ready { animation: pulseGlow 1.5s infinite; transform: scale(1.02); }
 
         @keyframes pulseGlow {
-            0% { box-shadow: 0 0 0 0 rgba(191, 149, 63, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(191, 149, 63, 0); }
+            0% { box-shadow: 0 0 0 0 rgba(191, 149, 63, 0.6); }
+            70% { box-shadow: 0 0 0 20px rgba(191, 149, 63, 0); }
             100% { box-shadow: 0 0 0 0 rgba(191, 149, 63, 0); }
         }
 
-        #output-zone { display: none; margin-top: 40px; width: 100%; max-width: 850px; }
-        #prompt-result { width: 100%; height: 450px; background: #000; color: #fcf6ba; border: 1px solid #bf953f; padding: 25px; border-radius: 15px; font-family: 'Consolas', monospace; font-size: 14px; }
+        #output-zone { display: none; margin-top: 50px; width: 100%; max-width: 850px; animation: fadeIn 0.8s ease; }
+        #prompt-result { width: 100%; height: 480px; background: #000; color: #fcf6ba; border: 1px solid #bf953f; padding: 30px; border-radius: 20px; font-family: 'Consolas', monospace; font-size: 14px; line-height: 1.7; box-shadow: inset 0 0 20px rgba(191,149,63,0.1); }
 
-        footer { margin-top: 60px; padding: 40px; text-align: center; border-top: 1px solid var(--border); }
-        .footer-text { font-size: 9px; color: var(--text); opacity: 0.4; text-transform: uppercase; letter-spacing: 2px; }
+        footer { margin-top: 80px; padding: 40px; text-align: center; border-top: 1px solid var(--border); }
+        .footer-text { font-size: 10px; color: var(--text); opacity: 0.5; text-transform: uppercase; letter-spacing: 2px; line-height: 2; }
 
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         #access-denied { display: none; height: 100vh; flex-direction: column; justify-content: center; align-items: center; background: #000; color: #ff4d4d; }
     </style>
 </head>
 <body>
 
 <div id="access-denied">
-    <h1>ACCESS REVOKED</h1>
+    <h1 style="letter-spacing: 10px;">ACCESS REVOKED</h1>
+    <p>SISTEMA V8 ELITE PROTOCOL</p>
 </div>
 
 <div id="main-app">
@@ -67,7 +73,7 @@
         <div class="logo-v8">V8 ELITE</div>
         <div>
             <button class="btn-top" onclick="document.body.classList.toggle('light-mode')">Inverter Cores</button>
-            <button class="btn-top" style="border-color:#ff4d4d; color:#ff4d4d;" onclick="limparTudo()">Limpar Memória</button>
+            <button class="btn-top" style="border-color:#ff4d4d; color:#ff4d4d;" onclick="limparMemoria()">Limpar Memória</button>
         </div>
     </nav>
 
@@ -75,7 +81,7 @@
         <div class="glass-panel">
             <div class="progress-container">
                 <div class="progress-header">
-                    <span class="progress-label">Status da Engenharia de Comando</span>
+                    <span class="progress-label">Protocolo de Integridade de Dados</span>
                     <span id="percent-text" class="progress-percent">0%</span>
                 </div>
                 <div class="progress-bar-bg">
@@ -83,29 +89,30 @@
                 </div>
             </div>
 
-            <label>Core Mission Objective</label>
-            <input type="text" id="destino" oninput="atualizar()" placeholder="Qual o objetivo final?">
+            <label>Definição do Destino (Missão)</label>
+            <input type="text" id="destino" oninput="monitorar()" placeholder="Ex: Petição Inicial de Alimentos...">
 
-            <label>Parâmetros Técnicos</label>
-            <textarea id="base" rows="2" placeholder="Diretrizes específicas..."></textarea>
+            <label>Diretrizes Técnicas & Rigor Jurídico</label>
+            <textarea id="base" rows="2" placeholder="Ex: Basear na Lei 5.478/68, tom persuasivo..."></textarea>
 
-            <label>Input de Inteligência Bruta</label>
-            <textarea id="fatos" rows="5" oninput="atualizar()" placeholder="Descreva os fatos aqui..."></textarea>
+            <label>Relato Bruto dos Fatos (Input Inteligência)</label>
+            <textarea id="fatos" rows="6" oninput="monitorar()" placeholder="Cole aqui o relato do cliente, mesmo com gírias..."></textarea>
 
-            <button id="btn-main" class="btn-prime" onclick="gerarPrompt()">Ativar Protocolo MODO ELITE</button>
+            <button id="btn-main" class="btn-prime" onclick="processar()">Ativar Protocolo MODO ELITE</button>
         </div>
 
         <div id="output-zone">
-            <label>💎 COMANDO DE ALTA PERFORMANCE GERADO:</label>
+            <label style="color: #fcf6ba; text-shadow: 0 0 10px rgba(191,149,63,0.5);">💎 DIAMANTE POLIDO (RIGOR ABSOLUTO):</label>
             <textarea id="prompt-result" readonly></textarea>
-            <button onclick="copiar()" style="width:100%; padding:20px; background:var(--gold); border:none; border-radius:15px; font-weight:900; margin-top:15px; cursor:pointer;">Copiar Comando</button>
+            <button onclick="copiar()" style="width:100%; padding:25px; background:var(--gold); border:none; border-radius:15px; font-weight:900; margin-top:20px; cursor:pointer; text-transform:uppercase; letter-spacing:2px;">Copiar Comando de Alta Performance</button>
         </div>
     </main>
 
     <footer>
         <div class="footer-text">
-            <strong>CÁSSIA PROMPT ® | V8 ELITE EDITION | LICENÇA INTERNACIONAL</strong><br><br>
-            A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. ESTE PROGRAMA APENAS GERA O PROMPT.
+            <strong>CÁSSIA PROMPT ® | V8 ELITE EDITION | LICENÇA INTERNACIONAL</strong><br>
+            ENGENHARIA DE COMANDO COM FILTRO ANTI-ALUCINAÇÃO ATIVADO<br><br>
+            <span style="opacity: 0.8; color: #ff4d4d;">A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. ESTE PROGRAMA APENAS GERA O PROMPT.</span>
         </div>
     </footer>
 </div>
@@ -120,21 +127,32 @@
         else { document.getElementById('main-app').style.display = 'none'; document.getElementById('access-denied').style.display = 'flex'; }
     }
 
-    // FUNÇÃO QUE CALCULA A PORCENTAGEM EM TEMPO REAL
-    function atualizar() {
+    function monitorar() {
         const d = document.getElementById('destino').value.length;
         const f = document.getElementById('fatos').value.length;
         
-        // Cálculo de preenchimento (meta de 20 caracteres no destino e 50 nos fatos para 100%)
-        let progresso = ((d / 20) * 30) + ((f / 50) * 70);
+        let progresso = ((d / 20) * 30) + ((f / 60) * 70);
         if (progresso > 100) progresso = 100;
         
         const perc = Math.round(progresso);
         document.getElementById('bar-fill').style.width = perc + "%";
         document.getElementById('percent-text').innerText = perc + "%";
 
-        if(perc >= 80) document.getElementById('btn-main').classList.add('ready');
+        if(perc >= 90) document.getElementById('btn-main').classList.add('ready');
         else document.getElementById('btn-main').classList.remove('ready');
+    }
+
+    function processar() {
+        // Simulação de processamento de alta performance
+        const btn = document.getElementById('btn-main');
+        btn.innerText = "PROCESSANDO RIGOR JURÍDICO...";
+        btn.style.opacity = "0.7";
+        
+        setTimeout(() => {
+            gerarPrompt();
+            btn.innerText = "ATUALIZAR PROTOCOLO";
+            btn.style.opacity = "1";
+        }, 1200);
     }
 
     function gerarPrompt() {
@@ -142,14 +160,30 @@
         const b = document.getElementById('base').value;
         const f = document.getElementById('fatos').value;
 
-        const mestre = `ORDEM DE EXECUÇÃO SUPREMA - PROTOCOLO V8 ELITE\nMISSÃO: ${d}\nRIGOR: ${b}\nINPUT: ${f}`;
+        // O MOTOR DE RIGOR EXTREMO (ANTI-ALUCINAÇÃO E VERACIDADE)
+        const mestre = `ORDEM DE EXECUÇÃO SUPREMA - PROTOCOLO V8 ELITE EDITION
+ESTE É UM COMANDO DE ALTA PRECISÃO. SIGA AS DIRETRIZES ABAIXO COM RIGOR MILITAR:
+
+1. MISSÃO: ${d}
+2. DIRETRIZES TÉCNICAS: ${b}
+3. INPUT DE FATOS REAIS: ${f}
+
+⚠️ REGRAS DE OURO (FILTRO DA VERDADE):
+- PROIBIDO ALUCINAR: Não invente nomes, datas, valores ou factos. Se não está no "Input de Fatos", não existe.
+- PROIBIDO INVENTAR: Atenha-se estritamente à verdade dos factos narrados.
+- RIGOR GRAMATICAL: Transforme gírias e erros do input bruto num texto jurídico impecável, polido e autoritário.
+- FIDELIDADE: Se houver lacunas, peça esclarecimentos ao utilizador em vez de presumir a informação.
+- TOM: Tier 10 Strategist. Sintaxe perfeita. Sem redundâncias.
+
+QUALQUER DESVIO DA VERDADE OU CRIAÇÃO FICCIONAL SERÁ CONSIDERADA FALHA CRÍTICA NO SISTEMA.`;
 
         document.getElementById('prompt-result').value = mestre;
         document.getElementById('output-zone').style.display = 'block';
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }
 
-    function limparTudo() {
-        if(confirm("Limpar todos os dados?")) {
+    function limparMemoria() {
+        if(confirm("Deseja apagar todos os dados para garantir a privacidade total?")) {
             location.reload();
         }
     }
@@ -158,7 +192,7 @@
         const res = document.getElementById('prompt-result');
         res.select();
         document.execCommand('copy');
-        alert("💎 COPIADO!");
+        alert("💎 DIAMANTE COPIADO COM SUCESSO!");
     }
 
     checkAccess();

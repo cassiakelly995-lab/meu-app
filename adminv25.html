@@ -2,18 +2,17 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>GESTOR V8 ELITE - CÁSSIA PROMPT</title>
+    <title>GESTOR V8 ELITE</title>
     <style>
         body { background: #000; color: #fff; font-family: sans-serif; text-align: center; padding: 20px; }
         .card { border: 2px solid #ed0b5a; padding: 30px; border-radius: 20px; max-width: 500px; margin: auto; box-shadow: 0 0 20px rgba(237, 11, 90, 0.2); }
-        h1 { text-transform: uppercase; font-size: 20px; letter-spacing: 2px; color: #ed0b5a; }
+        h1 { text-transform: uppercase; color: #ed0b5a; letter-spacing: 2px; }
         input { width: 90%; padding: 15px; margin: 15px 0; background: #111; border: 1px solid #333; color: #fff; border-radius: 10px; }
         .btn-gerar { background: #ed0b5a; color: #fff; border: none; padding: 15px; width: 95%; border-radius: 10px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
-        .lista { text-align: left; margin-top: 30px; }
-        .item { background: #111; padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #222; }
-        .btn-copiar { background: #007bff; color: #fff; border: none; padding: 10px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 12px; margin-top: 10px; }
+        .item { background: #111; padding: 15px; border-radius: 10px; margin-top: 20px; border: 1px solid #222; text-align: left; }
+        .btn-copiar { background: #007bff; color: #fff; border: none; padding: 10px; width: 100%; border-radius: 5px; cursor: pointer; margin-top: 10px; font-weight: bold; }
         .btn-revogar { background: none; border: 1px solid #ff4d4d; color: #ff4d4d; padding: 5px 10px; cursor: pointer; border-radius: 5px; float: right; font-size: 10px; }
-        footer { margin-top: 40px; font-size: 10px; opacity: 0.7; }
+        footer { margin-top: 40px; font-size: 10px; color: #666; }
     </style>
 </head>
 <body>
@@ -22,7 +21,7 @@
     <h1>Gestor <span style="color: #fff;">V8 Elite</span></h1>
     <input type="text" id="nomeDoutora" placeholder="NOME DA DOUTORA">
     <button class="btn-gerar" onclick="gerarAcesso()">Gerar Link e Autorizar</button>
-    <div class="lista" id="listaAcessos"></div>
+    <div id="listaAcessos"></div>
     <footer>
         <strong style="color: #bf953f;">LICENCIADO PARA: CÁSSIA PROMPT</strong><br><br>
         A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. <br>ESTE PROGRAMA APENAS GERA O PROMPT.
@@ -30,7 +29,7 @@
 </div>
 
 <script>
-    // HELEN CRISTINA SEMPRE ATIVA
+    // HELEN CRISTINA SEMPRE ATIVA - REGRAS FIXAS
     let acessos = JSON.parse(localStorage.getItem('v8_acessos_ativos')) || [
         { nome: "HELEN CRISTINA", id: "Helen_cristina" }
     ];
@@ -67,10 +66,18 @@
     }
 
     function copiar(id) {
-        // CORREÇÃO DO ERRO 404: Aponta para v25.html
-        const link = window.location.origin + window.location.pathname.replace('adminv25.html', 'v25.html') + "?id=" + id;
-        navigator.clipboard.writeText(link);
-        alert("LINK COPIADO COM SUCESSO!");
+        // CORREÇÃO DEFINITIVA DO 404: Aponta para a pasta meu-app e o arquivo v25.html
+        const base = "https://cassiakelly995-lab.github.io/meu-app/v25.html";
+        const linkFinal = base + "?id=" + id;
+        
+        const el = document.createElement('textarea');
+        el.value = linkFinal;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        
+        alert("LINK COPIADO: " + linkFinal);
     }
     renderizar();
 </script>

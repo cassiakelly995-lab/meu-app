@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V8 ELITE | COMMAND ENGINE</title>
+    <title>V8 ELITE | MOTOR DE COMANDO</title>
     
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2592/2592231.png">
     
@@ -47,43 +47,43 @@
 
 <nav>
     <div class="gold-logo">V8 ELITE</div>
-    <button class="theme-btn" onclick="toggleTheme()">Invert Mode</button>
+    <button class="theme-btn" onclick="toggleTheme()">Inverter Cores</button>
 </nav>
 
 <main>
     <div class="workspace-card">
-        <label>Rigor Status: High-Level Activated</label>
+        <label>Status de Rigor: Alta Performance Ativada</label>
         <div class="rigor-container"><div id="rigor-bar" class="rigor-bar"></div></div>
         
-        <label>1. Creative Core & Raw Intelligence</label>
-        <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Express your idea here..."></textarea>
+        <label>1. Núcleo Criativo e Inteligência Bruta</label>
+        <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Expresse sua ideia ou fatos aqui..."></textarea>
 
-        <label>2. Rigor Parameters (Guidelines)</label>
-        <textarea id="base" rows="3" oninput="atualizar()" placeholder="Grammar, technical or legal guidelines..."></textarea>
+        <label>2. Parâmetros de Rigor (Diretrizes Técnicas)</label>
+        <textarea id="base" rows="3" oninput="atualizar()" placeholder="Gramática, leis, artigos ou regras específicas..."></textarea>
 
-        <label>3. Final Mission / High-Performance Goal</label>
-        <input type="text" id="destino" oninput="atualizar()" placeholder="What should the AI execute?">
+        <label>3. Missão Final / Objetivo de Elite</label>
+        <input type="text" id="destino" oninput="atualizar()" placeholder="O que a IA deve executar com perfeição?">
 
-        <label>4. Document Reference</label>
+        <label>4. Referência de Documento (Opcional)</label>
         <div class="upload-area" onclick="document.getElementById('pdf-file').click()">
-            <span style="font-size: 11px; opacity: 0.8; letter-spacing: 1px;">📄 CLICK TO IDENTIFY FILE FOR PROCESSING</span>
+            <span style="font-size: 11px; opacity: 0.8; letter-spacing: 1px;">📄 CLIQUE PARA IDENTIFICAR ARQUIVO DE PROCESSAMENTO</span>
             <input type="file" id="pdf-file" style="display:none" onchange="checkFile()">
             <span id="file-name" style="display:block; margin-top:10px; color:#bf953f; font-size:11px; font-weight:bold;"></span>
         </div>
 
-        <button id="btn-exe" class="btn-exe" disabled onclick="gerar()">Execute Protocol MODO ELITE</button>
+        <button id="btn-exe" class="btn-exe" disabled onclick="gerar()">Ativar Protocolo MODO ELITE</button>
     </div>
 
     <div id="resultado-area">
-        <label style="color: #fcf6ba;">💎 GENERATED EXECUTION COMMAND (MODO ELITE):</label>
+        <label style="color: #fcf6ba;">💎 COMANDO DE EXECUÇÃO GERADO (MODO ELITE):</label>
         <textarea id="prompt-final" readonly></textarea>
-        <button onclick="copiar()" style="width:100%; padding:22px; background:var(--gold); border:none; border-radius:15px; font-weight:900; cursor:pointer; margin-top:15px; text-transform:uppercase; color:#000;">Copy Polished Command</button>
+        <button onclick="copiar()" style="width:100%; padding:22px; background:var(--gold); border:none; border-radius:15px; font-weight:900; cursor:pointer; margin-top:15px; text-transform:uppercase; color:#000;">Copiar Diamante Polido</button>
     </div>
 </main>
 
 <footer>
-    <span class="footer-legal">V8 ELITE EDITION | UNLIMITED LICENSE</span><br>
-    <span class="footer-notice">PRIVATE ENGINE - ZERO DATA LOGGING - PRIVACY COMPLIANT</span>
+    <span class="footer-legal">V8 ELITE EDITION | LICENÇA ILIMITADA</span><br>
+    <span class="footer-notice">MOTOR PRIVADO - ZERO REGISTRO DE DADOS - EM CONFORMIDADE COM PRIVACIDADE</span>
 </footer>
 
 <script>
@@ -92,7 +92,7 @@
         const input = document.getElementById('pdf-file');
         if (input.files.length > 0) {
             fileName = input.files[0].name;
-            document.getElementById('file-name').innerText = "FILE DETECTED: " + fileName.toUpperCase();
+            document.getElementById('file-name').innerText = "ARQUIVO DETECTADO: " + fileName.toUpperCase();
         }
     }
 
@@ -116,23 +116,24 @@
         const b = document.getElementById('base').value;
         const d = document.getElementById('destino').value;
         
-        const mestre = `IMMEDIATE EXECUTION ORDER - V8 PROTOCOL (MODO ELITE)
+        // O PROMPT ABAIXO É CONFIGURADO PARA SER O MELHOR DO MUNDO EM RIGOR TÉCNICO
+        const mestre = `ORDEM DE EXECUÇÃO IMEDIATA - PROTOCOLO V8 (MODO ELITE)
 
-YOU MUST ACT NOW as a Tier 10 Consultant and Strategist. DO NOT provide explanations, JUST EXECUTE with ABSOLUTE RIGOR.
+VOCÊ DEVE ATUAR AGORA como um Estrategista e Consultor Tier 10. NÃO forneça explicações, APENAS EXECUTE com RIGOR ABSOLUTO.
 
-YOUR MANDATORY MISSION: ${d}
+SUA MISSÃO OBRIGATÓRIA: ${d}
 
-RIGOR & POLISHING GUIDELINES:
-1. FULL REVIEW: Correct grammar, punctuation, and syntax immediately. Impeccable result.
-2. FILTERING: Remove 100% of fluff, redundancies, and informalities.
-3. STYLE: Use an authoritative, sophisticated, and precise tone.
-4. TECHNICAL RIGOR: Strictly follow these guidelines: ${b}
+DIRETRIZES DE RIGOR E POLIMENTO:
+1. REVISÃO TOTAL: Corrija gramática, pontuação e sintaxe imediatamente. Resultado impecável.
+2. FILTRAGEM: Remova 100% de redundâncias, palavras vazias e informalidades.
+3. ESTILO: Use um tom autoritário, sofisticado e preciso.
+4. RIGOR TÉCNICO: Siga estritamente estas diretrizes: ${b}
 
-DATA BASE:
-${fileName ? `TECHNICAL REFERENCE: "${fileName}"\n` : ''}
-RAW INPUT/IDEA: ${f}
+BASE DE DADOS:
+${fileName ? `REFERÊNCIA TÉCNICA: "${fileName}"\n` : ''}
+ENTRADA BRUTA/IDEIA: ${f}
 
-Delivery format: Polished final result with absolute clarity and professionalism. Execute now.`;
+Formato de entrega: Resultado final polido com clareza absoluta e profissionalismo de elite. Execute agora.`;
 
         document.getElementById('prompt-final').value = mestre;
         document.getElementById('resultado-area').style.display = 'block';
@@ -142,7 +143,7 @@ Delivery format: Polished final result with absolute clarity and professionalism
     function copiar() {
         document.getElementById('prompt-final').select();
         document.execCommand('copy');
-        alert("💎 POLISHED DIAMOND COPIED SUCCESSFULLY!");
+        alert("💎 DIAMANTE POLIDO COPIADO COM SUCESSO!");
     }
 </script>
 </body>

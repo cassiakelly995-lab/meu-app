@@ -10,7 +10,6 @@
             --bg: #050505; --card: #0a0a0a; --text: #ffffff; 
             --border: #1a1a1a; 
             --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
-            --glow: 0 0 20px rgba(191, 149, 63, 0.15);
         }
         
         body.light-mode { --bg: #fdfdfd; --card: #ffffff; --text: #050505; --border: #e0e0e0; }
@@ -21,19 +20,25 @@
         
         .logo-v8 { font-size: 24px; font-weight: 900; letter-spacing: 6px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
 
-        .btn-top { cursor: pointer; padding: 8px 15px; border: 1px solid #bf953f; border-radius: 50px; font-size: 9px; font-weight: 900; background: transparent; color: #bf953f; text-transform: uppercase; margin-left: 10px; transition: 0.3s; }
-        .btn-top:hover { background: var(--gold); color: #000; }
+        .btn-top { cursor: pointer; padding: 8px 15px; border: 1px solid #bf953f; border-radius: 50px; font-size: 9px; font-weight: 900; background: transparent; color: #bf953f; text-transform: uppercase; margin-left: 10px; }
 
         main { padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
-        .glass-panel { background: var(--card); width: 100%; max-width: 850px; border-radius: 30px; border: 1px solid var(--border); padding: 40px; box-sizing: border-box; box-shadow: var(--glow); }
+        .glass-panel { background: var(--card); width: 100%; max-width: 850px; border-radius: 30px; border: 1px solid var(--border); padding: 40px; box-sizing: border-box; box-shadow: 0 0 30px rgba(191,149,63,0.1); position: relative; }
+
+        /* BARRA DE PROGRESSO COM PORCENTAGEM REAIS */
+        .progress-container { margin-bottom: 35px; }
+        .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .progress-label { font-size: 10px; font-weight: 900; color: #bf953f; letter-spacing: 2px; text-transform: uppercase; }
+        .progress-percent { font-family: 'Consolas', monospace; color: #fcf6ba; font-size: 14px; font-weight: bold; }
+        .progress-bar-bg { width: 100%; height: 6px; background: #111; border-radius: 10px; overflow: hidden; border: 1px solid #222; }
+        .progress-bar-fill { width: 0%; height: 100%; background: var(--gold); transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
 
         label { font-size: 10px; font-weight: 800; color: #bf953f; text-transform: uppercase; display: block; margin-bottom: 12px; letter-spacing: 2px; }
         
-        textarea, input { width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 18px; border-radius: 12px; color: var(--text); font-size: 15px; outline: none; margin-bottom: 25px; box-sizing: border-box; transition: 0.3s; }
-        textarea:focus { border-color: #bf953f; background: rgba(255,255,255,0.05); }
+        textarea, input { width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 18px; border-radius: 12px; color: var(--text); font-size: 15px; outline: none; margin-bottom: 25px; box-sizing: border-box; }
+        textarea:focus { border-color: #bf953f; }
 
-        /* Botão Pulsante Inteligente */
-        .btn-prime { width: 100%; background: var(--gold); color: #000; border: none; padding: 25px; border-radius: 15px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; font-size: 15px; transition: 0.5s; position: relative; }
+        .btn-prime { width: 100%; background: var(--gold); color: #000; border: none; padding: 25px; border-radius: 15px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; font-size: 15px; transition: 0.5s; }
         .btn-prime.ready { animation: pulseGlow 1.5s infinite; }
 
         @keyframes pulseGlow {
@@ -42,18 +47,12 @@
             100% { box-shadow: 0 0 0 0 rgba(191, 149, 63, 0); }
         }
 
-        /* Sistema de Carregamento SpaceX */
-        #loader-area { display: none; width: 100%; max-width: 850px; margin-top: 30px; text-align: center; }
-        .progress-bar { width: 100%; height: 2px; background: #1a1a1a; margin-top: 10px; border-radius: 10px; overflow: hidden; }
-        .progress-fill { width: 0%; height: 100%; background: var(--gold); transition: width 1.5s linear; }
-
-        #output-zone { display: none; margin-top: 40px; width: 100%; max-width: 850px; animation: fadeIn 0.8s ease; }
-        #prompt-result { width: 100%; height: 450px; background: #000; color: #fcf6ba; border: 1px solid #bf953f; padding: 25px; border-radius: 15px; font-family: 'Consolas', monospace; font-size: 14px; line-height: 1.6; }
+        #output-zone { display: none; margin-top: 40px; width: 100%; max-width: 850px; }
+        #prompt-result { width: 100%; height: 450px; background: #000; color: #fcf6ba; border: 1px solid #bf953f; padding: 25px; border-radius: 15px; font-family: 'Consolas', monospace; font-size: 14px; }
 
         footer { margin-top: 60px; padding: 40px; text-align: center; border-top: 1px solid var(--border); }
         .footer-text { font-size: 9px; color: var(--text); opacity: 0.4; text-transform: uppercase; letter-spacing: 2px; }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         #access-denied { display: none; height: 100vh; flex-direction: column; justify-content: center; align-items: center; background: #000; color: #ff4d4d; }
     </style>
 </head>
@@ -61,7 +60,6 @@
 
 <div id="access-denied">
     <h1>ACCESS REVOKED</h1>
-    <p>SISTEMA DE SEGURANÇA V8 ELITE</p>
 </div>
 
 <div id="main-app">
@@ -75,27 +73,32 @@
 
     <main>
         <div class="glass-panel">
-            <label>Core Mission Objective</label>
-            <input type="text" id="destino" oninput="checkReady()" placeholder="O que deseja alcançar?">
+            <div class="progress-container">
+                <div class="progress-header">
+                    <span class="progress-label">Status da Engenharia de Comando</span>
+                    <span id="percent-text" class="progress-percent">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div id="bar-fill" class="progress-bar-fill"></div>
+                </div>
+            </div>
 
-            <label>Parâmetros Técnicos & Rigor</label>
+            <label>Core Mission Objective</label>
+            <input type="text" id="destino" oninput="atualizar()" placeholder="Qual o objetivo final?">
+
+            <label>Parâmetros Técnicos</label>
             <textarea id="base" rows="2" placeholder="Diretrizes específicas..."></textarea>
 
             <label>Input de Inteligência Bruta</label>
-            <textarea id="fatos" rows="5" oninput="checkReady()" placeholder="Descreva os fatos aqui..."></textarea>
+            <textarea id="fatos" rows="5" oninput="atualizar()" placeholder="Descreva os fatos aqui..."></textarea>
 
-            <button id="btn-main" class="btn-prime" onclick="processar()">Ativar Protocolo MODO ELITE</button>
-        </div>
-
-        <div id="loader-area">
-            <div style="font-size: 10px; letter-spacing: 3px; color: #bf953f; font-weight: 900;">PROCESSANDO ENGENHARIA REVERSA...</div>
-            <div class="progress-bar"><div id="fill" class="progress-fill"></div></div>
+            <button id="btn-main" class="btn-prime" onclick="gerarPrompt()">Ativar Protocolo MODO ELITE</button>
         </div>
 
         <div id="output-zone">
             <label>💎 COMANDO DE ALTA PERFORMANCE GERADO:</label>
             <textarea id="prompt-result" readonly></textarea>
-            <button onclick="copiar()" style="width:100%; padding:20px; background:var(--gold); border:none; border-radius:15px; font-weight:900; margin-top:15px; cursor:pointer; text-transform:uppercase;">Copiar Comando</button>
+            <button onclick="copiar()" style="width:100%; padding:20px; background:var(--gold); border:none; border-radius:15px; font-weight:900; margin-top:15px; cursor:pointer;">Copiar Comando</button>
         </div>
     </main>
 
@@ -117,24 +120,21 @@
         else { document.getElementById('main-app').style.display = 'none'; document.getElementById('access-denied').style.display = 'flex'; }
     }
 
-    function checkReady() {
-        const d = document.getElementById('destino').value;
-        const f = document.getElementById('fatos').value;
-        if(d.length > 5 && f.length > 10) document.getElementById('btn-main').classList.add('ready');
+    // FUNÇÃO QUE CALCULA A PORCENTAGEM EM TEMPO REAL
+    function atualizar() {
+        const d = document.getElementById('destino').value.length;
+        const f = document.getElementById('fatos').value.length;
+        
+        // Cálculo de preenchimento (meta de 20 caracteres no destino e 50 nos fatos para 100%)
+        let progresso = ((d / 20) * 30) + ((f / 50) * 70);
+        if (progresso > 100) progresso = 100;
+        
+        const perc = Math.round(progresso);
+        document.getElementById('bar-fill').style.width = perc + "%";
+        document.getElementById('percent-text').innerText = perc + "%";
+
+        if(perc >= 80) document.getElementById('btn-main').classList.add('ready');
         else document.getElementById('btn-main').classList.remove('ready');
-    }
-
-    function processar() {
-        document.getElementById('loader-area').style.display = 'block';
-        document.getElementById('output-zone').style.display = 'none';
-        document.getElementById('fill').style.width = '100%';
-
-        setTimeout(() => {
-            gerarPrompt();
-            document.getElementById('loader-area').style.display = 'none';
-            document.getElementById('output-zone').style.display = 'block';
-            document.getElementById('fill').style.width = '0%';
-        }, 1600);
     }
 
     function gerarPrompt() {
@@ -142,25 +142,15 @@
         const b = document.getElementById('base').value;
         const f = document.getElementById('fatos').value;
 
-        const mestre = `ORDEM DE EXECUÇÃO SUPREMA - PROTOCOLO V8 ELITE
-VOCÊ É UM ESTRATEGISTA TIER 10. EXECUTE COM PRECISÃO CIRÚRGICA.
-
-MISSÃO: ${d}
-RIGOR JURÍDICO/TÉCNICO: ${b}
-DADOS DE ENTRADA: ${f}
-
-REMOVA ERROS DE CONCORDÂNCIA, SINTAXE E REDUNDÂNCIAS. ENTREGUE RESULTADO DE NÍVEL MUNDIAL.`;
+        const mestre = `ORDEM DE EXECUÇÃO SUPREMA - PROTOCOLO V8 ELITE\nMISSÃO: ${d}\nRIGOR: ${b}\nINPUT: ${f}`;
 
         document.getElementById('prompt-result').value = mestre;
+        document.getElementById('output-zone').style.display = 'block';
     }
 
     function limparTudo() {
-        if(confirm("Deseja apagar todos os dados por segurança?")) {
-            document.getElementById('destino').value = '';
-            document.getElementById('base').value = '';
-            document.getElementById('fatos').value = '';
-            document.getElementById('output-zone').style.display = 'none';
-            document.getElementById('btn-main').classList.remove('ready');
+        if(confirm("Limpar todos os dados?")) {
+            location.reload();
         }
     }
 

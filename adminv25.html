@@ -2,70 +2,86 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>ADM | GESTOR DE ACESSO V8</title>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GESTOR V8 ELITE</title>
     <style>
-        :root { --bg: #000; --panel: rgba(255,255,255,0.02); --text: #0078d4; --danger: #ff4d4d; }
-        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; padding: 20px; }
-        .panel { width: 100%; max-width: 450px; background: var(--panel); border: 1px solid #c30052; border-radius: 20px; padding: 30px; backdrop-filter: blur(10px); box-shadow: 0 0 30px rgba(195,0,82,0.2); }
-        h2 { text-align: center; color: #fff; letter-spacing: 2px; }
-        input { width: 100%; background: #0a0a0a; border: 1px solid #333; color: #fff; padding: 15px; border-radius: 10px; margin: 15px 0; box-sizing: border-box; }
-        .btn-ativar { width: 100%; background: #c30052; color: #fff; border: none; padding: 15px; font-weight: bold; border-radius: 10px; cursor: pointer; text-transform: uppercase; }
-        .card-user { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-top: 15px; border: 1px solid #222; position: relative; }
-        .btn-copy { background: #0078d4; color: #fff; border: none; width: 100%; padding: 10px; border-radius: 6px; margin-top: 10px; cursor: pointer; font-weight: bold; }
-        .btn-del { position: absolute; top: 10px; right: 10px; color: var(--danger); background: none; border: none; cursor: pointer; font-size: 10px; font-weight: bold; border: 1px solid var(--danger); padding: 2px 5px; border-radius: 4px; }
-        .dra-name { color: #fff; font-weight: bold; font-size: 14px; }
+        body { background-color: #000; color: #fff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .panel { border: 2px solid #ed0b5a; padding: 40px; border-radius: 20px; width: 400px; text-align: center; box-shadow: 0 0 20px rgba(237, 11, 90, 0.2); }
+        h1 { text-transform: uppercase; letter-spacing: 2px; font-size: 22px; margin-bottom: 30px; }
+        input { width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #333; background: #111; color: #fff; margin-bottom: 15px; box-sizing: border-box; }
+        .btn-gerar { background-color: #ed0b5a; color: #fff; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .lista-acesso { margin-top: 30px; background: #111; padding: 15px; border-radius: 10px; text-align: left; }
+        .item-acesso { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .btn-bloquear { background: none; border: 1px solid #ff4d4d; color: #ff4d4d; font-size: 9px; padding: 5px; cursor: pointer; border-radius: 5px; }
+        .btn-copiar { background-color: #007bff; color: #fff; border: none; padding: 12px; width: 100%; border-radius: 10px; margin-top: 10px; cursor: pointer; font-weight: bold; }
+        footer { margin-top: 20px; font-size: 9px; opacity: 0.6; line-height: 1.4; }
+        .licenca { color: #bf953f; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; display: block; }
     </style>
 </head>
 <body>
+
 <div class="panel">
-    <h2>GESTOR <span style="color:#c30052">V8 ELITE</span></h2>
-    <input type="text" id="nomeAdv" placeholder="NOME COMPLETO DA DOUTORA">
-    <button class="btn-ativar" onclick="ativar()">ATIVAR E GERAR LINK V8</button>
-    <div id="lista"></div>
+    <h1>Gestor <span style="color: #ed0b5a;">V8 Elite</span></h1>
+    
+    <input type="text" id="nomeDoutora" placeholder="NOME COMPLETO DA DOUTORA">
+    <button class="btn-gerar" onclick="ativarAcesso()">Ativar e Gerar Link V8</button>
+
+    <div id="containerAcessos"></div>
+
+    <footer>
+        <span class="licenca">LICENCIADO PARA: [NOME DO CLIENTE AQUI]</span><br>
+        A RESPONSABILIDADE PELO USO É EXCLUSIVA DE QUEM ESTÁ USANDO. ESTE PROGRAMA APENAS GERA O PROMPT.
+    </footer>
 </div>
 
 <script>
-    const firebaseConfig = { databaseURL: "https://cassiapromptv8-default-rtdb.firebaseio.com/" };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-    const urlSistema = "https://cassiakelly995-lab.github.io/meu-app/v25.html";
+    // Função para carregar acessos do LocalStorage (Simulando Banco de Dados no Navegador)
+    function renderizarAcessos() {
+        const acessos = JSON.parse(localStorage.getItem('v8_acessos')) || [];
+        const container = document.getElementById('containerAcessos');
+        container.innerHTML = '';
 
-    function ativar() {
-        const nome = document.getElementById('nomeAdv').value.trim();
+        acessos.forEach((acc, index) => {
+            container.innerHTML += `
+                <div class="lista-acesso">
+                    <div class="item-acesso">
+                        <strong>${acc.nome}</strong>
+                        <button class="btn-bloquear" onclick="revogarAcesso(${index})">BLOQUEAR ACESSO</button>
+                    </div>
+                    <button class="btn-copiar" onclick="copiarLink('${acc.id}')">COPIAR LINK V8</button>
+                </div>
+            `;
+        });
+    }
+
+    function ativarAcesso() {
+        const nome = document.getElementById('nomeDoutora').value;
         if(!nome) return alert("Digite o nome!");
-        const id = nome.replace(/\s+/g, '_');
-        db.ref('clientes/' + id).set({ nome: nome }).then(() => {
-            alert("✅ LICENÇA ATIVADA!");
-            document.getElementById('nomeAdv').value = "";
-        });
+
+        const acessos = JSON.parse(localStorage.getItem('v8_acessos')) || [];
+        const novoAcesso = { nome: nome, id: btoa(nome + Date.now()).substring(0, 12) };
+        
+        acessos.push(novoAcesso);
+        localStorage.setItem('v8_acessos', JSON.stringify(acessos));
+        document.getElementById('nomeDoutora').value = '';
+        renderizarAcessos();
     }
 
-    db.ref('clientes').on('value', (snap) => {
-        const lista = document.getElementById('lista');
-        lista.innerHTML = "";
-        snap.forEach((child) => {
-            const id = child.key;
-            const linkFinal = urlSistema + "?id=" + id;
-            lista.innerHTML += `
-                <div class="card-user">
-                    <button class="btn-del" onclick="bloquear('${id}')">BLOQUEAR ACESSO</button>
-                    <span class="dra-name">Dra. ${id.replace(/_/g, ' ')}</span>
-                    <button class="btn-copy" onclick="copiar('${linkFinal}')">COPIAR LINK V8</button>
-                </div>`;
-        });
-    });
-
-    function copiar(url) { 
-        navigator.clipboard.writeText(url).then(() => alert("🔗 LINK COPIADO PARA O WHATSAPP!")); 
+    function revogarAcesso(index) {
+        let acessos = JSON.parse(localStorage.getItem('v8_acessos'));
+        acessos.splice(index, 1);
+        localStorage.setItem('v8_acessos', JSON.stringify(acessos));
+        renderizarAcessos();
+        alert("ACESSO REVOGADO COM SUCESSO. O LINK NÃO FUNCIONARÁ MAIS.");
     }
 
-    function bloquear(id) { 
-        if(confirm("⚠ DESEJA BLOQUEAR O ACESSO DE " + id + "? O link dela parará de funcionar na hora.")) {
-            db.ref('clientes/' + id).set(null); 
-        }
+    function copiarLink(id) {
+        const linkFinal = window.location.origin + "/v8-elite.html?token=" + id;
+        navigator.clipboard.writeText(linkFinal);
+        alert("Link copiado!");
     }
+
+    renderizarAcessos();
 </script>
 </body>
 </html>

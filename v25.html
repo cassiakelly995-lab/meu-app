@@ -69,32 +69,44 @@
         <div id="output-zone">
             <label style="color: #fcf6ba;">💎 DIAMANTE POLIDO (RIGOR ABSOLUTO):</label>
             <textarea id="prompt-result" readonly></textarea>
-            <button onclick="copiar()" style="width:100%; padding:25px; background:var(--gold); border:none; border-radius:15px; font-weight:900; margin-top:20px; cursor:pointer;">Copiar Comando</button>
+            <button onclick="copiar()" style="width:100%; padding:25px; background:var(--gold); border:none; border-radius:15px; font-weight:900; margin-top:20px; cursor:pointer; text-transform:uppercase;">Copiar Comando</button>
         </div>
     </main>
     <footer>
         <strong>CÁSSIA PROMPT ® | V8 ELITE EDITION | LICENÇA INTERNACIONAL</strong><br>
         <span id="licenciado-para" style="color: #bf953f; font-weight: bold; font-size: 11px;">LICENCIADO PARA: AGUARDANDO...</span><br><br>
-        A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. ESTE PROGRAMA APENAS GERA O PROMPT.
+        <span style="color: #ff4d4d;">A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. ESTE PROGRAMA APENAS GERA O PROMPT.</span>
     </footer>
 </div>
 
 <script>
     function checkAccess() {
         const params = new URLSearchParams(window.location.search);
-        let userParam = params.get('user') || params.get('id'); // Aceita ?user= ou ?id=
+        // Pega o ID ou USER da URL
+        let userParam = params.get('user') || params.get('id'); 
         
         const app = document.getElementById('main-app');
         const denied = document.getElementById('access-denied');
         const displayLicenca = document.getElementById('licenciado-para');
 
         if (userParam) {
-            // Limpa o nome (troca underline por espaço)
-            let nomeLimpo = userParam.replace(/_/g, " ").toUpperCase();
+            // LÓGICA DE LIMPEZA DO NOME:
+            // Remove o ID chato e deixa só o nome bonito
+            let nomeExibicao = userParam.split('_')[0]; // Pega só a primeira parte se houver underline
+            if (userParam.includes('Natalia')) nomeExibicao = "DRA. NATALIA";
+            if (userParam.includes('Helen')) nomeExibicao = "HELEN CRISTINA";
+            if (userParam.includes('Paula')) nomeExibicao = "DRA. PAULA";
+
+            // Se for um nome comum, apenas tira o underline e deixa maiúsculo
+            let nomeFinal = userParam.replace(/_/g, " ").toUpperCase();
             
+            // Se for um dos pré-definidos, usa o nome bonito
+            if (userParam.toLowerCase().includes('natalia')) nomeFinal = "DRA. NATALIA";
+            if (userParam.toLowerCase().includes('helen')) nomeFinal = "HELEN CRISTINA";
+
             app.style.display = 'block';
             denied.style.display = 'none';
-            displayLicenca.innerText = "LICENCIADO PARA: " + nomeLimpo;
+            displayLicenca.innerText = "LICENCIADO PARA: " + nomeFinal;
         } else {
             app.style.display = 'none';
             denied.style.display = 'flex';

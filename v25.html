@@ -40,7 +40,7 @@
 
         footer { margin-top: 60px; padding: 40px; border-top: 1px solid var(--border); text-align: center; }
         .footer-legal { color: #bf953f; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; display: block; margin-bottom: 8px; }
-        .footer-notice { color: var(--text); font-size: 9px; opacity: 0.5; text-transform: uppercase; }
+        .footer-notice { color: var(--text); font-size: 9px; opacity: 0.5; text-transform: uppercase; line-height: 1.5; }
     </style>
 </head>
 <body>
@@ -83,7 +83,8 @@
 
 <footer>
     <span class="footer-legal">V8 ELITE EDITION | LICENÇA ILIMITADA</span><br>
-    <span class="footer-notice">MOTOR PRIVADO - ZERO REGISTRO DE DADOS - EM CONFORMIDADE COM PRIVACIDADE</span>
+    <span class="footer-notice">MOTOR PRIVADO - ZERO REGISTRO DE DADOS - EM CONFORMIDADE COM PRIVACIDADE</span><br>
+    <span class="footer-notice" style="margin-top:10px; display:block; color:#ff4d4d; opacity:0.8;">A RESPONSABILIDADE PELO USO É EXCLUSIVA DO USUÁRIO. ESTE PROGRAMA APENAS GERA O PROMPT DE COMANDO.</span>
 </footer>
 
 <script>
@@ -116,7 +117,6 @@
         const b = document.getElementById('base').value;
         const d = document.getElementById('destino').value;
         
-        // O PROMPT ABAIXO É CONFIGURADO PARA SER O MELHOR DO MUNDO EM RIGOR TÉCNICO
         const mestre = `ORDEM DE EXECUÇÃO IMEDIATA - PROTOCOLO V8 (MODO ELITE)
 
 VOCÊ DEVE ATUAR AGORA como um Estrategista e Consultor Tier 10. NÃO forneça explicações, APENAS EXECUTE com RIGOR ABSOLUTO.

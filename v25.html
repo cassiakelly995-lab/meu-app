@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,63 +12,111 @@
             --bg: #030303; --card: #0a0a0a; --text: #ffffff; 
             --border: #1a1a1a; --gold: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
         }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; transition: 0.3s; }
+        body.light-mode { --bg: #f5f7f9; --card: #ffffff; --text: #111; --border: #ddd; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; transition: 0.3s; overflow-x: hidden; }
         
-        .container { max-width: 800px; width: 100%; background: var(--card); border: 1px solid var(--border); padding: 40px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); margin-top: 50px; }
-        
-        .gold-logo { font-size: 28px; font-weight: 900; letter-spacing: 5px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; text-align: center; display: block; margin-bottom: 10px; }
-        
-        .version-tag { font-size: 10px; color: #444; text-align: center; letter-spacing: 3px; margin-bottom: 40px; text-transform: uppercase; }
+        .gold-logo { font-size: 28px; font-weight: 900; letter-spacing: 5px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; padding: 10px 0; display: inline-block; }
 
-        label { display: block; margin-bottom: 10px; font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; }
-        
-        textarea, input { width: 100%; background: #000; border: 1px solid var(--border); color: #fff; padding: 18px; border-radius: 10px; margin-bottom: 25px; box-sizing: border-box; font-size: 14px; outline: none; transition: 0.3s; }
-        textarea:focus { border-color: #bf953f; }
+        nav { background: var(--card); padding: 15px 30px; border-bottom: 2px solid #bf953f; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
+        .theme-btn { cursor: pointer; padding: 10px 20px; border: 1px solid #bf953f; border-radius: 50px; font-size: 10px; font-weight: 800; background: transparent; color: #bf953f; text-transform: uppercase; }
 
-        button { width: 100%; padding: 20px; background: var(--gold); border: none; border-radius: 10px; color: #000; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; transition: 0.4s; margin-top: 10px; }
-        button:hover { transform: scale(1.02); filter: brightness(1.2); }
+        main { padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
+        .workspace-card { background: var(--card); width: 100%; max-width: 800px; border-radius: 24px; border: 1px solid var(--border); padding: 45px; box-sizing: border-box; box-shadow: 0 0 30px rgba(191, 149, 63, 0.1); }
+
+        .rigor-container { width: 100%; height: 12px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-bottom: 30px; overflow: hidden; border: 1px solid rgba(191,149,63,0.3); }
+        .rigor-bar { width: 0%; height: 100%; background: var(--gold); transition: 0.8s cubic-bezier(0.19, 1, 0.22, 1); box-shadow: 0 0 10px #bf953f; }
         
-        #resultado-area { display: none; margin-top: 40px; border-top: 1px solid var(--border); padding-top: 30px; animation: fadeIn 0.5s; }
-        
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
-        .footer-note { margin-top: 50px; font-size: 10px; color: #333; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+        label { font-size: 10px; font-weight: 900; color: #bf953f; text-transform: uppercase; display: block; margin-bottom: 12px; letter-spacing: 2px; }
+        textarea, input { width: 100%; background: rgba(0,0,0,0.2); border: 1px solid var(--border); padding: 20px; border-radius: 15px; color: var(--text); font-size: 15px; outline: none; box-sizing: border-box; margin-bottom: 25px; transition: 0.3s; }
+        textarea:focus { border-color: #bf953f; background: rgba(0,0,0,0.4); }
+
+        .upload-area { border: 1px dashed #444; border-radius: 15px; padding: 25px; text-align: center; cursor: pointer; margin-bottom: 25px; background: rgba(255,255,255,0.02); }
+
+        .btn-exe { width: 100%; background: #111; color: #333; border: none; padding: 25px; border-radius: 15px; font-weight: 900; cursor: not-allowed; transition: 0.5s; text-transform: uppercase; letter-spacing: 4px; font-size: 14px; }
+        .btn-exe.active { background: var(--gold); color: #000; cursor: pointer; box-shadow: 0 10px 30px rgba(179, 135, 40, 0.4); }
+
+        #resultado-area { display: none; margin-top: 35px; width: 100%; max-width: 800px; }
+        #prompt-final { width: 100%; height: 450px; background: #000; color: #fcf6ba; border: 1px solid #bf953f; padding: 25px; border-radius: 15px; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.6; }
+
+        footer { margin-top: 60px; padding: 40px; border-top: 1px solid var(--border); text-align: center; }
+        .footer-legal { color: #bf953f; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; display: block; margin-bottom: 8px; }
+        .footer-notice { color: var(--text); font-size: 9px; opacity: 0.5; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <span class="gold-logo">V8 ELITE</span>
-        <div class="version-tag">Protocolo Elite Edition</div>
+<nav>
+    <div class="gold-logo">V8 ELITE</div>
+    <button class="theme-btn" onclick="toggleTheme()">Invert Mode</button>
+</nav>
+
+<main>
+    <div class="workspace-card">
+        <label>Rigor Status: High-Level Activated</label>
+        <div class="rigor-container"><div id="rigor-bar" class="rigor-bar"></div></div>
         
-        <label>Qual a sua missão obrigatória?</label>
-        <input type="text" id="destino" placeholder="Ex: Redigir uma petição de urgência ou análise de contrato...">
+        <label>1. Creative Core & Raw Intelligence</label>
+        <textarea id="fatos" rows="4" oninput="atualizar()" placeholder="Express your idea here..."></textarea>
 
-        <label>Base de Dados / Diretrizes Técnicas (Opcional)</label>
-        <textarea id="base" rows="3" placeholder="Cole aqui leis, artigos ou regras específicas..."></textarea>
+        <label>2. Rigor Parameters (Guidelines)</label>
+        <textarea id="base" rows="3" oninput="atualizar()" placeholder="Grammar, technical or legal guidelines..."></textarea>
 
-        <label>Fatos ou Idéia Bruta</label>
-        <textarea id="fatos" rows="5" placeholder="Descreva os detalhes do caso ou o conteúdo que deve ser processado..."></textarea>
+        <label>3. Final Mission / High-Performance Goal</label>
+        <input type="text" id="destino" oninput="atualizar()" placeholder="What should the AI execute?">
 
-        <button onclick="gerar()">ATIVAR PROTOCOLO MODO ELITE</button>
-
-        <div id="resultado-area">
-            <label>Comando Gerado (Pronto para o ChatGPT):</label>
-            <textarea id="prompt-final" rows="12" readonly></textarea>
-            <button onclick="copiar()">COPIAR DIAMANTE POLIDO</button>
+        <label>4. Document Reference</label>
+        <div class="upload-area" onclick="document.getElementById('pdf-file').click()">
+            <span style="font-size: 11px; opacity: 0.8; letter-spacing: 1px;">📄 CLICK TO IDENTIFY FILE FOR PROCESSING</span>
+            <input type="file" id="pdf-file" style="display:none" onchange="checkFile()">
+            <span id="file-name" style="display:block; margin-top:10px; color:#bf953f; font-size:11px; font-weight:bold;"></span>
         </div>
+
+        <button id="btn-exe" class="btn-exe" disabled onclick="gerar()">Execute Protocol MODO ELITE</button>
     </div>
 
-    <div class="footer-note">Cássia Prompt ® | Zero Data Logging | Secured V8 Engine</div>
+    <div id="resultado-area">
+        <label style="color: #fcf6ba;">💎 GENERATED EXECUTION COMMAND (MODO ELITE):</label>
+        <textarea id="prompt-final" readonly></textarea>
+        <button onclick="copiar()" style="width:100%; padding:22px; background:var(--gold); border:none; border-radius:15px; font-weight:900; cursor:pointer; margin-top:15px; text-transform:uppercase; color:#000;">Copy Polished Command</button>
+    </div>
+</main>
 
-    <script>
-        function gerar() {
-            const f = document.getElementById('fatos').value;
-            const b = document.getElementById('base').value;
-            const d = document.getElementById('destino').value;
-            
-            // LOGICA MESTRE ATUALIZADA: MODO ELITE
-            const mestre = `IMMEDIATE EXECUTION ORDER - V8 PROTOCOL (MODO ELITE)
+<footer>
+    <span class="footer-legal">V8 ELITE EDITION | UNLIMITED LICENSE</span><br>
+    <span class="footer-notice">PRIVATE ENGINE - ZERO DATA LOGGING - PRIVACY COMPLIANT</span>
+</footer>
+
+<script>
+    let fileName = "";
+    function checkFile() {
+        const input = document.getElementById('pdf-file');
+        if (input.files.length > 0) {
+            fileName = input.files[0].name;
+            document.getElementById('file-name').innerText = "FILE DETECTED: " + fileName.toUpperCase();
+        }
+    }
+
+    function toggleTheme() { document.body.classList.toggle('light-mode'); }
+
+    function atualizar() {
+        const f = document.getElementById('fatos').value.length;
+        const b = document.getElementById('base').value.length;
+        const d = document.getElementById('destino').value.length;
+        const total = f + b + d;
+        const prog = Math.min((total / 180) * 100, 100);
+        document.getElementById('rigor-bar').style.width = prog + "%";
+        
+        const btn = document.getElementById('btn-exe');
+        if (prog >= 35) { btn.disabled = false; btn.classList.add('active'); } 
+        else { btn.disabled = true; btn.classList.remove('active'); }
+    }
+
+    function gerar() {
+        const f = document.getElementById('fatos').value;
+        const b = document.getElementById('base').value;
+        const d = document.getElementById('destino').value;
+        
+        const mestre = `IMMEDIATE EXECUTION ORDER - V8 PROTOCOL (MODO ELITE)
 
 YOU MUST ACT NOW as a Tier 10 Consultant and Strategist. DO NOT provide explanations, JUST EXECUTE with ABSOLUTE RIGOR.
 
@@ -81,21 +129,21 @@ RIGOR & POLISHING GUIDELINES:
 4. TECHNICAL RIGOR: Strictly follow these guidelines: ${b}
 
 DATA BASE:
+${fileName ? `TECHNICAL REFERENCE: "${fileName}"\n` : ''}
 RAW INPUT/IDEA: ${f}
 
 Delivery format: Polished final result with absolute clarity and professionalism. Execute now.`;
 
-            document.getElementById('prompt-final').value = mestre;
-            document.getElementById('resultado-area').style.display = 'block';
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        }
+        document.getElementById('prompt-final').value = mestre;
+        document.getElementById('resultado-area').style.display = 'block';
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
 
-        function copiar() {
-            const copyText = document.getElementById('prompt-final');
-            copyText.select();
-            document.execCommand('copy');
-            alert("💎 DIAMANTE POLIDO COPIADO COM SUCESSO!");
-        }
-    </script>
+    function copiar() {
+        document.getElementById('prompt-final').select();
+        document.execCommand('copy');
+        alert("💎 POLISHED DIAMOND COPIED SUCCESSFULLY!");
+    }
+</script>
 </body>
 </html>

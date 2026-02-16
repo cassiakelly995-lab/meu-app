@@ -28,7 +28,6 @@
         .progress-bar-bg { width: 100%; height: 8px; background: #111; border-radius: 20px; overflow: hidden; }
         .progress-bar-fill { width: 0%; height: 100%; background: var(--gold); transition: 0.6s; }
 
-        /* UPLOAD DISCRETO NO TOPO */
         .top-tools { display: flex; justify-content: flex-end; margin-bottom: 20px; }
         .btn-upload-slim { background: transparent; border: 1px solid #333; color: #666; padding: 8px 15px; border-radius: 8px; font-size: 9px; font-weight: 900; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
         .btn-upload-slim:hover { border-color: #bf953f; color: #bf953f; }
@@ -40,7 +39,7 @@
         .btn-prime:hover { transform: scale(1.02); filter: brightness(1.1); }
 
         #output-zone { display: none; margin-top: 50px; width: 100%; max-width: 850px; }
-        #prompt-result { width: 100%; height: 480px; background: #000; color: #fcf6ba; border: 1px solid #bf953f; padding: 30px; border-radius: 20px; font-family: monospace; }
+        #prompt-result { width: 100%; height: 480px; background: #000; color: #fcf6ba; border: 1px solid #bf953f; padding: 30px; border-radius: 20px; font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.5; }
 
         footer { margin-top: 80px; padding: 40px; text-align: center; border-top: 1px solid var(--border); }
         .footer-text { font-size: 10px; color: var(--text); opacity: 0.5; text-transform: uppercase; letter-spacing: 2px; line-height: 2; }
@@ -87,7 +86,7 @@
         </div>
 
         <div id="output-zone">
-            <label style="color: #fcf6ba;">💎 DIAMANTE POLIDO:</label>
+            <label style="color: #fcf6ba;">💎 DIAMANTE POLIDO (SUPREMO):</label>
             <textarea id="prompt-result" readonly></textarea>
             <button onclick="copiar()" style="width:100%; padding:25px; background:var(--gold); border:none; border-radius:15px; font-weight:900; margin-top:20px; cursor:pointer; text-transform:uppercase;">Copiar Comando</button>
         </div>
@@ -107,13 +106,10 @@
         const params = new URLSearchParams(window.location.search);
         const userParam = (params.get('user') || params.get('id') || "").toLowerCase();
         const displayLicenca = document.getElementById('licenciado-para');
-
         let nomeFinal = "CLIENTE VIP"; 
-        
         if (userParam.includes("natalia")) nomeFinal = "DRA. NATALIA";
         else if (userParam.includes("helen")) nomeFinal = "HELEN CRISTINA";
         else if (userParam.includes("paula")) nomeFinal = "DRA. PAULA";
-
         displayLicenca.innerText = "LICENCIADO PARA: " + nomeFinal;
     }
 
@@ -126,29 +122,47 @@
     }
 
     function handleUpload() {
-        const status = document.getElementById('upload-status');
-        status.innerText = "✔️ DOCUMENTO VINCULADO";
-        status.style.color = "#bf953f";
+        document.getElementById('upload-status').innerText = "✔️ DOCUMENTO VINCULADO";
+        document.getElementById('upload-status').style.color = "#bf953f";
     }
 
     function processar() {
         const btn = document.getElementById('btn-main');
-        btn.innerText = "PROCESSANDO...";
+        btn.innerText = "POLINDO COM ENGENHARIA V8...";
         setTimeout(() => {
-            const d = document.getElementById('destino').value;
-            const b = document.getElementById('base').value;
-            const f = document.getElementById('fatos').value;
-            document.getElementById('prompt-result').value = `[V8 ELITE]\nMISSÃO: ${d}\nDIRETRIZES: ${b}\nINPUT: ${f}`;
-            document.getElementById('output-zone').style.display = 'block';
-            btn.innerText = "GERAR NOVAMENTE";
+            gerarPrompt();
+            btn.innerText = "REATIVAR PROTOCOLO";
             window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
-        }, 800);
+        }, 1000);
+    }
+
+    function gerarPrompt() {
+        const d = document.getElementById('destino').value;
+        const b = document.getElementById('base').value;
+        const f = document.getElementById('fatos').value;
+        
+        // AQUI ESTÁ O SUPREMO PROMPT V8
+        const promptSupremo = `### [SISTEMA DE ENGENHARIA DE COMANDO V8 ELITE] ###\n\n` +
+        `**PERSONA:** Você é um Especialista de Elite em Redação Técnica e Jurídica, com foco em precisão absoluta, clareza e autoridade. Sua missão é transformar o relato bruto em um diamante polido.\n\n` +
+        `**1. MISSÃO CENTRAL:**\n> ${d}\n\n` +
+        `**2. DIRETRIZES TÉCNICAS E RIGOR:**\n> ${b}\n\n` +
+        `**3. INPUT DE INTELIGÊNCIA (FATOS):**\n> ${f}\n\n` +
+        `**REGRAS DE OURO DO PROTOCOLO V8:**\n` +
+        `- **TOM DE VOZ:** Profissional, assertivo e sofisticado.\n` +
+        `- **ESTRUTURA:** Organize as ideias de forma lógica e persuasiva.\n` +
+        `- **FILTRO ANTI-ALUCINAÇÃO:** Baseie-se estritamente nos fatos fornecidos. Proibido inventar dados ou nomes não citados.\n` +
+        `- **PRECISÃO JURÍDICA:** Utilize terminologia técnica adequada se o contexto for jurídico.\n` +
+        `- **CONCLUSÃO:** Finalize entregando exatamente o que foi solicitado na MISSÃO CENTRAL com perfeição máxima.\n\n` +
+        `**[AGUARDANDO EXECUÇÃO COM RIGOR ABSOLUTO]**`;
+
+        document.getElementById('prompt-result').value = promptSupremo;
+        document.getElementById('output-zone').style.display = 'block';
     }
 
     function copiar() {
         document.getElementById('prompt-result').select();
         document.execCommand('copy');
-        alert("💎 COPIADO!");
+        alert("💎 SUPREMO PROMPT COPIADO!");
     }
 
     window.onload = checkAccess;

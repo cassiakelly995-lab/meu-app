@@ -2,47 +2,64 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>V8 ELITE | ACESSO RESTRITO</title>
+    <title>V8 ELITE | PROTOCOLO</title>
     <style>
-        body { background: #000; color: #fff; font-family: sans-serif; text-align: center; padding-top: 100px; }
-        .bloqueado { display: none; color: #ff4d4d; }
-        .conteudo { display: none; }
-        /* Mantenha aqui o seu CSS original de luxo (preto e dourado) */
+        :root { --gold: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); }
+        body { background: #000; color: #fff; font-family: sans-serif; text-align: center; }
+        #v8-conteudo { display: none; } /* Começa escondido por segurança */
+        .bloqueio-tela { display: none; padding: 100px 20px; }
+        .bloqueio-tela h1 { color: #ff4d4d; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
-    <div id="msg-bloqueio" class="bloqueado">
+    <div id="msg-bloqueio" class="bloqueio-tela">
         <h1>🚫 ACESSO REVOGADO</h1>
-        <p>Este link de licença não é mais válido. Entre em contato com a administração.</p>
+        <p>Esta licença de uso expirou ou foi desativada pela administração.</p>
     </div>
 
-    <div id="v8-conteudo" class="conteudo">
-        <h1>BEM-VINDA AO V8 ELITE PROTOCOL</h1>
-        </div>
+    <div id="v8-conteudo">
+        <h2 style="background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">V8 ELITE ATIVADO</h2>
+        <p>Bem-vinda ao seu Motor de Comando.</p>
+        
+        <footer style="margin-top: 100px; font-size: 10px; opacity: 0.6;">
+            A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. ESTE PROGRAMA APENAS GERA O PROMPT.
+        </footer>
+    </div>
 
     <script>
-        // FUNÇÃO DE SEGURANÇA QUE REVOGA O ACESSO
-        function verificarAcesso() {
+        function validarAcesso() {
             const urlParams = new URLSearchParams(window.location.search);
-            const tokenUser = urlParams.get('token');
-            
-            // Pega a lista de quem você autorizou no Painel de Adm
-            const acessosAtivos = JSON.parse(localStorage.getItem('v8_acessos_ativos')) || [];
-            
-            // Verifica se o token do link ainda existe na sua lista
-            const autorizado = acessosAtivos.find(acc => acc.id === tokenUser);
+            const token = urlParams.get('token');
 
-            if (autorizado || tokenUser === "PERMANENTE_HELEN") {
-                document.getElementById('v8-conteudo').style.display = 'block';
-                document.getElementById('msg-bloqueio').style.display = 'none';
+            // --- REGRA DE OURO: ACESSO DA HELEN É IMUTÁVEL ---
+            if (token === "PERMANENTE_HELEN") {
+                liberar();
+                return;
+            }
+
+            // Verifica os outros acessos que você gerou no painel
+            const ativos = JSON.parse(localStorage.getItem('v8_acessos_ativos')) || [];
+            const autorizado = ativos.find(acc => acc.id === token);
+
+            if (autorizado) {
+                liberar();
             } else {
-                document.getElementById('v8-conteudo').style.display = 'none';
-                document.getElementById('msg-bloqueio').style.display = 'block';
+                bloquear();
             }
         }
 
-        verificarAcesso();
+        function liberar() {
+            document.getElementById('v8-conteudo').style.display = 'block';
+            document.getElementById('msg-bloqueio').style.display = 'none';
+        }
+
+        function bloquear() {
+            document.getElementById('v8-conteudo').style.display = 'none';
+            document.getElementById('msg-bloqueio').style.display = 'block';
+        }
+
+        validarAcesso();
     </script>
 </body>
 </html>

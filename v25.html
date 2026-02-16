@@ -16,7 +16,7 @@
         .logo-v8 { font-size: 24px; font-weight: 900; letter-spacing: 6px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
         .btn-top { cursor: pointer; padding: 10px 20px; border: 1px solid #bf953f; border-radius: 50px; font-size: 10px; font-weight: 900; background: transparent; color: #bf953f; text-transform: uppercase; margin-left: 10px; }
         main { padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
-        .glass-panel { background: var(--card); width: 100%; max-width: 850px; border-radius: 30px; border: 1px solid var(--border); padding: 45px; box-sizing: border-box; box-shadow: 0 0 30px rgba(191,149,63,0.1); }
+        .glass-panel { background: var(--card); width: 100%; max-width: 850px; border-radius: 30px; border: 1px solid var(--border); padding: 45px; box-sizing: border-box; }
         .progress-container { margin-bottom: 40px; }
         .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .progress-label { font-size: 10px; font-weight: 900; color: #bf953f; text-transform: uppercase; }
@@ -26,8 +26,6 @@
         label { font-size: 11px; font-weight: 800; color: #bf953f; text-transform: uppercase; display: block; margin-bottom: 15px; }
         textarea, input { width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 20px; border-radius: 15px; color: var(--text); font-size: 16px; outline: none; margin-bottom: 30px; box-sizing: border-box; }
         .btn-prime { width: 100%; background: var(--gold); color: #000; border: none; padding: 28px; border-radius: 18px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 5px; font-size: 16px; }
-        .btn-prime.ready { animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(191,149,63,0.6); } 70% { box-shadow: 0 0 0 20px rgba(191,149,63,0); } 100% { box-shadow: 0 0 0 0 rgba(191,149,63,0); } }
         #output-zone { display: none; margin-top: 50px; width: 100%; max-width: 850px; }
         #prompt-result { width: 100%; height: 480px; background: #000; color: #fcf6ba; border: 1px solid #bf953f; padding: 30px; border-radius: 20px; font-family: monospace; }
         footer { margin-top: 80px; padding: 40px; text-align: center; border-top: 1px solid var(--border); font-size: 10px; opacity: 0.5; }
@@ -38,77 +36,68 @@
 
 <div id="access-denied">
     <h1 style="letter-spacing: 10px;">ACESSO NEGADO</h1>
-    <p>LICENÇA NÃO IDENTIFICADA NO LINK</p>
+    <p>LICENÇA INVÁLIDA</p>
 </div>
 
 <div id="main-app" style="display: none;">
     <nav>
         <div class="logo-v8">V8 ELITE</div>
-        <div>
-            <button class="btn-top" onclick="document.body.classList.toggle('light-mode')">Inverter Cores</button>
-            <button class="btn-top" style="border-color:#ff4d4d; color:#ff4d4d;" onclick="location.reload()">Limpar Memória</button>
-        </div>
+        <div><button class="btn-top" onclick="document.body.classList.toggle('light-mode')">Cores</button></div>
     </nav>
     <main>
         <div class="glass-panel">
             <div class="progress-container">
                 <div class="progress-header">
-                    <span class="progress-label">Protocolo de Integridade</span>
+                    <span class="progress-label">Protocolo V8</span>
                     <span id="percent-text" class="progress-percent">0%</span>
                 </div>
                 <div class="progress-bar-bg"><div id="bar-fill" class="progress-bar-fill"></div></div>
             </div>
-            <label>Missão do Prompt</label>
-            <input type="text" id="destino" oninput="monitorar()" placeholder="Objetivo...">
-            <label>Regras de Rigor</label>
-            <textarea id="base" rows="2" placeholder="Diretrizes..."></textarea>
-            <label>Relato dos Fatos</label>
-            <textarea id="fatos" rows="6" oninput="monitorar()" placeholder="Input bruto..."></textarea>
-            <button id="btn-main" class="btn-prime" onclick="gerarPrompt()">Gerar Prompt Elite</button>
+            <label>Missão</label>
+            <input type="text" id="destino" oninput="monitorar()">
+            <label>Relato</label>
+            <textarea id="fatos" rows="6" oninput="monitorar()"></textarea>
+            <button id="btn-main" class="btn-prime" onclick="gerarPrompt()">Gerar</button>
         </div>
         <div id="output-zone">
-            <label style="color: #fcf6ba;">💎 DIAMANTE POLIDO (RIGOR ABSOLUTO):</label>
             <textarea id="prompt-result" readonly></textarea>
-            <button onclick="copiar()" style="width:100%; padding:25px; background:var(--gold); border:none; border-radius:15px; font-weight:900; margin-top:20px; cursor:pointer; text-transform:uppercase;">Copiar Comando</button>
+            <button onclick="copiar()" style="width:100%; padding:20px; background:var(--gold); border:none; border-radius:15px; font-weight:900; margin-top:10px;">Copiar</button>
         </div>
     </main>
     <footer>
-        <strong>CÁSSIA PROMPT ® | V8 ELITE EDITION | LICENÇA INTERNACIONAL</strong><br>
-        <span id="licenciado-para" style="color: #bf953f; font-weight: bold; font-size: 11px;">LICENCIADO PARA: AGUARDANDO...</span><br><br>
-        <span style="color: #ff4d4d;">A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. ESTE PROGRAMA APENAS GERA O PROMPT.</span>
+        <strong>CÁSSIA PROMPT ® | V8 ELITE EDITION</strong><br>
+        <span id="licenciado-para" style="color: #bf953f; font-weight: bold; font-size: 12px;">LICENCIADO PARA: AGUARDANDO...</span><br><br>
+        A RESPONSABILIDADE É DE QUEM ESTÁ USANDO.
     </footer>
 </div>
 
 <script>
     function checkAccess() {
         const params = new URLSearchParams(window.location.search);
-        // Pega o ID ou USER da URL
-        let userParam = params.get('user') || params.get('id'); 
-        
+        const userParam = params.get('user') || params.get('id') || "";
         const app = document.getElementById('main-app');
         const denied = document.getElementById('access-denied');
         const displayLicenca = document.getElementById('licenciado-para');
 
-        if (userParam) {
-            // LÓGICA DE LIMPEZA DO NOME:
-            // Remove o ID chato e deixa só o nome bonito
-            let nomeExibicao = userParam.split('_')[0]; // Pega só a primeira parte se houver underline
-            if (userParam.includes('Natalia')) nomeExibicao = "DRA. NATALIA";
-            if (userParam.includes('Helen')) nomeExibicao = "HELEN CRISTINA";
-            if (userParam.includes('Paula')) nomeExibicao = "DRA. PAULA";
-
-            // Se for um nome comum, apenas tira o underline e deixa maiúsculo
-            let nomeFinal = userParam.replace(/_/g, " ").toUpperCase();
+        if (userParam !== "") {
+            let nomeFinal = "USUÁRIO AUTORIZADO";
             
-            // Se for um dos pré-definidos, usa o nome bonito
-            if (userParam.toLowerCase().includes('natalia')) nomeFinal = "DRA. NATALIA";
-            if (userParam.toLowerCase().includes('helen')) nomeFinal = "HELEN CRISTINA";
+            // BUSCA POR NOMES ESPECÍFICOS NO LINK
+            if (userParam.toLowerCase().includes("natalia")) {
+                nomeFinal = "DRA. NATALIA";
+            } else if (userParam.toLowerCase().includes("helen")) {
+                nomeFinal = "HELEN CRISTINA";
+            } else if (userParam.toLowerCase().includes("paula")) {
+                nomeFinal = "DRA. PAULA";
+            } else {
+                // Se não for um dos nomes acima, ele tenta limpar o texto ou usa o padrão
+                nomeFinal = userParam.split('_')[0].toUpperCase();
+                if (nomeFinal.length < 3) nomeFinal = "CLIENTE ELITE";
+            }
 
             app.style.display = 'block';
-            denied.style.display = 'none';
             displayLicenca.innerText = "LICENCIADO PARA: " + nomeFinal;
         } else {
-            app.style.display = 'none';
             denied.style.display = 'flex';
         }
     }
@@ -116,29 +105,22 @@
     function monitorar() {
         const d = document.getElementById('destino').value.length;
         const f = document.getElementById('fatos').value.length;
-        let progresso = ((d / 20) * 30) + ((f / 60) * 70);
-        if (progresso > 100) progresso = 100;
-        document.getElementById('bar-fill').style.width = Math.round(progresso) + "%";
+        let progresso = Math.min(100, ((d / 10) * 30) + ((f / 30) * 70));
+        document.getElementById('bar-fill').style.width = progresso + "%";
         document.getElementById('percent-text').innerText = Math.round(progresso) + "%";
-        if(progresso >= 90) document.getElementById('btn-main').classList.add('ready');
-        else document.getElementById('btn-main').classList.remove('ready');
     }
 
     function gerarPrompt() {
         const d = document.getElementById('destino').value;
-        const b = document.getElementById('base').value;
         const f = document.getElementById('fatos').value;
-        const mestre = `ORDEM SUPREMA V8 ELITE\nMISSÃO: ${d}\nREGRAS: ${b}\nFATOS: ${f}\n\n⚠️ RIGOR: PROIBIDO INVENTAR. APENAS A VERDADE.`;
-        document.getElementById('prompt-result').value = mestre;
+        document.getElementById('prompt-result').value = `MISSÃO: ${d}\nFATOS: ${f}\n\n⚠️ RIGOR: PROIBIDO INVENTAR.`;
         document.getElementById('output-zone').style.display = 'block';
-        window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
     }
 
     function copiar() {
-        const res = document.getElementById('prompt-result');
-        res.select();
+        document.getElementById('prompt-result').select();
         document.execCommand('copy');
-        alert("💎 COPIADO!");
+        alert("Copiado!");
     }
 
     window.onload = checkAccess;

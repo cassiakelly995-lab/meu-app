@@ -2,67 +2,63 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>V8 ELITE | PROTOCOLO</title>
     <style>
-        :root { --gold: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); }
-        body { background: #000; color: #fff; font-family: sans-serif; text-align: center; margin: 0; padding: 0; }
-        #v8-conteudo { display: none; } 
-        .bloqueio-tela { display: none; padding: 100px 20px; }
-        .bloqueio-tela h1 { color: #ff4d4d; text-transform: uppercase; }
+        :root { --bg: #030303; --card: #0a0a0a; --gold: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); }
+        body { background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .container { background: var(--card); border: 1px solid #1a1a1a; padding: 40px; border-radius: 15px; width: 100%; max-width: 700px; text-align: center; }
+        .gold-text { background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; font-size: 24px; }
+        label { display: block; color: #888; font-size: 10px; text-transform: uppercase; margin: 20px 0 10px; text-align: left; }
+        textarea, input { width: 100%; background: #000; border: 1px solid #222; color: #fff; padding: 15px; border-radius: 8px; box-sizing: border-box; }
+        .btn-ativar { width: 100%; padding: 20px; background: var(--gold); border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 30px; text-transform: uppercase; color: #000; }
+        #v8-conteudo, #msg-bloqueio { display: none; }
+        footer { font-size: 9px; opacity: 0.5; margin-top: 40px; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
-    <div id="msg-bloqueio" class="bloqueio-tela">
-        <h1>🚫 ACESSO REVOGADO</h1>
-        <p>Esta licença de uso expirou ou foi desativada pela administração.</p>
+    <div id="msg-bloqueio" style="padding: 100px;">
+        <h1 style="color: #ff4d4d;">🚫 ACESSO REVOGADO</h1>
+        <p>Esta licença não é mais válida.</p>
     </div>
 
-    <div id="v8-conteudo">
-        <h1 style="margin-top:50px;"><span style="background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">V8 ELITE PROTOCOL</span></h1>
-        
-        <p>Acesso Autorizado. O motor está pronto.</p>
+    <div id="v8-conteudo" class="container">
+        <div class="gold-text">V8 ELITE</div>
+        <div style="font-size: 9px; color: #444; margin-bottom: 30px;">PROTOCOLO ELITE EDITION</div>
 
-        <footer style="position: fixed; bottom: 20px; width: 100%; font-size: 10px; opacity: 0.6; text-align: center;">
+        <label>Qual a sua missão obrigatória?</label>
+        <input type="text" placeholder="Ex: Redigir uma petição de urgência...">
+
+        <label>Base de Dados / Diretrizes Técnicas (Opcional)</label>
+        <textarea rows="3" placeholder="Cole aqui as diretrizes..."></textarea>
+
+        <label>Fatos ou Idéia Bruta</label>
+        <textarea rows="5" placeholder="Descreva os detalhes do caso..."></textarea>
+
+        <button class="btn-ativar">ATIVAR PROTOCOLO MODO ELITE</button>
+
+        <footer>
             A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. ESTE PROGRAMA APENAS GERA O PROMPT.
         </footer>
     </div>
 
     <script>
-        function validarAcesso() {
-            const urlParams = new URLSearchParams(window.location.search);
-            // Captura o 'id' que está no link da Helen
-            const idUser = urlParams.get('id');
+        const urlParams = new URLSearchParams(window.location.search);
+        const idUser = urlParams.get('id');
 
-            // --- REGRA DE OURO: BLINDAGEM DA HELEN CRISTINA ---
-            // Este trecho aceita exatamente o link: ?id=Helen_cristina
-            if (idUser === "Helen_cristina") {
-                liberar();
-                return;
-            }
-
-            // Verifica os outros acessos revogáveis
-            const ativos = JSON.parse(localStorage.getItem('v8_acessos_ativos')) || [];
-            const autorizado = ativos.find(acc => acc.id === idUser);
-
-            if (autorizado) {
-                liberar();
-            } else {
-                bloquear();
-            }
-        }
-
-        function liberar() {
+        // REGRA DA HELEN: NUNCA BLOQUEIA
+        if (idUser === "Helen_cristina") {
             document.getElementById('v8-conteudo').style.display = 'block';
-            document.getElementById('msg-bloqueio').style.display = 'none';
+        } else {
+            // Verifica se o ID está na sua lista de autorizados do ADM
+            const ativos = JSON.parse(localStorage.getItem('v8_acessos_ativos')) || [];
+            if (ativos.find(acc => acc.id === idUser)) {
+                document.getElementById('v8-conteudo').style.display = 'block';
+            } else {
+                document.getElementById('msg-bloqueio').style.display = 'block';
+            }
         }
-
-        function bloquear() {
-            document.getElementById('v8-conteudo').style.display = 'none';
-            document.getElementById('msg-bloqueio').style.display = 'block';
-        }
-
-        validarAcesso();
     </script>
 </body>
 </html>

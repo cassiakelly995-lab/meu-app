@@ -2,89 +2,76 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>GESTOR V8 ELITE - GERADOR DE ACESSOS</title>
+    <title>GESTOR V8 ELITE - CÁSSIA PROMPT</title>
     <style>
-        body { background: #000; color: #fff; font-family: sans-serif; padding: 20px; text-align: center; }
+        body { background: #000; color: #fff; font-family: sans-serif; text-align: center; padding: 20px; }
         .card { border: 2px solid #ed0b5a; padding: 30px; border-radius: 20px; max-width: 500px; margin: auto; box-shadow: 0 0 20px rgba(237, 11, 90, 0.2); }
-        h1 { text-transform: uppercase; font-size: 20px; letter-spacing: 2px; }
+        h1 { text-transform: uppercase; font-size: 20px; letter-spacing: 2px; color: #ed0b5a; }
         input { width: 90%; padding: 15px; margin: 15px 0; background: #111; border: 1px solid #333; color: #fff; border-radius: 10px; }
         .btn-gerar { background: #ed0b5a; color: #fff; border: none; padding: 15px; width: 95%; border-radius: 10px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
         .lista { text-align: left; margin-top: 30px; }
         .item { background: #111; padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #222; }
-        .item-topo { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .btn-copiar { background: #007bff; color: #fff; border: none; padding: 10px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: bold; }
-        .btn-revogar { background: none; border: 1px solid #ff4d4d; color: #ff4d4d; padding: 5px 10px; cursor: pointer; border-radius: 5px; font-size: 10px; }
-        footer { margin-top: 30px; font-size: 10px; opacity: 0.7; line-height: 1.5; }
-        .licenca { color: #bf953f; font-weight: bold; text-transform: uppercase; }
+        .btn-copiar { background: #007bff; color: #fff; border: none; padding: 10px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 12px; margin-top: 10px; }
+        .btn-revogar { background: none; border: 1px solid #ff4d4d; color: #ff4d4d; padding: 5px 10px; cursor: pointer; border-radius: 5px; float: right; font-size: 10px; }
+        footer { margin-top: 40px; font-size: 10px; opacity: 0.7; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h1>Gestor <span style="color: #ed0b5a;">V8 Elite</span></h1>
-    
+    <h1>Gestor <span style="color: #fff;">V8 Elite</span></h1>
     <input type="text" id="nomeDoutora" placeholder="NOME DA DOUTORA">
     <button class="btn-gerar" onclick="gerarAcesso()">Gerar Link e Autorizar</button>
-
     <div class="lista" id="listaAcessos"></div>
-
     <footer>
-        <span class="licenca">LICENCIADO PARA: CÁSSIA PROMPT</span><br>
-        A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. ESTE PROGRAMA APENAS GERA O PROMPT.
+        <strong style="color: #bf953f;">LICENCIADO PARA: CÁSSIA PROMPT</strong><br><br>
+        A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. <br>ESTE PROGRAMA APENAS GERA O PROMPT.
     </footer>
 </div>
 
 <script>
-    // Inicializa a lista com a Helen Cristina sempre autorizada
+    // HELEN CRISTINA SEMPRE ATIVA
     let acessos = JSON.parse(localStorage.getItem('v8_acessos_ativos')) || [
-        { nome: "HELEN CRISTINA", id: "PERMANENTE_HELEN" }
+        { nome: "HELEN CRISTINA", id: "Helen_cristina" }
     ];
 
     function renderizar() {
         const lista = document.getElementById('listaAcessos');
         lista.innerHTML = '';
-
         acessos.forEach((acc, index) => {
             const ehHelen = acc.nome === "HELEN CRISTINA";
             lista.innerHTML += `
                 <div class="item">
-                    <div class="item-topo">
-                        <strong>${acc.nome}</strong>
-                        ${ehHelen ? '' : `<button class="btn-revogar" onclick="revogar(${index})">REVOGAR ACESSO</button>`}
-                    </div>
-                    <button class="btn-copiar" onclick="copiar('${acc.id}')">COPIAR LINK DE ACESSO</button>
-                </div>
-            `;
+                    <strong>${acc.nome}</strong>
+                    ${ehHelen ? '' : `<button class="btn-revogar" onclick="revogar(${index})">REVOGAR</button>`}
+                    <button class="btn-copiar" onclick="copiar('${acc.id}')">COPIAR LINK V8 ELITE</button>
+                </div>`;
         });
         localStorage.setItem('v8_acessos_ativos', JSON.stringify(acessos));
     }
 
     function gerarAcesso() {
         const nome = document.getElementById('nomeDoutora').value.toUpperCase();
-        if (!nome) return alert("Por favor, digite o nome.");
-
-        // Gera um ID único para o link
-        const novoId = btoa(nome + Date.now()).substring(0, 10);
+        if (!nome) return;
+        const novoId = btoa(nome + Date.now()).substring(0, 8);
         acessos.push({ nome: nome, id: novoId });
-        
         document.getElementById('nomeDoutora').value = '';
         renderizar();
     }
 
     function revogar(index) {
-        if (confirm("BLOQUEAR ACESSO IMEDIATAMENTE?")) {
+        if (confirm("Bloquear este acesso?")) {
             acessos.splice(index, 1);
             renderizar();
         }
     }
 
     function copiar(id) {
-        // Gera o link completo baseado na sua página atual do GitHub
-        const linkCompleto = window.location.href.replace('adminv25.html', 'v8-elite.html') + "?token=" + id;
-        navigator.clipboard.writeText(linkCompleto);
-        alert("LINK GERADO E COPIADO!");
+        // CORREÇÃO DO ERRO 404: Aponta para v25.html
+        const link = window.location.origin + window.location.pathname.replace('adminv25.html', 'v25.html') + "?id=" + id;
+        navigator.clipboard.writeText(link);
+        alert("LINK COPIADO COM SUCESSO!");
     }
-
     renderizar();
 </script>
 </body>

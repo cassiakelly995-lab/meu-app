@@ -2,86 +2,71 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GESTOR V8 ELITE</title>
+    <title>GESTOR V8 ELITE - CONTROLE TOTAL</title>
     <style>
-        body { background-color: #000; color: #fff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .panel { border: 2px solid #ed0b5a; padding: 40px; border-radius: 20px; width: 400px; text-align: center; box-shadow: 0 0 20px rgba(237, 11, 90, 0.2); }
-        h1 { text-transform: uppercase; letter-spacing: 2px; font-size: 22px; margin-bottom: 30px; }
-        input { width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #333; background: #111; color: #fff; margin-bottom: 15px; box-sizing: border-box; }
-        .btn-gerar { background-color: #ed0b5a; color: #fff; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
-        .lista-acesso { margin-top: 30px; background: #111; padding: 15px; border-radius: 10px; text-align: left; }
-        .item-acesso { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .btn-bloquear { background: none; border: 1px solid #ff4d4d; color: #ff4d4d; font-size: 9px; padding: 5px; cursor: pointer; border-radius: 5px; }
-        .btn-copiar { background-color: #007bff; color: #fff; border: none; padding: 12px; width: 100%; border-radius: 10px; margin-top: 10px; cursor: pointer; font-weight: bold; }
-        footer { margin-top: 20px; font-size: 9px; opacity: 0.6; line-height: 1.4; }
-        .licenca { color: #bf953f; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; display: block; }
+        body { background: #000; color: #fff; font-family: sans-serif; padding: 20px; text-align: center; }
+        .card { border: 1px solid #bf953f; padding: 20px; border-radius: 15px; max-width: 500px; margin: auto; }
+        input { width: 80%; padding: 10px; margin: 10px 0; background: #111; border: 1px solid #333; color: #fff; }
+        button { padding: 10px 20px; cursor: pointer; font-weight: bold; text-transform: uppercase; }
+        .btn-add { background: #bf953f; color: #000; border: none; }
+        .btn-revogar { background: #ff4d4d; color: #fff; border: none; margin-left: 10px; padding: 5px; }
+        .lista { text-align: left; margin-top: 20px; border-top: 1px solid #222; padding-top: 20px; }
+        .item { display: flex; justify-content: space-between; margin-bottom: 10px; background: #0a0a0a; padding: 10px; border-radius: 5px; }
+        footer { font-size: 10px; margin-top: 30px; color: #666; }
     </style>
 </head>
 <body>
 
-<div class="panel">
-    <h1>Gestor <span style="color: #ed0b5a;">V8 Elite</span></h1>
-    
-    <input type="text" id="nomeDoutora" placeholder="NOME COMPLETO DA DOUTORA">
-    <button class="btn-gerar" onclick="ativarAcesso()">Ativar e Gerar Link V8</button>
+<div class="card">
+    <h2>GESTOR <span style="color:#bf953f">V8 ELITE</span></h2>
+    <input type="text" id="novoNome" placeholder="Nome da Doutora">
+    <button class="btn-add" onclick="adicionar()">Autorizar Nova Doutora</button>
 
-    <div id="containerAcessos"></div>
+    <div class="lista" id="listaDoutoras"></div>
 
     <footer>
-        <span class="licenca">LICENCIADO PARA: [NOME DO CLIENTE AQUI]</span><br>
-        A RESPONSABILIDADE PELO USO É EXCLUSIVA DE QUEM ESTÁ USANDO. ESTE PROGRAMA APENAS GERA O PROMPT.
+        LICENCIADO PARA: CÁSSIA PROMPT<br>
+        A RESPONSABILIDADE É DE QUEM USA. O PROGRAMA APENAS GERA O PROMPT.
     </footer>
 </div>
 
 <script>
-    // Função para carregar acessos do LocalStorage (Simulando Banco de Dados no Navegador)
-    function renderizarAcessos() {
-        const acessos = JSON.parse(localStorage.getItem('v8_acessos')) || [];
-        const container = document.getElementById('containerAcessos');
-        container.innerHTML = '';
+    // LISTA MESTRE - O link da Helen Cristina já começa protegido aqui
+    let autorizadas = JSON.parse(localStorage.getItem('v8_auth')) || ["HELEN CRISTINA"];
 
-        acessos.forEach((acc, index) => {
-            container.innerHTML += `
-                <div class="lista-acesso">
-                    <div class="item-acesso">
-                        <strong>${acc.nome}</strong>
-                        <button class="btn-bloquear" onclick="revogarAcesso(${index})">BLOQUEAR ACESSO</button>
-                    </div>
-                    <button class="btn-copiar" onclick="copiarLink('${acc.id}')">COPIAR LINK V8</button>
-                </div>
-            `;
-        });
-    }
-
-    function ativarAcesso() {
-        const nome = document.getElementById('nomeDoutora').value;
-        if(!nome) return alert("Digite o nome!");
-
-        const acessos = JSON.parse(localStorage.getItem('v8_acessos')) || [];
-        const novoAcesso = { nome: nome, id: btoa(nome + Date.now()).substring(0, 12) };
+    function atualizarLista() {
+        const lista = document.getElementById('listaDoutoras');
+        lista.innerHTML = '<strong>Doutoras com Acesso Ativo:</strong><br><br>';
         
-        acessos.push(novoAcesso);
-        localStorage.setItem('v8_acessos', JSON.stringify(acessos));
-        document.getElementById('nomeDoutora').value = '';
-        renderizarAcessos();
+        autorizadas.forEach((nome, index) => {
+            const displayRevogar = nome === "HELEN CRISTINA" ? "display:none" : "";
+            lista.innerHTML += `
+                <div class="item">
+                    <span>${nome}</span>
+                    <button class="btn-revogar" style="${displayRevogar}" onclick="revogar(${index})">REVOGAR ACESSO</button>
+                </div>`;
+        });
+        localStorage.setItem('v8_auth', JSON.stringify(autorizadas));
     }
 
-    function revogarAcesso(index) {
-        let acessos = JSON.parse(localStorage.getItem('v8_acessos'));
-        acessos.splice(index, 1);
-        localStorage.setItem('v8_acessos', JSON.stringify(acessos));
-        renderizarAcessos();
-        alert("ACESSO REVOGADO COM SUCESSO. O LINK NÃO FUNCIONARÁ MAIS.");
+    function adicionar() {
+        const nome = document.getElementById('novoNome').value.toUpperCase();
+        if (nome && !autorizadas.includes(nome)) {
+            autorizadas.push(nome);
+            document.getElementById('novoNome').value = '';
+            atualizarLista();
+            alert("ACESSO LIBERADO!");
+        }
     }
 
-    function copiarLink(id) {
-        const linkFinal = window.location.origin + "/v8-elite.html?token=" + id;
-        navigator.clipboard.writeText(linkFinal);
-        alert("Link copiado!");
+    function revogar(index) {
+        if (confirm("TEM CERTEZA? O LINK PARARÁ DE FUNCIONAR AGORA!")) {
+            autorizadas.splice(index, 1);
+            atualizarLista();
+        }
     }
 
-    renderizarAcessos();
+    atualizarLista();
 </script>
 </body>
 </html>

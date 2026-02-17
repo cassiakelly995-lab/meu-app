@@ -11,139 +11,129 @@
             --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
             --glow: 0 0 25px rgba(191, 149, 63, 0.15);
         }
-        .light-mode {
-            --bg: #f4f4f4; --card: #ffffff; --text: #1a1a1a; --border: #d1d1d1;
-            --glow: 0 5px 15px rgba(0,0,0,0.05);
+        body.light-mode {
+            --bg: #f8f8f8; --card: #ffffff; --text: #1a1a1a; --border: #e0e0e0;
+            --glow: 0 5px 20px rgba(0,0,0,0.05);
         }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; transition: 0.4s; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; transition: background 0.3s; }
         
-        nav { background: rgba(0,0,0,0.02); backdrop-filter: blur(10px); padding: 20px 40px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-        .logo-v8 { font-size: 20px; font-weight: 900; letter-spacing: 5px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
+        nav { padding: 25px 40px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--bg); }
+        .logo-v8 { font-size: 18px; font-weight: 900; letter-spacing: 5px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
 
-        .controls { display: flex; gap: 15px; }
-        .btn-tool { background: none; border: 1px solid var(--border); color: var(--text); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
-        .btn-tool:hover { border-color: #bf953f; color: #bf953f; }
+        .top-btns { display: flex; gap: 10px; }
+        .btn-minimal { background: none; border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 9px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; }
+        .btn-minimal:hover { opacity: 1; border-color: #bf953f; color: #bf953f; }
 
-        main { padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
-        .glass-panel { background: var(--card); width: 100%; max-width: 800px; border-radius: 25px; border: 1px solid var(--border); padding: 40px; box-shadow: var(--glow); position: relative; }
+        main { padding: 40px 20px; display: flex; flex-direction: column; align-items: center; min-height: 70vh; }
+        .glass-panel { background: var(--card); width: 100%; max-width: 750px; border-radius: 20px; border: 1px solid var(--border); padding: 40px; box-shadow: var(--glow); }
 
-        .integrity-box { margin-bottom: 30px; }
-        .integrity-header { display: flex; justify-content: space-between; font-size: 10px; font-weight: 800; color: #bf953f; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px; }
-        .bar-bg { width: 100%; height: 4px; background: rgba(191,149,63,0.1); border-radius: 10px; overflow: hidden; }
-        .bar-fill { width: 0%; height: 100%; background: var(--gold); transition: 0.6s; }
+        .integrity-header { display: flex; justify-content: space-between; font-size: 9px; font-weight: 800; color: #bf953f; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px; }
+        .bar-bg { width: 100%; height: 3px; background: rgba(191,149,63,0.1); border-radius: 5px; overflow: hidden; margin-bottom: 30px; }
+        .bar-fill { width: 0%; height: 100%; background: var(--gold); transition: 0.5s; }
 
-        .pdf-discreto { border: 1px dashed var(--border); padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 25px; cursor: pointer; font-size: 11px; color: #bf953f; transition: 0.3s; }
-        .pdf-discreto:hover { background: rgba(191,149,63,0.05); border-color: #bf953f; }
+        .pdf-link { color: #bf953f; font-size: 11px; text-decoration: none; font-weight: 700; cursor: pointer; display: inline-block; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; }
+        .pdf-link:hover { text-decoration: underline; }
 
-        label { font-size: 10px; font-weight: 700; opacity: 0.6; text-transform: uppercase; display: block; margin-bottom: 10px; letter-spacing: 1.5px; }
-        textarea, input { width: 100%; background: transparent; border: 1px solid var(--border); padding: 18px; border-radius: 12px; color: var(--text); font-size: 15px; margin-bottom: 25px; box-sizing: border-box; outline: none; transition: 0.3s; }
-        textarea:focus, input:focus { border-color: #bf953f; }
+        label { font-size: 9px; font-weight: 700; opacity: 0.5; text-transform: uppercase; display: block; margin-bottom: 8px; letter-spacing: 1.2px; }
+        input, textarea { width: 100%; background: transparent; border: 1px solid var(--border); padding: 15px; border-radius: 10px; color: var(--text); font-size: 15px; margin-bottom: 25px; box-sizing: border-box; outline: none; }
+        input:focus, textarea:focus { border-color: #bf953f; }
 
-        .btn-gerar { width: 100%; background: var(--gold); color: #000; border: none; padding: 22px; border-radius: 15px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; font-size: 14px; box-shadow: 0 10px 20px rgba(191,149,63,0.15); }
-        
-        #output-zone { display: none; margin-top: 40px; width: 100%; max-width: 800px; }
-        #prompt-result { width: 100%; height: 350px; background: rgba(0,0,0,0.05); color: var(--text); border: 1px solid var(--border); padding: 25px; border-radius: 15px; font-family: 'Courier New', monospace; font-size: 14px; }
+        .btn-gold { width: 100%; background: var(--gold); color: #000; border: none; padding: 20px; border-radius: 12px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 3px; font-size: 13px; transition: 0.3s; }
+        .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(191,149,63,0.2); }
 
-        footer { margin-top: 60px; padding: 30px; text-align: center; font-size: 9px; opacity: 0.4; letter-spacing: 2px; text-transform: uppercase; line-height: 2; }
+        #output-zone { display: none; width: 100%; max-width: 750px; margin-top: 30px; }
+        #prompt-result { width: 100%; height: 300px; background: rgba(0,0,0,0.03); border: 1px solid var(--border); color: var(--text); padding: 20px; border-radius: 12px; font-family: monospace; }
+
+        footer { margin-top: 80px; padding: 40px; text-align: center; border-top: 1px solid var(--border); font-size: 9px; opacity: 0.5; letter-spacing: 1.5px; line-height: 2; }
     </style>
 </head>
-<body id="body-tag">
+<body id="main-body">
 
 <nav>
     <div class="logo-v8">V8 ELITE EDITION</div>
-    <div class="controls">
-        <button class="btn-tool" onclick="apagarTudo()">Apagar Tudo</button>
-        <button class="btn-tool" onclick="toggleMode()">Modo Claro/Escuro</button>
+    <div class="top-btns">
+        <button class="btn-minimal" onclick="limpar()">Limpar Tudo</button>
+        <button class="btn-minimal" onclick="toggleMode()">Trocar Tema</button>
     </div>
 </nav>
 
-<main id="app-block">
+<main id="app-content">
     <div class="glass-panel">
-        <div class="integrity-box">
-            <div class="integrity-header"><span>Integridade do Sistema</span><span id="pct">0%</span></div>
-            <div class="bar-bg"><div id="fill" class="bar-fill"></div></div>
-        </div>
+        <div class="integrity-header"><span>Integridade V8</span><span id="pct">0%</span></div>
+        <div class="bar-bg"><div id="fill" class="bar-fill"></div></div>
 
-        <div class="pdf-discreto" onclick="document.getElementById('pdf-file').click()">
-            <span id="pdf-status">📎 ANEXAR PDF (OPCIONAL)</span>
-            <input type="file" id="pdf-file" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
-        </div>
+        <a class="pdf-link" onclick="document.getElementById('pdf-up').click()">📎 Anexar PDF da Triagem</a>
+        <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
 
-        <label>Objetivo</label>
-        <input type="text" id="destino" oninput="monitorar()" placeholder="Qual o resultado final esperado?">
+        <label>Qual o seu objetivo com este comando?</label>
+        <input type="text" id="destino" oninput="atualizar()" placeholder="Ex: Triagem Documental Elite">
 
-        <label>Fatos & Dados</label>
-        <textarea id="fatos" rows="6" oninput="monitorar()" placeholder="Insira os dados brutos ou anexe um PDF..."></textarea>
+        <label>Fatos e Informações Brutas</label>
+        <textarea id="fatos" rows="6" oninput="atualizar()" placeholder="Cole o texto ou anexe o PDF acima..."></textarea>
 
-        <button class="btn-gerar" onclick="gerar()">Gerar Supremo Prompt</button>
+        <button class="btn-gold" onclick="gerar()">Gerar Prompt Elite</button>
     </div>
 
     <div id="output-zone">
+        <label>Comando Gerado:</label>
         <textarea id="prompt-result" readonly></textarea>
-        <button class="btn-tool" style="width:100%; margin-top:15px; padding:15px" onclick="copiar()">Copiar Comando de Elite</button>
+        <button class="btn-minimal" style="width:100%; margin-top:10px; padding:15px;" onclick="copiar()">Copiar Prompt</button>
     </div>
 </main>
 
 <footer>
-    CÁSSIA PROMPT ® | TECNOLOGIA V8 ELITE<br>
-    LICENCIADO PARA: <span id="user-display" style="color:#bf953f">...</span><br>
-    A RESPONSABILIDADE É DO USUÁRIO. O PROGRAMA APENAS GERA O PROMPT.
+    CÁSSIA PROMPT ® | VERSÃO V8 GOD MODE<br>
+    LICENCIADO PARA: <span id="user-display" style="color:#bf953f; font-weight:bold;">VERIFICANDO...</span><br>
+    A RESPONSABILIDADE É DE QUEM ESTÁ USANDO E O PROGRAMA APENAS GERA O PROMPT.
 </footer>
 
 <script>
-    // SISTEMA DE ACESSO (HELEN E NATALIA LIBERADAS)
+    // SISTEMA DE ACESSO
     const ACESSOS = {
         "TkFUQUxJ": "NATALIA",
         "Helen_cristina": "HELEN CRISTINA",
-        "TkfVQUxK": "NATALIA",
         "cassia": "CÁSSIA"
     };
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id');
+    const id = new URLSearchParams(window.location.search).get('id');
     const user = ACESSOS[id];
 
     if (!user) {
-        document.getElementById('app-block').innerHTML = "<h2 style='color:#bf953f; text-align:center; margin-top:100px;'>ACESSO REVOGADO</h2>";
+        document.getElementById('app-content').innerHTML = "<h1 style='color:#bf953f; margin-top:100px;'>ACESSO REVOGADO</h1>";
     } else {
         document.getElementById('user-display').innerText = user;
     }
 
-    // MODO CLARO/ESCURO
-    function toggleMode() { document.getElementById('body-tag').classList.toggle('light-mode'); }
-
-    // APAGAR TUDO
-    function apagarTudo() {
+    // TEMA E LIMPEZA
+    function toggleMode() { document.getElementById('main-body').classList.toggle('light-mode'); }
+    function limpar() {
         document.getElementById('destino').value = "";
         document.getElementById('fatos').value = "";
-        document.getElementById('pdf-status').innerText = "📎 ANEXAR PDF (OPCIONAL)";
-        monitorar();
+        atualizar();
     }
 
-    // LEITOR DE PDF
+    // MOTOR PDF
     async function lerPDF(input) {
         const file = input.files[0];
         if(!file) return;
-        document.getElementById('pdf-status').innerText = "PROCESSANDO...";
         const reader = new FileReader();
         reader.onload = async function() {
             const typedarray = new Uint8Array(this.result);
             const pdf = await pdfjsLib.getDocument(typedarray).promise;
-            let text = "";
+            let fullText = "";
             for(let i=1; i<=pdf.numPages; i++) {
                 const page = await pdf.getPage(i);
                 const content = await page.getTextContent();
-                text += content.items.map(s => s.str).join(" ") + "\n";
+                fullText += content.items.map(s => s.str).join(" ") + "\n";
             }
-            document.getElementById('fatos').value = text;
-            document.getElementById('pdf-status').innerText = "PDF CARREGADO ✅";
-            monitorar();
+            document.getElementById('fatos').value = fullText;
+            atualizar();
         };
         reader.readAsArrayBuffer(file);
     }
 
-    function monitorar() {
-        let p = Math.min(100, (document.getElementById('destino').value.length * 2) + (document.getElementById('fatos').value.length / 20));
+    function atualizar() {
+        let p = Math.min(100, (document.getElementById('destino').value.length * 2) + (document.getElementById('fatos').value.length / 10));
         document.getElementById('fill').style.width = p + "%";
         document.getElementById('pct').innerText = Math.round(p) + "%";
     }
@@ -151,14 +141,15 @@
     function gerar() {
         const d = document.getElementById('destino').value;
         const f = document.getElementById('fatos').value;
-        document.getElementById('prompt-result').value = `### [SISTEMA V8 ELITE] ###\n\nOBJETIVO: ${d}\n\nCONTEXTO: ${f}`;
+        document.getElementById('prompt-result').value = `### [COMANDO V8 ELITE] ###\n\nOBJETIVO: ${d}\n\nDADOS PARA ANÁLISE:\n${f}`;
         document.getElementById('output-zone').style.display = 'block';
+        window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
     }
 
     function copiar() {
         document.getElementById('prompt-result').select();
         document.execCommand('copy');
-        alert("💎 Comando de Elite Copiado!");
+        alert("💎 Prompt V8 Copiado!");
     }
 </script>
 </body>

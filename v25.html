@@ -45,7 +45,7 @@
     </div>
 </nav>
 
-<main id="app-content">
+<main>
     <div class="glass-panel">
         <div class="integrity-header"><span>Sincronização de Dados V9</span><span id="pct">0%</span></div>
         <div class="bar-bg"><div id="fill" class="bar-fill"></div></div>
@@ -72,7 +72,7 @@
     </div>
 
     <div id="output-zone">
-        <label>Comando Supremo V9 [JURISPRUDÊNCIA ATIVA] Gerado:</label>
+        <label>Comando Supremo V9 [RIGOR ABSOLUTO] Gerado:</label>
         <textarea id="prompt-result" readonly></textarea>
         <div class="export-btns">
             <button class="btn-supreme" style="flex: 1; background:transparent; border:1px solid #bf953f; color:#bf953f;" onclick="copiar()">Copiar Prompt</button>
@@ -83,27 +83,11 @@
 
 <footer>
     CÁSSIA PROMPT ® | TECNOLOGIA V9 POWER ELITE EDITION<br>
-    SISTEMA DE ENGENHARIA E JURISPRUDÊNCIA DE ALTA PRECISÃO<br>
-    LICENCIADO PARA: <span id="user-display" style="color:#bf953f; font-weight:bold;">...</span><br>
-    A RESPONSABILIDADE É DO USUÁRIO. O PROGRAMA APENAS GERA O PROMPT.
+    SISTEMA DE ENGENHARIA DE PROMPT DE ALTA PRECISÃO<br>
+    A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. O PROGRAMA APENAS GERA O PROMPT.
 </footer>
 
 <script>
-    const ACESSOS = {
-        "TkFUQUxJ": "NATALIA",
-        "Helen_cristina": "HELEN CRISTINA",
-        "cassia": "CÁSSIA"
-    };
-
-    const id = new URLSearchParams(window.location.search).get('id');
-    const user = ACESSOS[id];
-
-    if (!user) {
-        document.getElementById('app-content').innerHTML = "<h1 style='color:#bf953f; margin-top:100px; text-align:center;'>ACESSO REVOGADO</h1>";
-    } else {
-        document.getElementById('user-display').innerText = user;
-    }
-
     function toggleMode() { document.getElementById('main-body').classList.toggle('light-mode'); }
     function limpar() {
         document.getElementById('gerado').value = "";
@@ -112,7 +96,6 @@
         document.getElementById('output-zone').style.display = 'none';
         atualizar();
     }
-
     async function lerPDF(input) {
         const file = input.files[0];
         if(!file) return;
@@ -131,43 +114,19 @@
         };
         reader.readAsArrayBuffer(file);
     }
-
     function atualizar() {
         let p = Math.min(100, (document.getElementById('gerado').value.length * 2) + (document.getElementById('destino').value.length * 2) + (document.getElementById('fatos').value.length / 50));
         document.getElementById('fill').style.width = p + "%";
         document.getElementById('pct').innerText = Math.round(p) + "%";
     }
-
     function gerar() {
         const g = document.getElementById('gerado').value;
         const d = document.getElementById('destino').value;
         const f = document.getElementById('fatos').value;
-        
-        const promptMaster = `### [ORDEM SUPREMA - SISTEMA V9 POWER ELITE] ###
-
-VOCÊ É UM EXPERT EM ENGENHARIA JURÍDICA E ANÁLISE JURISPRUDENCIAL.
-ESTE PROTOCOLO É DE ERRO ZERO.
-
-1. O QUE DEVE SER GERADO: ${g}
-2. OBJETIVO DO COMANDO: ${d}
-
-[DIRETRIZES DE RIGOR]:
-- FUNDAMENTAÇÃO LEGAL: Cite artigos da lei (CDC, CC, CLT, etc.).
-- JURISPRUDÊNCIA: Se houver entendimento pacificado no STF ou STJ sobre o tema, mencione a tese ou súmula correspondente.
-- TRAVA DE SEGURANÇA: Se não houver certeza absoluta da lei ou jurisprudência, escreva: "Fundamentação/Jurisprudência pendente de análise humana". PROIBIDO INVENTAR.
-- Se a informação não constar no "REGISTRO DOS FATOS", declare-a como inexistente.
-
-[REGISTRO DOS FATOS (BASE BRUTA)]:
-${f}
-
-[EXECUÇÃO]:
-Entregue o resultado técnico imediato, formatado e pronto para uso profissional.`;
-
-        document.getElementById('prompt-result').value = promptMaster;
+        const pMaster = `### [ORDEM V9 POWER] ###\n\n1. GERAR: ${g}\n2. OBJETIVO: ${d}\n\n[DIRETRIZES]: Use lei seca e jurisprudência STF/STJ. Se não houver certeza, escreva: "Fundamentação pendente de análise humana". PROIBIDO INVENTAR.\n\n[FATOS]:\n${f}`;
+        document.getElementById('prompt-result').value = pMaster;
         document.getElementById('output-zone').style.display = 'block';
-        window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
     }
-
     function exportarWord() {
         const content = document.getElementById('prompt-result').value;
         const blob = new Blob(['\ufeff', content], { type: 'application/msword' });
@@ -177,7 +136,6 @@ Entregue o resultado técnico imediato, formatado e pronto para uso profissional
         link.download = 'Comando_V9_Elite.doc';
         link.click();
     }
-
     function copiar() {
         document.getElementById('prompt-result').select();
         document.execCommand('copy');

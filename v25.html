@@ -14,13 +14,13 @@
             --glow: 0 0 30px rgba(191, 149, 63, 0.1);
         }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: none; }
-        #revogado { display: none; height: 100vh; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .logo-v9 { font-size: 18px; font-weight: 900; letter-spacing: 6px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; margin-bottom: 20px; }
+        #revogado { display: none; height: 100vh; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: #000; }
+        .logo-v9 { font-size: 18px; font-weight: 900; letter-spacing: 6px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
         .glass-panel { background: var(--card); width: 90%; max-width: 900px; border-radius: 12px; border: 1px solid var(--border); padding: 50px; margin: 40px auto; box-shadow: var(--glow); }
         .btn-supreme { width: 100%; background: var(--gold); color: #000; border: none; padding: 20px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; margin-top: 20px; }
-        input, textarea { width: 100%; background: transparent; border: 1px solid var(--border); padding: 14px; color: #fff; margin-bottom: 20px; }
-        label { font-size: 10px; opacity: 0.5; text-transform: uppercase; }
-        footer { padding: 40px; text-align: center; font-size: 9px; opacity: 0.5; letter-spacing: 2px; line-height: 2.2; }
+        input, textarea { width: 100%; background: transparent; border: 1px solid var(--border); padding: 14px; color: #fff; margin-bottom: 20px; border-radius: 4px; }
+        label { font-size: 10px; opacity: 0.5; text-transform: uppercase; display: block; margin-bottom: 8px; }
+        footer { padding: 40px; text-align: center; font-size: 9px; opacity: 0.5; letter-spacing: 2px; }
     </style>
 </head>
 <body>
@@ -31,23 +31,24 @@
     </nav>
     <main>
         <div class="glass-panel">
-            <div style="color:#bf953f; font-size:11px; margin-bottom:20px; cursor:pointer" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR PDF</div>
+            <div style="color:#bf953f; font-size:11px; margin-bottom:25px; cursor:pointer; font-weight:700;" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR DADOS DE PDF</div>
             <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
             
             <label>1. O que deve ser gerado?</label>
-            <input type="text" id="gerado" placeholder="Ex: Petição Inicial">
+            <input type="text" id="gerado" placeholder="Ex: Petição de Indenização">
             
-            <label>2. Objetivo</label>
-            <input type="text" id="destino" placeholder="Ex: Ganhar a causa">
+            <label>2. Objetivo (Destino do Comando)</label>
+            <input type="text" id="destino" placeholder="Ex: Demonstrar falha no serviço">
             
-            <label>3. Fatos</label>
-            <textarea id="fatos" rows="10" placeholder="Cole o texto aqui"></textarea>
+            <label>3. Registro dos Fatos (Base de Dados)</label>
+            <textarea id="fatos" rows="10" placeholder="Insira o texto bruto aqui..."></textarea>
             
             <button class="btn-supreme" onclick="gerar()">Executar Engenharia V9</button>
             
-            <div id="output" style="display:none; margin-top:30px;">
-                <textarea id="res" style="height:300px; background:#000; color:#fcf6ba; border-color:#bf953f" readonly></textarea>
-                <button class="btn-supreme" onclick="exportar()">Baixar em Word (.doc)</button>
+            <div id="output-zone" style="display:none; margin-top:40px;">
+                <label>Comando Supremo Gerado:</label>
+                <textarea id="prompt-result" style="height:300px; background:#000; color:#fcf6ba; border-color:#bf953f" readonly></textarea>
+                <button class="btn-supreme" onclick="exportarWord()">Baixar em Word (.doc)</button>
             </div>
         </div>
     </main>
@@ -56,31 +57,30 @@
 
 <div id="revogado">
     <div class="logo-v9">V9 POWER ELITE</div>
-    <h1 style="color:#bf953f; letter-spacing:5px;">ACESSO REVOGADO</h1>
-    <p style="opacity:0.5; font-size:10px;">Entre em contato com a administração para renovar sua licença.</p>
+    <h1 style="color:#bf953f; letter-spacing:5px; margin-top:30px;">ACESSO REVOGADO</h1>
+    <p style="opacity:0.5; font-size:10px; text-transform:uppercase;">Entre em contato para renovar sua licença.</p>
 </div>
 
 <script>
-    // Configuração do seu Firebase (Mantenha as suas chaves aqui)
+    // AQUI É ONDE VOCÊ COLA A SUA URL DO FIREBASE
     const firebaseConfig = {
-        databaseURL: "SUA_URL_DO_FIREBASE_AQUI"
+        databaseURL: "COLE_AQUI_A_SUA_URL_DO_FIREBASE" 
     };
+    
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
 
-    // Lógica de Verificação de ID
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get('id');
 
     if (userId) {
         database.ref('usuarios/' + userId).on('value', (snapshot) => {
             const data = snapshot.val();
+            document.body.style.display = 'block';
             if (data && data.status === 'ativo') {
-                document.body.style.display = 'block';
                 document.getElementById('app-content').style.display = 'block';
                 document.getElementById('revogado').style.display = 'none';
             } else {
-                document.body.style.display = 'block';
                 document.getElementById('app-content').style.display = 'none';
                 document.getElementById('revogado').style.display = 'flex';
             }
@@ -90,17 +90,22 @@
         document.getElementById('revogado').style.display = 'flex';
     }
 
-    // Funções do V9
+    // Funções mantidas do V9
     function gerar() {
-        const p = `### [ORDEM V9] ###\n1. GERAR: ${document.getElementById('gerado').value}\n2. OBJETIVO: ${document.getElementById('destino').value}\n3. FATOS: ${document.getElementById('fatos').value}`;
-        document.getElementById('res').value = p;
-        document.getElementById('output').style.display = 'block';
+        const g = document.getElementById('gerado').value;
+        const d = document.getElementById('destino').value;
+        const f = document.getElementById('fatos').value;
+        const p = `### [ORDEM V9 POWER] ###\n\n1. GERAR: ${g}\n2. OBJETIVO: ${d}\n\n[DIRETRIZES]: Use lei e jurisprudência STF/STJ. Se não houver certeza, escreva: "Jurisprudência pendente de análise humana".\n\n[FATOS]:\n${f}`;
+        document.getElementById('prompt-result').value = p;
+        document.getElementById('output-zone').style.display = 'block';
     }
-    function exportar() {
-        const blob = new Blob(['\ufeff', document.getElementById('res').value], { type: 'application/msword' });
+
+    function exportarWord() {
+        const content = document.getElementById('prompt-result').value;
+        const blob = new Blob(['\ufeff', content], { type: 'application/msword' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'V9_Prompt.doc';
+        link.download = 'Comando_V9.doc';
         link.click();
     }
 </script>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>V8 ELITE EDITION | CÁSSIA PROMPT</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <style>
         :root { 
             --bg: #050505; --card: #0a0a0a; --text: #ffffff; 
@@ -12,30 +13,22 @@
             --glow: 0 0 35px rgba(191, 149, 63, 0.15);
         }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        
         nav { background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); padding: 25px 40px; border-bottom: 1px solid #bf953f; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
         .logo-v8 { font-size: 26px; font-weight: 900; letter-spacing: 7px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
-
         main { padding: 50px 20px; display: flex; flex-direction: column; align-items: center; min-height: 80vh; }
-        .glass-panel { background: var(--card); width: 100%; max-width: 850px; border-radius: 35px; border: 1px solid var(--border); padding: 50px; box-sizing: border-box; box-shadow: var(--glow); position: relative; overflow: hidden; }
-        
+        .glass-panel { background: var(--card); width: 100%; max-width: 850px; border-radius: 35px; border: 1px solid var(--border); padding: 50px; box-sizing: border-box; box-shadow: var(--glow); position: relative; }
         .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .progress-label { font-size: 11px; font-weight: 900; color: #bf953f; text-transform: uppercase; letter-spacing: 2px; }
         .progress-bar-bg { width: 100%; height: 10px; background: #111; border-radius: 25px; overflow: hidden; margin-bottom: 30px; border: 1px solid #222; }
         .progress-bar-fill { width: 0%; height: 100%; background: var(--gold); transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-
         label { font-size: 11px; font-weight: 800; color: #bf953f; text-transform: uppercase; display: block; margin-bottom: 15px; letter-spacing: 2px; }
         textarea, input { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 22px; border-radius: 18px; color: var(--text); font-size: 16px; outline: none; margin-bottom: 30px; box-sizing: border-box; }
-        textarea:focus, input:focus { border-color: #fcf6ba; }
-
-        .btn-prime { width: 100%; background: var(--gold); color: #000; border: none; padding: 30px; border-radius: 20px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 6px; font-size: 17px; transition: 0.5s; }
-
+        .file-input-wrapper { border: 2px dashed #bf953f; padding: 30px; border-radius: 18px; text-align: center; margin-bottom: 30px; cursor: pointer; transition: 0.3s; }
+        .btn-prime { width: 100%; background: var(--gold); color: #000; border: none; padding: 30px; border-radius: 20px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 6px; font-size: 17px; }
         #output-zone { display: none; margin-top: 60px; width: 100%; max-width: 850px; animation: fadeIn 0.8s ease; }
         #prompt-result { width: 100%; height: 450px; background: #000; color: #fcf6ba; border: 1px solid #bf953f; padding: 35px; border-radius: 25px; font-family: 'Courier New', monospace; font-size: 15px; line-height: 1.6; }
-
         footer { margin-top: 100px; padding: 50px; text-align: center; border-top: 1px solid var(--border); }
         .footer-text { font-size: 10px; color: var(--text); opacity: 0.6; text-transform: uppercase; letter-spacing: 2px; }
-
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -46,19 +39,22 @@
 <main id="app-block">
     <div class="glass-panel">
         <div class="progress-header">
-            <span class="progress-label">Integridade do Comando V8</span>
+            <span class="progress-label">Integridade do Sistema V8</span>
             <span id="percent-text" style="color:#fcf6ba; font-weight:bold;">0%</span>
         </div>
         <div class="progress-bar-bg"><div id="bar-fill" class="progress-bar-fill"></div></div>
 
+        <label>UPLOAD DE DOCUMENTO (PDF)</label>
+        <div class="file-input-wrapper" onclick="document.getElementById('pdf-input').click()">
+            <span id="file-status" style="color:#fcf6ba; font-weight:bold;">CLIQUE PARA SUBIR O PDF DA TRIAGEM</span>
+            <input type="file" id="pdf-input" accept="application/pdf" style="display:none" onchange="processarPDF(this)">
+        </div>
+
         <label>OBJETIVO FINAL (DESTINO)</label>
-        <input type="text" id="destino" oninput="monitorar()" placeholder="O que você quer que a IA entregue?">
+        <input type="text" id="destino" oninput="monitorar()" placeholder="Ex: Triagem Jurídica Completa...">
 
-        <label>REGRAS & DIRETRIZES (BASE)</label>
-        <textarea id="base" rows="2" placeholder="Ex: Tom de voz profissional, leis específicas..."></textarea>
-
-        <label>DADOS BRUTOS (FATOS)</label>
-        <textarea id="fatos" rows="6" oninput="monitorar()" placeholder="Cole aqui as informações..."></textarea>
+        <label>DADOS EXTRAÍDOS / FATOS BRUTOS</label>
+        <textarea id="fatos" rows="8" oninput="monitorar()" placeholder="O texto aparecerá aqui..."></textarea>
 
         <button id="btn-main" class="btn-prime" onclick="processar()">ATIVAR ENGENHARIA SUPREMA</button>
     </div>
@@ -79,50 +75,58 @@
 </footer>
 
 <script>
-    // ==========================================
-    // CENTRAL DE ACESSOS (LIBERADO PARA ELAS)
-    // ==========================================
-    const LICENCAS_ATIVAS = {
+    const LICENCAS = {
         "TkFUQUxJ": "NATALIA",
-        "SEVMRU4=": "HELEN CRISTINA", // ID para a Helen (ex: id=SEVMRU4=)
+        "SEVMRU4=": "HELEN CRISTINA",
         "Y2Fzc2lh": "CÁSSIA"
     };
 
     const urlParams = new URLSearchParams(window.location.search);
     const idUser = urlParams.get('id');
-    const usuarioAtivo = LICENCAS_ATIVAS[idUser];
+    const usuarioAtivo = LICENCAS[idUser];
 
     if (!usuarioAtivo) {
-        document.getElementById('app-block').innerHTML = `
-            <div style="padding:100px; text-align:center;">
-                <h1 style="color:#bf953f; font-size:45px; letter-spacing:5px;">ACESSO REVOGADO</h1>
-                <p style="opacity:0.7;">SISTEMA V8 BLOQUEADO PARA ESTE ID.</p>
-            </div>`;
+        document.getElementById('app-block').innerHTML = `<h1 style='color:#bf953f; text-align:center; padding-top:100px;'>ACESSO REVOGADO</h1>`;
         document.getElementById('user-display').innerText = "BLOQUEADO";
     } else {
         document.getElementById('user-display').innerText = usuarioAtivo;
     }
 
-    // --- LÓGICA ELITE DE MONITORAMENTO ---
+    async function processarPDF(input) {
+        const status = document.getElementById('file-status');
+        const fatos = document.getElementById('fatos');
+        const file = input.files[0];
+        if (!file) return;
+        status.innerText = "LENDO PDF...";
+        const reader = new FileReader();
+        reader.onload = async function() {
+            const typedarray = new Uint8Array(this.result);
+            const pdf = await pdfjsLib.getDocument(typedarray).promise;
+            let textoFull = "";
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const content = await page.getTextContent();
+                textoFull += content.items.map(item => item.str).join(" ") + "\n";
+            }
+            fatos.value = textoFull;
+            status.innerText = "PDF CARREGADO COM SUCESSO! ✅";
+            monitorar();
+        };
+        reader.readAsArrayBuffer(file);
+    }
+
     function monitorar() {
         const d = document.getElementById('destino').value.length;
         const f = document.getElementById('fatos').value.length;
-        let progresso = Math.min(100, ((d / 15) * 20) + ((f / 60) * 80));
+        let progresso = Math.min(100, ((d / 10) * 30) + ((f / 100) * 70));
         document.getElementById('bar-fill').style.width = progresso + "%";
         document.getElementById('percent-text').innerText = Math.round(progresso) + "%";
     }
 
-    // --- ENGENHARIA DE PROMPT V8 ---
     function processar() {
         const d = document.getElementById('destino').value;
-        const b = document.getElementById('base').value;
         const f = document.getElementById('fatos').value;
-        
-        const promptFinal = `### [SISTEMA V8 ELITE EDITION] ###\n\n` +
-        `**MISSÃO:** ${d}\n\n**REGRAS:** ${b}\n\n**DADOS:**\n${f}\n\n` +
-        `**PROTOCOLO V8:** Use tom assertivo, profissional e elimine redundâncias.`;
-
-        document.getElementById('prompt-result').value = promptFinal;
+        document.getElementById('prompt-result').value = `### [V8 ELITE EDITION] ###\n\nOBJETIVO: ${d}\n\nDADOS EXTRAÍDOS:\n${f}\n\nPROTOCOLO: Redija com máximo rigor técnico e jurídico.`;
         document.getElementById('output-zone').style.display = 'block';
         window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
     }
@@ -131,7 +135,7 @@
         const text = document.getElementById('prompt-result');
         text.select();
         document.execCommand('copy');
-        alert("💎 Prompt V8 copiado!");
+        alert("💎 Copiado!");
     }
 </script>
 </body>

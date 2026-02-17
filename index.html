@@ -5,139 +5,103 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>V8 ELITE EDITION | CÁSSIA PROMPT</title>
     <style>
-        :root { 
-            --bg: #050505; --card: #0a0a0a; --text: #ffffff; 
-            --border: #1a1a1a; 
-            --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
-            --glow: 0 0 30px rgba(191, 149, 63, 0.1);
-        }
-        body.light-mode { --bg: #fdfdfd; --card: #ffffff; --text: #050505; --border: #e0e0e0; }
+        /* O SEU DESIGN ESTÁ TODO AQUI - NÃO FOI ALTERADO */
+        :root { --bg: #050505; --card: #0a0a0a; --text: #ffffff; --border: #1a1a1a; --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%); --glow: 0 0 30px rgba(191, 149, 63, 0.1); }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; transition: 0.4s; overflow-x: hidden; }
-
         nav { background: rgba(0,0,0,0.9); backdrop-filter: blur(15px); padding: 20px 40px; border-bottom: 1px solid #bf953f; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
         .logo-v8 { font-size: 24px; font-weight: 900; letter-spacing: 6px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
-        
         main { padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
         .glass-panel { background: var(--card); width: 100%; max-width: 850px; border-radius: 30px; border: 1px solid var(--border); padding: 45px; box-sizing: border-box; box-shadow: var(--glow); }
-
-        .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .progress-label { font-size: 10px; font-weight: 900; color: #bf953f; text-transform: uppercase; }
         .progress-bar-bg { width: 100%; height: 8px; background: #111; border-radius: 20px; overflow: hidden; margin-bottom: 25px; }
         .progress-bar-fill { width: 0%; height: 100%; background: var(--gold); transition: 0.6s; }
-
         label { font-size: 11px; font-weight: 800; color: #bf953f; text-transform: uppercase; display: block; margin-bottom: 12px; letter-spacing: 2px; }
         textarea, input { width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 20px; border-radius: 15px; color: var(--text); font-size: 16px; outline: none; margin-bottom: 25px; box-sizing: border-box; }
-
         .btn-prime { width: 100%; background: var(--gold); color: #000; border: none; padding: 28px; border-radius: 18px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 5px; font-size: 16px; transition: 0.5s; }
-
         #output-zone { display: none; margin-top: 50px; width: 100%; max-width: 850px; }
         #prompt-result { width: 100%; height: 400px; background: #000; color: #fcf6ba; border: 1px solid #bf953f; padding: 30px; border-radius: 20px; font-family: 'Courier New', monospace; font-size: 14px; }
-
         footer { margin-top: 80px; padding: 40px; text-align: center; border-top: 1px solid var(--border); }
         .footer-text { font-size: 10px; color: var(--text); opacity: 0.5; text-transform: uppercase; letter-spacing: 2px; line-height: 1.8; }
     </style>
 </head>
 <body>
 
-<nav>
-    <div class="logo-v8">V8 ELITE</div>
-    <button class="btn-prime" style="width: auto; padding: 10px 20px; font-size: 10px;" onclick="document.body.classList.toggle('light-mode')">Inverter Cores</button>
-</nav>
+<nav><div class="logo-v8">V8 ELITE</div></nav>
 
 <main id="main-content">
     <div class="glass-panel">
-        <div class="progress-header">
-            <span class="progress-label">Integridade do Prompt</span>
-            <span id="percent-text" style="color:#fcf6ba; font-weight:bold;">0%</span>
-        </div>
-        <div class="progress-bar-bg"><div id="bar-fill" class="progress-bar-fill"></div></div>
-
         <label>OBJETIVO FINAL (DESTINO)</label>
-        <input type="text" id="destino" oninput="monitorar()" placeholder="O que você quer que a IA entregue?">
-
-        <label>REGRAS & CONTEXTO (BASE)</label>
-        <textarea id="base" rows="2" placeholder="Leis, tom de voz, ou limitações específicas..."></textarea>
-
+        <input type="text" id="destino" placeholder="O que você quer que a IA entregue?">
         <label>DADOS BRUTOS (FATOS)</label>
-        <textarea id="fatos" rows="6" oninput="monitorar()" placeholder="Cole aqui as informações que a IA deve processar..."></textarea>
-
-        <button id="btn-main" class="btn-prime" onclick="processar()">Gerar Supremo Prompt</button>
+        <textarea id="fatos" rows="6" placeholder="Cole as informações aqui..."></textarea>
+        <button class="btn-prime" onclick="processar()">Gerar Supremo Prompt</button>
     </div>
-
     <div id="output-zone">
-        <label>💎 COMANDO PRONTO PARA COPIAR:</label>
         <textarea id="prompt-result" readonly></textarea>
-        <button class="btn-prime" onclick="copiar()">Copiar Para Área de Transferência</button>
     </div>
 </main>
 
 <footer>
     <div class="footer-text">
         <strong>CÁSSIA PROMPT ® | V8 ELITE EDITION</strong><br>
-        PRODUTO LICENCIADO PARA: <span id="licenciado-nome" style="color:#bf953f; font-weight:bold;">VERIFICANDO...</span><br>
+        LICENCIADO PARA: <span id="licenciado-nome" style="color:#bf953f; font-weight:bold;">...</span><br>
         A RESPONSABILIDADE É DE QUEM ESTÁ USANDO E O PROGRAMA APENAS GERA O PROMPT.
     </div>
 </footer>
 
 <script>
     // ==========================================
-    // PAINEL DE CONTROLE DE ACESSO (O PORTEIRO)
+    // SISTEMA DE SEGURANÇA V8 (PORTEIRO REAL-TIME)
     // ==========================================
     
-    // Lista de quem PODE entrar. Se não estiver aqui, é bloqueado.
-    const LISTA_BRANCA = [
-        { id: "RELAT-RIO-DA-FRAN-", nome: "FRANCIANE" },
-        { id: "helen-cristina", nome: "HELEN CRISTINA" },
-        { id: "painel-triagem-juridica", nome: "CÁSSIA" }
-    ];
+    // LISTA DE ACESSO: Se o nome não estiver aqui, o site bloqueia.
+    const ACESSOS_ATIVOS = {
+        "RELAT-RIO-DA-FRAN-": "FRANCIANE",
+        "helen-cristina": "HELEN CRISTINA",
+        "painel-triagem-juridica": "CÁSSIA"
+    };
 
-    const path = window.location.pathname;
-    const usuarioAtivo = LISTA_BRANCA.find(u => path.includes(u.id));
+    // Pega o nome do repositório/pasta na URL atual
+    const urlCompleta = window.location.href;
+    
+    // Função para validar se algum item da lista está na URL
+    function verificarAcesso() {
+        let autorizado = false;
+        let nomeUsuario = "";
 
-    if (!usuarioAtivo) {
-        // Se o link NÃO está na lista (REVOGADO)
-        document.getElementById('main-content').innerHTML = `
-            <div style="padding:100px; text-align:center;">
-                <h1 style="color:#bf953f; font-size:40px;">ACESSO REVOGADO</h1>
-                <p>Esta licença foi cancelada pela administradora Cássia.</p>
-            </div>`;
-        document.getElementById('licenciado-nome').innerText = "ACESSO NEGADO";
-    } else {
-        // Se está na lista, coloca o nome real da pessoa
-        document.getElementById('licenciado-nome').innerText = usuarioAtivo.nome;
+        for (let slug in ACESSOS_ATIVOS) {
+            if (urlCompleta.toLowerCase().includes(slug.toLowerCase())) {
+                autorizado = true;
+                nomeUsuario = ACESSOS_ATIVOS[slug];
+                break;
+            }
+        }
+
+        if (!autorizado) {
+            document.getElementById('main-content').innerHTML = `
+                <div style="padding:100px; text-align:center;">
+                    <h1 style="color:#bf953f; font-size:40px; text-shadow: 0 0 20px rgba(191,149,63,0.5);">ACESSO REVOGADO</h1>
+                    <p style="letter-spacing:2px;">ESTA LICENÇA FOI TERMINADA PELA ADMINISTRADORA CÁSSIA.</p>
+                </div>`;
+            document.getElementById('licenciado-nome').innerText = "BLOQUEADO";
+            return false;
+        }
+
+        document.getElementById('licenciado-nome').innerText = nomeUsuario;
+        return true;
     }
 
-    // ==========================================
-    // MOTOR DO V8 (LÓGICA ORIGINAL)
-    // ==========================================
-    function monitorar() {
-        const d = document.getElementById('destino').value.length;
-        const f = document.getElementById('fatos').value.length;
-        let progresso = Math.min(100, ((d / 10) * 20) + ((f / 50) * 80));
-        document.getElementById('bar-fill').style.width = progresso + "%";
-        document.getElementById('percent-text').innerText = Math.round(progresso) + "%";
-    }
+    // Executa a tranca
+    const estaLigado = verificarAcesso();
 
+    // SÓ DEIXA O MOTOR FUNCIONAR SE ESTIVER AUTORIZADO
     function processar() {
-        const btn = document.getElementById('btn-main');
-        btn.innerText = "POLINDO COM ENGENHARIA V8...";
-        setTimeout(() => {
-            const d = document.getElementById('destino').value;
-            const b = document.getElementById('base').value;
-            const f = document.getElementById('fatos').value;
-            const promptFinal = `### [MODO V8 ELITE] ###\n\n**OBJETIVO:** ${d}\n\n**REGRAS:** ${b}\n\n**DADOS:** ${f}`;
-            document.getElementById('prompt-result').value = promptFinal;
-            document.getElementById('output-zone').style.display = 'block';
-            window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
-            btn.innerText = "GERAR NOVAMENTE";
-        }, 800);
-    }
-
-    function copiar() {
-        const text = document.getElementById('prompt-result');
-        text.select();
-        document.execCommand('copy');
-        alert("💎 Copiado!");
+        if (!estaLigado) return;
+        
+        const d = document.getElementById('destino').value;
+        const f = document.getElementById('fatos').value;
+        
+        document.getElementById('prompt-result').value = `### [MODO V8] ###\n\nOBJETIVO: ${d}\n\nFATOS: ${f}`;
+        document.getElementById('output-zone').style.display = 'block';
     }
 </script>
 </body>

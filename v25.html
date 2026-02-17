@@ -3,43 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V27 VERDICT MASTER | CÁSSIA PROMPT</title>
+    <title>V27 VERDICT MASTER</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <style>
-        :root { --bg: #050505; --card: rgba(12, 12, 12, 0.98); --text: #ffffff; --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%); --border: rgba(191, 149, 63, 0.3); }
-        .light-mode { --bg: #fdfdfd; --card: rgba(255, 255, 255, 0.96); --text: #1a1a1a; --border: rgba(179, 135, 40, 0.3); }
-        .focus-mode { --bg: #000000; }
-        .focus-mode header, .focus-mode footer, .focus-mode .logo-v9:first-child { opacity: 0; pointer-events: none; }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; transition: 0.8s; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
-        #app-content { display: flex; flex-grow: 1; flex-direction: column; align-items: center; justify-content: center; width: 100%; z-index: 2; position: relative; }
-        .logo-v9 { font-size: 24px; font-weight: 900; letter-spacing: 12px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; margin: 40px 0; text-align: center; }
-        .glass-panel { background: var(--card); width: 94%; max-width: 1000px; border-radius: 12px; border: 1px solid var(--border); padding: 40px; box-shadow: 0 25px 80px rgba(0,0,0,1); backdrop-filter: blur(25px); margin-bottom: 40px; position: relative; box-sizing: border-box; }
-        .progress-group { margin-bottom: 30px; display: none; width: 100%; }
-        .label-rigor { font-size: 10px; font-weight: 800; color: #bf953f; letter-spacing: 2px; margin-bottom: 8px; display: block; text-transform: uppercase; }
-        .progress-container { width: 100%; background: rgba(255,255,255,0.05); height: 4px; border-radius: 10px; margin-bottom: 15px; overflow: hidden; }
-        .progress-bar { width: 0%; height: 100%; background: var(--gold); transition: width 0.3s ease; }
-        input, textarea, select { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 15px; border-radius: 4px; color: var(--text); font-size: 14px; box-sizing: border-box; outline: none; margin-bottom: 15px; }
-        .btn-supreme { width: 100%; background: var(--gold); color: #000; border: none; padding: 20px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; font-size: 13px; margin-top: 10px; }
-        .btn-copy { background: transparent; color: #bf953f; border: 1px solid #bf953f; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; margin-bottom: 10px; width: fit-content; align-self: flex-end; }
-        .top-controls { position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 1001; }
-        .ctrl-btn { background: none; border: 1px solid #bf953f; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 9px; font-weight: 900; color: #bf953f; }
-        .label-sugestao { font-size: 9px; color: #bf953f; margin-bottom: 5px; display: block; letter-spacing: 1px; font-weight: bold; }
-        footer { padding: 40px; text-align: center; font-size: 9px; opacity: 0.4; letter-spacing: 2px; }
+        :root { 
+            --bg: #000000; 
+            --gold: #bf953f; 
+            --gold-gradient: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
+            --border: rgba(191, 149, 63, 0.4); 
+        }
+        
+        body { 
+            margin: 0; 
+            background: var(--bg); 
+            color: #ffffff; 
+            font-family: 'Inter', sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh;
+        }
+
+        .top-controls { 
+            position: absolute; 
+            top: 20px; 
+            right: 20px; 
+            display: flex; 
+            gap: 10px; 
+        }
+
+        .ctrl-btn { 
+            background: none; 
+            border: 1px solid var(--gold); 
+            padding: 5px 15px; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 10px; 
+            color: var(--gold); 
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .logo-v27 { 
+            font-size: 28px; 
+            font-weight: 900; 
+            letter-spacing: 12px; 
+            background: var(--gold-gradient); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            text-transform: uppercase; 
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .glass-panel { 
+            background: rgba(10, 10, 10, 0.8); 
+            width: 80%; 
+            max-width: 800px; 
+            border-radius: 15px; 
+            border: 1px solid var(--border); 
+            padding: 40px; 
+            box-shadow: 0 0 50px rgba(191, 149, 63, 0.1);
+        }
+
+        .pdf-label {
+            color: var(--gold);
+            font-weight: 900;
+            font-size: 11px;
+            cursor: pointer;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input, textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border);
+            color: white;
+            padding: 10px 0;
+            margin-bottom: 25px;
+            outline: none;
+            font-size: 13px;
+        }
+
+        .label-sugestao {
+            font-size: 10px;
+            color: var(--gold);
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .btn-supreme {
+            width: 100%;
+            background: var(--gold-gradient);
+            color: black;
+            border: none;
+            padding: 15px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 9px;
+            color: #444;
+            letter-spacing: 2px;
+        }
     </style>
 </head>
 <body>
-<div class="top-controls"><button class="ctrl-btn" onclick="document.body.classList.toggle('focus-mode')">FOCO</button><button class="ctrl-btn" onclick="document.body.classList.toggle('light-mode')">TEMA</button></div>
-<div id="app-content">
-    <div class="logo-v9">V27 VERDICT MASTER</div>
-    <main class="glass-panel">
-        <div class="progress-group" id="prog-area">
-            <span class="label-rigor">Calibragem de Jurisdição e Objetivo: <span id="val1">0%</span></span>
-            <div class="progress-container"><div class="progress-bar" id="bar1"></div></div>
-            <span class="label-rigor">Simplificação de Lacunas (Linguagem Clara): <span id="val2">0%</span></span>
-            <div class="progress-container"><div class="progress-bar" id="bar2"></div></div>
+
+<div class="top-controls">
+    <button class="ctrl-btn">FOCO</button>
+    <button class="ctrl-btn">TEMA</button>
+</div>
+
+<div class="logo-v27">V27 VERDICT MASTER</div>
+
+<main class="glass-panel">
+    <span class="pdf-label" onclick="document.getElementById('pdf-up').click()">📎 PDF (FATOS E LEIS)</span>
+    <input type="file" id="pdf-up" style="display:none">
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:30px; margin-top:30px;">
+        <div>
+            <span class="label-sugestao">OBJETIVO FINAL</span>
+            <input type="text" id="goal" placeholder="Ex: Pedir liminar hoje">
         </div>
-        <span style="color:#fcf6ba; font-weight:900; cursor:pointer; font-size:11px;" onclick="document.getElementById('pdf-up').click()">📎 PDF (FATOS E LEIS)</span>
-        <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
-        
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-            <div><span class="
+        <div>
+            <span class="label-sugestao">JURISDIÇÃO</span>
+            <input type="text" id="juris" placeholder="Ex: Brasil (LPI)">
+        </div>
+    </div>
+
+    <span class="label-sugestao">BASE DE DADOS TÉCNICOS</span>
+    <textarea id="fatos" rows="4" placeholder="Insira os fatos aqui..."></textarea>
+
+    <button class="btn-supreme">EXECUTAR ANÁLISE</button>
+</main>
+
+<footer>RESPONSABILIDADE DO USUÁRIO | CÁSSIA PROMPT V27.</footer>
+
+</body>
+</html>

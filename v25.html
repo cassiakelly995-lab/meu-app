@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V23 INTEGRITY | CÁSSIA PROMPT</title>
+    <title>V24 NEURAL JUDGE | CÁSSIA PROMPT</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <style>
         :root { --bg: #050505; --card: rgba(12, 12, 12, 0.98); --text: #ffffff; --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%); --border: rgba(191, 149, 63, 0.3); }
@@ -30,43 +30,43 @@
 <body>
 <div class="top-controls"><button class="ctrl-btn" onclick="document.body.classList.toggle('focus-mode')">FOCO</button><button class="ctrl-btn" onclick="document.body.classList.toggle('light-mode')">TEMA</button></div>
 <div id="app-content">
-    <div class="logo-v9">V23 THE INTEGRITY</div>
+    <div class="logo-v9">V24 NEURAL JUDGE</div>
     <main class="glass-panel">
         <div class="progress-group" id="prog-area">
-            <span class="label-rigor">Integridade de Nexo Probatório: <span id="val1">0%</span></span>
+            <span class="label-rigor">Remoção de Viés Cognitivo: <span id="val1">0%</span></span>
             <div class="progress-container"><div class="progress-bar" id="bar1"></div></div>
-            <span class="label-rigor">Mapeamento de Lacunas Universais: <span id="val2">0%</span></span>
+            <span class="label-rigor">Saturação de Rigor Epistêmico: <span id="val2">0%</span></span>
             <div class="progress-container"><div class="progress-bar" id="bar2"></div></div>
         </div>
-        <span style="color:#fcf6ba; font-weight:900; cursor:pointer; font-size:11px;" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR PDF (CUSTÓDIA DE PROVAS)</span>
+        <span style="color:#fcf6ba; font-weight:900; cursor:pointer; font-size:11px;" onclick="document.getElementById('pdf-up').click()">📎 PDF (LEIS E EVIDÊNCIAS)</span>
         <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
         
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-            <div><span class="label-sugestao">ORIGEM E CUSTÓDIA DOS DADOS</span><input type="text" id="custodia" placeholder="Ex: Vazamento anônimo / Auditoria interna"></div>
-            <div><span class="label-sugestao">LINHA DO TEMPO DO AGENTE</span><input type="text" id="timeline" placeholder="Ex: Saída 10/01 -> Início Rival 11/01"></div>
+            <div><span class="label-sugestao">HIPÓTESE INVESTIGATIVA</span><input type="text" id="agente" placeholder="Ex: Avaliar nexo entre saída e infração"></div>
+            <div><span class="label-sugestao">REFERENCIAL NORMATIVO</span><input type="text" id="normas" placeholder="Ex: PatG § 9, UWG § 4 (Alemanha)"></div>
         </div>
 
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-            <div><span class="label-sugestao">HIERARQUIA E PRIORIDADE</span><input type="text" id="hierarquia" placeholder="Ex: Sumário Executivo para Decisão do CEO"></div>
-            <div><span class="label-sugestao">CITAÇÃO E ENQUADRAMENTO</span><input type="text" id="agente" placeholder="Ex: Dr. Aris (Má-fé) / PatG e UWG"></div>
+            <div><span class="label-sugestao">HIERARQUIA DE OUTPUT</span><input type="text" id="hierarquia" placeholder="Ex: Parecer Técnico-Jurídico Imparcial"></div>
+            <div><span class="label-sugestao">MÉTRICA DE CUSTÓDIA</span><input type="text" id="custodia" placeholder="Ex: Auditoria Kroll com Hash MD5"></div>
         </div>
 
-        <span class="label-sugestao">CORPUS TÉCNICO (CLAIMS VS. EVIDÊNCIAS RIVAIS)</span>
-        <textarea id="fatos" rows="6" placeholder="Insira Reivindicações e Fatos correspondentes..."></textarea>
+        <span class="label-sugestao">BASE DE DADOS (CLAIMS + FATOS + CRONOGRAMA)</span>
+        <textarea id="fatos" rows="6" placeholder="Insira dados técnicos e linha do tempo..."></textarea>
         
-        <button class="btn-supreme" onclick="executarV23()">EXECUTAR AUDITORIA V23</button>
+        <button class="btn-supreme" onclick="executarV24()">EXECUTAR V24 NEURAL JUDGE</button>
         <div id="res-box" style="display:none; margin-top:25px; flex-direction:column;">
-            <button class="btn-copy" id="btnCopy" onclick="copyRes()">COPIAR COMANDO V23</button>
+            <button class="btn-copy" id="btnCopy" onclick="copyRes()">COPIAR SISTEMA V24</button>
             <textarea id="res" style="height:350px; background:#000; color:#fcf6ba; font-family:monospace; font-size:12px;"></textarea>
         </div>
     </main>
-    <footer>RESPONSABILIDADE DO USUÁRIO | CÁSSIA PROMPT V23.</footer>
+    <footer>CÁSSIA PROMPT V24 | RESPONSABILIDADE DO USUÁRIO.</footer>
 </div>
 
 <script>
     async function lerPDF(i){const f=i.files[0];const r=new FileReader();r.onload=async function(){const ta=new Uint8Array(this.result);const pdf=await pdfjsLib.getDocument(ta).promise;let t="";for(let p=1;p<=pdf.numPages;p++){const pg=await pdf.getPage(p);const c=await pg.getTextContent();t+=c.items.map(s=>s.str).join(" ")+"\n";}document.getElementById('fatos').value=t;};r.readAsArrayBuffer(f);}
     function copyRes(){const t=document.getElementById('res');t.select();document.execCommand('copy');document.getElementById('btnCopy').innerText="COPIADO!";setTimeout(()=>document.getElementById('btnCopy').innerText="COPIAR",2000);}
-    function executarV23() {
+    function executarV24() {
         document.getElementById('prog-area').style.display='block';
         let p1=0, p2=0;
         let itv=setInterval(()=>{
@@ -74,7 +74,7 @@
             if(p1>=100 && p2<100){p2+=20;document.getElementById('bar2').style.width=p2+'%';document.getElementById('val2').innerText=p2+'%';}
             if(p2>=100){
                 clearInterval(itv);
-                const p = `DIRETRIZES DE INTEGRIDADE V23:\n1. CUSTÓDIA: ${document.getElementById('custodia').value}\n2. TIMELINE: ${document.getElementById('timeline').value}\n3. HIERARQUIA: ${document.getElementById('hierarquia').value}\n4. ENQUADRAMENTO: ${document.getElementById('agente').value}\n\n[INSTRUÇÃO DE CORRELAÇÃO]:\n- Cruze cada REIVINDICAÇÃO do Corpus com uma EVIDÊNCIA da Rival.\n- Se houver uma Reivindicação sem dado correspondente, sinalize imediatamente como "LACUNA CRÍTICA DE PROVA".\n- Analise a admissibilidade dos dados com base na ORIGEM especificada.\n\n[ESTRUTURA DE OUTPUT]:\n- Sumário Executivo (Decisório)\n- Quadro Comparativo de Claims (Com status: Correspondente / Inconclusivo / Lacuna)\n- Análise de Nexo Temporal e Má-fé\n- Alerta de Admissibilidade Jurídica\n- Tabela Universal de Dados Ausentes (Tag: REVISÃO HUMANA NECESSÁRIA)\n\n[CORPUS TÉCNICO]:\n${document.getElementById('fatos').value}`;
+                const p = `### PROTOCOLO DE ANÁLISE FORENSE V24 ###\n\n1. HIPÓTESE: ${document.getElementById('agente').value}\n2. BASE NORMATIVA: ${document.getElementById('normas').value}\n3. CUSTÓDIA: ${document.getElementById('custodia').value}\n4. PRIORIDADE: ${document.getElementById('hierarquia').value}\n\n[DIRETIVA DE IMPARCIALIDADE]:\n- Atue como perito judicial neutro. Não predetermine culpa.\n- Avalie se as evidências sustentam a hipótese sob o padrão de "Dúvida Razoável".\n- Se os dados forem insuficientes, a conclusão deve ser "Inconclusiva" e detalhada no Checklist de Lacunas.\n\n[OUTPUT ESPERADO]:\n- Sumário Executivo (Probabilidade Jurídica)\n- Quadro de Correlação Probatória (Claims vs. Fatos)\n- Checklist de Prontidão Jurídica (Dúvidas em linguagem simples para o usuário)\n- Tabela de Dados Ausentes (Tag: REVISÃO HUMANA NECESSÁRIA)\n\n[BASE DE DADOS]:\n${document.getElementById('fatos').value}`;
                 document.getElementById('res').value=p; document.getElementById('res-box').style.display='flex';
             }
         },50);

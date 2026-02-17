@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V8 ELITE EDITION | CÁSSIA PROMPT</title>
+    <title>V9 POWER ELITE | CÁSSIA PROMPT</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <style>
         :root {
@@ -11,12 +11,10 @@
             --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
             --glow: 0 0 30px rgba(191, 149, 63, 0.1);
         }
-        body.light-mode {
-            --bg: #f9f9f9; --card: #ffffff; --text: #1a1a1a; --border: #e2e2e2;
-        }
+        body.light-mode { --bg: #f9f9f9; --card: #ffffff; --text: #1a1a1a; --border: #e2e2e2; }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; transition: 0.3s; overflow-x: hidden; }
         nav { padding: 20px 60px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--bg); position: sticky; top: 0; z-index: 100; }
-        .logo-v8 { font-size: 18px; font-weight: 900; letter-spacing: 6px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
+        .logo-v9 { font-size: 18px; font-weight: 900; letter-spacing: 6px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
         .top-btns { display: flex; gap: 10px; }
         .btn-minimal { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; transition: 0.2s; }
         .btn-minimal:hover { border-color: #bf953f; color: #bf953f; }
@@ -33,13 +31,14 @@
         .btn-supreme { width: 100%; background: var(--gold); color: #000; border: none; padding: 20px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; font-size: 13px; transition: 0.3s; margin-top: 20px; }
         #output-zone { display: none; width: 100%; max-width: 900px; margin-top: 40px; }
         #prompt-result { width: 100%; height: 400px; background: #000; border: 1px solid #bf953f; color: #fcf6ba; padding: 30px; border-radius: 8px; font-family: 'Consolas', monospace; font-size: 14px; line-height: 1.6; }
+        .export-btns { display: flex; gap: 15px; margin-top: 15px; }
         footer { margin-top: 80px; padding: 40px; text-align: center; border-top: 1px solid var(--border); font-size: 9px; opacity: 0.5; letter-spacing: 2px; line-height: 2.2; }
     </style>
 </head>
 <body id="main-body">
 
 <nav>
-    <div class="logo-v8">V8 ELITE EDITION</div>
+    <div class="logo-v9">V9 POWER ELITE</div>
     <div class="top-btns">
         <button class="btn-minimal" onclick="limpar()">Apagar Tudo</button>
         <button class="btn-minimal" onclick="toggleMode()">Modo Claro/Escuro</button>
@@ -48,7 +47,7 @@
 
 <main id="app-content">
     <div class="glass-panel">
-        <div class="integrity-header"><span>Sincronização de Dados V8</span><span id="pct">0%</span></div>
+        <div class="integrity-header"><span>Sincronização de Dados V9</span><span id="pct">0%</span></div>
         <div class="bar-bg"><div id="fill" class="bar-fill"></div></div>
 
         <div class="pdf-action" onclick="document.getElementById('pdf-up').click()">📎 Importar Dados de PDF</div>
@@ -69,28 +68,30 @@
             <textarea id="fatos" rows="10" oninput="atualizar()" placeholder="Insira o texto bruto ou use o PDF..."></textarea>
         </div>
 
-        <button class="btn-supreme" onclick="gerar()">Executar Engenharia de Elite</button>
+        <button class="btn-supreme" onclick="gerar()">Executar Engenharia V9 Power</button>
     </div>
 
     <div id="output-zone">
-        <label>Comando Supremo V8 [GOD MODE] Gerado:</label>
+        <label>Comando Supremo V9 [JURISPRUDÊNCIA ATIVA] Gerado:</label>
         <textarea id="prompt-result" readonly></textarea>
-        <button class="btn-supreme" style="margin-top:15px; background:transparent; border:1px solid #bf953f; color:#bf953f;" onclick="copiar()">Copiar Prompt Blindado</button>
+        <div class="export-btns">
+            <button class="btn-supreme" style="flex: 1; background:transparent; border:1px solid #bf953f; color:#bf953f;" onclick="copiar()">Copiar Prompt</button>
+            <button class="btn-supreme" style="flex: 1; background: #bf953f; color: #000;" onclick="exportarWord()">Baixar em Word (.doc)</button>
+        </div>
     </div>
 </main>
 
 <footer>
-    CÁSSIA PROMPT ® | TECNOLOGIA V8 ELITE EDITION<br>
-    SISTEMA DE ENGENHARIA DE PROMPT DE ALTA PRECISÃO<br>
+    CÁSSIA PROMPT ® | TECNOLOGIA V9 POWER ELITE EDITION<br>
+    SISTEMA DE ENGENHARIA E JURISPRUDÊNCIA DE ALTA PRECISÃO<br>
     LICENCIADO PARA: <span id="user-display" style="color:#bf953f; font-weight:bold;">...</span><br>
-    A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. O PROGRAMA APENAS GERA O PROMPT.
+    A RESPONSABILIDADE É DO USUÁRIO. O PROGRAMA APENAS GERA O PROMPT.
 </footer>
 
 <script>
     const ACESSOS = {
         "TkFUQUxJ": "NATALIA",
         "Helen_cristina": "HELEN CRISTINA",
-        "TkfVQUxK": "NATALIA",
         "cassia": "CÁSSIA"
     };
 
@@ -98,7 +99,7 @@
     const user = ACESSOS[id];
 
     if (!user) {
-        document.getElementById('app-content').innerHTML = "<h1 style='color:#bf953f; margin-top:100px; text-align:center; letter-spacing:5px;'>ACESSO REVOGADO</h1>";
+        document.getElementById('app-content').innerHTML = "<h1 style='color:#bf953f; margin-top:100px; text-align:center;'>ACESSO REVOGADO</h1>";
     } else {
         document.getElementById('user-display').innerText = user;
     }
@@ -142,35 +143,45 @@
         const d = document.getElementById('destino').value;
         const f = document.getElementById('fatos').value;
         
-        const promptMaster = `### [ORDEM SUPREMA - SISTEMA V8 ELITE] ###
+        const promptMaster = `### [ORDEM SUPREMA - SISTEMA V9 POWER ELITE] ###
 
-VOCÊ ATUARÁ COMO UMA INTELIGÊNCIA DE ELITE EM ENGENHARIA TÉCNICA.
-ESTE PROTOCOLO É DE ERRO ZERO. ALUCINAÇÕES SÃO TERMINANTEMENTE PROIBIDAS.
+VOCÊ É UM EXPERT EM ENGENHARIA JURÍDICA E ANÁLISE JURISPRUDENCIAL.
+ESTE PROTOCOLO É DE ERRO ZERO.
 
 1. O QUE DEVE SER GERADO: ${g}
 2. OBJETIVO DO COMANDO: ${d}
 
 [DIRETRIZES DE RIGOR]:
-- FUNDAMENTAÇÃO: Sempre que identificar uma irregularidade, cite o artigo da lei correspondente (CDC, Código Civil, etc.) com CERTEZA ABSOLUTA. Se não houver clareza legal, escreva: "Fundamentação pendente de análise humana".
-- NÃO INVENTE fatos ou leis. Se não estiver no "REGISTRO DOS FATOS", não existe.
-- Se houver lacuna de informação, cite: "Informação ausente na base de dados".
-- Proibido erros gramaticais ou introduções amigáveis. Vá direto ao ponto técnico.
+- FUNDAMENTAÇÃO LEGAL: Cite artigos da lei (CDC, CC, CLT, etc.).
+- JURISPRUDÊNCIA: Se houver entendimento pacificado no STF ou STJ sobre o tema, mencione a tese ou súmula correspondente.
+- TRAVA DE SEGURANÇA: Se não houver certeza absoluta da lei ou jurisprudência, escreva: "Fundamentação/Jurisprudência pendente de análise humana". PROIBIDO INVENTAR.
+- Se a informação não constar no "REGISTRO DOS FATOS", declare-a como inexistente.
 
 [REGISTRO DOS FATOS (BASE BRUTA)]:
 ${f}
 
 [EXECUÇÃO]:
-Processe agora sem preâmbulos.`;
+Entregue o resultado técnico imediato, formatado e pronto para uso profissional.`;
 
         document.getElementById('prompt-result').value = promptMaster;
         document.getElementById('output-zone').style.display = 'block';
         window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
     }
 
+    function exportarWord() {
+        const content = document.getElementById('prompt-result').value;
+        const blob = new Blob(['\ufeff', content], { type: 'application/msword' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'Comando_V9_Elite.doc';
+        link.click();
+    }
+
     function copiar() {
         document.getElementById('prompt-result').select();
         document.execCommand('copy');
-        alert("💎 Prompt V8 Copiado!");
+        alert("💎 Prompt V9 Copiado!");
     }
 </script>
 </body>

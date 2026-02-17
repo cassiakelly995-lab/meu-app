@@ -6,21 +6,41 @@
     <title>V13 SOVEREIGN | CÁSSIA PROMPT</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <style>
-        :root { --bg: #050505; --card: rgba(12, 12, 12, 0.98); --text: #ffffff; --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%); --border: rgba(191, 149, 63, 0.3); }
+        :root {
+            --bg: #050505;
+            --card: rgba(12, 12, 12, 0.98);
+            --text: #ffffff;
+            --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
+            --border: rgba(191, 149, 63, 0.3);
+        }
         .light-mode { --bg: #fdfdfd; --card: rgba(255, 255, 255, 0.96); --text: #1a1a1a; --border: rgba(179, 135, 40, 0.3); }
         .focus-mode { --bg: #000000; }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; transition: 0.8s; display: flex; flex-direction: column; min-height: 100vh; }
-        .logo-v9 { font-size: 22px; font-weight: 900; letter-spacing: 10px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; margin: 30px 0; text-align: center; }
-        .glass-panel { background: var(--card); width: 94%; max-width: 1050px; border-radius: 12px; border: 1px solid var(--border); padding: 35px; box-shadow: 0 25px 80px rgba(0,0,0,1); margin: 0 auto 40px auto; position: relative; box-sizing: border-box; }
+        .focus-mode header, .focus-mode footer, .focus-mode .logo-v9:first-child { opacity: 0; pointer-events: none; }
+
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; transition: 0.8s; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
+        #app-content { display: flex; flex-grow: 1; flex-direction: column; align-items: center; justify-content: center; width: 100%; z-index: 2; position: relative; }
+        
+        .logo-v9 { font-size: 24px; font-weight: 900; letter-spacing: 12px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; margin: 40px 0; text-align: center; }
+        .glass-panel { background: var(--card); width: 94%; max-width: 1000px; border-radius: 12px; border: 1px solid var(--border); padding: 40px; box-shadow: 0 25px 80px rgba(0,0,0,1); backdrop-filter: blur(25px); margin-bottom: 40px; position: relative; box-sizing: border-box; }
+
+        /* BARRAS DE PROGRESSO RESTAURADAS */
+        .progress-group { margin-bottom: 30px; display: none; width: 100%; }
+        .label-rigor { font-size: 10px; font-weight: 800; color: #bf953f; letter-spacing: 2px; margin-bottom: 8px; display: block; text-transform: uppercase; }
+        .progress-container { width: 100%; background: rgba(255,255,255,0.05); height: 4px; border-radius: 10px; margin-bottom: 15px; overflow: hidden; }
+        .progress-bar { width: 0%; height: 100%; background: var(--gold); transition: width 0.3s ease; }
+        
         .grid-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
-        input, textarea, select { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 14px; border-radius: 4px; color: var(--text); font-size: 13px; box-sizing: border-box; outline: none; }
-        .btn-supreme { width: 100%; background: var(--gold); color: #000; border: none; padding: 18px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 3px; font-size: 12px; margin-top: 15px; }
-        .btn-copy { background: transparent; color: #bf953f; border: 1px solid #bf953f; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 10px; font-weight: bold; margin-bottom: 10px; width: fit-content; align-self: flex-end; }
+        input, textarea, select { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 15px; border-radius: 4px; color: var(--text); font-size: 14px; box-sizing: border-box; outline: none; transition: 0.3s; }
+        
+        .btn-supreme { width: 100%; background: var(--gold); color: #000; border: none; padding: 20px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; font-size: 13px; margin-top: 20px; }
+        .btn-copy { background: transparent; color: #bf953f; border: 1px solid #bf953f; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; margin-bottom: 10px; width: fit-content; align-self: flex-end; text-transform: uppercase; }
+        
         .top-controls { position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 1001; }
-        .ctrl-btn { background: none; border: 1px solid #bf953f; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 8px; font-weight: 900; color: #bf953f; }
-        .label-sugestao { font-size: 9px; color: #bf953f; margin-bottom: 4px; display: block; letter-spacing: 1px; font-weight: bold; text-transform: uppercase; }
-        footer { padding: 30px; text-align: center; font-size: 8px; opacity: 0.5; letter-spacing: 2px; line-height: 1.5; }
-        .pdf-action { color: #fcf6ba; font-weight: 900; cursor: pointer; font-size: 10px; text-transform: uppercase; display: block; margin-bottom: 12px; }
+        .ctrl-btn { background: none; border: 1px solid #bf953f; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 9px; font-weight: 900; color: #bf953f; }
+        
+        .label-sugestao { font-size: 9px; color: #bf953f; margin-bottom: 5px; display: block; letter-spacing: 1px; font-weight: bold; text-transform: uppercase; }
+        footer { padding: 40px; text-align: center; font-size: 9px; opacity: 0.4; letter-spacing: 2px; width: 100%; box-sizing: border-box; }
+        .pdf-action { color: #fcf6ba; font-weight: 900; cursor: pointer; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 15px; }
     </style>
 </head>
 <body>
@@ -32,80 +52,89 @@
 
 <div id="app-content">
     <div class="logo-v9">V13 SOVEREIGN EDITION</div>
-    <main class="glass-panel" style="display: flex; flex-direction: column;">
-        
-        <span class="pdf-action" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR PDF (BASE DE DADOS)</span>
-        <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
+    <main style="width: 100%; max-width: 1000px; display: flex; flex-direction: column; align-items: center; padding: 0 15px; box-sizing: border-box;">
+        <div class="glass-panel" style="display: flex; flex-direction: column;">
+            
+            <div class="progress-group" id="prog-area">
+                <span class="label-rigor">Escaneamento de Dados: <span id="val1">0%</span></span>
+                <div class="progress-container"><div class="progress-bar" id="bar1"></div></div>
+                <span class="label-rigor">Blindagem Contra Alucinação: <span id="val2">0%</span></span>
+                <div class="progress-container"><div class="progress-bar" id="bar2"></div></div>
+            </div>
 
-        <div class="grid-inputs">
-            <div>
-                <span class="label-sugestao">Ação e Entrega</span>
-                <input type="text" id="gerado" placeholder="Ex: Parecer Técnico de Exportação">
-            </div>
-            <div>
-                <span class="label-sugestao">Objetivo (KPI/Meta)</span>
-                <input type="text" id="destino" placeholder="Ex: Analisar conformidade e sugerir remediação">
-            </div>
-        </div>
-        
-        <div class="grid-inputs">
-            <div>
-                <span class="label-sugestao">Público Primário e Secundário</span>
-                <input type="text" id="persona" placeholder="Ex: Diretores (Executivo) e Fiscais (Técnico)">
-            </div>
-            <div>
-                <span class="label-sugestao">Profundidade do Relatório</span>
-                <select id="extensao">
-                    <option value="Executivo (Conciso e Direto)">Executivo (Conciso)</option>
-                    <option value="Técnico Detalhado (Profundo e Analítico)">Técnico Detalhado</option>
-                    <option value="Completo (Sumário Executivo + Anexos Técnicos)">Completo (Híbrido)</option>
-                </select>
-            </div>
-        </div>
+            <span class="pdf-action" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR PDF (UPLOAD)</span>
+            <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
 
-        <div class="grid-inputs">
-            <div>
-                <span class="label-sugestao">Normas e Referências</span>
-                <input type="text" id="referencia" placeholder="Ex: ISO 31000, IN MAPA 11/2007, EFSA">
+            <div class="grid-inputs">
+                <div>
+                    <span class="label-sugestao">ENTREGA FINAL</span>
+                    <input type="text" id="gerado" placeholder="Ex: Parecer, Auditoria, Plano">
+                </div>
+                <div>
+                    <span class="label-sugestao">OBJETIVO ESTRATÉGICO</span>
+                    <input type="text" id="destino" placeholder="Ex: Mitigar riscos e garantir conformidade">
+                </div>
             </div>
-            <div>
-                <span class="label-sugestao">Formato da Saída</span>
-                <select id="formato">
-                    <option value="Matriz de Risco (Probabilidade x Impacto 1-5)">Matriz de Risco (1-5)</option>
-                    <option value="Cronograma Operacional de Ação">Cronograma de Ação</option>
-                    <option value="Relatório em Prosa Jurídica/Técnica">Relatório em Prosa</option>
-                </select>
+            
+            <div class="grid-inputs">
+                <div>
+                    <span class="label-sugestao">AUDIÊNCIA (PRIORIDADE)</span>
+                    <input type="text" id="persona" placeholder="Ex: 70% Técnico / 30% Estratégico">
+                </div>
+                <div>
+                    <span class="label-sugestao">LIMITE DE EXTENSÃO</span>
+                    <input type="text" id="extensao" placeholder="Ex: Máximo 2 páginas, Sumário Executivo">
+                </div>
             </div>
-        </div>
 
-        <span class="label-sugestao">Base de Dados Real</span>
-        <textarea id="fatos" rows="6" placeholder="Dados coletados..." oninput="countChars()"></textarea>
-        <div style="text-align:right; font-size: 9px; color:#bf953f; font-weight: bold; margin-bottom: 10px;" id="count">Caracteres: 0</div>
-        
-        <button class="btn-supreme" onclick="executarV13()">GERAR ENGENHARIA SOVEREIGN V13</button>
-        
-        <div id="res-box" style="display:none; margin-top:25px; border-top: 1px solid var(--border); padding-top: 20px; flex-direction: column;">
-            <button class="btn-copy" id="btnCopy" onclick="copyRes()">COPIAR COMANDO V13</button>
-            <textarea id="res" style="height:350px; border-color: #bf953f; color: #fcf6ba; background: #000; font-family: 'Courier New', monospace; font-size: 12px;" readonly></textarea>
+            <div class="grid-inputs">
+                <div>
+                    <span class="label-sugestao">NORMAS DE REFERÊNCIA</span>
+                    <input type="text" id="referencia" placeholder="Ex: ISO 31000, LGPD, ANVISA">
+                </div>
+                <div>
+                    <span class="label-sugestao">FORMATO DO OUTPUT</span>
+                    <select id="formato">
+                        <option value="Tabela de Matriz de Risco (Probabilidade x Impacto 1-5)">Matriz de Risco (1-5)</option>
+                        <option value="Relatório Técnico Híbrido">Relatório Técnico Híbrido</option>
+                        <option value="Cronograma Operacional">Cronograma Operacional</option>
+                    </select>
+                </div>
+            </div>
+
+            <span class="label-sugestao">BASE DE DADOS E REGISTRO DOS FATOS</span>
+            <textarea id="fatos" rows="8" placeholder="Cole os dados aqui ou use o PDF..." oninput="countChars()"></textarea>
+            <div style="text-align:right; font-size: 10px; color:#bf953f; font-weight: bold; margin-bottom: 15px;" id="count">Caracteres: 0</div>
+            
+            <button class="btn-supreme" onclick="executarV13()">GERAR ENGENHARIA SOVEREIGN</button>
+            
+            <div id="res-box" style="display:none; margin-top:30px; border-top: 1px solid var(--border); padding-top: 20px; flex-direction: column;">
+                <button class="btn-copy" id="btnCopy" onclick="copyRes()">COPIAR COMANDO V13</button>
+                <textarea id="res" style="height:400px; border-color: #bf953f; color: #fcf6ba; background: #000; font-family: 'Courier New', monospace;" readonly></textarea>
+            </div>
         </div>
     </main>
     <footer>
         CÁSSIA PROMPT ® | V13 SOVEREIGN EDITION<br>
-        A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. O PROGRAMA APENAS GERA O PROMPT.
+        RESPONSABILIDADE DO USUÁRIO. O PROGRAMA APENAS GERA O PROMPT.<br>
+        A ESCALA E AS INFORMAÇÕES SÃO ARMAZENADAS PERMANENTEMENTE PARA TODOS OS USUÁRIOS.
     </footer>
 </div>
 
 <script>
     function countChars() { document.getElementById('count').innerText = "Caracteres: " + document.getElementById('fatos').value.length; }
+    
     function copyRes() {
         const text = document.getElementById('res');
         text.select();
         document.execCommand('copy');
-        document.getElementById('btnCopy').innerText = "COPIADO COM SUCESSO!";
+        document.getElementById('btnCopy').innerText = "COPIADO!";
         setTimeout(() => { document.getElementById('btnCopy').innerText = "COPIAR COMANDO V13"; }, 2000);
     }
+
     async function lerPDF(input) {
-        const file = input.files[0]; if(!file) return;
+        const file = input.files[0];
+        if(!file) return;
         const reader = new FileReader();
         reader.onload = async function() {
             const typedarray = new Uint8Array(this.result);
@@ -116,13 +145,27 @@
                 const content = await page.getTextContent();
                 text += content.items.map(s => s.str).join(" ") + "\n";
             }
-            document.getElementById('fatos').value = text; countChars();
+            document.getElementById('fatos').value = text;
+            countChars();
         };
         reader.readAsArrayBuffer(file);
     }
+
     function executarV13() {
-        const p = `### [ORDEM V13 SOVEREIGN - RIGOR SUPREMO] ###\n\n1. AÇÃO: ${document.getElementById('gerado').value}\n2. OBJETIVO: ${document.getElementById('destino').value}\n3. AUDIÊNCIA: ${document.getElementById('persona').value} (Ajuste o tom para atender ambos os perfis proporcionalmente).\n4. PROFUNDIDADE: ${document.getElementById('extensao').value}\n5. REFERÊNCIA: ${document.getElementById('referencia').value}\n6. FORMATO: ${document.getElementById('formato').value}\n\n[FEW-SHOT EXAMPLE / MODELO DE MATRIZ]:\n| ID | Risco | P | I | Score | Nível | Ação |\n|---|---|---|---|---|---|---|\n| R01 | Descrição | 1-5 | 1-5 | PxI | Baixo/Alto | Conduta |\n\n[DIRETRIZES]:\n- Não assuma redução de risco de 100%; trabalhe com níveis de aceitabilidade.\n- Calcule deltas e impactos matemáticos sempre que houver dados numéricos.\n- ANTI-ALUCINAÇÃO: Liste lacunas em "DADOS AUSENTES" e responda "REVISÃO HUMANA NECESSÁRIA".\n\n[BASE DE DADOS]:\n${document.getElementById('fatos').value}`;
-        document.getElementById('res').value = p; document.getElementById('res-box').style.display = 'flex';
+        const area = document.getElementById('prog-area');
+        area.style.display = 'block';
+        let p1 = 0; let p2 = 0;
+        let itv = setInterval(() => {
+            if(p1 < 100) { p1 += 5; document.getElementById('bar1').style.width = p1+'%'; document.getElementById('val1').innerText = p1+'%'; }
+            if(p1 > 50 && p2 < 100) { p2 += 10; document.getElementById('bar2').style.width = p2+'%'; document.getElementById('val2').innerText = p2+'%'; }
+            if(p1 >= 100 && p2 >= 100) {
+                clearInterval(itv);
+                const p = `### [ORDEM V13 SOVEREIGN - RIGOR SUPREMO] ###\n\n1. AÇÃO: ${document.getElementById('gerado').value}\n2. OBJETIVO: ${document.getElementById('destino').value}\n3. AUDIÊNCIA: ${document.getElementById('persona').value} (Ajuste o tom conforme o peso indicado).\n4. EXTENSÃO: ${document.getElementById('extensao').value}\n5. REFERÊNCIA: ${document.getElementById('referencia').value}\n6. FORMATO: ${document.getElementById('formato').value}\n\n[FEW-SHOT MODELO]: | ID | Risco | P | I | Score | Nível | Ação |\n\n[DIRETRIZES]: Use normas reais. Não assuma redução de 100% de risco. Liste falhas em "DADOS AUSENTES" e responda "REVISÃO HUMANA NECESSÁRIA" para lacunas.\n\n[BASE DE DADOS]:\n${document.getElementById('fatos').value}`;
+                document.getElementById('res').value = p;
+                document.getElementById('res-box').style.display = 'flex';
+                setTimeout(() => { area.style.display = 'none'; }, 1000);
+            }
+        }, 70);
     }
 </script>
 </body>

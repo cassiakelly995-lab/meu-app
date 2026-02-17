@@ -3,123 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V27 VERDICT MASTER</title>
+    <title>V27 VERDICT MASTER | CÁSSIA PROMPT</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <style>
         :root { 
             --bg: #000000; 
-            --gold: #bf953f; 
-            --gold-gradient: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
-            --border: rgba(191, 149, 63, 0.4); 
+            --gold-grad: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            --panel-bg: rgba(15, 15, 15, 0.6);
         }
         
         body { 
-            margin: 0; 
-            background: var(--bg); 
-            color: #ffffff; 
-            font-family: 'Inter', sans-serif; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            min-height: 100vh;
+            margin: 0; background: var(--bg); color: #ffffff; 
+            font-family: 'Inter', sans-serif; display: flex; 
+            flex-direction: column; align-items: center; justify-content: center; 
+            min-height: 100vh; overflow: hidden;
         }
 
-        .top-controls { 
-            position: absolute; 
-            top: 20px; 
-            right: 20px; 
-            display: flex; 
-            gap: 10px; 
-        }
-
+        .top-controls { position: absolute; top: 20px; right: 20px; display: flex; gap: 8px; }
         .ctrl-btn { 
-            background: none; 
-            border: 1px solid var(--gold); 
-            padding: 5px 15px; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            font-size: 10px; 
-            color: var(--gold); 
-            font-weight: bold;
-            text-transform: uppercase;
+            background: transparent; border: 1px solid #444; color: #888; 
+            padding: 4px 12px; font-size: 10px; border-radius: 4px; cursor: pointer;
+            text-transform: uppercase; font-weight: bold;
         }
 
         .logo-v27 { 
-            font-size: 28px; 
-            font-weight: 900; 
-            letter-spacing: 12px; 
-            background: var(--gold-gradient); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-            text-transform: uppercase; 
-            margin-bottom: 60px;
-            text-align: center;
+            font-size: 32px; font-weight: 900; letter-spacing: 15px; 
+            background: var(--gold-grad); -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; text-transform: uppercase; 
+            margin-bottom: 50px; text-align: center;
         }
 
         .glass-panel { 
-            background: rgba(10, 10, 10, 0.8); 
-            width: 80%; 
-            max-width: 800px; 
-            border-radius: 15px; 
-            border: 1px solid var(--border); 
-            padding: 40px; 
-            box-shadow: 0 0 50px rgba(191, 149, 63, 0.1);
+            background: var(--panel-bg); width: 85%; max-width: 900px; 
+            border-radius: 20px; border: 1px solid rgba(191, 149, 63, 0.2); 
+            padding: 50px; box-shadow: 0 0 100px rgba(0,0,0,0.5);
+            position: relative;
         }
 
-        .pdf-label {
-            color: var(--gold);
-            font-weight: 900;
-            font-size: 11px;
-            cursor: pointer;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .pdf-link {
+            color: #bf953f; font-size: 11px; font-weight: bold; 
+            text-transform: uppercase; cursor: pointer; display: block;
+            margin-bottom: 30px; letter-spacing: 1px;
+        }
+
+        .grid-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 30px; }
+        
+        .input-group label { 
+            display: block; color: #bf953f; font-size: 10px; 
+            font-weight: 900; text-transform: uppercase; margin-bottom: 10px; 
         }
 
         input, textarea {
-            width: 100%;
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid var(--border);
-            color: white;
-            padding: 10px 0;
-            margin-bottom: 25px;
-            outline: none;
-            font-size: 13px;
+            width: 100%; background: transparent; border: none;
+            border-bottom: 1px solid #333; color: #fff; padding: 10px 0;
+            outline: none; font-size: 14px; transition: 0.3s;
         }
 
-        .label-sugestao {
-            font-size: 10px;
-            color: var(--gold);
-            letter-spacing: 1px;
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+        input:focus, textarea:focus { border-bottom: 1px solid #bf953f; }
+
+        .btn-execute {
+            width: 100%; height: 50px; margin-top: 40px;
+            background: var(--gold-grad); border: none; color: #000;
+            font-weight: 900; text-transform: uppercase; letter-spacing: 3px;
+            cursor: pointer; border-radius: 4px; font-size: 12px;
         }
 
-        .btn-supreme {
-            width: 100%;
-            background: var(--gold-gradient);
-            color: black;
-            border: none;
-            padding: 15px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-
-        footer {
-            position: absolute;
-            bottom: 20px;
-            width: 100%;
-            text-align: center;
-            font-size: 9px;
-            color: #444;
-            letter-spacing: 2px;
+        footer { 
+            position: absolute; bottom: 15px; width: 100%; text-align: center; 
+            font-size: 8px; color: #333; letter-spacing: 3px; text-transform: uppercase;
         }
     </style>
 </head>
@@ -133,27 +84,55 @@
 <div class="logo-v27">V27 VERDICT MASTER</div>
 
 <main class="glass-panel">
-    <span class="pdf-label" onclick="document.getElementById('pdf-up').click()">📎 PDF (FATOS E LEIS)</span>
-    <input type="file" id="pdf-up" style="display:none">
+    <span class="pdf-link" onclick="document.getElementById('pdf-up').click()">📎 PDF (FATOS E LEIS)</span>
+    <input type="file" id="pdf-up" style="display:none" onchange="processPDF(this)">
 
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:30px; margin-top:30px;">
-        <div>
-            <span class="label-sugestao">OBJETIVO FINAL</span>
+    <div class="grid-inputs">
+        <div class="input-group">
+            <label>OBJETIVO FINAL</label>
             <input type="text" id="goal" placeholder="Ex: Pedir liminar hoje">
         </div>
-        <div>
-            <span class="label-sugestao">JURISDIÇÃO</span>
+        <div class="input-group">
+            <label>JURISDIÇÃO</label>
             <input type="text" id="juris" placeholder="Ex: Brasil (LPI)">
         </div>
     </div>
 
-    <span class="label-sugestao">BASE DE DADOS TÉCNICOS</span>
-    <textarea id="fatos" rows="4" placeholder="Insira os fatos aqui..."></textarea>
+    <div class="input-group" style="margin-top: 20px;">
+        <label>BASE DE DADOS TÉCNICOS</label>
+        <textarea id="fatos" rows="3" placeholder="Insira os fatos aqui..."></textarea>
+    </div>
 
-    <button class="btn-supreme">EXECUTAR ANÁLISE</button>
+    <button class="btn-execute" onclick="gerarPrompt()">EXECUTAR ANÁLISE</button>
 </main>
 
-<footer>RESPONSABILIDADE DO USUÁRIO | CÁSSIA PROMPT V27.</footer>
+<footer>RESPONSABILIDADE DO USUÁRIO | CÁSSIA PROMPT V27</footer>
+
+<script>
+    async function processPDF(input) {
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = async function() {
+            const typedarray = new Uint8Array(this.result);
+            const pdf = await pdfjsLib.getDocument(typedarray).promise;
+            let text = "";
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const content = await page.getTextContent();
+                text += content.items.map(s => s.str).join(" ") + "\n";
+            }
+            document.getElementById('fatos').value = text;
+        };
+        reader.readAsArrayBuffer(file);
+    }
+
+    function gerarPrompt() {
+        // Lógica de inteligência para o Claude sem estragar o design
+        const promptFinal = `[ANALISTA SÊNIOR V27]\nOBJETIVO: ${document.getElementById('goal').value}\nJURISDIÇÃO: ${document.getElementById('juris').value}\n\n[DADOS]:\n${document.getElementById('fatos').value}`;
+        console.log(promptFinal);
+        alert("Análise processada com a potência máxima V27!");
+    }
+</script>
 
 </body>
 </html>

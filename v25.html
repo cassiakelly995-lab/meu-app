@@ -51,16 +51,16 @@
         </div>
         <div class="progress-bar-bg"><div id="bar-fill" class="progress-bar-fill"></div></div>
 
-        <label>OBJETIVO (O QUE VOCÊ QUER?)</label>
-        <input type="text" id="destino" oninput="monitorar()" placeholder="Ex: Analisar este contrato jurídico...">
+        <label>OBJETIVO FINAL (DESTINO)</label>
+        <input type="text" id="destino" oninput="monitorar()" placeholder="O que você quer que a IA entregue?">
 
-        <label>REGRAS (DIRETRIZES TÉCNICAS)</label>
-        <textarea id="base" rows="2" placeholder="Ex: Use o tom de um juiz, cite leis brasileiras..."></textarea>
+        <label>REGRAS & DIRETRIZES (BASE)</label>
+        <textarea id="base" rows="2" placeholder="Ex: Tom de voz profissional, leis específicas..."></textarea>
 
         <label>DADOS BRUTOS (FATOS)</label>
-        <textarea id="fatos" rows="6" oninput="monitorar()" placeholder="Cole aqui o texto que a IA deve ler..."></textarea>
+        <textarea id="fatos" rows="6" oninput="monitorar()" placeholder="Cole aqui as informações..."></textarea>
 
-        <button id="btn-main" class="btn-prime" onclick="processar()">GERAR COMANDO SUPREMO</button>
+        <button id="btn-main" class="btn-prime" onclick="processar()">ATIVAR ENGENHARIA SUPREMA</button>
     </div>
 
     <div id="output-zone">
@@ -73,30 +73,37 @@
 <footer>
     <div class="footer-text">
         <strong>CÁSSIA PROMPT ® | TECNOLOGIA V8</strong><br>
-        LICENCIADO PARA: <span id="user-display" style="color:#bf953f; font-weight:bold;">...</span><br>
+        LICENCIADO PARA: <span id="user-display" style="color:#bf953f; font-weight:bold;">VERIFICANDO...</span><br>
         A RESPONSABILIDADE É DE QUEM ESTÁ USANDO.
     </div>
 </footer>
 
 <script>
-    // --- LISTA DE ACESSO (O PORTEIRO) ---
-    const LICENCAS = {
-        "TkFUQUxJ": "NATALIA", // Natalia está autorizada!
+    // ==========================================
+    // CENTRAL DE ACESSOS (LIBERADO PARA ELAS)
+    // ==========================================
+    const LICENCAS_ATIVAS = {
+        "TkFUQUxJ": "NATALIA",
+        "SEVMRU4=": "HELEN CRISTINA", // ID para a Helen (ex: id=SEVMRU4=)
         "Y2Fzc2lh": "CÁSSIA"
     };
 
     const urlParams = new URLSearchParams(window.location.search);
     const idUser = urlParams.get('id');
-    const usuarioAtivo = LICENCAS[idUser];
+    const usuarioAtivo = LICENCAS_ATIVAS[idUser];
 
     if (!usuarioAtivo) {
-        document.getElementById('app-block').innerHTML = `<h1 style='color:#bf953f; text-align:center; padding-top:100px;'>ACESSO REVOGADO</h1>`;
+        document.getElementById('app-block').innerHTML = `
+            <div style="padding:100px; text-align:center;">
+                <h1 style="color:#bf953f; font-size:45px; letter-spacing:5px;">ACESSO REVOGADO</h1>
+                <p style="opacity:0.7;">SISTEMA V8 BLOQUEADO PARA ESTE ID.</p>
+            </div>`;
         document.getElementById('user-display').innerText = "BLOQUEADO";
     } else {
         document.getElementById('user-display').innerText = usuarioAtivo;
     }
 
-    // --- LÓGICA ELITE (MONITORAMENTO) ---
+    // --- LÓGICA ELITE DE MONITORAMENTO ---
     function monitorar() {
         const d = document.getElementById('destino').value.length;
         const f = document.getElementById('fatos').value.length;
@@ -105,19 +112,15 @@
         document.getElementById('percent-text').innerText = Math.round(progresso) + "%";
     }
 
-    // --- LÓGICA ELITE (GERAÇÃO DE PROMPT) ---
+    // --- ENGENHARIA DE PROMPT V8 ---
     function processar() {
         const d = document.getElementById('destino').value;
         const b = document.getElementById('base').value;
         const f = document.getElementById('fatos').value;
         
-        // Esta é a parte que torna o programa ELITE (A estrutura do prompt)
-        const promptFinal = `### [SISTEMA DE ENGENHARIA V8 ELITE] ###\n\n` +
-        `**PERSONA:** Você é um Especialista de Elite em Redação Técnica e Jurídica.\n\n` +
-        `**1. MISSÃO CENTRAL:** ${d}\n\n` +
-        `**2. DIRETRIZES TÉCNICAS:** ${b}\n\n` +
-        `**3. INPUT DE INTELIGÊNCIA (FATOS):**\n${f}\n\n` +
-        `**PROTOCOLO V8:**\n- Seja assertivo e sofisticado.\n- Remova redundâncias.\n- Entregue com precisão máxima.\n\n[AGUARDANDO EXECUÇÃO]`;
+        const promptFinal = `### [SISTEMA V8 ELITE EDITION] ###\n\n` +
+        `**MISSÃO:** ${d}\n\n**REGRAS:** ${b}\n\n**DADOS:**\n${f}\n\n` +
+        `**PROTOCOLO V8:** Use tom assertivo, profissional e elimine redundâncias.`;
 
         document.getElementById('prompt-result').value = promptFinal;
         document.getElementById('output-zone').style.display = 'block';

@@ -5,141 +5,103 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>V9 POWER ELITE | CÁSSIA PROMPT</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <style>
         :root {
             --bg: #050505; --card: #0a0a0a; --text: #ffffff; --border: #1a1a1a;
             --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
             --glow: 0 0 30px rgba(191, 149, 63, 0.1);
         }
-        body.light-mode { --bg: #f9f9f9; --card: #ffffff; --text: #1a1a1a; --border: #e2e2e2; }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; transition: 0.3s; overflow-x: hidden; }
-        nav { padding: 20px 60px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--bg); position: sticky; top: 0; z-index: 100; }
-        .logo-v9 { font-size: 18px; font-weight: 900; letter-spacing: 6px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
-        .top-btns { display: flex; gap: 10px; }
-        .btn-minimal { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; transition: 0.2s; }
-        .btn-minimal:hover { border-color: #bf953f; color: #bf953f; }
-        main { padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
-        .glass-panel { background: var(--card); width: 100%; max-width: 900px; border-radius: 12px; border: 1px solid var(--border); padding: 50px; box-shadow: var(--glow); }
-        .integrity-header { display: flex; justify-content: space-between; font-size: 9px; font-weight: 800; color: #bf953f; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 2px; }
-        .bar-bg { width: 100%; height: 2px; background: rgba(191,149,63,0.1); border-radius: 4px; overflow: hidden; margin-bottom: 40px; }
-        .bar-fill { width: 0%; height: 100%; background: var(--gold); transition: 0.8s; }
-        .pdf-action { color: #bf953f; font-size: 11px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; }
-        .field-group { margin-bottom: 25px; }
-        label { font-size: 10px; font-weight: 600; opacity: 0.5; text-transform: uppercase; display: block; margin-bottom: 8px; letter-spacing: 1.5px; }
-        input, textarea { width: 100%; background: transparent; border: 1px solid var(--border); padding: 14px; border-radius: 4px; color: var(--text); font-size: 14px; box-sizing: border-box; outline: none; transition: 0.2s; font-weight: 300; }
-        input:focus, textarea:focus { border-color: #bf953f; background: rgba(191,149,63,0.01); }
-        .btn-supreme { width: 100%; background: var(--gold); color: #000; border: none; padding: 20px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; font-size: 13px; transition: 0.3s; margin-top: 20px; }
-        #output-zone { display: none; width: 100%; max-width: 900px; margin-top: 40px; }
-        #prompt-result { width: 100%; height: 400px; background: #000; border: 1px solid #bf953f; color: #fcf6ba; padding: 30px; border-radius: 8px; font-family: 'Consolas', monospace; font-size: 14px; line-height: 1.6; }
-        .export-btns { display: flex; gap: 15px; margin-top: 15px; }
-        footer { margin-top: 80px; padding: 40px; text-align: center; border-top: 1px solid var(--border); font-size: 9px; opacity: 0.5; letter-spacing: 2px; line-height: 2.2; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: none; }
+        #revogado { display: none; height: 100vh; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .logo-v9 { font-size: 18px; font-weight: 900; letter-spacing: 6px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; margin-bottom: 20px; }
+        .glass-panel { background: var(--card); width: 90%; max-width: 900px; border-radius: 12px; border: 1px solid var(--border); padding: 50px; margin: 40px auto; box-shadow: var(--glow); }
+        .btn-supreme { width: 100%; background: var(--gold); color: #000; border: none; padding: 20px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; margin-top: 20px; }
+        input, textarea { width: 100%; background: transparent; border: 1px solid var(--border); padding: 14px; color: #fff; margin-bottom: 20px; }
+        label { font-size: 10px; opacity: 0.5; text-transform: uppercase; }
+        footer { padding: 40px; text-align: center; font-size: 9px; opacity: 0.5; letter-spacing: 2px; line-height: 2.2; }
     </style>
 </head>
-<body id="main-body">
+<body>
 
-<nav>
-    <div class="logo-v9">V9 POWER ELITE</div>
-    <div class="top-btns">
-        <button class="btn-minimal" onclick="limpar()">Apagar Tudo</button>
-        <button class="btn-minimal" onclick="toggleMode()">Modo Claro/Escuro</button>
-    </div>
-</nav>
-
-<main>
-    <div class="glass-panel">
-        <div class="integrity-header"><span>Sincronização de Dados V9</span><span id="pct">0%</span></div>
-        <div class="bar-bg"><div id="fill" class="bar-fill"></div></div>
-
-        <div class="pdf-action" onclick="document.getElementById('pdf-up').click()">📎 Importar Dados de PDF</div>
-        <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
-
-        <div class="field-group">
+<div id="app-content">
+    <nav style="padding: 20px 60px; border-bottom: 1px solid var(--border); text-align:center;">
+        <div class="logo-v9">V9 POWER ELITE</div>
+    </nav>
+    <main>
+        <div class="glass-panel">
+            <div style="color:#bf953f; font-size:11px; margin-bottom:20px; cursor:pointer" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR PDF</div>
+            <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
+            
             <label>1. O que deve ser gerado?</label>
-            <input type="text" id="gerado" oninput="atualizar()" placeholder="Ex: Petição Inicial, Relatório de Triagem...">
+            <input type="text" id="gerado" placeholder="Ex: Petição Inicial">
+            
+            <label>2. Objetivo</label>
+            <input type="text" id="destino" placeholder="Ex: Ganhar a causa">
+            
+            <label>3. Fatos</label>
+            <textarea id="fatos" rows="10" placeholder="Cole o texto aqui"></textarea>
+            
+            <button class="btn-supreme" onclick="gerar()">Executar Engenharia V9</button>
+            
+            <div id="output" style="display:none; margin-top:30px;">
+                <textarea id="res" style="height:300px; background:#000; color:#fcf6ba; border-color:#bf953f" readonly></textarea>
+                <button class="btn-supreme" onclick="exportar()">Baixar em Word (.doc)</button>
+            </div>
         </div>
+    </main>
+    <footer>CÁSSIA PROMPT ® | TECNOLOGIA V9 POWER ELITE EDITION</footer>
+</div>
 
-        <div class="field-group">
-            <label>2. Objetivo (Destino do Comando)</label>
-            <input type="text" id="destino" oninput="atualizar()" placeholder="Ex: Demonstrar abusividade contratual...">
-        </div>
-
-        <div class="field-group">
-            <label>3. Registro dos Fatos (Base de Dados)</label>
-            <textarea id="fatos" rows="10" oninput="atualizar()" placeholder="Insira o texto bruto ou use o PDF..."></textarea>
-        </div>
-
-        <button class="btn-supreme" onclick="gerar()">Executar Engenharia V9 Power</button>
-    </div>
-
-    <div id="output-zone">
-        <label>Comando Supremo V9 [RIGOR ABSOLUTO] Gerado:</label>
-        <textarea id="prompt-result" readonly></textarea>
-        <div class="export-btns">
-            <button class="btn-supreme" style="flex: 1; background:transparent; border:1px solid #bf953f; color:#bf953f;" onclick="copiar()">Copiar Prompt</button>
-            <button class="btn-supreme" style="flex: 1; background: #bf953f; color: #000;" onclick="exportarWord()">Baixar em Word (.doc)</button>
-        </div>
-    </div>
-</main>
-
-<footer>
-    CÁSSIA PROMPT ® | TECNOLOGIA V9 POWER ELITE EDITION<br>
-    SISTEMA DE ENGENHARIA DE PROMPT DE ALTA PRECISÃO<br>
-    A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. O PROGRAMA APENAS GERA O PROMPT.
-</footer>
+<div id="revogado">
+    <div class="logo-v9">V9 POWER ELITE</div>
+    <h1 style="color:#bf953f; letter-spacing:5px;">ACESSO REVOGADO</h1>
+    <p style="opacity:0.5; font-size:10px;">Entre em contato com a administração para renovar sua licença.</p>
+</div>
 
 <script>
-    function toggleMode() { document.getElementById('main-body').classList.toggle('light-mode'); }
-    function limpar() {
-        document.getElementById('gerado').value = "";
-        document.getElementById('destino').value = "";
-        document.getElementById('fatos').value = "";
-        document.getElementById('output-zone').style.display = 'none';
-        atualizar();
-    }
-    async function lerPDF(input) {
-        const file = input.files[0];
-        if(!file) return;
-        const reader = new FileReader();
-        reader.onload = async function() {
-            const typedarray = new Uint8Array(this.result);
-            const pdf = await pdfjsLib.getDocument(typedarray).promise;
-            let fullText = "";
-            for(let i=1; i<=pdf.numPages; i++) {
-                const page = await pdf.getPage(i);
-                const content = await page.getTextContent();
-                fullText += content.items.map(s => s.str).join(" ") + "\n";
+    // Configuração do seu Firebase (Mantenha as suas chaves aqui)
+    const firebaseConfig = {
+        databaseURL: "SUA_URL_DO_FIREBASE_AQUI"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // Lógica de Verificação de ID
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('id');
+
+    if (userId) {
+        database.ref('usuarios/' + userId).on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data && data.status === 'ativo') {
+                document.body.style.display = 'block';
+                document.getElementById('app-content').style.display = 'block';
+                document.getElementById('revogado').style.display = 'none';
+            } else {
+                document.body.style.display = 'block';
+                document.getElementById('app-content').style.display = 'none';
+                document.getElementById('revogado').style.display = 'flex';
             }
-            document.getElementById('fatos').value = fullText;
-            atualizar();
-        };
-        reader.readAsArrayBuffer(file);
+        });
+    } else {
+        document.body.style.display = 'block';
+        document.getElementById('revogado').style.display = 'flex';
     }
-    function atualizar() {
-        let p = Math.min(100, (document.getElementById('gerado').value.length * 2) + (document.getElementById('destino').value.length * 2) + (document.getElementById('fatos').value.length / 50));
-        document.getElementById('fill').style.width = p + "%";
-        document.getElementById('pct').innerText = Math.round(p) + "%";
-    }
+
+    // Funções do V9
     function gerar() {
-        const g = document.getElementById('gerado').value;
-        const d = document.getElementById('destino').value;
-        const f = document.getElementById('fatos').value;
-        const pMaster = `### [ORDEM V9 POWER] ###\n\n1. GERAR: ${g}\n2. OBJETIVO: ${d}\n\n[DIRETRIZES]: Use lei seca e jurisprudência STF/STJ. Se não houver certeza, escreva: "Fundamentação pendente de análise humana". PROIBIDO INVENTAR.\n\n[FATOS]:\n${f}`;
-        document.getElementById('prompt-result').value = pMaster;
-        document.getElementById('output-zone').style.display = 'block';
+        const p = `### [ORDEM V9] ###\n1. GERAR: ${document.getElementById('gerado').value}\n2. OBJETIVO: ${document.getElementById('destino').value}\n3. FATOS: ${document.getElementById('fatos').value}`;
+        document.getElementById('res').value = p;
+        document.getElementById('output').style.display = 'block';
     }
-    function exportarWord() {
-        const content = document.getElementById('prompt-result').value;
-        const blob = new Blob(['\ufeff', content], { type: 'application/msword' });
-        const url = URL.createObjectURL(blob);
+    function exportar() {
+        const blob = new Blob(['\ufeff', document.getElementById('res').value], { type: 'application/msword' });
         const link = document.createElement('a');
-        link.href = url;
-        link.download = 'Comando_V9_Elite.doc';
+        link.href = URL.createObjectURL(blob);
+        link.download = 'V9_Prompt.doc';
         link.click();
-    }
-    function copiar() {
-        document.getElementById('prompt-result').select();
-        document.execCommand('copy');
-        alert("💎 Prompt V9 Copiado!");
     }
 </script>
 </body>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V9 POWER ELITE | CÁSSIA PROMPT</title>
+    <title>V9 POWER EDITION | CÁSSIA PROMPT</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
@@ -16,55 +16,38 @@
             --border: rgba(191, 149, 63, 0.3);
         }
         .light-mode {
-            --bg: #f8f8f8;
+            --bg: #fdfdfd;
             --card: rgba(255, 255, 255, 0.96);
-            --text: #111111;
-            --border: rgba(179, 135, 40, 0.2);
+            --text: #1a1a1a;
+            --border: rgba(179, 135, 40, 0.3);
         }
-        body { 
-            margin: 0; background: var(--bg); color: var(--text); 
-            font-family: 'Inter', sans-serif; transition: 0.4s;
-            display: flex; flex-direction: column; min-height: 100vh;
-        }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; transition: 0.4s; display: flex; flex-direction: column; min-height: 100vh; }
         #app-content, #revogado, #carregando { display: none; flex-grow: 1; flex-direction: column; align-items: center; justify-content: center; }
         #carregando { display: flex; }
-        .logo-v9 { 
-            font-size: 26px; font-weight: 900; letter-spacing: 10px; 
-            background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
-            text-transform: uppercase; margin: 40px 0 10px 0;
-        }
-        .glass-panel { 
-            background: var(--card); width: 92%; max-width: 950px; 
-            border-radius: 12px; border: 1px solid var(--border); 
-            padding: 50px; box-shadow: 0 25px 60px rgba(0,0,0,0.9);
-            backdrop-filter: blur(25px); margin-bottom: 40px; position: relative;
-        }
-        /* BARRA DE PROGRESSO RIGOROSA */
-        .progress-container { width: 100%; background: rgba(255,255,255,0.05); height: 4px; border-radius: 10px; margin-bottom: 30px; display: none; overflow: hidden; }
-        .progress-bar { width: 0%; height: 100%; background: var(--gold); transition: width 0.3s ease; box-shadow: 0 0 10px #bf953f; }
-
-        .btn-supreme { 
-            width: 100%; background: var(--gold); color: #000; border: none; 
-            padding: 24px; border-radius: 4px; font-weight: 900; cursor: pointer; 
-            text-transform: uppercase; letter-spacing: 5px; font-size: 15px; 
-            margin-top: 25px; transition: 0.3s;
-        }
-        .btn-supreme:hover { filter: brightness(1.2); transform: scale(1.005); }
+        .logo-v9 { font-size: 26px; font-weight: 900; letter-spacing: 8px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; margin: 40px 0; }
+        .glass-panel { background: var(--card); width: 92%; max-width: 950px; border-radius: 12px; border: 1px solid var(--border); padding: 50px; box-shadow: 0 25px 60px rgba(0,0,0,0.9); backdrop-filter: blur(25px); margin-bottom: 40px; position: relative; }
         
-        input, textarea { 
-            width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); 
-            padding: 20px; border-radius: 4px; color: var(--text); font-size: 15px; 
-            box-sizing: border-box; margin-bottom: 25px; outline: none;
-        }
-        /* MUDAR TEMA EM DOURADO */
+        /* BARRAS DE PROGRESSO RIGOROSAS */
+        .progress-group { margin-bottom: 30px; display: none; width: 100%; text-align: left; }
+        .label-rigor { font-size: 10px; font-weight: 800; color: #bf953f; letter-spacing: 2px; margin-bottom: 8px; display: block; text-transform: uppercase; }
+        .progress-container { width: 100%; background: rgba(255,255,255,0.05); height: 6px; border-radius: 10px; margin-bottom: 15px; overflow: hidden; border: 1px solid rgba(191,149,63,0.1); }
+        .progress-bar { width: 0%; height: 100%; background: var(--gold); transition: width 0.2s ease; box-shadow: 0 0 10px #bf953f; }
+
+        .btn-supreme { width: 100%; background: var(--gold); color: #000; border: none; padding: 24px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; font-size: 15px; margin-top: 25px; transition: 0.3s; }
+        .btn-supreme:hover { filter: brightness(1.2); }
+        
+        input, textarea { width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 20px; border-radius: 4px; color: var(--text); font-size: 15px; box-sizing: border-box; margin-bottom: 25px; outline: none; }
+        
+        /* BOTÃO MUDAR TEMA EM OURO */
         .toggle-btn { 
             position: absolute; top: 30px; right: 30px; background: none; border: 1px solid #bf953f; 
+            padding: 10px 18px; border-radius: 5px; cursor: pointer; font-size: 11px; 
+            letter-spacing: 2px; font-weight: 900; z-index: 1000;
             background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            padding: 10px 15px; border-radius: 4px; cursor: pointer; font-size: 11px; 
-            letter-spacing: 2px; font-weight: 900; z-index: 1000; border: 1px solid #bf953f;
         }
-        footer { padding: 50px; text-align: center; font-size: 10px; opacity: 0.6; letter-spacing: 2px; line-height: 2.2; border-top: 1px solid var(--border); width: 100%; box-sizing: border-box; }
-        .pdf-action { color: #fcf6ba; font-weight: 900; cursor: pointer; font-size: 12px; text-transform: uppercase; display: block; text-align: left; margin-bottom: 15px; letter-spacing: 1px; }
+        
+        footer { padding: 50px; text-align: center; font-size: 10px; opacity: 0.5; letter-spacing: 2px; border-top: 1px solid var(--border); width: 100%; box-sizing: border-box; }
+        .pdf-action { color: #fcf6ba; font-weight: 900; cursor: pointer; font-size: 12px; text-transform: uppercase; display: block; text-align: left; margin-bottom: 15px; }
     </style>
 </head>
 <body>
@@ -72,40 +55,46 @@
 <button class="toggle-btn" onclick="document.body.classList.toggle('light-mode')">MUDAR TEMA</button>
 
 <div id="carregando">
-    <div class="logo-v9">V9 POWER ELITE</div>
-    <p style="letter-spacing: 5px; font-size: 10px; margin-top: 20px;">SISTEMA RIGOROSO ATIVO</p>
+    <div class="logo-v9">V9 POWER EDITION</div>
 </div>
 
 <div id="app-content">
-    <div class="logo-v9">V9 POWER ELITE</div>
+    <div class="logo-v9">V9 POWER EDITION</div>
     <main style="width: 100%; display: flex; flex-direction: column; align-items: center; padding: 0 20px; box-sizing: border-box;">
         <div class="glass-panel">
-            <div class="progress-container" id="p-cont"><div class="progress-bar" id="p-bar"></div></div>
             
+            <div class="progress-group" id="prog-area">
+                <span class="label-rigor">Análise de Desenvolvimento: <span id="val1">0%</span></span>
+                <div class="progress-container"><div class="progress-bar" id="bar1"></div></div>
+                
+                <span class="label-rigor">Rigor Pericial Jurídico: <span id="val2">0%</span></span>
+                <div class="progress-container"><div class="progress-bar" id="bar2"></div></div>
+            </div>
+
             <span class="pdf-action" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR DOSSIÊ PDF PERICIAL</span>
             <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
             
             <input type="text" id="gerado" placeholder="O QUE DEVE SER GERADO?">
-            <input type="text" id="destino" placeholder="OBJETIVO ESTRATÉGICO (RIGOR MÁXIMO)">
-            <textarea id="fatos" rows="12" placeholder="REGISTRO DOS FATOS - BASE DE DADOS SUPREMA"></textarea>
+            <input type="text" id="destino" placeholder="OBJETIVO ESTRATÉGICO">
+            <textarea id="fatos" rows="12" placeholder="REGISTRO DOS FATOS E BASE DE DADOS"></textarea>
             
-            <button class="btn-supreme" onclick="gerar()">EXECUTAR ENGENHARIA V9 GOD MODE</button>
+            <button class="btn-supreme" onclick="executarV9()">EXECUTAR ENGENHARIA V9 POWER</button>
             
             <div id="res-box" style="display:none; margin-top:50px; border-top: 1px solid var(--border); padding-top: 30px;">
                 <textarea id="res" style="height:450px; border-color: #bf953f; color: #fcf6ba; background: #000; font-family: 'Courier New', monospace;" readonly></textarea>
-                <button class="btn-supreme" onclick="baixar()">EXPORTAR RESULTADO EM WORD (.DOC)</button>
+                <button class="btn-supreme" onclick="baixar()">EXPORTAR PARA WORD (.DOC)</button>
             </div>
         </div>
     </main>
     <footer>
-        CÁSSIA PROMPT ® | PROJETO CÁSSIA PROMPT V9 POWER ELITE EDITION<br>
+        CÁSSIA PROMPT ® | V9 POWER EDITION<br>
         A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. O PROGRAMA APENAS GERA O PROMPT.
     </footer>
 </div>
 
 <div id="revogado">
-    <div class="logo-v9">V9 POWER ELITE</div>
-    <h1 style="color:#bf953f; letter-spacing: 10px;">ACESSO BLOQUEADO</h1>
+    <div class="logo-v9">V9 POWER EDITION</div>
+    <h1 style="color:#bf953f; letter-spacing: 5px;">ACESSO BLOQUEADO</h1>
 </div>
 
 <script>
@@ -114,11 +103,7 @@
     const database = firebase.database();
     const userId = new URLSearchParams(window.location.search).get('id');
 
-    function entrar() {
-        document.getElementById('carregando').style.display = 'none';
-        document.getElementById('app-content').style.display = 'flex';
-    }
-
+    function entrar() { document.getElementById('carregando').style.display = 'none'; document.getElementById('app-content').style.display = 'flex'; }
     let timeout = setTimeout(() => { entrar(); }, 2500);
 
     if (userId) {
@@ -126,65 +111,56 @@
             clearTimeout(timeout);
             const data = snap.val();
             if (data && data.status === 'ativo') { entrar(); }
-            else if (data && data.status === 'revogado') {
-                document.getElementById('carregando').style.display = 'none';
-                document.getElementById('revogado').style.display = 'flex';
-            } else { entrar(); }
+            else if (data && data.status === 'revogado') { document.getElementById('carregando').style.display = 'none'; document.getElementById('revogado').style.display = 'flex'; }
+            else { entrar(); }
         });
     } else { clearTimeout(timeout); entrar(); }
 
     async function lerPDF(input) {
         const file = input.files[0];
         const reader = new FileReader();
-        const pCont = document.getElementById('p-cont');
-        const pBar = document.getElementById('p-bar');
-
-        pCont.style.display = 'block';
-        pBar.style.width = '10%';
-
         reader.onload = async function() {
             const typedarray = new Uint8Array(this.result);
             const pdf = await pdfjsLib.getDocument(typedarray).promise;
-            pBar.style.width = '40%';
             let text = "";
             for(let i=1; i<=pdf.numPages; i++) {
                 const page = await pdf.getPage(i);
                 const content = await page.getTextContent();
                 text += content.items.map(s => s.str).join(" ") + "\n";
-                pBar.style.width = (40 + (i/pdf.numPages * 50)) + '%';
             }
             document.getElementById('fatos').value = text;
-            pBar.style.width = '100%';
-            setTimeout(() => { pCont.style.display = 'none'; pBar.style.width = '0%'; }, 1000);
+            alert("V9: PDF processado com rigor.");
         };
         reader.readAsArrayBuffer(file);
     }
 
-    function gerar() {
-        const pCont = document.getElementById('p-cont');
-        const pBar = document.getElementById('p-bar');
-        pCont.style.display = 'block';
-        pBar.style.width = '0%';
+    function executarV9() {
+        const area = document.getElementById('prog-area');
+        const b1 = document.getElementById('bar1'); const b2 = document.getElementById('bar2');
+        const v1 = document.getElementById('val1'); const v2 = document.getElementById('val2');
+        
+        area.style.display = 'block';
+        let p1 = 0; let p2 = 0;
 
-        let prog = 0;
-        let intv = setInterval(() => {
-            prog += 10;
-            pBar.style.width = prog + '%';
-            if(prog >= 100) {
-                clearInterval(intv);
-                const p = `### [ORDEM V9 POWER ELITE - GOD MODE] ###\n\n1. GERAR: ${document.getElementById('gerado').value}\n2. OBJETIVO: ${document.getElementById('destino').value}\n\n[DIRETRIZES DE RIGOR MÁXIMO]: Use lei seca, jurisprudência vinculante STF/STJ. Proibido alucinar fatos.\n\n[FATOS]:\n${document.getElementById('fatos').value}`;
+        let itv = setInterval(() => {
+            if(p1 < 100) { p1 += 2; b1.style.width = p1+'%'; v1.innerText = p1+'%'; }
+            if(p1 > 40 && p2 < 100) { p2 += 3; b2.style.width = p2+'%'; v2.innerText = p2+'%'; }
+            
+            if(p1 >= 100 && p2 >= 100) {
+                clearInterval(itv);
+                const p = `### [ORDEM V9 POWER EDITION - RIGOR MÁXIMO] ###\n\nGERAR: ${document.getElementById('gerado').value}\nOBJETIVO: ${document.getElementById('destino').value}\n\n[DIRETRIZES]: Use lei seca e jurisprudência STF/STJ. Proibido alucinar.\n\n[BASE DE FATOS]:\n${document.getElementById('fatos').value}`;
                 document.getElementById('res').value = p;
                 document.getElementById('res-box').style.display = 'block';
-                setTimeout(() => { pCont.style.display = 'none'; }, 500);
+                setTimeout(() => { area.style.display = 'none'; }, 1000);
             }
-        }, 150);
+        }, 50);
     }
 
     function baixar() {
         const blob = new Blob(['\ufeff', document.getElementById('res').value], { type: 'application/msword' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'V9_Elite_Rigor_Maximo.doc';
+        link.download = 'V9_Power_Comando.doc';
         link.click();
     }
 </script>

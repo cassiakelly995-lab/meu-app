@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V19 FRAMEWORK | CÁSSIA PROMPT</title>
+    <title>V20 SOVEREIGN | CÁSSIA PROMPT</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <style>
         :root { --bg: #050505; --card: rgba(12, 12, 12, 0.98); --text: #ffffff; --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%); --border: rgba(191, 149, 63, 0.3); }
@@ -30,43 +30,43 @@
 <body>
 <div class="top-controls"><button class="ctrl-btn" onclick="document.body.classList.toggle('focus-mode')">FOCO</button><button class="ctrl-btn" onclick="document.body.classList.toggle('light-mode')">TEMA</button></div>
 <div id="app-content">
-    <div class="logo-v9">V19 GLOBAL FRAMEWORK</div>
+    <div class="logo-v9">V20 SOVEREIGN EDITION</div>
     <main class="glass-panel">
         <div class="progress-group" id="prog-area">
-            <span class="label-rigor">Abstração de Variáveis (Framework): <span id="val1">0%</span></span>
+            <span class="label-rigor">Saturação de Nexo Temporal: <span id="val1">0%</span></span>
             <div class="progress-container"><div class="progress-bar" id="bar1"></div></div>
-            <span class="label-rigor">Mapeamento B2B Internacional: <span id="val2">0%</span></span>
+            <span class="label-rigor">Calibragem de Tom de Destinatário: <span id="val2">0%</span></span>
             <div class="progress-container"><div class="progress-bar" id="bar2"></div></div>
         </div>
-        <span style="color:#fcf6ba; font-weight:900; cursor:pointer; font-size:11px;" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR PDF (PROVAS/DOCUMENTOS)</span>
+        <span style="color:#fcf6ba; font-weight:900; cursor:pointer; font-size:11px;" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR PDF (EVIDÊNCIAS)</span>
         <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
         
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-            <div><span class="label-sugestao">FORO E SISTEMA JURÍDICO</span><input type="text" id="jurisdicao" placeholder="Ex: Civil Law (BR) / Common Law (US)"></div>
-            <div><span class="label-sugestao">METODOLOGIA DE ANÁLISE</span><input type="text" id="metodo" placeholder="Ex: Protocolo Diamond / Trade Secret Audit"></div>
+            <div><span class="label-sugestao">DESTINATÁRIO FINAL (Stakeholder)</span><input type="text" id="stakeholder" placeholder="Ex: Conselho de Administração / CEO"></div>
+            <div><span class="label-sugestao">MÉTRICA DE CRONOGRAMA</span><input type="text" id="crono" placeholder="Ex: Data de saída vs. Data de lançamento"></div>
         </div>
 
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-            <div><span class="label-sugestao">ELEMENTOS TÉCNICOS COMPARATIVOS</span><input type="text" id="claims" placeholder="Insira os Claims ou Ativos Críticos"></div>
-            <div><span class="label-sugestao">OBJETIVOS DE NEGÓCIO (ROI/RISCO)</span><input type="text" id="tradeoff" placeholder="Ex: Litigação agressiva vs. Acordo confidencial"></div>
+            <div><span class="label-sugestao">SISTEMA E JURISDIÇÃO</span><input type="text" id="jurisdicao" placeholder="Ex: Civil Law (UE) / Alemanha"></div>
+            <div><span class="label-sugestao">METODOLOGIA DE ANÁLISE</span><input type="text" id="metodo" placeholder="Ex: Protocolo Diamond / Trade Secret Audit"></div>
         </div>
 
-        <span class="label-sugestao">CORPUS DE DADOS (FATOS BRUTOS)</span>
-        <textarea id="fatos" rows="6" placeholder="Insira o relato completo do incidente..."></textarea>
+        <span class="label-sugestao">CORPUS DE DADOS (FATOS + EVIDÊNCIAS TÉCNICAS)</span>
+        <textarea id="fatos" rows="6" placeholder="Insira o relato completo com datas e claims..."></textarea>
         
-        <button class="btn-supreme" onclick="executarV19()">GERAR FRAMEWORK PROFISSIONAL V19</button>
+        <button class="btn-supreme" onclick="executarV20()">EXECUTAR PROTOCOLO SOBERANO</button>
         <div id="res-box" style="display:none; margin-top:25px; flex-direction:column;">
-            <button class="btn-copy" id="btnCopy" onclick="copyRes()">COPIAR SISTEMA V19</button>
+            <button class="btn-copy" id="btnCopy" onclick="copyRes()">COPIAR COMANDO V20</button>
             <textarea id="res" style="height:350px; background:#000; color:#fcf6ba; font-family:monospace; font-size:12px;"></textarea>
         </div>
     </main>
-    <footer>CÁSSIA PROMPT ® | FRAMEWORK PARA MERCADO INTERNACIONAL.</footer>
+    <footer>CÁSSIA PROMPT ® | V20 SOVEREIGN | RESPONSABILIDADE DO USUÁRIO.</footer>
 </div>
 
 <script>
     async function lerPDF(i){const f=i.files[0];const r=new FileReader();r.onload=async function(){const ta=new Uint8Array(this.result);const pdf=await pdfjsLib.getDocument(ta).promise;let t="";for(let p=1;p<=pdf.numPages;p++){const pg=await pdf.getPage(p);const c=await pg.getTextContent();t+=c.items.map(s=>s.str).join(" ")+"\n";}document.getElementById('fatos').value=t;};r.readAsArrayBuffer(f);}
-    function copyRes(){const t=document.getElementById('res');t.select();document.execCommand('copy');document.getElementById('btnCopy').innerText="COPIADO!";setTimeout(()=>document.getElementById('btnCopy').innerText="COPIAR SISTEMA V19",2000);}
-    function executarV19() {
+    function copyRes(){const t=document.getElementById('res');t.select();document.execCommand('copy');document.getElementById('btnCopy').innerText="COPIADO!";setTimeout(()=>document.getElementById('btnCopy').innerText="COPIAR COMANDO V20",2000);}
+    function executarV20() {
         document.getElementById('prog-area').style.display='block';
         let p1=0, p2=0;
         let itv=setInterval(()=>{
@@ -74,7 +74,7 @@
             if(p1>=100 && p2<100){p2+=20;document.getElementById('bar2').style.width=p2+'%';document.getElementById('val2').innerText=p2+'%';}
             if(p2>=100){
                 clearInterval(itv);
-                const p = `### [FRAMEWORK PROPRIETÁRIO DE AUDITORIA ESTRATÉGICA] ###\n\n1. SISTEMA JURÍDICO E JURISDIÇÃO: ${document.getElementById('jurisdicao').value}\n2. METODOLOGIA APLICADA: ${document.getElementById('metodo').value}\n3. ATIVOS TÉCNICOS EM ANÁLISE: ${document.getElementById('claims').value}\n4. DRIVERS DE DECISÃO (TRADE-OFF): ${document.getElementById('tradeoff').value}\n\n[INSTRUÇÃO DE PROCESSAMENTO PARAMÉTRICO]:\n- Atue como um Auditor de Risco Internacional especializado no nexo causal entre infrações técnicas e danos econômicos.\n- Aplique a metodologia solicitada sobre o CORPUS DE DADOS fornecido.\n- Gere o output em camadas: Executiva (Linguagem de ROI/Custo de Oportunidade) e Técnica (Rigor Normativo).\n\n[ESTRUTURA DE ENTREGA]:\n- Sumário Executivo (Estratégico - máx 150 pal.)\n- Análise Técnica de Correlação (Claims vs. Fatos)\n- Matriz de Risco PxI (Escala 1-5)\n- Framework de Trade-off (Análise Econômica do Direito)\n- Seção de "DADOS AUSENTES" (Obrigatório: Identificar lacunas com tag REVISÃO HUMANA NECESSÁRIA).\n\n[CORPUS DE DADOS]:\n${document.getElementById('fatos').value}`;
+                const p = `### [PROTOCOLO SOBERANO DE AUDITORIA V20] ###\n\n1. DESTINATÁRIO: ${document.getElementById('stakeholder').value}\n2. SISTEMA JURÍDICO: ${document.getElementById('jurisdicao').value}\n3. MÉTRICA TEMPORAL: ${document.getElementById('crono').value}\n4. METODOLOGIA: ${document.getElementById('metodo').value}\n\n[INSTRUÇÃO DE ALTA DENSIDADE]:\n- Alvo: Analise o CORPUS DE DADOS focando no NEXO CAUSAL entre o cronograma e a infração.\n- Calibragem de Tom: Ajuste a linguagem para o DESTINATÁRIO especificado (Ex: Direto para CEO, Termos de Compliance para Conselho).\n- Seção Técnica: Detalhe os Claims e compare com a conduta do rival.\n\n[ESTRUTURA OBRIGATÓRIA]:\n- Sumário Executivo (Estratégico - máx 150 pal.)\n- Análise de Nexo Temporal e Causal\n- Matriz de Risco PxI (1-5)\n- Recomendação de Trade-off (Litigação vs. ROI)\n- Seção de DADOS AUSENTES (Obrigatório: Tag REVISÃO HUMANA NECESSÁRIA).\n\n[CORPUS DE DADOS]:\n${document.getElementById('fatos').value}`;
                 document.getElementById('res').value=p; document.getElementById('res-box').style.display='flex';
             }
         },50);

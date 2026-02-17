@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V16 PERFECT SCORE | CÁSSIA PROMPT</title>
+    <title>V17 GOLD STANDARD | CÁSSIA PROMPT</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <style>
         :root { --bg: #050505; --card: rgba(12, 12, 12, 0.98); --text: #ffffff; --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%); --border: rgba(191, 149, 63, 0.3); }
@@ -30,33 +30,33 @@
 <body>
 <div class="top-controls"><button class="ctrl-btn" onclick="document.body.classList.toggle('focus-mode')">FOCO</button><button class="ctrl-btn" onclick="document.body.classList.toggle('light-mode')">TEMA</button></div>
 <div id="app-content">
-    <div class="logo-v9">V16 PERFECT SCORE</div>
+    <div class="logo-v9">V17 GOLD STANDARD</div>
     <main class="glass-panel">
         <div class="progress-group" id="prog-area">
-            <span class="label-rigor">Blindagem de Veracidade (Anti-Dúvida): <span id="val1">0%</span></span>
+            <span class="label-rigor">Refino Quântico de Incerteza: <span id="val1">0%</span></span>
             <div class="progress-container"><div class="progress-bar" id="bar1"></div></div>
-            <span class="label-rigor">Calibragem de Escala e ROI: <span id="val2">0%</span></span>
+            <span class="label-rigor">Sincronização de Audiência: <span id="val2">0%</span></span>
             <div class="progress-container"><div class="progress-bar" id="bar2"></div></div>
         </div>
         <span style="color:#fcf6ba; font-weight:900; cursor:pointer; font-size:11px;" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR PDF (BASE DE DADOS)</span>
         <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
         
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-            <div><span class="label-sugestao">ENTREGA (O QUÊ)</span><input type="text" id="gerado" placeholder="Ex: Relatório de Crise"></div>
-            <div><span class="label-sugestao">URGÊNCIA (QUANDO)</span><input type="text" id="destino" placeholder="Ex: Interdição imediata / 48h"></div>
+            <div><span class="label-sugestao">OBJETO DA ANÁLISE</span><input type="text" id="gerado" placeholder="Ex: Relatório Técnico"></div>
+            <div><span class="label-sugestao">CRONOGRAMA E URGÊNCIA</span><input type="text" id="destino" placeholder="Ex: Decisão em 12h / Crítico"></div>
         </div>
 
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-            <div><span class="label-sugestao">AUDIÊNCIA & TOM ESPECÍFICO</span><input type="text" id="persona" placeholder="Ex: Operações (Técnico) / Financeiro (ROI)"></div>
-            <div><span class="label-sugestao">ESTRUTURA DE SEÇÕES (MODELO)</span><input type="text" id="secoes" placeholder="Ex: Sumário (150 pal), Análise, Matriz, Fases"></div>
+            <div><span class="label-sugestao">SEGMENTAÇÃO DE AUDIÊNCIA</span><input type="text" id="persona" placeholder="Ex: Engenharia (Técnico) / Sócios (ROI)"></div>
+            <div><span class="label-sugestao">ESTRUTURA OBRIGATÓRIA</span><input type="text" id="secoes" placeholder="Ex: Sumário, Análise, Matriz, Trade-off"></div>
         </div>
 
-        <span class="label-sugestao">BASE DE DADOS</span>
-        <textarea id="fatos" rows="6" placeholder="Dados para análise..."></textarea>
+        <span class="label-sugestao">DADOS REAIS E PONTOS DE TESTE</span>
+        <textarea id="fatos" rows="6" placeholder="Insira os dados aqui..."></textarea>
         
-        <button class="btn-supreme" onclick="executarV16()">EXECUTAR ENGENHARIA V16</button>
+        <button class="btn-supreme" onclick="executarV17()">EXECUTAR V17 GOLD</button>
         <div id="res-box" style="display:none; margin-top:25px; flex-direction:column;">
-            <button class="btn-copy" id="btnCopy" onclick="copyRes()">COPIAR COMANDO V16</button>
+            <button class="btn-copy" id="btnCopy" onclick="copyRes()">COPIAR</button>
             <textarea id="res" style="height:350px; background:#000; color:#fcf6ba; font-family:monospace; font-size:12px;"></textarea>
         </div>
     </main>
@@ -65,8 +65,8 @@
 
 <script>
     async function lerPDF(i){const f=i.files[0];const r=new FileReader();r.onload=async function(){const ta=new Uint8Array(this.result);const pdf=await pdfjsLib.getDocument(ta).promise;let t="";for(let p=1;p<=pdf.numPages;p++){const pg=await pdf.getPage(p);const c=await pg.getTextContent();t+=c.items.map(s=>s.str).join(" ")+"\n";}document.getElementById('fatos').value=t;};r.readAsArrayBuffer(f);}
-    function copyRes(){const t=document.getElementById('res');t.select();document.execCommand('copy');document.getElementById('btnCopy').innerText="COPIADO!";setTimeout(()=>document.getElementById('btnCopy').innerText="COPIAR COMANDO V16",2000);}
-    function executarV16() {
+    function copyRes(){const t=document.getElementById('res');t.select();document.execCommand('copy');document.getElementById('btnCopy').innerText="COPIADO!";setTimeout(()=>document.getElementById('btnCopy').innerText="COPIAR",2000);}
+    function executarV17() {
         document.getElementById('prog-area').style.display='block';
         let p1=0, p2=0;
         let itv=setInterval(()=>{
@@ -74,7 +74,7 @@
             if(p1>=100 && p2<100){p2+=20;document.getElementById('bar2').style.width=p2+'%';document.getElementById('val2').innerText=p2+'%';}
             if(p2>=100){
                 clearInterval(itv);
-                const p = `### [INSTÂNCIA DE RIGOR V16 - PERFECT SCORE] ###\n\n1. CONTEXTO: ${document.getElementById('gerado').value}\n2. URGÊNCIA: ${document.getElementById('destino').value}\n3. AUDIÊNCIA & TOM: ${document.getElementById('persona').value}.\n4. ESTRUTURA: ${document.getElementById('secoes').value}.\n\n[INSTRUÇÃO DE LINGUAGEM]:\n- Seção Executiva: Foco em "ROI de Crise" (Custo de inação vs. Custo de mitigação).\n- Seção Técnica: Terminologia normativa absoluta.\n- RESTRIÇÃO: Use apenas afirmações factuais. Proibido: "talvez", "possivelmente", "pode ser que", "provável". Se não há certeza, use a Seção 5.\n\n[FEW-SHOT MODELO MATRIZ PxI (ESCALA 1-5)]:\n| ID | Risco | P | I | Score | Nível | Ação |\n|---|---|---|---|---|---|---|\n| R01 | Descrição factual | 5 | 5 | 25 | Crítico | Conduta imediata |\n\n[DIRETRIZ ANTI-ALUCINAÇÃO]: Lacunas devem constar em "DADOS AUSENTES" com "REVISÃO HUMANA NECESSÁRIA".\n\n[BASE DE DADOS]:\n${document.getElementById('fatos').value}`;
+                const p = `### PROTOCOLO DE ANÁLISE DE ALTA PRECISÃO ###\n\n1. OBJETO: ${document.getElementById('gerado').value}\n2. CRONOGRAMA: ${document.getElementById('destino').value}\n3. AUDIÊNCIAS: ${document.getElementById('persona').value}.\n4. ESTRUTURA: ${document.getElementById('secoes').value}.\n\n[DIRETRIZES TÉCNICAS]:\n- COMUNICAÇÃO DE INCERTEZA: Não use termos vagos. Em caso de dados incompletos, use "Probabilidade de Confiança (%)" ou classifique como "Risco de Inação".\n- SEÇÃO DE TRADE-OFF: Apresente o conflito de interesses entre as audiências (ex: Segurança vs. Custo) e forneça uma recomendação fundamentada.\n- MATRIZ PxI: Use escala 1-5 conforme o modelo: | ID | Risco | P | I | Score | Nível | Ação |\n\n[ANTI-ALUCINAÇÃO]: Seções com dados insuficientes devem ser rotuladas como "DADOS AUSENTES" com a tag "REVISÃO HUMANA NECESSÁRIA".\n\n[BASE DE DADOS]:\n${document.getElementById('fatos').value}`;
                 document.getElementById('res').value=p; document.getElementById('res-box').style.display='flex';
             }
         },50);

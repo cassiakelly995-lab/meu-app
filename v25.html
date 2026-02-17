@@ -13,12 +13,13 @@
             --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
             --glow: 0 0 30px rgba(191, 149, 63, 0.1);
         }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: none; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: block; }
+        #app-content { display: none; }
         #revogado { display: none; height: 100vh; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: #000; }
         .logo-v9 { font-size: 18px; font-weight: 900; letter-spacing: 6px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
         .glass-panel { background: var(--card); width: 90%; max-width: 900px; border-radius: 12px; border: 1px solid var(--border); padding: 50px; margin: 40px auto; box-shadow: var(--glow); }
         .btn-supreme { width: 100%; background: var(--gold); color: #000; border: none; padding: 20px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; margin-top: 20px; }
-        input, textarea { width: 100%; background: transparent; border: 1px solid var(--border); padding: 14px; color: #fff; margin-bottom: 20px; border-radius: 4px; }
+        input, textarea { width: 100%; background: transparent; border: 1px solid var(--border); padding: 14px; color: #fff; margin-bottom: 20px; border-radius: 4px; box-sizing: border-box; }
         label { font-size: 10px; opacity: 0.5; text-transform: uppercase; display: block; margin-bottom: 8px; }
         footer { padding: 40px; text-align: center; font-size: 9px; opacity: 0.5; letter-spacing: 2px; }
     </style>
@@ -62,9 +63,9 @@
 </div>
 
 <script>
-    // AQUI É ONDE VOCÊ COLA A SUA URL DO FIREBASE
+    // URL DO SEU FIREBASE RESTAURADA PELO ANTÔNIO
     const firebaseConfig = {
-        databaseURL: "COLE_AQUI_A_SUA_URL_DO_FIREBASE" 
+        databaseURL: "https://promptv25-default-rtdb.firebaseio.com" 
     };
     
     firebase.initializeApp(firebaseConfig);
@@ -76,7 +77,6 @@
     if (userId) {
         database.ref('usuarios/' + userId).on('value', (snapshot) => {
             const data = snapshot.val();
-            document.body.style.display = 'block';
             if (data && data.status === 'ativo') {
                 document.getElementById('app-content').style.display = 'block';
                 document.getElementById('revogado').style.display = 'none';
@@ -86,7 +86,6 @@
             }
         });
     } else {
-        document.body.style.display = 'block';
         document.getElementById('revogado').style.display = 'flex';
     }
 
@@ -95,7 +94,7 @@
         const g = document.getElementById('gerado').value;
         const d = document.getElementById('destino').value;
         const f = document.getElementById('fatos').value;
-        const p = `### [ORDEM V9 POWER] ###\n\n1. GERAR: ${g}\n2. OBJETIVO: ${d}\n\n[DIRETRIZES]: Use lei e jurisprudência STF/STJ. Se não houver certeza, escreva: "Jurisprudência pendente de análise humana".\n\n[FATOS]:\n${f}`;
+        const p = `### [ORDEM V9 POWER ELITE] ###\n\n1. GERAR: ${g}\n2. OBJETIVO: ${d}\n\n[DIRETRIZES]: Use lei seca e jurisprudência STF/STJ. Se não houver certeza, escreva: "Fundamentação pendente de análise humana". PROIBIDO INVENTAR.\n\n[FATOS]:\n${f}`;
         document.getElementById('prompt-result').value = p;
         document.getElementById('output-zone').style.display = 'block';
     }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V21 CLEAN ENGINE | CÁSSIA PROMPT</title>
+    <title>V22 AUTHORITY | CÁSSIA PROMPT</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <style>
         :root { --bg: #050505; --card: rgba(12, 12, 12, 0.98); --text: #ffffff; --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%); --border: rgba(191, 149, 63, 0.3); }
@@ -30,43 +30,43 @@
 <body>
 <div class="top-controls"><button class="ctrl-btn" onclick="document.body.classList.toggle('focus-mode')">FOCO</button><button class="ctrl-btn" onclick="document.body.classList.toggle('light-mode')">TEMA</button></div>
 <div id="app-content">
-    <div class="logo-v9">V21 CLEAN ENGINE</div>
+    <div class="logo-v9">V22 THE AUTHORITY</div>
     <main class="glass-panel">
         <div class="progress-group" id="prog-area">
-            <span class="label-rigor">Otimização de Sinal vs Ruído: <span id="val1">0%</span></span>
+            <span class="label-rigor">Hierarquização de Prioridade: <span id="val1">0%</span></span>
             <div class="progress-container"><div class="progress-bar" id="bar1"></div></div>
-            <span class="label-rigor">Estilização Normativa (BGH/STJ): <span id="val2">0%</span></span>
+            <span class="label-rigor">Enquadramento de Agentes e Normas: <span id="val2">0%</span></span>
             <div class="progress-container"><div class="progress-bar" id="bar2"></div></div>
         </div>
-        <span style="color:#fcf6ba; font-weight:900; cursor:pointer; font-size:11px;" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR PDF (PROVAS)</span>
+        <span style="color:#fcf6ba; font-weight:900; cursor:pointer; font-size:11px;" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR PDF (DADOS TÉCNICOS)</span>
         <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
         
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-            <div><span class="label-sugestao">DESTINATÁRIO E TOM (Persona)</span><input type="text" id="stakeholder" placeholder="Ex: CEO (Estratégico) / Jurídico (Conservador)"></div>
-            <div><span class="label-sugestao">SISTEMA E FORMATO DE CITAÇÃO</span><input type="text" id="jurisdicao" placeholder="Ex: Alemanha (Formato BGH + Ano + N°)"></div>
+            <div><span class="label-sugestao">HIERARQUIA (DOCUMENTO PRINCIPAL)</span><input type="text" id="hierarquia" placeholder="Ex: Sumário Executivo é prioridade total"></div>
+            <div><span class="label-sugestao">STATUS DO AGENTE HUMANO</span><input type="text" id="agente" placeholder="Ex: Dr. Aris como Suspeito de Má-Fé"></div>
         </div>
 
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-            <div><span class="label-sugestao">CRONOGRAMA DE EVENTOS</span><input type="text" id="crono" placeholder="Ex: Data saída (X) / Data lançamento rival (Y)"></div>
-            <div><span class="label-sugestao">DETALHE TÉCNICO (CLAIMS)</span><input type="text" id="metodo" placeholder="Ex: Especificações de pureza e temperatura"></div>
+            <div><span class="label-sugestao">NORMAS E CITAÇÃO (PatG, UWG, BGH)</span><input type="text" id="normas" placeholder="Ex: Formato BGH + Ano e Código Alemão PatG"></div>
+            <div><span class="label-sugestao">REIVINDICAÇÕES QUANTITATIVAS</span><input type="text" id="claims" placeholder="Ex: 15.000 RPM / Delta-T 12°C"></div>
         </div>
 
-        <span class="label-sugestao">DADOS BRUTOS (RELATO E EVIDÊNCIAS)</span>
-        <textarea id="fatos" rows="6" placeholder="Insira o relato completo aqui..."></textarea>
+        <span class="label-sugestao">CORPUS DE DADOS (FATOS + EVIDÊNCIAS)</span>
+        <textarea id="fatos" rows="6" placeholder="Insira o relato completo..."></textarea>
         
-        <button class="btn-supreme" onclick="executarV21()">PROCESSAR DATA ENGINE V21</button>
+        <button class="btn-supreme" onclick="executarV22()">EXECUTAR CÓDIGO AUTORIDADE V22</button>
         <div id="res-box" style="display:none; margin-top:25px; flex-direction:column;">
             <button class="btn-copy" id="btnCopy" onclick="copyRes()">COPIAR COMANDO</button>
             <textarea id="res" style="height:350px; background:#000; color:#fcf6ba; font-family:monospace; font-size:12px;"></textarea>
         </div>
     </main>
-    <footer>RESPONSABILIDADE DO USUÁRIO | CÁSSIA PROMPT V21.</footer>
+    <footer>RESPONSABILIDADE DO USUÁRIO | CÁSSIA PROMPT V22.</footer>
 </div>
 
 <script>
     async function lerPDF(i){const f=i.files[0];const r=new FileReader();r.onload=async function(){const ta=new Uint8Array(this.result);const pdf=await pdfjsLib.getDocument(ta).promise;let t="";for(let p=1;p<=pdf.numPages;p++){const pg=await pdf.getPage(p);const c=await pg.getTextContent();t+=c.items.map(s=>s.str).join(" ")+"\n";}document.getElementById('fatos').value=t;};r.readAsArrayBuffer(f);}
     function copyRes(){const t=document.getElementById('res');t.select();document.execCommand('copy');document.getElementById('btnCopy').innerText="COPIADO!";setTimeout(()=>document.getElementById('btnCopy').innerText="COPIAR",2000);}
-    function executarV21() {
+    function executarV22() {
         document.getElementById('prog-area').style.display='block';
         let p1=0, p2=0;
         let itv=setInterval(()=>{
@@ -74,7 +74,7 @@
             if(p1>=100 && p2<100){p2+=20;document.getElementById('bar2').style.width=p2+'%';document.getElementById('val2').innerText=p2+'%';}
             if(p2>=100){
                 clearInterval(itv);
-                const p = `ESTRUTURA DE ANÁLISE PROFISSIONAL:\n\n1. DESTINATÁRIO: ${document.getElementById('stakeholder').value}\n2. JURISDIÇÃO E REFERÊNCIAS: ${document.getElementById('jurisdicao').value}\n3. MÉTRICA TEMPORAL: ${document.getElementById('crono').value}\n4. ESPECIFICAÇÃO TÉCNICA: ${document.getElementById('metodo').value}\n\n[DIRETIVAS]:\n- Citações: Use estritamente o formato de citação definido no item 2.\n- Análise de Nexo: Correlacione os dados do item 3 com as evidências do corpus.\n- Restrição: Proibido o uso de advérbios de dúvida e linguagem decorativa.\n\n[OUTPUT ESPERADO]:\n- Sumário Executivo (Estratégico)\n- Quadro de Correlação Técnica\n- Matriz de Risco PxI (1-5)\n- Seção de Dados Ausentes (Tag: REVISÃO HUMANA NECESSÁRIA)\n\n[CORPUS DE DADOS]:\n${document.getElementById('fatos').value}`;
+                const p = `HIERARQUIA DE ANÁLISE:\n1. DOCUMENTO CORE: ${document.getElementById('hierarquia').value}\n2. ENQUADRAMENTO DO AGENTE: ${document.getElementById('agente').value}\n3. CITAÇÃO NORMATIVA: ${document.getElementById('normas').value}\n4. CLAIMS: ${document.getElementById('claims').value}\n\n[INSTRUÇÃO]:\n- Priorize o Documento Core como núcleo decisório.\n- O Agente Humano deve ser analisado sob a ótica do status definido (Ex: Suspeito).\n- Integre as citações normativas diretamente no corpo da análise técnica.\n\n[ESTRUTURA]:\n- Sumário Executivo (Documento Principal)\n- Tabela de Correlação de Claims\n- Parecer Jurídico-Econômico (Base BGH/PatG)\n- Matriz de Risco PxI\n- Tabela de Dados Ausentes (Tag: REVISÃO HUMANA NECESSÁRIA)\n\n[CORPUS DE DADOS]:\n${document.getElementById('fatos').value}`;
                 document.getElementById('res').value=p; document.getElementById('res-box').style.display='flex';
             }
         },50);

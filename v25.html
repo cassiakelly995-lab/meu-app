@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V25 FULL PROOF | CÁSSIA PROMPT</title>
+    <title>V26 HUMAN PERITUS | CÁSSIA PROMPT</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <style>
         :root { --bg: #050505; --card: rgba(12, 12, 12, 0.98); --text: #ffffff; --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%); --border: rgba(191, 149, 63, 0.3); }
@@ -30,43 +30,43 @@
 <body>
 <div class="top-controls"><button class="ctrl-btn" onclick="document.body.classList.toggle('focus-mode')">FOCO</button><button class="ctrl-btn" onclick="document.body.classList.toggle('light-mode')">TEMA</button></div>
 <div id="app-content">
-    <div class="logo-v9">V25 THE FULL PROOF</div>
+    <div class="logo-v9">V26 THE HUMAN PERITUS</div>
     <main class="glass-panel">
         <div class="progress-group" id="prog-area">
-            <span class="label-rigor">Integridade Probatória Total: <span id="val1">0%</span></span>
+            <span class="label-rigor">Neutralidade Epistêmica: <span id="val1">0%</span></span>
             <div class="progress-container"><div class="progress-bar" id="bar1"></div></div>
-            <span class="label-rigor">Calibragem de Perfil Decisório: <span id="val2">0%</span></span>
+            <span class="label-rigor">Simplificação de Lacunas (UX): <span id="val2">0%</span></span>
             <div class="progress-container"><div class="progress-bar" id="bar2"></div></div>
         </div>
-        <span style="color:#fcf6ba; font-weight:900; cursor:pointer; font-size:11px;" onclick="document.getElementById('pdf-up').click()">📎 PDF (CONTRATOS E NORMAS)</span>
+        <span style="color:#fcf6ba; font-weight:900; cursor:pointer; font-size:11px;" onclick="document.getElementById('pdf-up').click()">📎 PDF (PROVAS E LEIS)</span>
         <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
         
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-            <div><span class="label-sugestao">STATUS DA PATENTE E NDA</span><input type="text" id="status" placeholder="Ex: Patente concedida em 2024 / NDA assinado"></div>
-            <div><span class="label-sugestao">DESTINATÁRIO E PRIORIDADE</span><input type="text" id="target" placeholder="Ex: CEO (Urgente: Decisão em 48h)"></div>
+            <div><span class="label-sugestao">STATUS JURÍDICO (PATENTE/NDA)</span><input type="text" id="legal" placeholder="Ex: Patente concedida / NDA assinado"></div>
+            <div><span class="label-sugestao">OBJETIVO DA ANÁLISE</span><input type="text" id="target" placeholder="Ex: Decidir se entramos com processo agora"></div>
         </div>
 
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-            <div><span class="label-sugestao">TESE DE DEFESA (CONTRA-ARGUMENTO)</span><input type="text" id="defesa" placeholder="Ex: Artigo Smith & Jones (2023)"></div>
-            <div><span class="label-sugestao">JURISDIÇÃO E LEGISLAÇÃO</span><input type="text" id="juris" placeholder="Ex: Alemanha (PatG e UWG)"></div>
+            <div><span class="label-sugestao">ARGUMENTO DA DEFESA</span><input type="text" id="defesa" placeholder="Ex: Dizem que leram num artigo de 2023"></div>
+            <div><span class="label-sugestao">REIVINDICAÇÕES TÉCNICAS</span><input type="text" id="claims" placeholder="Ex: pH 3.2 / 15.000 RPM"></div>
         </div>
 
-        <span class="label-sugestao">CORPUS DE DADOS (CRONOGRAMA + CLAIMS + LOGS)</span>
-        <textarea id="fatos" rows="6" placeholder="Insira todos os fatos, logs e evidências..."></textarea>
+        <span class="label-sugestao">RELATO DOS FATOS E EVIDÊNCIAS</span>
+        <textarea id="fatos" rows="6" placeholder="O que aconteceu? O que você viu na rival?"></textarea>
         
-        <button class="btn-supreme" onclick="executarV25()">EXECUTAR SISTEMA FULL PROOF</button>
+        <button class="btn-supreme" onclick="executarV26()">GERAR PARECER V26</button>
         <div id="res-box" style="display:none; margin-top:25px; flex-direction:column;">
-            <button class="btn-copy" id="btnCopy" onclick="copyRes()">COPIAR SISTEMA V25</button>
+            <button class="btn-copy" id="btnCopy" onclick="copyRes()">COPIAR COMANDO V26</button>
             <textarea id="res" style="height:350px; background:#000; color:#fcf6ba; font-family:monospace; font-size:12px;"></textarea>
         </div>
     </main>
-    <footer>CÁSSIA PROMPT V25 | RESPONSABILIDADE DO USUÁRIO.</footer>
+    <footer>RESPONSABILIDADE DO USUÁRIO | CÁSSIA PROMPT V26.</footer>
 </div>
 
 <script>
     async function lerPDF(i){const f=i.files[0];const r=new FileReader();r.onload=async function(){const ta=new Uint8Array(this.result);const pdf=await pdfjsLib.getDocument(ta).promise;let t="";for(let p=1;p<=pdf.numPages;p++){const pg=await pdf.getPage(p);const c=await pg.getTextContent();t+=c.items.map(s=>s.str).join(" ")+"\n";}document.getElementById('fatos').value=t;};r.readAsArrayBuffer(f);}
     function copyRes(){const t=document.getElementById('res');t.select();document.execCommand('copy');document.getElementById('btnCopy').innerText="COPIADO!";setTimeout(()=>document.getElementById('btnCopy').innerText="COPIAR",2000);}
-    function executarV25() {
+    function executarV26() {
         document.getElementById('prog-area').style.display='block';
         let p1=0, p2=0;
         let itv=setInterval(()=>{
@@ -74,7 +74,7 @@
             if(p1>=100 && p2<100){p2+=20;document.getElementById('bar2').style.width=p2+'%';document.getElementById('val2').innerText=p2+'%';}
             if(p2>=100){
                 clearInterval(itv);
-                const p = `### SISTEMA DE AUDITORIA V25 - FULL PROOF ###\n\n1. STATUS LEGAL: ${document.getElementById('status').value}\n2. DESTINATÁRIO: ${document.getElementById('target').value}\n3. TESE DE DEFESA: ${document.getElementById('defesa').value}\n4. LEGISLAÇÃO: ${document.getElementById('juris').value}\n\n[DIRETIVAS]:\n- Analise se o Status Legal sustenta as reivindicações.\n- Avalie a Tese de Defesa contra as evidências do Corpus.\n- Se houver conflito de provas, apresente os dois cenários e suas consequências.\n- Priorize o output conforme a necessidade do Destinatário.\n\n[OUTPUT ESPERADO]:\n- Recomendação de Ação Imediata (Prioridade Máxima)\n- Sumário Executivo Estratégico\n- Quadro Comparativo (Claim vs. Fato vs. Defesa)\n- Painel de Riscos para Leigos (Explique lacunas de forma simples)\n- Tabela Técnica de Dados Ausentes (Tag: REVISÃO HUMANA NECESSÁRIA)\n\n[CORPUS DE DADOS]:\n${document.getElementById('fatos').value}`;
+                const p = `[SISTEMA DE ANÁLISE TÉCNICA V26]\n\n1. CONTEXTO LEGAL: ${document.getElementById('legal').value}\n2. OBJETIVO: ${document.getElementById('target').value}\n3. DEFESA AVALIADA: ${document.getElementById('defesa').value}\n4. PARÂMETROS: ${document.getElementById('claims').value}\n\n[INSTRUÇÃO]:\n- Atue como um perito neutro. Avalie se as evidências do corpus confirmam a infração ou se a defesa é plausível.\n- Evite conclusões precipitadas; foque no nexo temporal e na viabilidade técnica.\n\n[OUTPUT]:\n- Sumário Decisório (Para quem não é da área)\n- Análise de Contradição (Prova vs. Defesa)\n- CHECKLIST DE DADOS FALTANTES (Em linguagem simples: o que o usuário precisa buscar para vencer)\n- Tabela de Riscos (O que pode dar errado se prosseguirmos agora)\n\n[CORPUS]:\n${document.getElementById('fatos').value}`;
                 document.getElementById('res').value=p; document.getElementById('res-box').style.display='flex';
             }
         },50);

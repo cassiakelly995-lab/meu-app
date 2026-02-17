@@ -19,24 +19,22 @@
         main { padding: 50px 20px; display: flex; flex-direction: column; align-items: center; min-height: 80vh; }
         .glass-panel { background: var(--card); width: 100%; max-width: 850px; border-radius: 35px; border: 1px solid var(--border); padding: 50px; box-sizing: border-box; box-shadow: var(--glow); position: relative; overflow: hidden; }
         
-        /* BARRA DE PROGRESSO ELITE */
         .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .progress-label { font-size: 11px; font-weight: 900; color: #bf953f; text-transform: uppercase; letter-spacing: 2px; }
         .progress-bar-bg { width: 100%; height: 10px; background: #111; border-radius: 25px; overflow: hidden; margin-bottom: 30px; border: 1px solid #222; }
-        .progress-bar-fill { width: 0%; height: 100%; background: var(--gold); transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 0 15px rgba(191, 149, 63, 0.4); }
+        .progress-bar-fill { width: 0%; height: 100%; background: var(--gold); transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
 
         label { font-size: 11px; font-weight: 800; color: #bf953f; text-transform: uppercase; display: block; margin-bottom: 15px; letter-spacing: 2px; }
-        textarea, input { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 22px; border-radius: 18px; color: var(--text); font-size: 16px; outline: none; margin-bottom: 30px; box-sizing: border-box; transition: 0.3s; }
-        textarea:focus, input:focus { border-color: #fcf6ba; background: rgba(255,255,255,0.05); }
+        textarea, input { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 22px; border-radius: 18px; color: var(--text); font-size: 16px; outline: none; margin-bottom: 30px; box-sizing: border-box; }
+        textarea:focus, input:focus { border-color: #fcf6ba; }
 
         .btn-prime { width: 100%; background: var(--gold); color: #000; border: none; padding: 30px; border-radius: 20px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 6px; font-size: 17px; transition: 0.5s; }
-        .btn-prime:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(191, 149, 63, 0.3); }
 
         #output-zone { display: none; margin-top: 60px; width: 100%; max-width: 850px; animation: fadeIn 0.8s ease; }
         #prompt-result { width: 100%; height: 450px; background: #000; color: #fcf6ba; border: 1px solid #bf953f; padding: 35px; border-radius: 25px; font-family: 'Courier New', monospace; font-size: 15px; line-height: 1.6; }
 
         footer { margin-top: 100px; padding: 50px; text-align: center; border-top: 1px solid var(--border); }
-        .footer-text { font-size: 10px; color: var(--text); opacity: 0.6; text-transform: uppercase; letter-spacing: 2px; line-height: 2; }
+        .footer-text { font-size: 10px; color: var(--text); opacity: 0.6; text-transform: uppercase; letter-spacing: 2px; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -46,23 +44,23 @@
 <nav><div class="logo-v8">V8 ELITE EDITION</div></nav>
 
 <main id="app-block">
-    <div class="glass-panel" id="conteudo-valido">
+    <div class="glass-panel">
         <div class="progress-header">
-            <span class="progress-label">Potência do Motor V8</span>
+            <span class="progress-label">Integridade do Comando V8</span>
             <span id="percent-text" style="color:#fcf6ba; font-weight:bold;">0%</span>
         </div>
         <div class="progress-bar-bg"><div id="bar-fill" class="progress-bar-fill"></div></div>
 
-        <label>OBJETIVO FINAL (DESTINO)</label>
-        <input type="text" id="destino" oninput="monitorar()" placeholder="O que você quer que a IA entregue com perfeição?">
+        <label>OBJETIVO (O QUE VOCÊ QUER?)</label>
+        <input type="text" id="destino" oninput="monitorar()" placeholder="Ex: Analisar este contrato jurídico...">
 
-        <label>REGRAS & DIRETRIZES (BASE)</label>
-        <textarea id="base" rows="2" placeholder="Ex: Tom de voz profissional, leis específicas..."></textarea>
+        <label>REGRAS (DIRETRIZES TÉCNICAS)</label>
+        <textarea id="base" rows="2" placeholder="Ex: Use o tom de um juiz, cite leis brasileiras..."></textarea>
 
-        <label>DADOS DE ENTRADA (FATOS BRUTOS)</label>
-        <textarea id="fatos" rows="6" oninput="monitorar()" placeholder="Cole aqui as informações brutas..."></textarea>
+        <label>DADOS BRUTOS (FATOS)</label>
+        <textarea id="fatos" rows="6" oninput="monitorar()" placeholder="Cole aqui o texto que a IA deve ler..."></textarea>
 
-        <button id="btn-main" class="btn-prime" onclick="processar()">ATIVAR ENGENHARIA SUPREMA</button>
+        <button id="btn-main" class="btn-prime" onclick="processar()">GERAR COMANDO SUPREMO</button>
     </div>
 
     <div id="output-zone">
@@ -74,17 +72,16 @@
 
 <footer>
     <div class="footer-text">
-        <strong>CÁSSIA PROMPT ® | TECNOLOGIA GOD MODE</strong><br>
-        PRODUTO LICENCIADO PARA: <span id="user-display" style="color:#bf953f; font-weight:bold;">VERIFICANDO...</span><br>
-        A RESPONSABILIDADE É DE QUEM ESTÁ USANDO E O PROGRAMA APENAS GERA O PROMPT.
+        <strong>CÁSSIA PROMPT ® | TECNOLOGIA V8</strong><br>
+        LICENCIADO PARA: <span id="user-display" style="color:#bf953f; font-weight:bold;">...</span><br>
+        A RESPONSABILIDADE É DE QUEM ESTÁ USANDO.
     </div>
 </footer>
 
 <script>
-    // --- CONTROLE DE ACESSO (O SEGREDO DA REVOGAÇÃO) ---
+    // --- LISTA DE ACESSO (O PORTEIRO) ---
     const LICENCAS = {
-        "TkfVQUxJ": "NATALIA",
-        "TkfVQUxK": "NATALIA", // ID que aparece no seu print
+        "TkFUQUxJ": "NATALIA", // Natalia está autorizada!
         "Y2Fzc2lh": "CÁSSIA"
     };
 
@@ -93,17 +90,13 @@
     const usuarioAtivo = LICENCAS[idUser];
 
     if (!usuarioAtivo) {
-        document.getElementById('app-block').innerHTML = `
-            <div style="padding:100px; text-align:center;">
-                <h1 style="color:#bf953f; font-size:45px; letter-spacing:5px;">ACESSO REVOGADO</h1>
-                <p style="opacity:0.7; letter-spacing:2px;">SISTEMA V8 BLOQUEADO PARA ESTE ID.</p>
-            </div>`;
-        document.getElementById('user-display').innerText = "NÃO AUTORIZADO";
+        document.getElementById('app-block').innerHTML = `<h1 style='color:#bf953f; text-align:center; padding-top:100px;'>ACESSO REVOGADO</h1>`;
+        document.getElementById('user-display').innerText = "BLOQUEADO";
     } else {
         document.getElementById('user-display').innerText = usuarioAtivo;
     }
 
-    // --- MONITORAMENTO V8 ---
+    // --- LÓGICA ELITE (MONITORAMENTO) ---
     function monitorar() {
         const d = document.getElementById('destino').value.length;
         const f = document.getElementById('fatos').value.length;
@@ -112,28 +105,30 @@
         document.getElementById('percent-text').innerText = Math.round(progresso) + "%";
     }
 
-    // --- PROCESSAMENTO ELITE ---
+    // --- LÓGICA ELITE (GERAÇÃO DE PROMPT) ---
     function processar() {
-        const btn = document.getElementById('btn-main');
-        btn.innerText = "EXECUTANDO ENGENHARIA V8...";
+        const d = document.getElementById('destino').value;
+        const b = document.getElementById('base').value;
+        const f = document.getElementById('fatos').value;
         
-        setTimeout(() => {
-            const d = document.getElementById('destino').value;
-            const b = document.getElementById('base').value;
-            const f = document.getElementById('fatos').value;
-            
-            document.getElementById('prompt-result').value = `### [SISTEMA V8 ELITE] ###\n\nMISSÃO: ${d}\n\nBASE: ${b}\n\nDADOS: ${f}`;
-            document.getElementById('output-zone').style.display = 'block';
-            window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
-            btn.innerText = "ATIVAR ENGENHARIA SUPREMA";
-        }, 1000);
+        // Esta é a parte que torna o programa ELITE (A estrutura do prompt)
+        const promptFinal = `### [SISTEMA DE ENGENHARIA V8 ELITE] ###\n\n` +
+        `**PERSONA:** Você é um Especialista de Elite em Redação Técnica e Jurídica.\n\n` +
+        `**1. MISSÃO CENTRAL:** ${d}\n\n` +
+        `**2. DIRETRIZES TÉCNICAS:** ${b}\n\n` +
+        `**3. INPUT DE INTELIGÊNCIA (FATOS):**\n${f}\n\n` +
+        `**PROTOCOLO V8:**\n- Seja assertivo e sofisticado.\n- Remova redundâncias.\n- Entregue com precisão máxima.\n\n[AGUARDANDO EXECUÇÃO]`;
+
+        document.getElementById('prompt-result').value = promptFinal;
+        document.getElementById('output-zone').style.display = 'block';
+        window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
     }
 
     function copiar() {
         const text = document.getElementById('prompt-result');
         text.select();
         document.execCommand('copy');
-        alert("💎 Copiado!");
+        alert("💎 Prompt V8 copiado!");
     }
 </script>
 </body>

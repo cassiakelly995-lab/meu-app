@@ -10,23 +10,20 @@
     <style>
         :root {
             --bg: #050505;
-            --card: rgba(15, 15, 15, 0.95);
+            --card: rgba(18, 18, 18, 0.98);
             --text: #ffffff;
             --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
             --border: #2a2a2a;
         }
         .light-mode {
             --bg: #fdfdfd;
-            --card: rgba(255, 255, 255, 0.9);
+            --card: rgba(255, 255, 255, 0.95);
             --text: #1a1a1a;
             --border: #e0e0e0;
         }
         body { 
-            margin: 0; 
-            background: var(--bg); 
-            color: var(--text); 
-            font-family: 'Inter', 'Segoe UI', sans-serif; 
-            transition: all 0.4s ease;
+            margin: 0; background: var(--bg); color: var(--text); 
+            font-family: 'Inter', sans-serif; transition: 0.4s;
             display: flex; flex-direction: column; min-height: 100vh;
         }
         #app-content, #revogado, #carregando { display: none; flex-grow: 1; flex-direction: column; align-items: center; justify-content: center; }
@@ -34,34 +31,28 @@
         .logo-v9 { 
             font-size: 22px; font-weight: 900; letter-spacing: 8px; 
             background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
-            text-transform: uppercase; margin-bottom: 10px;
+            text-transform: uppercase; margin: 30px 0;
         }
         .glass-panel { 
-            background: var(--card); 
-            width: 90%; max-width: 950px; 
-            border-radius: 20px; 
-            border: 1px solid rgba(191, 149, 63, 0.3); 
-            padding: 50px; 
-            box-shadow: 0 0 50px rgba(0,0,0,0.5), 0 0 20px rgba(191, 149, 63, 0.1);
-            backdrop-filter: blur(15px);
-            margin: 30px 0;
+            background: var(--card); width: 92%; max-width: 1000px; 
+            border-radius: 12px; border: 1px solid rgba(191, 149, 63, 0.2); 
+            padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px); margin-bottom: 30px;
         }
         .btn-supreme { 
             width: 100%; background: var(--gold); color: #000; border: none; 
-            padding: 22px; border-radius: 8px; font-weight: 900; cursor: pointer; 
+            padding: 22px; border-radius: 4px; font-weight: 900; cursor: pointer; 
             text-transform: uppercase; letter-spacing: 4px; font-size: 14px; 
-            margin-top: 25px; transition: 0.3s ease;
+            margin-top: 25px;
         }
-        .btn-supreme:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(179, 135, 40, 0.3); }
         input, textarea { 
-            width: 100%; background: rgba(128,128,128,0.08); border: 1px solid var(--border); 
-            padding: 18px; border-radius: 8px; color: var(--text); font-size: 15px; 
-            box-sizing: border-box; margin-bottom: 25px; outline: none; transition: 0.3s;
+            width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); 
+            padding: 18px; border-radius: 4px; color: var(--text); font-size: 15px; 
+            box-sizing: border-box; margin-bottom: 25px; outline: none;
         }
-        input:focus { border-color: #bf953f; background: rgba(191, 149, 63, 0.05); }
-        .toggle-btn { position: fixed; top: 25px; right: 25px; background: none; border: 1px solid var(--border); color: var(--text); padding: 10px; border-radius: 10px; cursor: pointer; z-index: 100; }
-        footer { padding: 40px; text-align: center; font-size: 10px; opacity: 0.5; letter-spacing: 3px; line-height: 2; border-top: 1px solid var(--border); width: 100%; box-sizing: border-box; }
-        .pdf-label { color: #bf953f; font-weight: 900; cursor: pointer; font-size: 12px; margin-bottom: 20px; display: inline-block; text-transform: uppercase; }
+        .toggle-btn { position: absolute; top: 25px; right: 25px; background: none; border: 1px solid var(--border); color: var(--text); padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 10px; letter-spacing: 1px; }
+        footer { padding: 40px; text-align: center; font-size: 9px; opacity: 0.5; letter-spacing: 2px; border-top: 1px solid var(--border); width: 100%; box-sizing: border-box; }
+        .pdf-link { color: #bf953f; font-weight: 800; cursor: pointer; font-size: 11px; text-transform: uppercase; display: block; text-align: left; margin-bottom: 15px; }
     </style>
 </head>
 <body>
@@ -70,41 +61,35 @@
 
 <div id="carregando">
     <div class="logo-v9">V9 POWER ELITE</div>
-    <div style="width: 50px; height: 2px; background: var(--gold); animation: pulse 1.5s infinite;"></div>
 </div>
 
 <div id="app-content">
-    <nav style="padding: 30px; border-bottom: 1px solid var(--border); width: 100%; text-align: center;">
-        <div class="logo-v9">V9 POWER ELITE</div>
-    </nav>
-    <main style="width: 100%; display: flex; flex-direction: column; align-items: center; padding: 20px; box-sizing: border-box;">
+    <div class="logo-v9">V9 POWER ELITE</div>
+    <main style="width: 100%; display: flex; flex-direction: column; align-items: center; padding: 0 20px; box-sizing: border-box;">
         <div class="glass-panel">
-            <span class="pdf-label" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR DOSSIÊ PDF</span>
+            <span class="pdf-link" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR DOSSIÊ PDF</span>
             <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
             
             <input type="text" id="gerado" placeholder="O QUE DEVE SER GERADO? (EX: RÉPLICA À CONTESTAÇÃO)">
             <input type="text" id="destino" placeholder="OBJETIVO ESTRATÉGICO DO COMANDO">
             <textarea id="fatos" rows="12" placeholder="REGISTRO DOS FATOS E BASE DE DADOS"></textarea>
             
-            <button class="btn-supreme" onclick="gerar()">DISPARAR ENGENHARIA V9 GOD MODE</button>
+            <button class="btn-supreme" onclick="gerar()">EXECUTAR V9 POWER</button>
             
-            <div id="res-box" style="display:none; margin-top:50px; border-top: 1px solid var(--border); padding-top: 30px;">
-                <div class="logo-v9" style="font-size: 12px; margin-bottom: 15px;">RESULTADO DE RIGOR MÁXIMO</div>
-                <textarea id="res" style="height:400px; background: rgba(0,0,0,0.2); border-color: #bf953f; color: #fcf6ba; font-family: 'Courier New', monospace;"></textarea>
-                <button class="btn-supreme" onclick="baixar()">EXPORTAR PARA MICROSOFT WORD (.DOC)</button>
+            <div id="res-box" style="display:none; margin-top:40px;">
+                <textarea id="res" style="height:400px; border-color: #bf953f; color: #fcf6ba;" readonly></textarea>
+                <button class="btn-supreme" onclick="baixar()">BAIXAR EM WORD (.DOC)</button>
             </div>
         </div>
     </main>
     <footer>
-        CÁSSIA PROMPT ® | VERSÃO V9 POWER ELITE EDITION<br>
-        A RESPONSABILIDADE É EXCLUSIVA DO USUÁRIO. O PROGRAMA APENAS GERA O PROMPT.
+        A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. O PROGRAMA APENAS GERA O PROMPT.
     </footer>
 </div>
 
 <div id="revogado">
     <div class="logo-v9">V9 POWER ELITE</div>
-    <h1 style="color:#bf953f; letter-spacing:5px;">ACESSO BLOQUEADO</h1>
-    <p style="opacity:0.6;">LICENÇA NÃO LOCALIZADA OU EXPIRADA.</p>
+    <h1 style="color:#bf953f;">ACESSO BLOQUEADO</h1>
 </div>
 
 <script>
@@ -113,26 +98,25 @@
     const database = firebase.database();
     const userId = new URLSearchParams(window.location.search).get('id');
 
-    function entrar() {
+    function abrir() {
         document.getElementById('carregando').style.display = 'none';
         document.getElementById('app-content').style.display = 'flex';
-        document.getElementById('revogado').style.display = 'none';
     }
 
-    // BYPASS DRA NATÁLIA E DRA HELEN (2.5 segundos para garantir)
-    let autoLogin = setTimeout(() => { entrar(); }, 2500);
+    // BYPASS DE SEGURANÇA PARA DRA NATÁLIA E HELEN
+    let timeout = setTimeout(() => { abrir(); }, 2000);
 
     if (userId) {
         database.ref('usuarios/' + userId).on('value', (snap) => {
-            clearTimeout(autoLogin);
+            clearTimeout(timeout);
             const data = snap.val();
-            if (data && data.status === 'ativo') { entrar(); } 
+            if (data && data.status === 'ativo') { abrir(); }
             else if (data && data.status === 'revogado') {
                 document.getElementById('carregando').style.display = 'none';
                 document.getElementById('revogado').style.display = 'flex';
-            } else { entrar(); } // Se houver erro ou não existir, deixa entrar pelo bypass
+            } else { abrir(); }
         });
-    } else { clearTimeout(autoLogin); entrar(); }
+    } else { clearTimeout(timeout); abrir(); }
 
     async function lerPDF(input) {
         const file = input.files[0];
@@ -147,16 +131,14 @@
                 text += content.items.map(s => s.str).join(" ") + "\n";
             }
             document.getElementById('fatos').value = text;
-            alert("V9: PDF processado com rigor máximo.");
         };
         reader.readAsArrayBuffer(file);
     }
 
     function gerar() {
-        const p = `### [ORDEM V9 POWER ELITE - GOD MODE] ###\n\nGERAR: ${document.getElementById('gerado').value}\nFOCO: ${document.getElementById('destino').value}\n\n[INSTRUÇÃO DE RIGOR MÁXIMO]:\n- Utilize jurisprudência vinculante e legislação vigente.\n- Proibido qualquer tipo de alucinação ou invenção.\n- Estrutura jurídica de alta performance.\n\n[BASE DE FATOS]:\n${document.getElementById('fatos').value}`;
+        const p = `### [ORDEM V9 POWER ELITE - RIGOR MÁXIMO] ###\n\n1. GERAR: ${document.getElementById('gerado').value}\n2. OBJETIVO: ${document.getElementById('destino').value}\n\n[FATOS]:\n${document.getElementById('fatos').value}`;
         document.getElementById('res').value = p;
         document.getElementById('res-box').style.display = 'block';
-        window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
     }
 
     function baixar() {

@@ -11,42 +11,66 @@
         :root {
             --bg: #050505; --card: #0a0a0a; --text: #ffffff; --border: #1a1a1a;
             --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
+            --glow: 0 0 30px rgba(191, 149, 63, 0.1);
         }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
         #app-content, #revogado, #carregando { display: none; flex-grow: 1; flex-direction: column; align-items: center; justify-content: center; width: 100%; text-align: center; }
         #carregando { display: flex; }
         .logo-v9 { font-size: 18px; font-weight: 900; letter-spacing: 6px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
-        .glass-panel { background: var(--card); width: 90%; max-width: 850px; border-radius: 12px; border: 1px solid var(--border); padding: 40px; box-shadow: 0 0 30px rgba(191,149,63,0.1); margin: 20px 0; }
-        .btn-supreme { width: 100%; background: var(--gold); color: #000; border: none; padding: 18px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 3px; margin-top: 15px; }
-        input, textarea { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 12px; color: #fff; margin-bottom: 15px; border-radius: 4px; box-sizing: border-box; }
-        footer { padding: 30px; text-align: center; font-size: 9px; opacity: 0.4; letter-spacing: 2px; }
+        .glass-panel { background: var(--card); width: 90%; max-width: 900px; border-radius: 12px; border: 1px solid var(--border); padding: 50px; box-shadow: var(--glow); margin: 20px 0; position: relative; }
+        .btn-supreme { width: 100%; background: var(--gold); color: #000; border: none; padding: 20px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; font-size: 13px; margin-top: 20px; transition: 0.3s; }
+        .btn-supreme:hover { opacity: 0.8; transform: translateY(-2px); }
+        input, textarea { width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 15px; border-radius: 4px; color: var(--text); font-size: 14px; box-sizing: border-box; outline: none; margin-bottom: 20px; }
+        input:focus, textarea:focus { border-color: #bf953f; background: rgba(255,255,255,0.05); }
+        label { font-size: 10px; font-weight: 600; opacity: 0.5; text-transform: uppercase; display: block; margin-bottom: 8px; letter-spacing: 1.5px; text-align: left; }
+        footer { padding: 40px; text-align: center; font-size: 9px; opacity: 0.4; letter-spacing: 2px; line-height: 2; border-top: 1px solid var(--border); width: 100%; box-sizing: border-box; }
+        #output-zone { display: none; margin-top: 40px; width: 100%; }
     </style>
 </head>
 <body>
 
 <div id="carregando">
     <div class="logo-v9">V9 POWER ELITE</div>
-    <p style="margin-top:20px; font-size:10px; letter-spacing:2px;">ESTABELECENDO CONEXÃO SEGURA...</p>
+    <p style="margin-top:20px; letter-spacing:3px; font-size:10px; opacity:0.8;">VALIDANDO ACESSO ELITE...</p>
 </div>
 
 <div id="app-content">
-    <div class="logo-v9" style="margin-top:40px;">V9 POWER ELITE</div>
-    <div class="glass-panel">
-        <input type="text" id="gerado" placeholder="O QUE DEVE SER GERADO?">
-        <input type="text" id="destino" placeholder="OBJETIVO DO COMANDO">
-        <textarea id="fatos" rows="8" placeholder="REGISTRO DOS FATOS"></textarea>
-        <button class="btn-supreme" onclick="gerar()">EXECUTAR V9 POWER</button>
-        <div id="res-box" style="display:none; margin-top:30px;">
-            <textarea id="res" style="height:250px; border-color:#bf953f; color:#fcf6ba;" readonly></textarea>
+    <nav style="padding: 20px; width: 100%; text-align: center; border-bottom: 1px solid var(--border);">
+        <div class="logo-v9">V9 POWER ELITE</div>
+    </nav>
+    <main style="width: 100%; display: flex; flex-direction: column; align-items: center; padding: 20px; box-sizing: border-box;">
+        <div class="glass-panel">
+            <div style="color:#bf953f; font-size:11px; font-weight:700; cursor:pointer; margin-bottom:25px; text-align:left; text-transform:uppercase;" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR DADOS DE PDF</div>
+            <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
+            
+            <label>1. O que deve ser gerado?</label>
+            <input type="text" id="gerado" placeholder="Ex: Petição Inicial de Indenização">
+
+            <label>2. Objetivo (Destino do Comando)</label>
+            <input type="text" id="destino" placeholder="Ex: Demonstrar nexo causal e falha no serviço">
+
+            <label>3. Registro dos Fatos (Base de Dados)</label>
+            <textarea id="fatos" rows="10" placeholder="Insira o texto bruto ou use o botão de PDF acima..."></textarea>
+
+            <button class="btn-supreme" onclick="gerar()">Executar Engenharia V9 Power</button>
+
+            <div id="output-zone">
+                <label>Comando Supremo V9 Gerado:</label>
+                <textarea id="prompt-result" style="height:350px; background:#000; border:1px solid #bf953f; color:#fcf6ba; font-family: monospace;" readonly></textarea>
+                <button class="btn-supreme" onclick="exportarWord()">Baixar em Word (.doc)</button>
+            </div>
         </div>
-    </div>
-    <footer>A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. O PROGRAMA APENAS GERA O PROMPT.</footer>
+    </main>
+    <footer>
+        CÁSSIA PROMPT ® | TECNOLOGIA V9 POWER ELITE EDITION<br>
+        A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. O PROGRAMA APENAS GERA O PROMPT.
+    </footer>
 </div>
 
 <div id="revogado">
     <div class="logo-v9">V9 POWER ELITE</div>
-    <h1 style="color:#bf953f; letter-spacing:5px; margin-top:30px;">ACESSO NEGADO</h1>
-    <p style="opacity:0.5; font-size:10px;">LICENÇA NÃO LOCALIZADA.</p>
+    <h1 style="color:#bf953f; letter-spacing:5px; margin-top:30px;">ACESSO REVOGADO</h1>
+    <p style="opacity:0.5; font-size:10px; text-transform:uppercase;">Entre em contato com a administração para renovar.</p>
 </div>
 
 <script>
@@ -57,42 +81,66 @@
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get('id');
 
-    // Função para liberar a tela
-    function liberar() {
+    function liberarPortal() {
         document.getElementById('carregando').style.display = 'none';
         document.getElementById('app-content').style.display = 'flex';
+        document.getElementById('revogado').style.display = 'none';
     }
 
-    // Tenta validar no Firebase, mas se demorar 5 segundos, LIBERA POR SEGURANÇA
-    let timeoutPortal = setTimeout(() => {
-        console.log("Timeout: Liberando acesso de emergência.");
-        liberar();
-    }, 5000);
+    // TRAVA DE SEGURANÇA: Se o Firebase não responder em 3s, libera o acesso para não travar o cliente.
+    let bypass = setTimeout(() => { liberarPortal(); }, 3500);
 
     if (userId) {
-        database.ref('usuarios/' + userId).on('value', (snapshot) => {
-            clearTimeout(timeoutPortal); // Cancela o timeout se o Firebase responder
-            const data = snapshot.val();
+        database.ref('usuarios/' + userId).on('value', (snap) => {
+            clearTimeout(bypass);
+            const data = snap.val();
             document.getElementById('carregando').style.display = 'none';
-            
             if (data && data.status === 'ativo') {
-                document.getElementById('app-content').style.display = 'flex';
-                document.getElementById('revogado').style.display = 'none';
+                liberarPortal();
             } else {
                 document.getElementById('app-content').style.display = 'none';
                 document.getElementById('revogado').style.display = 'flex';
             }
         });
     } else {
-        clearTimeout(timeoutPortal);
-        document.getElementById('carregando').style.display = 'none';
-        document.getElementById('revogado').style.display = 'flex';
+        clearTimeout(bypass);
+        liberarPortal();
+    }
+
+    async function lerPDF(input) {
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = async function() {
+            const typedarray = new Uint8Array(this.result);
+            const pdf = await pdfjsLib.getDocument(typedarray).promise;
+            let text = "";
+            for(let i=1; i<=pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const content = await page.getTextContent();
+                text += content.items.map(s => s.str).join(" ") + "\n";
+            }
+            document.getElementById('fatos').value = text;
+            alert("PDF lido com sucesso!");
+        };
+        reader.readAsArrayBuffer(file);
     }
 
     function gerar() {
-        const p = `ORDEM V9: ${document.getElementById('gerado').value}\nFATOS: ${document.getElementById('fatos').value}`;
-        document.getElementById('res').value = p;
-        document.getElementById('res-box').style.display = 'block';
+        const g = document.getElementById('gerado').value;
+        const d = document.getElementById('destino').value;
+        const f = document.getElementById('fatos').value;
+        const p = `### [ORDEM SUPREMA V9 POWER ELITE] ###\n\n1. GERAR: ${g}\n2. OBJETIVO: ${d}\n\n[DIRETRIZES]: Use lei seca e jurisprudência atualizada. Proibido inventar.\n\n[FATOS]:\n${f}`;
+        document.getElementById('prompt-result').value = p;
+        document.getElementById('output-zone').style.display = 'block';
+    }
+
+    function exportarWord() {
+        const content = document.getElementById('prompt-result').value;
+        const blob = new Blob(['\ufeff', content], { type: 'application/msword' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'Comando_V9_Elite.doc';
+        link.click();
     }
 </script>
 </body>

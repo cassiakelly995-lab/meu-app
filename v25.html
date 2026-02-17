@@ -15,34 +15,24 @@
             --bg: #f9f9f9; --card: #ffffff; --text: #1a1a1a; --border: #e2e2e2;
         }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; transition: 0.3s; overflow-x: hidden; }
-        
         nav { padding: 20px 60px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--bg); position: sticky; top: 0; z-index: 100; }
         .logo-v8 { font-size: 18px; font-weight: 900; letter-spacing: 6px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
-
         .top-btns { display: flex; gap: 10px; }
         .btn-minimal { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; transition: 0.2s; }
         .btn-minimal:hover { border-color: #bf953f; color: #bf953f; }
-
         main { padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
         .glass-panel { background: var(--card); width: 100%; max-width: 900px; border-radius: 12px; border: 1px solid var(--border); padding: 50px; box-shadow: var(--glow); }
-
         .integrity-header { display: flex; justify-content: space-between; font-size: 9px; font-weight: 800; color: #bf953f; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 2px; }
         .bar-bg { width: 100%; height: 2px; background: rgba(191,149,63,0.1); border-radius: 4px; overflow: hidden; margin-bottom: 40px; }
         .bar-fill { width: 0%; height: 100%; background: var(--gold); transition: 0.8s; }
-
         .pdf-action { color: #bf953f; font-size: 11px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; }
-
         .field-group { margin-bottom: 25px; }
         label { font-size: 10px; font-weight: 600; opacity: 0.5; text-transform: uppercase; display: block; margin-bottom: 8px; letter-spacing: 1.5px; }
         input, textarea { width: 100%; background: transparent; border: 1px solid var(--border); padding: 14px; border-radius: 4px; color: var(--text); font-size: 14px; box-sizing: border-box; outline: none; transition: 0.2s; font-weight: 300; }
         input:focus, textarea:focus { border-color: #bf953f; background: rgba(191,149,63,0.01); }
-
         .btn-supreme { width: 100%; background: var(--gold); color: #000; border: none; padding: 20px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; font-size: 13px; transition: 0.3s; margin-top: 20px; }
-        .btn-supreme:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 10px 20px rgba(191,149,63,0.2); }
-
         #output-zone { display: none; width: 100%; max-width: 900px; margin-top: 40px; }
         #prompt-result { width: 100%; height: 400px; background: #000; border: 1px solid #bf953f; color: #fcf6ba; padding: 30px; border-radius: 8px; font-family: 'Consolas', monospace; font-size: 14px; line-height: 1.6; }
-
         footer { margin-top: 80px; padding: 40px; text-align: center; border-top: 1px solid var(--border); font-size: 9px; opacity: 0.5; letter-spacing: 2px; line-height: 2.2; }
     </style>
 </head>
@@ -66,17 +56,17 @@
 
         <div class="field-group">
             <label>1. O que deve ser gerado?</label>
-            <input type="text" id="gerado" oninput="atualizar()" placeholder="Ex: Petição Inicial, Relatório de Triagem, Contrato...">
+            <input type="text" id="gerado" oninput="atualizar()" placeholder="Ex: Petição Inicial, Relatório de Triagem...">
         </div>
 
         <div class="field-group">
             <label>2. Objetivo (Destino do Comando)</label>
-            <input type="text" id="destino" oninput="atualizar()" placeholder="Ex: Demonstrar a abusividade da cláusula X...">
+            <input type="text" id="destino" oninput="atualizar()" placeholder="Ex: Demonstrar abusividade contratual...">
         </div>
 
         <div class="field-group">
             <label>3. Registro dos Fatos (Base de Dados)</label>
-            <textarea id="fatos" rows="10" oninput="atualizar()" placeholder="Insira o texto bruto ou use o PDF acima..."></textarea>
+            <textarea id="fatos" rows="10" oninput="atualizar()" placeholder="Insira o texto bruto ou use o PDF..."></textarea>
         </div>
 
         <button class="btn-supreme" onclick="gerar()">Executar Engenharia de Elite</button>
@@ -114,7 +104,6 @@
     }
 
     function toggleMode() { document.getElementById('main-body').classList.toggle('light-mode'); }
-    
     function limpar() {
         document.getElementById('gerado').value = "";
         document.getElementById('destino').value = "";
@@ -162,17 +151,16 @@ ESTE PROTOCOLO É DE ERRO ZERO. ALUCINAÇÕES SÃO TERMINANTEMENTE PROIBIDAS.
 2. OBJETIVO DO COMANDO: ${d}
 
 [DIRETRIZES DE RIGOR]:
-- NÃO INVENTE fatos, leis ou dados. Se não estiver no "REGISTRO DOS FATOS", não existe.
+- FUNDAMENTAÇÃO: Sempre que identificar uma irregularidade, cite o artigo da lei correspondente (CDC, Código Civil, etc.) com CERTEZA ABSOLUTA. Se não houver clareza legal, escreva: "Fundamentação pendente de análise humana".
+- NÃO INVENTE fatos ou leis. Se não estiver no "REGISTRO DOS FATOS", não existe.
 - Se houver lacuna de informação, cite: "Informação ausente na base de dados".
-- Proibido erros gramaticais, gírias ou "conversas amigáveis".
-- Entregue o resultado técnico puro e blindado contra falhas.
+- Proibido erros gramaticais ou introduções amigáveis. Vá direto ao ponto técnico.
 
 [REGISTRO DOS FATOS (BASE BRUTA)]:
 ${f}
 
 [EXECUÇÃO]:
-Processe o Registro dos Fatos para cumprir o Objetivo e entregar exatamente O Que Deve Ser Gerado. 
-ORDEM: Inicie agora sem preâmbulos.`;
+Processe agora sem preâmbulos.`;
 
         document.getElementById('prompt-result').value = promptMaster;
         document.getElementById('output-zone').style.display = 'block';

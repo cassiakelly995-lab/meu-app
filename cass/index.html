@@ -44,7 +44,7 @@
     <button class="btn-prime" style="width: auto; padding: 10px 20px; font-size: 10px;" onclick="document.body.classList.toggle('light-mode')">Inverter Cores</button>
 </nav>
 
-<main id="conteudo-principal">
+<main id="main-content">
     <div class="glass-panel">
         <div class="progress-header">
             <span class="progress-label">Integridade do Prompt</span>
@@ -72,47 +72,44 @@
 </main>
 
 <footer>
-    <div class="footer-text" id="footer-legenda">
+    <div class="footer-text">
         <strong>CÁSSIA PROMPT ® | V8 ELITE EDITION</strong><br>
-        PRODUTO LICENCIADO PARA: <span id="nome-licenciado">---</span><br>
+        PRODUTO LICENCIADO PARA: <span id="licenciado-nome" style="color:#bf953f; font-weight:bold;">VERIFICANDO...</span><br>
         A RESPONSABILIDADE É DE QUEM ESTÁ USANDO E O PROGRAMA APENAS GERA O PROMPT.
     </div>
 </footer>
 
 <script>
-    // ============================================================
-    // CONTROLE DE ACESSO E LICENCIAMENTO (O CORAÇÃO DO SISTEMA)
-    // ============================================================
+    // ==========================================
+    // PAINEL DE CONTROLE DE ACESSO (O PORTEIRO)
+    // ==========================================
     
-    // Para REVOGAR: Apague a linha da pessoa abaixo.
-    // Para ADICIONAR: Copie uma linha e mude o nome e o link.
-    const USUARIOS_AUTORIZADOS = [
-        { nome: "FRANCIANE", url: "RELAT-RIO-DA-FRAN-" },
-        { nome: "HELEN CRISTINA", url: "helen-cristina" },
-        { nome: "CÁSSIA", url: "painel-triagem-juridica" },
-        { nome: "ADMIN", url: "cassiakelly995-lab.github.io" } 
+    // Lista de quem PODE entrar. Se não estiver aqui, é bloqueado.
+    const LISTA_BRANCA = [
+        { id: "RELAT-RIO-DA-FRAN-", nome: "FRANCIANE" },
+        { id: "helen-cristina", nome: "HELEN CRISTINA" },
+        { id: "painel-triagem-juridica", nome: "CÁSSIA" }
     ];
 
-    const urlAtual = window.location.href;
-    const usuarioLogado = USUARIOS_AUTORIZADOS.find(user => urlAtual.includes(user.url));
+    const path = window.location.pathname;
+    const usuarioAtivo = LISTA_BRANCA.find(u => path.includes(u.id));
 
-    // SISTEMA DE BLOQUEIO/REVOGAÇÃO
-    if (!usuarioLogado) {
-        document.getElementById('conteudo-principal').innerHTML = `
-            <div style="padding: 100px; text-align: center;">
-                <h1 style="color: #bf953f; font-size: 40px; letter-spacing: 5px;">ACESSO REVOGADO</h1>
-                <p style="opacity: 0.6;">ESTA LICENÇA NÃO É MAIS VÁLIDA PARA ESTE ENDEREÇO.</p>
-            </div>
-        `;
-        document.getElementById('footer-legenda').innerHTML = "SISTEMA BLOQUEADO POR VIOLAÇÃO DE LICENÇA.";
+    if (!usuarioAtivo) {
+        // Se o link NÃO está na lista (REVOGADO)
+        document.getElementById('main-content').innerHTML = `
+            <div style="padding:100px; text-align:center;">
+                <h1 style="color:#bf953f; font-size:40px;">ACESSO REVOGADO</h1>
+                <p>Esta licença foi cancelada pela administradora Cássia.</p>
+            </div>`;
+        document.getElementById('licenciado-nome').innerText = "ACESSO NEGADO";
     } else {
-        // Se autorizado, coloca o nome dele no rodapé automaticamente
-        document.getElementById('nome-licenciado').innerText = usuarioLogado.nome;
+        // Se está na lista, coloca o nome real da pessoa
+        document.getElementById('licenciado-nome').innerText = usuarioAtivo.nome;
     }
 
-    // ============================================================
-    // LÓGICA DO GERADOR V8 (INALTEADA)
-    // ============================================================
+    // ==========================================
+    // MOTOR DO V8 (LÓGICA ORIGINAL)
+    // ==========================================
     function monitorar() {
         const d = document.getElementById('destino').value.length;
         const f = document.getElementById('fatos').value.length;
@@ -124,22 +121,11 @@
     function processar() {
         const btn = document.getElementById('btn-main');
         btn.innerText = "POLINDO COM ENGENHARIA V8...";
-        
         setTimeout(() => {
             const d = document.getElementById('destino').value;
             const b = document.getElementById('base').value;
             const f = document.getElementById('fatos').value;
-            
-            const promptFinal = `### [MODO DE ENGENHARIA V8 ELITE ATIVADO] ###\n\n` +
-            `**MISSÃO PRINCIPAL:** ${d}\n\n` +
-            `**CONTEXTO E REGRAS:** ${b}\n\n` +
-            `**DADOS PARA PROCESSAMENTO:** ${f}\n\n` +
-            `**INSTRUÇÕES DO SISTEMA:**\n` +
-            `- Use linguagem técnica e sofisticada.\n` +
-            `- Seja extremamente assertivo e remova redundâncias.\n` +
-            `- Priorize a clareza e o rigor jurídico/profissional.\n` +
-            `--- [FIM DO COMANDO] ---`;
-
+            const promptFinal = `### [MODO V8 ELITE] ###\n\n**OBJETIVO:** ${d}\n\n**REGRAS:** ${b}\n\n**DADOS:** ${f}`;
             document.getElementById('prompt-result').value = promptFinal;
             document.getElementById('output-zone').style.display = 'block';
             window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
@@ -151,7 +137,7 @@
         const text = document.getElementById('prompt-result');
         text.select();
         document.execCommand('copy');
-        alert("💎 Prompt copiado para a área de transferência!");
+        alert("💎 Copiado!");
     }
 </script>
 </body>

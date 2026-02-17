@@ -14,45 +14,51 @@
             --text: #ffffff;
             --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
             --border: rgba(191, 149, 63, 0.3);
+            --focus-overlay: rgba(0,0,0,0);
         }
-        .light-mode {
-            --bg: #fdfdfd;
-            --card: rgba(255, 255, 255, 0.96);
-            --text: #1a1a1a;
-            --border: rgba(179, 135, 40, 0.3);
-        }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; transition: 0.4s; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
-        #app-content, #revogado, #carregando { display: none; flex-grow: 1; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
-        #carregando { display: flex; }
-        .logo-v9 { font-size: 26px; font-weight: 900; letter-spacing: 8px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; margin: 40px 0; text-align: center; }
-        .glass-panel { background: var(--card); width: 92%; max-width: 950px; border-radius: 12px; border: 1px solid var(--border); padding: clamp(20px, 5vw, 50px); box-shadow: 0 25px 60px rgba(0,0,0,0.9); backdrop-filter: blur(25px); margin-bottom: 40px; position: relative; box-sizing: border-box; }
+        .focus-mode { --bg: #000000; --focus-overlay: rgba(0,0,0,0.85); }
+        .focus-mode header, .focus-mode footer, .focus-mode .logo-v9:first-child { opacity: 0; pointer-events: none; transition: 0.5s; }
+
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; transition: 0.8s; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
         
+        /* MODO FOCO OVERLAY */
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--focus-overlay); z-index: 1; pointer-events: none; transition: 0.8s; }
+
+        #app-content { display: none; flex-grow: 1; flex-direction: column; align-items: center; justify-content: center; width: 100%; z-index: 2; position: relative; }
+        #carregando { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
+        
+        .logo-v9 { font-size: 26px; font-weight: 900; letter-spacing: 10px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; margin: 40px 0; text-align: center; }
+        
+        .glass-panel { background: var(--card); width: 92%; max-width: 950px; border-radius: 12px; border: 1px solid var(--border); padding: clamp(20px, 5vw, 50px); box-shadow: 0 25px 80px rgba(0,0,0,1); backdrop-filter: blur(25px); margin-bottom: 40px; position: relative; box-sizing: border-box; transition: 0.5s; }
+        .focus-mode .glass-panel { border-color: #bf953f; box-shadow: 0 0 100px rgba(191,149,63,0.1); }
+
         .progress-group { margin-bottom: 30px; display: none; width: 100%; text-align: left; }
         .label-rigor { font-size: 10px; font-weight: 800; color: #bf953f; letter-spacing: 2px; margin-bottom: 8px; display: block; text-transform: uppercase; }
         .progress-container { width: 100%; background: rgba(255,255,255,0.05); height: 6px; border-radius: 10px; margin-bottom: 15px; overflow: hidden; border: 1px solid rgba(191,149,63,0.1); }
-        .progress-bar { width: 0%; height: 100%; background: var(--gold); transition: width 0.2s ease; box-shadow: 0 0 15px rgba(191, 149, 63, 0.5); position: relative; }
+        .progress-bar { width: 0%; height: 100%; background: var(--gold); transition: width 0.2s ease; }
         
         .btn-supreme { width: 100%; background: var(--gold); color: #000; border: none; padding: 22px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; font-size: 14px; margin-top: 15px; transition: 0.3s; }
-        .btn-supreme:hover { filter: brightness(1.2); box-shadow: 0 0 20px rgba(191, 149, 63, 0.3); }
+        .btn-supreme:hover { filter: brightness(1.2); }
         
-        /* BOTÃO COPIAR NOTA 10 */
-        .btn-copy { background: transparent; color: #bf953f; border: 1px solid #bf953f; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; margin-bottom: 10px; width: fit-content; align-self: flex-end; transition: 0.3s; text-transform: uppercase; }
+        .btn-copy { background: transparent; color: #bf953f; border: 1px solid #bf953f; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; margin-bottom: 10px; width: fit-content; align-self: flex-end; transition: 0.3s; }
         .btn-copy.copied { background: var(--gold); color: #000; border-color: transparent; }
         
         input, textarea { width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 18px; border-radius: 4px; color: var(--text); font-size: 15px; box-sizing: border-box; margin-bottom: 10px; outline: none; transition: 0.3s; }
-        input:focus, textarea:focus { border-color: #bf953f; background: rgba(191,149,63,0.03); }
-        .char-count { font-size: 10px; color: #bf953f; text-align: right; margin-bottom: 20px; width: 100%; font-weight: bold; letter-spacing: 1px; }
+        .char-count { font-size: 10px; color: #bf953f; text-align: right; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; }
         
-        .toggle-btn { position: absolute; top: clamp(10px, 2vw, 30px); right: clamp(10px, 2vw, 30px); background: none; border: 1px solid #bf953f; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 10px; letter-spacing: 2px; font-weight: 900; z-index: 1000; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .top-controls { position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 1001; }
+        .ctrl-btn { background: none; border: 1px solid #bf953f; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 9px; letter-spacing: 1px; font-weight: 900; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        footer { padding: 40px 20px; text-align: center; font-size: 10px; opacity: 0.5; letter-spacing: 2px; border-top: 1px solid var(--border); width: 100%; box-sizing: border-box; }
-        .pdf-action { color: #fcf6ba; font-weight: 900; cursor: pointer; font-size: 12px; text-transform: uppercase; display: block; text-align: left; margin-bottom: 15px; transition: 0.3s; }
-        .pdf-action:hover { letter-spacing: 2px; }
+        footer { padding: 40px 20px; text-align: center; font-size: 10px; opacity: 0.5; letter-spacing: 2px; border-top: 1px solid var(--border); width: 100%; box-sizing: border-box; transition: 0.5s; }
+        .pdf-action { color: #fcf6ba; font-weight: 900; cursor: pointer; font-size: 12px; text-transform: uppercase; display: block; text-align: left; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
-<button class="toggle-btn" onclick="document.body.classList.toggle('light-mode')">MUDAR TEMA</button>
+<div class="top-controls">
+    <button class="ctrl-btn" onclick="document.body.classList.toggle('focus-mode')">MODO FOCO</button>
+    <button class="ctrl-btn" onclick="document.body.classList.toggle('light-mode')">TEMA</button>
+</div>
 
 <div id="carregando">
     <div class="logo-v9">V9 POWER EDITION</div>
@@ -64,13 +70,13 @@
         <div class="glass-panel" style="display: flex; flex-direction: column;">
             
             <div class="progress-group" id="prog-area">
-                <span class="label-rigor">Análise de Desenvolvimento: <span id="val1">0%</span></span>
+                <span class="label-rigor">Análise: <span id="val1">0%</span></span>
                 <div class="progress-container"><div class="progress-bar" id="bar1"></div></div>
-                <span class="label-rigor">Rigor Pericial Jurídico: <span id="val2">0%</span></span>
+                <span class="label-rigor">Rigor Jurídico: <span id="val2">0%</span></span>
                 <div class="progress-container"><div class="progress-bar" id="bar2"></div></div>
             </div>
 
-            <span class="pdf-action" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR DOSSIÊ PDF PERICIAL</span>
+            <span class="pdf-action" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR PDF PERICIAL</span>
             <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
             
             <input type="text" id="gerado" placeholder="O QUE DEVE SER GERADO?">
@@ -93,11 +99,6 @@
     </footer>
 </div>
 
-<div id="revogado">
-    <div class="logo-v9">V9 POWER EDITION</div>
-    <h1 style="color:#bf953f; letter-spacing: 5px;">ACESSO BLOQUEADO</h1>
-</div>
-
 <script>
     const firebaseConfig = { databaseURL: "https://promptv25-default-rtdb.firebaseio.com" };
     firebase.initializeApp(firebaseConfig);
@@ -105,7 +106,7 @@
     const userId = new URLSearchParams(window.location.search).get('id');
 
     function entrar() { document.getElementById('carregando').style.display = 'none'; document.getElementById('app-content').style.display = 'flex'; }
-    let timeout = setTimeout(() => { entrar(); }, 2500);
+    setTimeout(entrar, 2000);
 
     function countChars() { document.getElementById('count').innerText = "Caracteres: " + document.getElementById('fatos').value.length; }
 
@@ -114,24 +115,10 @@
         const btn = document.getElementById('btnCopy');
         text.select();
         document.execCommand('copy');
-        
         btn.innerText = "COPIADO!";
         btn.classList.add('copied');
-        setTimeout(() => { 
-            btn.innerText = "COPIAR COMANDO"; 
-            btn.classList.remove('copied');
-        }, 2000);
+        setTimeout(() => { btn.innerText = "COPIAR COMANDO"; btn.classList.remove('copied'); }, 2000);
     }
-
-    if (userId) {
-        database.ref('usuarios/' + userId).on('value', (snap) => {
-            clearTimeout(timeout);
-            const data = snap.val();
-            if (data && data.status === 'ativo') { entrar(); }
-            else if (data && data.status === 'revogado') { document.getElementById('carregando').style.display = 'none'; document.getElementById('revogado').style.display = 'flex'; }
-            else { entrar(); }
-        });
-    } else { clearTimeout(timeout); entrar(); }
 
     async function lerPDF(input) {
         const file = input.files[0];
@@ -148,7 +135,6 @@
             }
             document.getElementById('fatos').value = text;
             countChars();
-            alert("V9: PDF processado com rigor pericial.");
         };
         reader.readAsArrayBuffer(file);
     }
@@ -157,20 +143,17 @@
         const area = document.getElementById('prog-area');
         const b1 = document.getElementById('bar1'); const b2 = document.getElementById('bar2');
         const v1 = document.getElementById('val1'); const v2 = document.getElementById('val2');
-        
         area.style.display = 'block';
         let p1 = 0; let p2 = 0;
-
         let itv = setInterval(() => {
-            if(p1 < 100) { p1 += 4; b1.style.width = p1+'%'; v1.innerText = p1+'%'; }
-            if(p1 > 50 && p2 < 100) { p2 += 6; b2.style.width = p2+'%'; v2.innerText = p2+'%'; }
-            
+            if(p1 < 100) { p1 += 5; b1.style.width = p1+'%'; v1.innerText = p1+'%'; }
+            if(p1 > 50 && p2 < 100) { p2 += 10; b2.style.width = p2+'%'; v2.innerText = p2+'%'; }
             if(p1 >= 100 && p2 >= 100) {
                 clearInterval(itv);
-                const p = `### [ORDEM V9 POWER EDITION - RIGOR PERICIAL] ###\n\n1. AÇÃO: ${document.getElementById('gerado').value}\n2. OBJETIVO: ${document.getElementById('destino').value}\n\n[DIRETRIZES DE RIGOR]:\n- GRAMÁTICA: Utilize exclusivamente a norma culta padrão.\n- ANTI-ALUCINAÇÃO: Proibido inventar fatos, leis ou jurisprudências.\n- SEGURANÇA: Se a resposta não estiver na base de dados abaixo, responda EXATAMENTE: "INFORMAÇÃO NÃO LOCALIZADA NA BASE DE DADOS - NECESSITA DE REVISÃO HUMANA".\n\n[BASE DE DADOS]:\n${document.getElementById('fatos').value}`;
+                const p = `### [ORDEM V9 POWER EDITION - RIGOR PERICIAL] ###\n\n1. AÇÃO: ${document.getElementById('gerado').value}\n2. OBJETIVO: ${document.getElementById('destino').value}\n\n[DIRETRIZES]: Use norma culta padrão. Anti-alucinação ativo. Se não houver dados, responda: "REVISÃO HUMANA NECESSÁRIA".\n\n[BASE]: ${document.getElementById('fatos').value}`;
                 document.getElementById('res').value = p;
                 document.getElementById('res-box').style.display = 'flex';
-                setTimeout(() => { area.style.display = 'none'; window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'}); }, 1000);
+                setTimeout(() => { area.style.display = 'none'; }, 1000);
             }
         }, 80);
     }
@@ -179,7 +162,7 @@
         const blob = new Blob(['\ufeff', document.getElementById('res').value], { type: 'application/msword' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'V9_Comando_Rigoroso.doc';
+        link.download = 'V9_Power_Edition.doc';
         link.click();
     }
 </script>

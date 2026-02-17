@@ -33,36 +33,3 @@
         #prompt-result { width: 100%; height: 400px; background: #000; border: 1px solid #bf953f; color: #fcf6ba; padding: 30px; border-radius: 8px; font-family: 'Consolas', monospace; font-size: 14px; line-height: 1.6; }
         .export-btns { display: flex; gap: 15px; margin-top: 15px; }
         footer { margin-top: 80px; padding: 40px; text-align: center; border-top: 1px solid var(--border); font-size: 9px; opacity: 0.5; letter-spacing: 2px; line-height: 2.2; }
-    </style>
-</head>
-<body id="main-body">
-
-<nav>
-    <div class="logo-v9">V9 POWER ELITE</div>
-    <div class="top-btns">
-        <button class="btn-minimal" onclick="limpar()">Apagar Tudo</button>
-        <button class="btn-minimal" onclick="toggleMode()">Modo Claro/Escuro</button>
-    </div>
-</nav>
-
-<main>
-    <div class="glass-panel">
-        <div class="integrity-header"><span>Sincronização de Dados V9</span><span id="pct">0%</span></div>
-        <div class="bar-bg"><div id="fill" class="bar-fill"></div></div>
-
-        <div class="pdf-action" onclick="document.getElementById('pdf-up').click()">📎 Importar Dados de PDF</div>
-        <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
-
-        <div class="field-group">
-            <label>1. O que deve ser gerado?</label>
-            <input type="text" id="gerado" oninput="atualizar()" placeholder="Ex: Petição, Relatório, Contrato...">
-        </div>
-
-        <div class="field-group">
-            <label>2. Objetivo (Destino do Comando)</label>
-            <input type="text" id="destino" oninput="atualizar()" placeholder="Qual o resultado final esperado?">
-        </div>
-
-        <div class="field-group">
-            <label>3. Registro dos Fatos (Base de Dados)</label>
-            <textarea id="fatos" rows="10" on

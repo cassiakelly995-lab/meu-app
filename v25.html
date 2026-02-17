@@ -21,27 +21,33 @@
             --text: #1a1a1a;
             --border: rgba(179, 135, 40, 0.3);
         }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; transition: 0.4s; display: flex; flex-direction: column; min-height: 100vh; }
-        #app-content, #revogado, #carregando { display: none; flex-grow: 1; flex-direction: column; align-items: center; justify-content: center; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; transition: 0.4s; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
+        #app-content, #revogado, #carregando { display: none; flex-grow: 1; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
         #carregando { display: flex; }
-        .logo-v9 { font-size: 26px; font-weight: 900; letter-spacing: 8px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; margin: 40px 0; }
-        .glass-panel { background: var(--card); width: 92%; max-width: 950px; border-radius: 12px; border: 1px solid var(--border); padding: 50px; box-shadow: 0 25px 60px rgba(0,0,0,0.9); backdrop-filter: blur(25px); margin-bottom: 40px; position: relative; }
+        .logo-v9 { font-size: 26px; font-weight: 900; letter-spacing: 8px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; margin: 40px 0; text-align: center; }
+        .glass-panel { background: var(--card); width: 92%; max-width: 950px; border-radius: 12px; border: 1px solid var(--border); padding: clamp(20px, 5vw, 50px); box-shadow: 0 25px 60px rgba(0,0,0,0.9); backdrop-filter: blur(25px); margin-bottom: 40px; position: relative; box-sizing: border-box; }
         
         .progress-group { margin-bottom: 30px; display: none; width: 100%; text-align: left; }
         .label-rigor { font-size: 10px; font-weight: 800; color: #bf953f; letter-spacing: 2px; margin-bottom: 8px; display: block; text-transform: uppercase; }
         .progress-container { width: 100%; background: rgba(255,255,255,0.05); height: 6px; border-radius: 10px; margin-bottom: 15px; overflow: hidden; border: 1px solid rgba(191,149,63,0.1); }
-        .progress-bar { width: 0%; height: 100%; background: var(--gold); transition: width 0.2s ease; box-shadow: 0 0 10px #bf953f; }
-
+        .progress-bar { width: 0%; height: 100%; background: var(--gold); transition: width 0.2s ease; box-shadow: 0 0 15px rgba(191, 149, 63, 0.5); position: relative; }
+        
         .btn-supreme { width: 100%; background: var(--gold); color: #000; border: none; padding: 22px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; font-size: 14px; margin-top: 15px; transition: 0.3s; }
-        .btn-copy { background: rgba(191, 149, 63, 0.1); color: #bf953f; border: 1px solid #bf953f; padding: 10px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; margin-bottom: 10px; width: fit-content; align-self: flex-end; }
+        .btn-supreme:hover { filter: brightness(1.2); box-shadow: 0 0 20px rgba(191, 149, 63, 0.3); }
         
-        input, textarea { width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 20px; border-radius: 4px; color: var(--text); font-size: 15px; box-sizing: border-box; margin-bottom: 10px; outline: none; }
-        .char-count { font-size: 10px; color: #bf953f; text-align: right; margin-bottom: 20px; width: 100%; font-weight: bold; }
+        /* BOTÃO COPIAR NOTA 10 */
+        .btn-copy { background: transparent; color: #bf953f; border: 1px solid #bf953f; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; margin-bottom: 10px; width: fit-content; align-self: flex-end; transition: 0.3s; text-transform: uppercase; }
+        .btn-copy.copied { background: var(--gold); color: #000; border-color: transparent; }
         
-        .toggle-btn { position: absolute; top: 30px; right: 30px; background: none; border: 1px solid #bf953f; padding: 10px 18px; border-radius: 5px; cursor: pointer; font-size: 11px; letter-spacing: 2px; font-weight: 900; z-index: 1000; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        input, textarea { width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 18px; border-radius: 4px; color: var(--text); font-size: 15px; box-sizing: border-box; margin-bottom: 10px; outline: none; transition: 0.3s; }
+        input:focus, textarea:focus { border-color: #bf953f; background: rgba(191,149,63,0.03); }
+        .char-count { font-size: 10px; color: #bf953f; text-align: right; margin-bottom: 20px; width: 100%; font-weight: bold; letter-spacing: 1px; }
         
-        footer { padding: 50px; text-align: center; font-size: 10px; opacity: 0.5; letter-spacing: 2px; border-top: 1px solid var(--border); width: 100%; box-sizing: border-box; }
-        .pdf-action { color: #fcf6ba; font-weight: 900; cursor: pointer; font-size: 12px; text-transform: uppercase; display: block; text-align: left; margin-bottom: 15px; }
+        .toggle-btn { position: absolute; top: clamp(10px, 2vw, 30px); right: clamp(10px, 2vw, 30px); background: none; border: 1px solid #bf953f; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 10px; letter-spacing: 2px; font-weight: 900; z-index: 1000; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        footer { padding: 40px 20px; text-align: center; font-size: 10px; opacity: 0.5; letter-spacing: 2px; border-top: 1px solid var(--border); width: 100%; box-sizing: border-box; }
+        .pdf-action { color: #fcf6ba; font-weight: 900; cursor: pointer; font-size: 12px; text-transform: uppercase; display: block; text-align: left; margin-bottom: 15px; transition: 0.3s; }
+        .pdf-action:hover { letter-spacing: 2px; }
     </style>
 </head>
 <body>
@@ -54,7 +60,7 @@
 
 <div id="app-content">
     <div class="logo-v9">V9 POWER EDITION</div>
-    <main style="width: 100%; display: flex; flex-direction: column; align-items: center; padding: 0 20px; box-sizing: border-box;">
+    <main style="width: 100%; display: flex; flex-direction: column; align-items: center; padding: 0 10px; box-sizing: border-box;">
         <div class="glass-panel" style="display: flex; flex-direction: column;">
             
             <div class="progress-group" id="prog-area">
@@ -74,8 +80,8 @@
             
             <button class="btn-supreme" onclick="executarV9()">EXECUTAR ENGENHARIA V9 POWER</button>
             
-            <div id="res-box" style="display:none; margin-top:40px; border-top: 1px solid var(--border); padding-top: 30px; display: none; flex-direction: column;">
-                <button class="btn-copy" onclick="copyRes()">COPIAR COMANDO</button>
+            <div id="res-box" style="display:none; margin-top:40px; border-top: 1px solid var(--border); padding-top: 30px; flex-direction: column;">
+                <button class="btn-copy" id="btnCopy" onclick="copyRes()">COPIAR COMANDO</button>
                 <textarea id="res" style="height:450px; border-color: #bf953f; color: #fcf6ba; background: #000; font-family: 'Courier New', monospace;" readonly></textarea>
                 <button class="btn-supreme" onclick="baixar()">EXPORTAR PARA WORD (.DOC)</button>
             </div>
@@ -105,9 +111,16 @@
 
     function copyRes() {
         const text = document.getElementById('res');
+        const btn = document.getElementById('btnCopy');
         text.select();
         document.execCommand('copy');
-        alert("Comando de Rigor Máximo copiado!");
+        
+        btn.innerText = "COPIADO!";
+        btn.classList.add('copied');
+        setTimeout(() => { 
+            btn.innerText = "COPIAR COMANDO"; 
+            btn.classList.remove('copied');
+        }, 2000);
     }
 
     if (userId) {
@@ -122,6 +135,7 @@
 
     async function lerPDF(input) {
         const file = input.files[0];
+        if(!file) return;
         const reader = new FileReader();
         reader.onload = async function() {
             const typedarray = new Uint8Array(this.result);
@@ -134,6 +148,7 @@
             }
             document.getElementById('fatos').value = text;
             countChars();
+            alert("V9: PDF processado com rigor pericial.");
         };
         reader.readAsArrayBuffer(file);
     }
@@ -142,21 +157,22 @@
         const area = document.getElementById('prog-area');
         const b1 = document.getElementById('bar1'); const b2 = document.getElementById('bar2');
         const v1 = document.getElementById('val1'); const v2 = document.getElementById('val2');
+        
         area.style.display = 'block';
         let p1 = 0; let p2 = 0;
 
         let itv = setInterval(() => {
-            if(p1 < 100) { p1 += 5; b1.style.width = p1+'%'; v1.innerText = p1+'%'; }
-            if(p1 > 50 && p2 < 100) { p2 += 10; b2.style.width = p2+'%'; v2.innerText = p2+'%'; }
+            if(p1 < 100) { p1 += 4; b1.style.width = p1+'%'; v1.innerText = p1+'%'; }
+            if(p1 > 50 && p2 < 100) { p2 += 6; b2.style.width = p2+'%'; v2.innerText = p2+'%'; }
             
             if(p1 >= 100 && p2 >= 100) {
                 clearInterval(itv);
                 const p = `### [ORDEM V9 POWER EDITION - RIGOR PERICIAL] ###\n\n1. AÇÃO: ${document.getElementById('gerado').value}\n2. OBJETIVO: ${document.getElementById('destino').value}\n\n[DIRETRIZES DE RIGOR]:\n- GRAMÁTICA: Utilize exclusivamente a norma culta padrão.\n- ANTI-ALUCINAÇÃO: Proibido inventar fatos, leis ou jurisprudências.\n- SEGURANÇA: Se a resposta não estiver na base de dados abaixo, responda EXATAMENTE: "INFORMAÇÃO NÃO LOCALIZADA NA BASE DE DADOS - NECESSITA DE REVISÃO HUMANA".\n\n[BASE DE DADOS]:\n${document.getElementById('fatos').value}`;
                 document.getElementById('res').value = p;
                 document.getElementById('res-box').style.display = 'flex';
-                setTimeout(() => { area.style.display = 'none'; }, 1000);
+                setTimeout(() => { area.style.display = 'none'; window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'}); }, 1000);
             }
-        }, 100);
+        }, 80);
     }
 
     function baixar() {

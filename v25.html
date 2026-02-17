@@ -3,130 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V27 VERDICT MASTER</title>
+    <title>V9 POWER EDITION | CÁSSIA PROMPT</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <style>
-        :root { 
-            --bg: #000000; 
+        :root {
+            --bg: #050505;
+            --card: rgba(12, 12, 12, 0.98);
             --text: #ffffff;
-            --gold: #bf953f;
-            --gold-grad: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
+            --border: rgba(191, 149, 63, 0.3);
+            --focus-overlay: rgba(0,0,0,0);
         }
+        .focus-mode { --bg: #000000; --focus-overlay: rgba(0,0,0,0.85); }
+        .focus-mode header, .focus-mode footer, .focus-mode .logo-v9:first-child { opacity: 0; pointer-events: none; transition: 0.5s; }
+
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; transition: 0.8s; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
         
-        .light-mode { --bg: #ffffff; --text: #000000; }
-        .focus-mode .logo, .focus-mode footer, .focus-mode .top-buttons { display: none !important; }
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--focus-overlay); z-index: 1; pointer-events: none; transition: 0.8s; }
 
-        body { 
-            margin: 0; background-color: var(--bg); color: var(--text); 
-            font-family: 'Inter', sans-serif; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; min-height: 100vh;
-            transition: 0.3s ease;
-        }
-
-        .top-buttons { position: absolute; top: 30px; right: 30px; display: flex; gap: 10px; }
-        .btn-ctrl { 
-            background: transparent; border: 1px solid #333; color: var(--text); 
-            padding: 5px 15px; font-size: 10px; border-radius: 3px; cursor: pointer;
-            font-weight: bold; text-transform: uppercase;
-        }
-
-        .logo { 
-            font-size: 32px; font-weight: 900; letter-spacing: 12px; 
-            background: var(--gold-grad); -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; text-transform: uppercase; 
-            margin-bottom: 60px; text-align: center;
-        }
-
-        .main-card { 
-            background: rgba(15, 15, 15, 0.4); width: 85%; max-width: 900px; 
-            border-radius: 15px; border: 1px solid rgba(191, 149, 63, 0.15); 
-            padding: 50px; position: relative;
-        }
-
-        .pdf-trigger {
-            color: var(--gold); font-size: 10px; font-weight: 900; 
-            text-transform: uppercase; cursor: pointer; display: block;
-            margin-bottom: 30px; letter-spacing: 1.5px;
-        }
-
-        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 25px; }
+        #app-content { display: none; flex-grow: 1; flex-direction: column; align-items: center; justify-content: center; width: 100%; z-index: 2; position: relative; }
+        #carregando { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
         
-        .field label { 
-            display: block; color: var(--gold); font-size: 9px; 
-            font-weight: 900; text-transform: uppercase; margin-bottom: 10px; 
-        }
+        .logo-v9 { font-size: 26px; font-weight: 900; letter-spacing: 10px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; margin: 40px 0; text-align: center; }
+        
+        .glass-panel { background: var(--card); width: 92%; max-width: 950px; border-radius: 12px; border: 1px solid var(--border); padding: clamp(20px, 5vw, 50px); box-shadow: 0 25px 80px rgba(0,0,0,1); backdrop-filter: blur(25px); margin-bottom: 40px; position: relative; box-sizing: border-box; transition: 0.5s; }
+        .focus-mode .glass-panel { border-color: #bf953f; box-shadow: 0 0 100px rgba(191,149,63,0.1); }
 
-        input, textarea {
-            width: 100%; background: transparent; border: none;
-            border-bottom: 1px solid #222; color: #fff; padding: 10px 0;
-            outline: none; font-size: 14px;
-        }
-
-        .btn-exec {
-            width: 100%; height: 55px; margin-top: 50px;
-            background: var(--gold-grad); border: none; color: #000;
-            font-weight: 900; text-transform: uppercase; letter-spacing: 3px;
-            cursor: pointer; border-radius: 4px; font-size: 11px;
-        }
-
-        footer { 
-            position: absolute; bottom: 20px; width: 100%; text-align: center; 
-            font-size: 8px; color: #222; letter-spacing: 3px; text-transform: uppercase;
-        }
+        .progress-group { margin-bottom: 30px; display: none; width: 100%; text-align: left; }
+        .label-rigor { font-size: 10px; font-weight: 800; color: #bf953f; letter-spacing: 2px; margin-bottom: 8px; display: block; text-transform: uppercase; }
+        .progress-container { width: 100%; background: rgba(255,255,255,0.05); height: 6px; border-radius: 10px; margin-bottom: 15px; overflow: hidden; border: 1px solid rgba(191,149,63,0.1); }
+        .progress-bar { width: 0%; height: 100%; background: var(--gold); transition: width 0.2s ease; }
+        
+        .btn-supreme { width: 100%; background: var(--gold); color: #000; border: none; padding: 22px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; font-size: 14px; margin-top: 15px; transition: 0.3s; }
+        .btn-supreme:hover { filter: brightness(1.2); }
+        
+        .btn-copy { background: transparent; color: #bf953f; border: 1px solid #bf953f; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; margin-bottom: 10px; width: fit-content; align-self: flex-end; transition: 0.3s; }
+        .btn-copy.copied { background: var(--gold); color: #000; border-color: transparent; }
+        
+        input, textarea { width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 18px; border-radius: 4px; color: var(--text); font-size: 15px; box-sizing: border-box; margin-bottom: 10px; outline: none; transition: 0.3s; }
+        .char-count { font-size: 10px; color: #bf953f; text-align: right; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; }
+        
+        .top-controls { position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 1001; }
+        .ctrl-btn { background: none; border: 1px solid #bf953f; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 9px; letter-spacing: 1px; font-weight: 900; color: #bf953f; }
+        
+        footer { padding: 40px 20px; text-align: center; font-size: 10px; opacity: 0.5; letter-spacing: 2px; border-top: 1px solid var(--border); width: 100%; box-sizing: border-box; transition: 0.5s; }
+        .pdf-action { color: #fcf6ba; font-weight: 900; cursor: pointer; font-size: 12px; text-transform: uppercase; display: block; text-align: left; margin-bottom: 15px; }
     </style>
 </head>
-<body id="body">
+<body>
 
-<div class="top-buttons">
-    <button class="btn-ctrl" onclick="document.getElementById('body').classList.toggle('focus-mode')">FOCO</button>
-    <button class="btn-ctrl" onclick="document.getElementById('body').classList.toggle('light-mode')">TEMA</button>
+<div class="top-controls">
+    <button class="ctrl-btn" onclick="document.body.classList.toggle('focus-mode')">MODO FOCO</button>
 </div>
 
-<div class="logo">V27 VERDICT MASTER</div>
+<div id="carregando">
+    <div class="logo-v9">CÁSSIA PROMPT • V9 POWER</div>
+</div>
 
-<main class="main-card">
-    <span class="pdf-trigger" onclick="document.getElementById('pdf-in').click()">📎 IMPORTAR PDF (DADOS E LEIS)</span>
-    <input type="file" id="pdf-in" style="display:none" onchange="handlePDF(this)">
+<div id="app-content">
+    <div class="logo-v9">V9 POWER EDITION</div>
+    <main style="width: 100%; display: flex; flex-direction: column; align-items: center; padding: 0 10px; box-sizing: border-box;">
+        <div class="glass-panel" style="display: flex; flex-direction: column;">
+            
+            <div class="progress-group" id="prog-area">
+                <span class="label-rigor">Análise de Dados: <span id="val1">0%</span></span>
+                <div class="progress-container"><div class="progress-bar" id="bar1"></div></div>
+                <span class="label-rigor">Rigor Jurídico/Pericial: <span id="val2">0%</span></span>
+                <div class="progress-container"><div class="progress-bar" id="bar2"></div></div>
+            </div>
 
-    <div class="row">
-        <div class="field">
-            <label>OBJETIVO DA ANÁLISE</label>
-            <input type="text" id="goal" placeholder="Ex: Pedir liminar judicial hoje">
+            <span class="pdf-action" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR PDF PERICIAL (MÁXIMA PRECISÃO)</span>
+            <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
+            
+            <input type="text" id="gerado" placeholder="O QUE DEVE SER GERADO? (EX: RÉPLICA, PARECER...)">
+            <input type="text" id="destino" placeholder="OBJETIVO ESTRATÉGICO DA PEÇA">
+            <textarea id="fatos" rows="10" placeholder="COLE AQUI OS FATOS OU USE O PDF ACIMA" oninput="countChars()"></textarea>
+            <div class="char-count" id="count">Caracteres: 0</div>
+            
+            <button class="btn-supreme" onclick="executarV9()">EXECUTAR ENGENHARIA V9 POWER</button>
+            
+            <div id="res-box" style="display:none; margin-top:40px; border-top: 1px solid var(--border); padding-top: 30px; flex-direction: column;">
+                <button class="btn-copy" id="btnCopy" onclick="copyRes()">COPIAR COMANDO PARA IA</button>
+                <textarea id="res" style="height:450px; border-color: #bf953f; color: #fcf6ba; background: #000; font-family: 'Courier New', monospace;" readonly></textarea>
+                <button class="btn-supreme" onclick="baixar()">EXPORTAR PARA WORD (.DOC)</button>
+            </div>
         </div>
-        <div class="field">
-            <label>JURISDIÇÃO / PAÍS</label>
-            <input type="text" id="juris" placeholder="Ex: Brasil (Lei LPI)">
-        </div>
-    </div>
-
-    <div class="field" style="margin-top: 15px;">
-        <label>BASE DE EVIDÊNCIAS E FATOS TÉCNICOS</label>
-        <textarea id="fatos" rows="3" placeholder="Descreva os fatos ou anexe o PDF..."></textarea>
-    </div>
-
-    <button class="btn-exec" onclick="alert('Análise Iniciada...')">EXECUTAR SISTEMA SOVEREIGN</button>
-</main>
-
-<footer>RESPONSABILIDADE DO USUÁRIO | CÁSSIA PROMPT V27</footer>
+    </main>
+    <footer>
+        CÁSSIA PROMPT ® | V9 POWER EDITION<br>
+        A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. O PROGRAMA APENAS GERA O PROMPT.
+    </footer>
+</div>
 
 <script>
-    async function handlePDF(e) {
-        const file = e.files[0];
+    const firebaseConfig = { databaseURL: "https://promptv25-default-rtdb.firebaseio.com" };
+    firebase.initializeApp(firebaseConfig);
+    
+    function entrar() { 
+        document.getElementById('carregando').style.display = 'none'; 
+        document.getElementById('app-content').style.display = 'flex'; 
+    }
+    setTimeout(entrar, 1500);
+
+    function countChars() { document.getElementById('count').innerText = "Caracteres: " + document.getElementById('fatos').value.length; }
+
+    function copyRes() {
+        const text = document.getElementById('res');
+        const btn = document.getElementById('btnCopy');
+        text.select();
+        document.execCommand('copy');
+        btn.innerText = "COPIADO COM SUCESSO!";
+        btn.classList.add('copied');
+        setTimeout(() => { btn.innerText = "COPIAR COMANDO PARA IA"; btn.classList.remove('copied'); }, 2000);
+    }
+
+    async function lerPDF(input) {
+        const file = input.files[0];
+        if(!file) return;
         const reader = new FileReader();
         reader.onload = async function() {
-            const arr = new Uint8Array(this.result);
-            const pdf = await pdfjsLib.getDocument(arr).promise;
-            let content = "";
-            for (let i = 1; i <= pdf.numPages; i++) {
+            const typedarray = new Uint8Array(this.result);
+            const pdf = await pdfjsLib.getDocument(typedarray).promise;
+            let text = "";
+            for(let i=1; i<=pdf.numPages; i++) {
                 const page = await pdf.getPage(i);
-                const text = await page.getTextContent();
-                content += text.items.map(s => s.str).join(" ") + "\n";
+                const content = await page.getTextContent();
+                text += content.items.map(s => s.str).join(" ") + "\n";
             }
-            document.getElementById('fatos').value = content;
+            document.getElementById('fatos').value = text;
+            countChars();
         };
         reader.readAsArrayBuffer(file);
     }
-</script>
 
+    function executarV9() {
+        const area = document.getElementById('prog-area');
+        const b1 = document.getElementById('bar1'); const b2 = document.getElementById('bar2');
+        const v1 = document.getElementById('val1'); const v2 = document.getElementById('val2');
+        
+        area.style.display = 'block';
+        let p1 = 0; let p2 = 0;
+        
+        let itv = setInterval(() => {
+            if(p1 < 100) { p1 += 5; b1.style.width = p1+'%'; v1.innerText = p1+'%'; }
+            if(p1 > 50 && p2 < 100) { p2 += 10; b2.style.width = p2+'%'; v2.innerText = p2+'%'; }
+            
+            if(p1 >= 100 && p2 >= 100) {
+                clearInterval(itv);
+                const promptFinal = `### [COMANDO V9 POWER EDITION - RIGOR JURÍDICO MÁXIMO] ###\n\n` +
+                                    `1. AÇÃO SOLICITADA: ${document.getElementById('gerado').value}\n` +
+                                    `2. OBJETIVO ESTRATÉGICO: ${document.getElementById('destino').value}\n\n` +
+                                    `[DIRETRIZES DE ENGENHARIA]:\n` +
+                                    `- Utilize linguagem jurídica culta e técnica.\n` +
+                                    `- Protocolo ANTI-ALUCINAÇÃO: Baseie-se estritamente nos fatos fornecidos.\n` +
+                                    `- Se faltarem dados essenciais, responda explicitamente: "REVISÃO HUMANA NECESSÁRIA".\n\n` +
+                                    `[BASE DE DADOS/FATOS]:\n${document.getElementById('fatos').value}`;
+                
+                document.getElementById('res').value = promptFinal;
+                document.getElementById('res-box').style.display = 'flex';
+                setTimeout(() => { area.style.display = 'none'; }, 1000);
+            }
+        }, 60);
+    }
+
+    function baixar() {
+        const conteudo = document.getElementById('res').value;
+        const blob = new Blob(['\ufeff', conteudo], { type: 'application/msword' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'CASSIA_PROMPT_V9.doc';
+        link.click();
+    }
+</script>
 </body>
 </html>

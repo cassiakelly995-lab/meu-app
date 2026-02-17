@@ -16,7 +16,7 @@
         #app-content, #revogado, #carregando { display: none; flex-grow: 1; flex-direction: column; align-items: center; justify-content: center; width: 100%; text-align: center; }
         #carregando { display: flex; }
         .logo-v9 { font-size: 18px; font-weight: 900; letter-spacing: 6px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
-        .glass-panel { background: var(--card); width: 90%; max-width: 850px; border-radius: 12px; border: 1px solid var(--border); padding: 40px; box-shadow: 0 0 30px rgba(191,149,63,0.1); }
+        .glass-panel { background: var(--card); width: 90%; max-width: 850px; border-radius: 12px; border: 1px solid var(--border); padding: 40px; box-shadow: 0 0 30px rgba(191,149,63,0.1); margin: 20px 0; }
         .btn-supreme { width: 100%; background: var(--gold); color: #000; border: none; padding: 18px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 3px; margin-top: 15px; }
         input, textarea { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 12px; color: #fff; margin-bottom: 15px; border-radius: 4px; box-sizing: border-box; }
         footer { padding: 30px; text-align: center; font-size: 9px; opacity: 0.4; letter-spacing: 2px; }
@@ -26,37 +26,30 @@
 
 <div id="carregando">
     <div class="logo-v9">V9 POWER ELITE</div>
-    <p style="margin-top:20px; font-size:10px; letter-spacing:2px;">SINCRONIZANDO COM FIREBASE...</p>
+    <p style="margin-top:20px; font-size:10px; letter-spacing:2px;">ESTABELECENDO CONEXÃO SEGURA...</p>
 </div>
 
 <div id="app-content">
     <div class="logo-v9" style="margin-top:40px;">V9 POWER ELITE</div>
     <div class="glass-panel">
-        <div style="color:#bf953f; font-size:10px; font-weight:700; cursor:pointer; margin-bottom:20px; text-align:left;" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR PDF</div>
-        <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
-        
         <input type="text" id="gerado" placeholder="O QUE DEVE SER GERADO?">
         <input type="text" id="destino" placeholder="OBJETIVO DO COMANDO">
-        <textarea id="fatos" rows="8" placeholder="COLE OS FATOS AQUI OU USE O PDF"></textarea>
-        
-        <button class="btn-supreme" onclick="gerar()">EXECUTAR ENGENHARIA V9</button>
-        
+        <textarea id="fatos" rows="8" placeholder="REGISTRO DOS FATOS"></textarea>
+        <button class="btn-supreme" onclick="gerar()">EXECUTAR V9 POWER</button>
         <div id="res-box" style="display:none; margin-top:30px;">
             <textarea id="res" style="height:250px; border-color:#bf953f; color:#fcf6ba;" readonly></textarea>
-            <button class="btn-supreme" onclick="baixar()">BAIXAR EM WORD (.DOC)</button>
         </div>
     </div>
-    <footer>CÁSSIA PROMPT ® | A RESPONSABILIDADE É DO USUÁRIO.</footer>
+    <footer>A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. O PROGRAMA APENAS GERA O PROMPT.</footer>
 </div>
 
 <div id="revogado">
     <div class="logo-v9">V9 POWER ELITE</div>
     <h1 style="color:#bf953f; letter-spacing:5px; margin-top:30px;">ACESSO NEGADO</h1>
-    <p style="opacity:0.5; font-size:10px;">ID INVÁLIDO OU LICENÇA EXPIRADA.</p>
+    <p style="opacity:0.5; font-size:10px;">LICENÇA NÃO LOCALIZADA.</p>
 </div>
 
 <script>
-    // Configuração do seu Banco de Dados
     const firebaseConfig = { databaseURL: "https://promptv25-default-rtdb.firebaseio.com" };
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
@@ -64,12 +57,24 @@
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get('id');
 
-    // Validação Real-Time
+    // Função para liberar a tela
+    function liberar() {
+        document.getElementById('carregando').style.display = 'none';
+        document.getElementById('app-content').style.display = 'flex';
+    }
+
+    // Tenta validar no Firebase, mas se demorar 5 segundos, LIBERA POR SEGURANÇA
+    let timeoutPortal = setTimeout(() => {
+        console.log("Timeout: Liberando acesso de emergência.");
+        liberar();
+    }, 5000);
+
     if (userId) {
-        const userRef = database.ref('usuarios/' + userId);
-        userRef.on('value', (snapshot) => {
+        database.ref('usuarios/' + userId).on('value', (snapshot) => {
+            clearTimeout(timeoutPortal); // Cancela o timeout se o Firebase responder
             const data = snapshot.val();
             document.getElementById('carregando').style.display = 'none';
+            
             if (data && data.status === 'ativo') {
                 document.getElementById('app-content').style.display = 'flex';
                 document.getElementById('revogado').style.display = 'none';
@@ -77,26 +82,17 @@
                 document.getElementById('app-content').style.display = 'none';
                 document.getElementById('revogado').style.display = 'flex';
             }
-        }, (error) => {
-            alert("Erro de Conexão: Verifique seu Firebase.");
         });
     } else {
+        clearTimeout(timeoutPortal);
         document.getElementById('carregando').style.display = 'none';
         document.getElementById('revogado').style.display = 'flex';
     }
 
     function gerar() {
-        const p = `### [ORDEM V9 POWER ELITE] ###\n\nGERAR: ${document.getElementById('gerado').value}\nOBJETIVO: ${document.getElementById('destino').value}\n\nFATOS:\n${document.getElementById('fatos').value}`;
+        const p = `ORDEM V9: ${document.getElementById('gerado').value}\nFATOS: ${document.getElementById('fatos').value}`;
         document.getElementById('res').value = p;
         document.getElementById('res-box').style.display = 'block';
-    }
-
-    function baixar() {
-        const blob = new Blob(['\ufeff', document.getElementById('res').value], { type: 'application/msword' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'V9_Elite_Prompt.doc';
-        link.click();
     }
 </script>
 </body>

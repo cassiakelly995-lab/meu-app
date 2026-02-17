@@ -5,35 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>V8 ELITE EDITION | CÁSSIA PROMPT</title>
     <style>
-        /* O SEU DESIGN ESTÁ TODO AQUI - NÃO FOI ALTERADO */
         :root { --bg: #050505; --card: #0a0a0a; --text: #ffffff; --border: #1a1a1a; --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%); --glow: 0 0 30px rgba(191, 149, 63, 0.1); }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; transition: 0.4s; overflow-x: hidden; }
-        nav { background: rgba(0,0,0,0.9); backdrop-filter: blur(15px); padding: 20px 40px; border-bottom: 1px solid #bf953f; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        nav { background: rgba(0,0,0,0.9); padding: 20px 40px; border-bottom: 1px solid #bf953f; display: flex; justify-content: space-between; align-items: center; }
         .logo-v8 { font-size: 24px; font-weight: 900; letter-spacing: 6px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
-        main { padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
-        .glass-panel { background: var(--card); width: 100%; max-width: 850px; border-radius: 30px; border: 1px solid var(--border); padding: 45px; box-sizing: border-box; box-shadow: var(--glow); }
-        .progress-bar-bg { width: 100%; height: 8px; background: #111; border-radius: 20px; overflow: hidden; margin-bottom: 25px; }
-        .progress-bar-fill { width: 0%; height: 100%; background: var(--gold); transition: 0.6s; }
+        main { padding: 40px 20px; display: flex; flex-direction: column; align-items: center; min-height: 70vh; }
+        .glass-panel { background: var(--card); width: 100%; max-width: 850px; border-radius: 30px; border: 1px solid var(--border); padding: 45px; box-shadow: var(--glow); }
         label { font-size: 11px; font-weight: 800; color: #bf953f; text-transform: uppercase; display: block; margin-bottom: 12px; letter-spacing: 2px; }
-        textarea, input { width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 20px; border-radius: 15px; color: var(--text); font-size: 16px; outline: none; margin-bottom: 25px; box-sizing: border-box; }
-        .btn-prime { width: 100%; background: var(--gold); color: #000; border: none; padding: 28px; border-radius: 18px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 5px; font-size: 16px; transition: 0.5s; }
+        textarea, input { width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 20px; border-radius: 15px; color: var(--text); font-size: 16px; margin-bottom: 25px; box-sizing: border-box; }
+        .btn-prime { width: 100%; background: var(--gold); color: #000; border: none; padding: 28px; border-radius: 18px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 5px; }
         #output-zone { display: none; margin-top: 50px; width: 100%; max-width: 850px; }
-        #prompt-result { width: 100%; height: 400px; background: #000; color: #fcf6ba; border: 1px solid #bf953f; padding: 30px; border-radius: 20px; font-family: 'Courier New', monospace; font-size: 14px; }
+        #prompt-result { width: 100%; height: 300px; background: #000; color: #fcf6ba; border: 1px solid #bf953f; padding: 20px; border-radius: 15px; font-family: monospace; }
         footer { margin-top: 80px; padding: 40px; text-align: center; border-top: 1px solid var(--border); }
-        .footer-text { font-size: 10px; color: var(--text); opacity: 0.5; text-transform: uppercase; letter-spacing: 2px; line-height: 1.8; }
+        .footer-text { font-size: 10px; color: var(--text); opacity: 0.5; text-transform: uppercase; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
 <nav><div class="logo-v8">V8 ELITE</div></nav>
 
-<main id="main-content">
-    <div class="glass-panel">
-        <label>OBJETIVO FINAL (DESTINO)</label>
-        <input type="text" id="destino" placeholder="O que você quer que a IA entregue?">
-        <label>DADOS BRUTOS (FATOS)</label>
-        <textarea id="fatos" rows="6" placeholder="Cole as informações aqui..."></textarea>
-        <button class="btn-prime" onclick="processar()">Gerar Supremo Prompt</button>
+<main id="app-block">
+    <div class="glass-panel" id="conteudo-valido">
+        <label>OBJETIVO (DESTINO)</label>
+        <input type="text" id="destino" placeholder="O que a IA deve entregar?">
+        <label>DADOS (FATOS)</label>
+        <textarea id="fatos" rows="5" placeholder="Cole as informações aqui..."></textarea>
+        <button class="btn-prime" onclick="gerar()">Gerar Supremo Prompt</button>
     </div>
     <div id="output-zone">
         <textarea id="prompt-result" readonly></textarea>
@@ -43,64 +40,54 @@
 <footer>
     <div class="footer-text">
         <strong>CÁSSIA PROMPT ® | V8 ELITE EDITION</strong><br>
-        LICENCIADO PARA: <span id="licenciado-nome" style="color:#bf953f; font-weight:bold;">...</span><br>
-        A RESPONSABILIDADE É DE QUEM ESTÁ USANDO E O PROGRAMA APENAS GERA O PROMPT.
+        LICENCIADO PARA: <span id="user-display" style="color:#fcf6ba; font-weight:bold;">VERIFICANDO...</span><br>
+        A RESPONSABILIDADE É DE QUEM ESTÁ USANDO.
     </div>
 </footer>
 
 <script>
     // ==========================================
-    // SISTEMA DE SEGURANÇA V8 (PORTEIRO REAL-TIME)
+    // TRAVA DE SEGURANÇA MESTRE (CÁSSIA V8)
     // ==========================================
-    
-    // LISTA DE ACESSO: Se o nome não estiver aqui, o site bloqueia.
-    const ACESSOS_ATIVOS = {
+
+    // LISTA BRANCA: Só quem estiver aqui acessa.
+    // Se o termo da URL não estiver aqui, o site bloqueia na hora!
+    const ACESSOS = {
         "RELAT-RIO-DA-FRAN-": "FRANCIANE",
-        "helen-cristina": "HELEN CRISTINA",
-        "painel-triagem-juridica": "CÁSSIA"
+        "painel-triagem-juridica": "CÁSSIA",
+        "helen-cristina": "HELEN CRISTINA"
     };
 
-    // Pega o nome do repositório/pasta na URL atual
-    const urlCompleta = window.location.href;
-    
-    // Função para validar se algum item da lista está na URL
-    function verificarAcesso() {
-        let autorizado = false;
-        let nomeUsuario = "";
+    const url = window.location.href.toLowerCase();
+    let acessoConcedido = false;
+    let nomeEncontrado = "";
 
-        for (let slug in ACESSOS_ATIVOS) {
-            if (urlCompleta.toLowerCase().includes(slug.toLowerCase())) {
-                autorizado = true;
-                nomeUsuario = ACESSOS_ATIVOS[slug];
-                break;
-            }
+    // O detetive varre a lista:
+    for (let chave in ACESSOS) {
+        if (url.includes(chave.toLowerCase())) {
+            acessoConcedido = true;
+            nomeEncontrado = ACESSOS[chave];
+            break;
         }
-
-        if (!autorizado) {
-            document.getElementById('main-content').innerHTML = `
-                <div style="padding:100px; text-align:center;">
-                    <h1 style="color:#bf953f; font-size:40px; text-shadow: 0 0 20px rgba(191,149,63,0.5);">ACESSO REVOGADO</h1>
-                    <p style="letter-spacing:2px;">ESTA LICENÇA FOI TERMINADA PELA ADMINISTRADORA CÁSSIA.</p>
-                </div>`;
-            document.getElementById('licenciado-nome').innerText = "BLOQUEADO";
-            return false;
-        }
-
-        document.getElementById('licenciado-nome').innerText = nomeUsuario;
-        return true;
     }
 
-    // Executa a tranca
-    const estaLigado = verificarAcesso();
+    // Se o detetive não achar o nome na URL, ele DESTRÓI o site:
+    if (!acessoConcedido) {
+        document.getElementById('app-block').innerHTML = `
+            <div style="padding:100px; text-align:center;">
+                <h1 style="color:#bf953f; font-size:45px;">ACESSO REVOGADO</h1>
+                <p style="color:white; letter-spacing:3px;">ESTA LICENÇA FOI CANCELADA PELA ADMINISTRADORA.</p>
+            </div>`;
+        document.getElementById('user-display').innerText = "BLOQUEADO";
+    } else {
+        document.getElementById('user-display').innerText = nomeEncontrado;
+    }
 
-    // SÓ DEIXA O MOTOR FUNCIONAR SE ESTIVER AUTORIZADO
-    function processar() {
-        if (!estaLigado) return;
-        
+    function gerar() {
+        if (!acessoConcedido) return;
         const d = document.getElementById('destino').value;
         const f = document.getElementById('fatos').value;
-        
-        document.getElementById('prompt-result').value = `### [MODO V8] ###\n\nOBJETIVO: ${d}\n\nFATOS: ${f}`;
+        document.getElementById('prompt-result').value = "### MODO V8 ###\n\nOBJETIVO: " + d + "\n\nFATOS: " + f;
         document.getElementById('output-zone').style.display = 'block';
     }
 </script>

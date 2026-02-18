@@ -20,14 +20,13 @@
         .focus-mode header, .focus-mode footer, .focus-mode .logo-v9:first-child { opacity: 0; pointer-events: none; transition: 0.5s; }
 
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; transition: 0.8s; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
-        
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--focus-overlay); z-index: 1; pointer-events: none; transition: 0.8s; }
 
         #app-content { display: none; flex-grow: 1; flex-direction: column; align-items: center; justify-content: center; width: 100%; z-index: 2; position: relative; }
         #carregando { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
-        
+
         .logo-v9 { font-size: 26px; font-weight: 900; letter-spacing: 10px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; margin: 40px 0; text-align: center; }
-        
+
         .glass-panel { background: var(--card); width: 92%; max-width: 950px; border-radius: 12px; border: 1px solid var(--border); padding: clamp(20px, 5vw, 50px); box-shadow: 0 25px 80px rgba(0,0,0,1); backdrop-filter: blur(25px); margin-bottom: 40px; position: relative; box-sizing: border-box; transition: 0.5s; }
         .focus-mode .glass-panel { border-color: #bf953f; box-shadow: 0 0 100px rgba(191,149,63,0.1); }
 
@@ -35,19 +34,22 @@
         .label-rigor { font-size: 10px; font-weight: 800; color: #bf953f; letter-spacing: 2px; margin-bottom: 8px; display: block; text-transform: uppercase; }
         .progress-container { width: 100%; background: rgba(255,255,255,0.05); height: 6px; border-radius: 10px; margin-bottom: 15px; overflow: hidden; border: 1px solid rgba(191,149,63,0.1); }
         .progress-bar { width: 0%; height: 100%; background: var(--gold); transition: width 0.2s ease; }
-        
+
         .btn-supreme { width: 100%; background: var(--gold); color: #000; border: none; padding: 22px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; font-size: 14px; margin-top: 15px; transition: 0.3s; }
         .btn-supreme:hover { filter: brightness(1.2); }
-        
+
         .btn-copy { background: transparent; color: #bf953f; border: 1px solid #bf953f; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; margin-bottom: 10px; width: fit-content; align-self: flex-end; transition: 0.3s; }
         .btn-copy.copied { background: var(--gold); color: #000; border-color: transparent; }
-        
-        input, textarea { width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 18px; border-radius: 4px; color: var(--text); font-size: 15px; box-sizing: border-box; margin-bottom: 10px; outline: none; transition: 0.3s; }
+
+        input, textarea, select { width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 18px; border-radius: 4px; color: var(--text); font-size: 15px; box-sizing: border-box; margin-bottom: 10px; outline: none; transition: 0.3s; }
+        select { cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23bf953f' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 18px center; }
+        select option { background: #111; color: #fff; }
+
         .char-count { font-size: 10px; color: #bf953f; text-align: right; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; }
-        
+
         .top-controls { position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 1001; }
         .ctrl-btn { background: none; border: 1px solid #bf953f; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 9px; letter-spacing: 1px; font-weight: 900; color: #bf953f; }
-        
+
         footer { padding: 40px 20px; text-align: center; font-size: 10px; opacity: 0.5; letter-spacing: 2px; border-top: 1px solid var(--border); width: 100%; box-sizing: border-box; transition: 0.5s; }
         .pdf-action { color: #fcf6ba; font-weight: 900; cursor: pointer; font-size: 12px; text-transform: uppercase; display: block; text-align: left; margin-bottom: 15px; }
     </style>
@@ -66,24 +68,39 @@
     <div class="logo-v9">V9 POWER EDITION</div>
     <main style="width: 100%; display: flex; flex-direction: column; align-items: center; padding: 0 10px; box-sizing: border-box;">
         <div class="glass-panel" style="display: flex; flex-direction: column;">
-            
+
             <div class="progress-group" id="prog-area">
                 <span class="label-rigor">Análise de Dados: <span id="val1">0%</span></span>
                 <div class="progress-container"><div class="progress-bar" id="bar1"></div></div>
-                <span class="label-rigor">Rigor Jurídico/Pericial: <span id="val2">0%</span></span>
+                <span class="label-rigor">Calibração de Expertise: <span id="val2">0%</span></span>
                 <div class="progress-container"><div class="progress-bar" id="bar2"></div></div>
             </div>
 
-            <span class="pdf-action" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR PDF PERICIAL (MÁXIMA PRECISÃO)</span>
+            <span class="pdf-action" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR PDF (MÁXIMA PRECISÃO)</span>
             <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
-            
-            <input type="text" id="gerado" placeholder="O QUE DEVE SER GERADO? (EX: RÉPLICA, PARECER...)">
-            <input type="text" id="destino" placeholder="OBJETIVO ESTRATÉGICO DA PEÇA">
-            <textarea id="fatos" rows="10" placeholder="COLE AQUI OS FATOS OU USE O PDF ACIMA" oninput="countChars()"></textarea>
+
+            <select id="area">
+                <option value="" disabled selected>SELECIONE SUA ÁREA PROFISSIONAL</option>
+                <option value="juridico">⚖️ Jurídico / Advocacia</option>
+                <option value="medico">🏥 Medicina / Saúde</option>
+                <option value="contabil">📊 Contabilidade / Finanças</option>
+                <option value="engenharia">🔧 Engenharia / Arquitetura</option>
+                <option value="educacao">📚 Educação / Pedagogia</option>
+                <option value="negocios">💼 Negócios / Gestão / RH</option>
+                <option value="ti">💻 Tecnologia / TI</option>
+                <option value="marketing">📣 Marketing / Comunicação</option>
+                <option value="psicologia">🧠 Psicologia / Assistência Social</option>
+                <option value="outro">✳️ Outra área</option>
+            </select>
+
+            <input type="text" id="gerado" placeholder="O QUE DEVE SER GERADO? (EX: RELATÓRIO, PARECER, PLANO, LAUDO...)">
+            <input type="text" id="destino" placeholder="QUAL O OBJETIVO? (EX: CONVENCER, INFORMAR, RESOLVER...)">
+            <input type="text" id="publico" placeholder="PARA QUEM É? (EX: CLIENTE, JUIZ, DIRETOR, PACIENTE...)">
+            <textarea id="fatos" rows="10" placeholder="COLE AQUI AS INFORMAÇÕES, FATOS OU USE O PDF ACIMA" oninput="countChars()"></textarea>
             <div class="char-count" id="count">Caracteres: 0</div>
-            
+
             <button class="btn-supreme" onclick="executarV9()">EXECUTAR ENGENHARIA V9 POWER</button>
-            
+
             <div id="res-box" style="display:none; margin-top:40px; border-top: 1px solid var(--border); padding-top: 30px; flex-direction: column;">
                 <button class="btn-copy" id="btnCopy" onclick="copyRes()">COPIAR COMANDO PARA IA</button>
                 <textarea id="res" style="height:450px; border-color: #bf953f; color: #fcf6ba; background: #000; font-family: 'Courier New', monospace;" readonly></textarea>
@@ -100,10 +117,10 @@
 <script>
     const firebaseConfig = { databaseURL: "https://promptv25-default-rtdb.firebaseio.com" };
     firebase.initializeApp(firebaseConfig);
-    
-    function entrar() { 
-        document.getElementById('carregando').style.display = 'none'; 
-        document.getElementById('app-content').style.display = 'flex'; 
+
+    function entrar() {
+        document.getElementById('carregando').style.display = 'none';
+        document.getElementById('app-content').style.display = 'flex';
     }
     setTimeout(entrar, 1500);
 
@@ -121,13 +138,13 @@
 
     async function lerPDF(input) {
         const file = input.files[0];
-        if(!file) return;
+        if (!file) return;
         const reader = new FileReader();
-        reader.onload = async function() {
+        reader.onload = async function () {
             const typedarray = new Uint8Array(this.result);
             const pdf = await pdfjsLib.getDocument(typedarray).promise;
             let text = "";
-            for(let i=1; i<=pdf.numPages; i++) {
+            for (let i = 1; i <= pdf.numPages; i++) {
                 const page = await pdf.getPage(i);
                 const content = await page.getTextContent();
                 text += content.items.map(s => s.str).join(" ") + "\n";
@@ -138,83 +155,77 @@
         reader.readAsArrayBuffer(file);
     }
 
+    const personas = {
+        juridico:    "advogado(a) sênior com 20 anos de experiência em litígios complexos, domínio em argumentação, jurisprudência (STJ, STF, TRTs) e técnica processual. Linguagem jurídica culta e persuasiva.",
+        medico:      "médico(a) especialista com 20 anos de experiência clínica e acadêmica, habilidade em elaborar laudos, pareceres e relatórios com linguagem técnica precisa e embasamento científico atualizado.",
+        contabil:    "contador(a) sênior com 20 anos de experiência em contabilidade, auditoria e finanças corporativas, domínio das normas IFRS, NBC e legislação tributária brasileira.",
+        engenharia:  "engenheiro(a) sênior com 20 anos de experiência em projetos complexos, laudos técnicos, normas ABNT e análise crítica de especificações técnicas.",
+        educacao:    "pedagogo(a) e educador(a) sênior com 20 anos de experiência em currículo, didática e avaliação, domínio das melhores práticas pedagógicas e da BNCC.",
+        negocios:    "consultor(a) executivo(a) sênior com 20 anos de experiência em gestão estratégica, RH e organizações, com visão analítica e foco em resultados concretos.",
+        ti:          "arquiteto(a) de soluções e especialista em TI com 20 anos de experiência, domínio em sistemas, segurança, boas práticas de desenvolvimento e documentação técnica.",
+        marketing:   "estrategista de marketing e comunicação sênior com 20 anos de experiência, especialista em copy persuasivo, branding e criação de conteúdo de alto impacto.",
+        psicologia:  "psicólogo(a) clínico(a) e social com 20 anos de experiência, habilidade em elaborar relatórios, pareceres e documentos com linguagem técnica ética e empática.",
+        outro:       "especialista sênior com 20 anos de experiência na área solicitada, com capacidade analítica e de escrita técnica de alto nível."
+    };
+
+    const regras = {
+        juridico:    "- Cite artigos de lei, códigos e jurisprudência do STJ/STF/TRTs.\n- Nunca invente decisões ou processos. Se faltar dado, sinalize com ⚠.\n- Estrutura: qualificação das partes → fatos → fundamentação → pedidos.",
+        medico:      "- Baseie-se em evidências científicas e diretrizes clínicas atuais.\n- Nunca invente dados do paciente ou resultados de exames.\n- Estrutura: identificação → anamnese/histórico → análise técnica → conclusão/conduta.",
+        contabil:    "- Cite normas contábeis (NBC, IFRS, CFC) e legislação tributária aplicável.\n- Nunca invente valores, datas ou lançamentos.\n- Estrutura: contexto → análise dos dados → fundamentação normativa → conclusão.",
+        engenharia:  "- Referencie normas técnicas da ABNT e legislação aplicável.\n- Nunca invente especificações ou medições não fornecidas.\n- Estrutura: objeto → metodologia → análise técnica → conclusão/recomendações.",
+        educacao:    "- Referencie a BNCC, teorias pedagógicas e autores reconhecidos quando aplicável.\n- Nunca invente dados de alunos ou resultados.\n- Estrutura: contexto → diagnóstico → proposta/análise → conclusão.",
+        negocios:    "- Use linguagem objetiva, orientada a dados e resultados.\n- Nunca invente métricas ou projeções não fornecidas.\n- Estrutura: contexto → análise → recomendações estratégicas → próximos passos.",
+        ti:          "- Use terminologia técnica precisa e referencie padrões e boas práticas (ISO, IEEE, etc.) quando aplicável.\n- Nunca invente funcionalidades ou dados técnicos.\n- Estrutura: escopo → análise técnica → solução proposta → considerações finais.",
+        marketing:   "- Use linguagem persuasiva, direta e adaptada ao público-alvo.\n- Nunca invente dados de mercado ou métricas não fornecidas.\n- Estrutura: contexto/objetivo → desenvolvimento → call to action ou conclusão.",
+        psicologia:  "- Use linguagem técnica e ética, respeitando o Código de Ética do CFP.\n- Nunca invente informações sobre o indivíduo avaliado.\n- Estrutura: identificação → histórico → análise → conclusão/recomendações.",
+        outro:       "- Use linguagem técnica adequada à área e ao público-alvo.\n- Nunca invente dados ou informações não fornecidas.\n- Estrutura: contexto → desenvolvimento lógico → conclusão objetiva."
+    };
+
     function executarV9() {
+        const areaVal = document.getElementById('area').value;
+        if (!areaVal) { alert("Selecione sua área profissional antes de continuar."); return; }
+
         const area = document.getElementById('prog-area');
         const b1 = document.getElementById('bar1'); const b2 = document.getElementById('bar2');
         const v1 = document.getElementById('val1'); const v2 = document.getElementById('val2');
-        
+
         area.style.display = 'block';
         let p1 = 0; let p2 = 0;
-        
+
         let itv = setInterval(() => {
-            if(p1 < 100) { p1 += 5; b1.style.width = p1+'%'; v1.innerText = p1+'%'; }
-            if(p1 > 50 && p2 < 100) { p2 += 10; b2.style.width = p2+'%'; v2.innerText = p2+'%'; }
-            
-            if(p1 >= 100 && p2 >= 100) {
+            if (p1 < 100) { p1 += 5; b1.style.width = p1 + '%'; v1.innerText = p1 + '%'; }
+            if (p1 > 50 && p2 < 100) { p2 += 10; b2.style.width = p2 + '%'; v2.innerText = p2 + '%'; }
+
+            if (p1 >= 100 && p2 >= 100) {
                 clearInterval(itv);
 
-                const acao = document.getElementById('gerado').value.trim();
+                const acao     = document.getElementById('gerado').value.trim();
                 const objetivo = document.getElementById('destino').value.trim();
-                const fatos = document.getElementById('fatos').value.trim();
+                const publico  = document.getElementById('publico').value.trim();
+                const fatos    = document.getElementById('fatos').value.trim();
+                const persona  = personas[areaVal];
+                const regra    = regras[areaVal];
 
                 const promptFinal =
-`════════════════════════════════════════════════════════
-   CÁSSIA PROMPT V9 POWER EDITION — ENGENHARIA MÁXIMA
-════════════════════════════════════════════════════════
+`[CÁSSIA PROMPT V9 — ENGENHARIA MÁXIMA]
 
-▌ PAPEL E PERSONA
-Você é um(a) advogado(a) sênior com 20 anos de experiência em litígios complexos, especialista em produção de peças jurídicas de alto impacto. Sua escrita é tecnicamente impecável, persuasiva e estruturada conforme as melhores práticas do Direito brasileiro. Você tem profundo domínio em argumentação, jurisprudência e técnica processual.
+PERSONA: Você é ${persona}
 
-▌ MISSÃO PRINCIPAL
-Elabore com máximo rigor e excelência: ${acao}
+TAREFA: ${acao}
+OBJETIVO: ${objetivo}
+PÚBLICO-ALVO: ${publico || "não especificado — adapte o tom ao contexto"}
 
-▌ OBJETIVO ESTRATÉGICO DA PEÇA
-${objetivo}
+REGRAS OBRIGATÓRIAS:
+1. Leia e interprete TODOS os dados fornecidos antes de escrever qualquer coisa.
+2. Identifique os pontos centrais, dados críticos e possíveis lacunas.
+3. Adapte o tom, vocabulário e nível técnico ao público-alvo informado.
+${regra}
+4. Se faltar dado essencial, escreva: ⚠ REVISÃO NECESSÁRIA — [descreva o dado ausente].
+5. NUNCA invente informações. Use exclusivamente o que está nos dados abaixo.
+6. Entregue o documento completo, estruturado e pronto para uso. Sem introduções desnecessárias — comece direto pelo conteúdo.
 
-▌ PROTOCOLO OBRIGATÓRIO DE QUALIDADE
-Antes de redigir qualquer linha, siga rigorosamente este protocolo:
-
-  [1] ANÁLISE DOS FATOS
-  — Leia e interprete integralmente a base de dados fornecida abaixo.
-  — Identifique os fatos juridicamente relevantes, as partes envolvidas, datas, valores, documentos e omissões.
-  — Mapeie os pontos fortes e os pontos vulneráveis da posição a ser defendida.
-
-  [2] FUNDAMENTAÇÃO JURÍDICA
-  — Cite dispositivos legais aplicáveis (artigos de lei, códigos, regulamentos).
-  — Referencie jurisprudência atualizada dos tribunais superiores (STJ, STF, TRTs, TRFs) quando aplicável.
-  — Construa uma linha argumentativa coesa, do geral para o específico.
-
-  [3] ESTRUTURA DA PEÇA
-  A peça deve conter obrigatoriamente:
-    • Cabeçalho com qualificação completa das partes (se disponível nos fatos)
-    • Síntese dos fatos em ordem cronológica e lógica
-    • Fundamentos jurídicos sólidos, com argumentos encadeados
-    • Pedidos ou conclusões objetivos e bem delimitados
-    • Linguagem culta, técnica e persuasiva — sem jargões desnecessários
-
-  [4] CONTROLE DE QUALIDADE E ANTI-ALUCINAÇÃO
-  — NÃO invente fatos, datas, nomes, valores ou jurisprudência inexistente.
-  — Baseie-se EXCLUSIVAMENTE nos dados fornecidos abaixo.
-  — Se algum dado essencial estiver ausente nos fatos, sinalize claramente:
-    ⚠ [REVISÃO HUMANA NECESSÁRIA — dado ausente: descreva o dado]
-  — Não preencha lacunas com suposições; aponte-as explicitamente.
-
-  [5] NÍVEL DE EXIGÊNCIA
-  — O resultado deve ter qualidade de peça profissional pronta para uso.
-  — Revise internamente sua própria resposta antes de entregar.
-  — Se houver contradições nos fatos fornecidos, sinalize e adote a interpretação mais favorável à posição estratégica descrita acima.
-
-▌ BASE DE DADOS — FATOS E DOCUMENTOS FORNECIDOS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-${fatos}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-▌ ENTREGA ESPERADA
-Produza agora a peça completa, seguindo todos os protocolos acima. Apresente o resultado formatado, pronto para revisão final pelo(a) profissional responsável. Inicie diretamente pela peça, sem preâmbulos desnecessários.
-
-════════════════════════════════════════════════════════
-   FIM DO COMANDO V9 — EXECUTE COM MÁXIMA EXCELÊNCIA
-════════════════════════════════════════════════════════`;
+DADOS FORNECIDOS:
+${fatos}`;
 
                 document.getElementById('res').value = promptFinal;
                 document.getElementById('res-box').style.display = 'flex';

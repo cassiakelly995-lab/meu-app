@@ -12,14 +12,37 @@
             --bg: #050505;
             --card: rgba(12, 12, 12, 0.98);
             --text: #ffffff;
+            --subtext: rgba(255,255,255,0.5);
             --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
+            --gold-solid: #bf953f;
             --border: rgba(191, 149, 63, 0.3);
+            --input-bg: rgba(255,255,255,0.02);
             --focus-overlay: rgba(0,0,0,0);
+            --warn-bg: rgba(191,149,63,0.08);
+            --res-bg: #000;
+            --res-color: #fcf6ba;
         }
+
+        body.light-mode {
+            --bg: #f0ece3;
+            --card: rgba(255,255,255,0.97);
+            --text: #1a1209;
+            --subtext: rgba(0,0,0,0.45);
+            --border: rgba(139, 100, 20, 0.35);
+            --input-bg: rgba(0,0,0,0.03);
+            --focus-overlay: rgba(0,0,0,0);
+            --warn-bg: rgba(191,149,63,0.12);
+            --res-bg: #1a1209;
+            --res-color: #fcf6ba;
+        }
+        body.light-mode .glass-panel { box-shadow: 0 25px 80px rgba(0,0,0,0.12); }
+        body.light-mode footer { border-top-color: var(--border); }
+        body.light-mode .progress-container { background: rgba(0,0,0,0.06); }
+
         .focus-mode { --bg: #000000; --focus-overlay: rgba(0,0,0,0.85); }
         .focus-mode header, .focus-mode footer, .focus-mode .logo-v9:first-child { opacity: 0; pointer-events: none; transition: 0.5s; }
 
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; transition: 0.8s; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; transition: background 0.5s, color 0.5s; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--focus-overlay); z-index: 1; pointer-events: none; transition: 0.8s; }
 
         #app-content { display: none; flex-grow: 1; flex-direction: column; align-items: center; justify-content: center; width: 100%; z-index: 2; position: relative; }
@@ -41,23 +64,52 @@
         .btn-copy { background: transparent; color: #bf953f; border: 1px solid #bf953f; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; margin-bottom: 10px; width: fit-content; align-self: flex-end; transition: 0.3s; }
         .btn-copy.copied { background: var(--gold); color: #000; border-color: transparent; }
 
-        input, textarea, select { width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 18px; border-radius: 4px; color: var(--text); font-size: 15px; box-sizing: border-box; margin-bottom: 10px; outline: none; transition: 0.3s; }
-        select { cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23bf953f' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 18px center; }
+        input, textarea, select { width: 100%; background: var(--input-bg); border: 1px solid var(--border); padding: 18px; border-radius: 4px; color: var(--text); font-size: 15px; box-sizing: border-box; margin-bottom: 10px; outline: none; transition: 0.3s; }
+        input:focus, textarea:focus, select:focus { border-color: var(--gold-solid); }
+        input.invalid, select.invalid { border-color: #e05252 !important; }
+
+        select { cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23bf953f' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 18px center; background-color: var(--input-bg); }
         select option { background: #111; color: #fff; }
+        body.light-mode select option { background: #fff; color: #111; }
 
-        .char-count { font-size: 10px; color: #bf953f; text-align: right; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px; }
+        .char-count { font-size: 10px; color: #bf953f; text-align: right; margin-bottom: 5px; font-weight: bold; letter-spacing: 1px; }
 
-        .top-controls { position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 1001; }
-        .ctrl-btn { background: none; border: 1px solid #bf953f; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 9px; letter-spacing: 1px; font-weight: 900; color: #bf953f; }
+        .quality-bar-wrap { width: 100%; margin-bottom: 20px; }
+        .quality-label { font-size: 10px; font-weight: 800; color: var(--gold-solid); letter-spacing: 2px; text-transform: uppercase; display: flex; justify-content: space-between; margin-bottom: 6px; }
+        .quality-track { width: 100%; background: rgba(255,255,255,0.05); height: 6px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(191,149,63,0.1); }
+        body.light-mode .quality-track { background: rgba(0,0,0,0.06); }
+        .quality-fill { height: 100%; border-radius: 10px; transition: width 0.4s ease, background 0.4s; }
+        .quality-warn { font-size: 11px; color: #e0a052; margin-top: 6px; display: none; font-weight: 600; letter-spacing: 0.5px; background: var(--warn-bg); padding: 8px 12px; border-radius: 4px; border-left: 3px solid #bf953f; }
+
+        .efetividade-wrap { display: none; margin-bottom: 20px; padding: 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--warn-bg); }
+        .efetividade-label { font-size: 10px; font-weight: 800; color: var(--gold-solid); letter-spacing: 2px; text-transform: uppercase; display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .efetividade-track { width: 100%; background: rgba(255,255,255,0.05); height: 8px; border-radius: 10px; overflow: hidden; }
+        body.light-mode .efetividade-track { background: rgba(0,0,0,0.08); }
+        .efetividade-fill { height: 100%; border-radius: 10px; background: var(--gold); transition: width 0.8s ease; }
+        .efetividade-msg { font-size: 11px; color: var(--subtext); margin-top: 8px; letter-spacing: 0.3px; }
+
+        .tom-group { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+        .tom-btn { flex: 1; min-width: 80px; background: var(--input-bg); border: 1px solid var(--border); padding: 10px 8px; border-radius: 4px; color: var(--subtext); font-size: 10px; font-weight: 800; letter-spacing: 1px; cursor: pointer; text-transform: uppercase; text-align: center; transition: 0.2s; }
+        .tom-btn.active { background: var(--gold); color: #000; border-color: transparent; }
+        .tom-label { font-size: 10px; font-weight: 800; color: var(--gold-solid); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; display: block; }
+
+        #res { height: 300px; border-color: #bf953f; color: var(--res-color); background: var(--res-bg); font-family: 'Courier New', monospace; resize: vertical; min-height: 200px; }
+
+        .top-controls { position: absolute; top: 20px; right: 20px; display: flex; gap: 8px; z-index: 1001; flex-wrap: wrap; justify-content: flex-end; }
+        .ctrl-btn { background: none; border: 1px solid #bf953f; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 9px; letter-spacing: 1px; font-weight: 900; color: #bf953f; transition: 0.2s; }
+        .ctrl-btn:hover { background: rgba(191,149,63,0.1); }
+        .ctrl-btn.active { background: var(--gold); color: #000; border-color: transparent; }
 
         footer { padding: 40px 20px; text-align: center; font-size: 10px; opacity: 0.5; letter-spacing: 2px; border-top: 1px solid var(--border); width: 100%; box-sizing: border-box; transition: 0.5s; }
         .pdf-action { color: #fcf6ba; font-weight: 900; cursor: pointer; font-size: 12px; text-transform: uppercase; display: block; text-align: left; margin-bottom: 15px; }
+        body.light-mode .pdf-action { color: #8a6010; }
     </style>
 </head>
 <body>
 
 <div class="top-controls">
-    <button class="ctrl-btn" onclick="document.body.classList.toggle('focus-mode')">MODO FOCO</button>
+    <button class="ctrl-btn" id="btnFoco" onclick="toggleFoco()">MODO FOCO</button>
+    <button class="ctrl-btn" id="btnTema" onclick="toggleTema()">☀️ CLARO</button>
 </div>
 
 <div id="carregando">
@@ -79,7 +131,7 @@
             <span class="pdf-action" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR PDF (MÁXIMA PRECISÃO)</span>
             <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
 
-            <select id="area">
+            <select id="area" onchange="limparInvalid(this); calcEfetividade()">
                 <option value="" disabled selected>SELECIONE SUA ÁREA PROFISSIONAL</option>
                 <option value="juridico">⚖️ Jurídico / Advocacia</option>
                 <option value="medico">🏥 Medicina / Saúde</option>
@@ -93,17 +145,44 @@
                 <option value="outro">✳️ Outra área</option>
             </select>
 
-            <input type="text" id="gerado" placeholder="O QUE DEVE SER GERADO? (EX: RELATÓRIO, PARECER, PLANO, LAUDO...)">
-            <input type="text" id="destino" placeholder="QUAL O OBJETIVO? (EX: CONVENCER, INFORMAR, RESOLVER...)">
-            <input type="text" id="publico" placeholder="PARA QUEM É? (EX: CLIENTE, JUIZ, DIRETOR, PACIENTE...)">
-            <textarea id="fatos" rows="10" placeholder="COLE AQUI AS INFORMAÇÕES, FATOS OU USE O PDF ACIMA" oninput="countChars()"></textarea>
+            <input type="text" id="gerado" placeholder="O QUE DEVE SER GERADO? (EX: RELATÓRIO, PARECER, LAUDO...)" oninput="limparInvalid(this); calcEfetividade()">
+            <input type="text" id="destino" placeholder="QUAL O OBJETIVO? (EX: CONVENCER, INFORMAR, RESOLVER...)" oninput="calcEfetividade()">
+            <input type="text" id="publico" placeholder="PARA QUEM É? (EX: CLIENTE, JUIZ, DIRETOR, PACIENTE...)" oninput="calcEfetividade()">
+
+            <span class="tom-label">TOM DA ESCRITA</span>
+            <div class="tom-group">
+                <button class="tom-btn active" data-tom="formal" onclick="selecionarTom(this)">FORMAL</button>
+                <button class="tom-btn" data-tom="semiformal" onclick="selecionarTom(this)">SEMIFORMAL</button>
+                <button class="tom-btn" data-tom="simples" onclick="selecionarTom(this)">SIMPLES</button>
+                <button class="tom-btn" data-tom="persuasivo" onclick="selecionarTom(this)">PERSUASIVO</button>
+            </div>
+
+            <textarea id="fatos" rows="10" placeholder="COLE AQUI AS INFORMAÇÕES, FATOS OU USE O PDF ACIMA" oninput="countChars(); calcQualidade(); calcEfetividade()"></textarea>
             <div class="char-count" id="count">Caracteres: 0</div>
+
+            <div class="quality-bar-wrap">
+                <div class="quality-label">
+                    <span>QUALIDADE DOS DADOS</span>
+                    <span id="quality-pct">0%</span>
+                </div>
+                <div class="quality-track"><div class="quality-fill" id="quality-fill" style="width:0%"></div></div>
+                <div class="quality-warn" id="quality-warn">⚠ Seus dados estão incompletos. Quanto mais detalhes você fornecer, melhor será o resultado gerado.</div>
+            </div>
+
+            <div class="efetividade-wrap" id="efetividade-wrap">
+                <div class="efetividade-label">
+                    <span>EFETIVIDADE DO PROMPT</span>
+                    <span id="efet-pct">0%</span>
+                </div>
+                <div class="efetividade-track"><div class="efetividade-fill" id="efet-fill" style="width:0%"></div></div>
+                <div class="efetividade-msg" id="efet-msg"></div>
+            </div>
 
             <button class="btn-supreme" onclick="executarV9()">EXECUTAR ENGENHARIA V9 POWER</button>
 
             <div id="res-box" style="display:none; margin-top:40px; border-top: 1px solid var(--border); padding-top: 30px; flex-direction: column;">
                 <button class="btn-copy" id="btnCopy" onclick="copyRes()">COPIAR COMANDO PARA IA</button>
-                <textarea id="res" style="height:450px; border-color: #bf953f; color: #fcf6ba; background: #000; font-family: 'Courier New', monospace;" readonly></textarea>
+                <textarea id="res" readonly></textarea>
                 <button class="btn-supreme" onclick="baixar()">EXPORTAR PARA WORD (.DOC)</button>
             </div>
         </div>
@@ -124,7 +203,93 @@
     }
     setTimeout(entrar, 1500);
 
-    function countChars() { document.getElementById('count').innerText = "Caracteres: " + document.getElementById('fatos').value.length; }
+    function toggleTema() {
+        const body = document.body;
+        const btn = document.getElementById('btnTema');
+        body.classList.toggle('light-mode');
+        btn.textContent = body.classList.contains('light-mode') ? '🌙 ESCURO' : '☀️ CLARO';
+    }
+
+    function toggleFoco() {
+        const body = document.body;
+        const btn = document.getElementById('btnFoco');
+        body.classList.toggle('focus-mode');
+        btn.classList.toggle('active');
+    }
+
+    let tomSelecionado = 'formal';
+    function selecionarTom(el) {
+        document.querySelectorAll('.tom-btn').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
+        tomSelecionado = el.dataset.tom;
+        calcEfetividade();
+    }
+
+    const tomDesc = {
+        formal:      "Linguagem formal, técnica e culta. Adequada para documentos oficiais, processos e relatórios institucionais.",
+        semiformal:  "Linguagem semiformal: clara, profissional, sem excesso de tecnicidade. Adequada para e-mails e comunicações internas.",
+        simples:     "Linguagem simples e acessível. Adequada para comunicação com leigos, clientes e público geral.",
+        persuasivo:  "Linguagem persuasiva e estratégica. Foco em convencer, engajar e gerar impacto no leitor."
+    };
+
+    function countChars() {
+        document.getElementById('count').innerText = "Caracteres: " + document.getElementById('fatos').value.length;
+    }
+
+    function calcQualidade() {
+        const texto = document.getElementById('fatos').value.trim();
+        const chars = texto.length;
+        const palavras = texto.split(/\s+/).filter(p => p.length > 0).length;
+
+        let pct = 0;
+        if (chars >= 50)  pct = 20;
+        if (chars >= 200) pct = 40;
+        if (chars >= 500) pct = 60;
+        if (chars >= 900) pct = 80;
+        if (chars >= 1500 && palavras >= 150) pct = 100;
+
+        const fill = document.getElementById('quality-fill');
+        const label = document.getElementById('quality-pct');
+        const warn = document.getElementById('quality-warn');
+
+        fill.style.width = pct + '%';
+        fill.style.background = pct < 40 ? '#e05252' : pct < 70 ? '#e0a052' : '#52c452';
+        label.innerText = pct + '%';
+        warn.style.display = (pct < 60 && chars > 0) ? 'block' : 'none';
+    }
+
+    function calcEfetividade() {
+        const area    = document.getElementById('area').value;
+        const acao    = document.getElementById('gerado').value.trim();
+        const destino = document.getElementById('destino').value.trim();
+        const publico = document.getElementById('publico').value.trim();
+        const fatos   = document.getElementById('fatos').value.trim();
+
+        let score = 0;
+        if (area)               score += 25;
+        if (acao.length > 3)    score += 20;
+        if (destino.length > 3) score += 15;
+        if (publico.length > 3) score += 10;
+        if (fatos.length >= 200) score += 15;
+        if (fatos.length >= 800) score += 10;
+        if (tomSelecionado)      score += 5;
+
+        const wrap = document.getElementById('efetividade-wrap');
+        const fill = document.getElementById('efet-fill');
+        const pctEl = document.getElementById('efet-pct');
+        const msg = document.getElementById('efet-msg');
+
+        if (score > 0) wrap.style.display = 'block';
+        fill.style.width = score + '%';
+        pctEl.innerText = score + '%';
+
+        if (score < 40)      msg.innerText = "Preencha mais campos para aumentar a efetividade.";
+        else if (score < 65) msg.innerText = "Bom começo! Adicione mais detalhes nos dados fornecidos.";
+        else if (score < 85) msg.innerText = "Ótimo! O prompt já tem alta qualidade.";
+        else                  msg.innerText = "🏆 Prompt no nível máximo. Pronto para resultados excepcionais.";
+    }
+
+    function limparInvalid(el) { el.classList.remove('invalid'); }
 
     function copyRes() {
         const text = document.getElementById('res');
@@ -150,40 +315,51 @@
                 text += content.items.map(s => s.str).join(" ") + "\n";
             }
             document.getElementById('fatos').value = text;
-            countChars();
+            countChars(); calcQualidade(); calcEfetividade();
         };
         reader.readAsArrayBuffer(file);
     }
 
     const personas = {
-        juridico:    "advogado(a) sênior com 20 anos de experiência em litígios complexos, domínio em argumentação, jurisprudência (STJ, STF, TRTs) e técnica processual. Linguagem jurídica culta e persuasiva.",
-        medico:      "médico(a) especialista com 20 anos de experiência clínica e acadêmica, habilidade em elaborar laudos, pareceres e relatórios com linguagem técnica precisa e embasamento científico atualizado.",
-        contabil:    "contador(a) sênior com 20 anos de experiência em contabilidade, auditoria e finanças corporativas, domínio das normas IFRS, NBC e legislação tributária brasileira.",
-        engenharia:  "engenheiro(a) sênior com 20 anos de experiência em projetos complexos, laudos técnicos, normas ABNT e análise crítica de especificações técnicas.",
-        educacao:    "pedagogo(a) e educador(a) sênior com 20 anos de experiência em currículo, didática e avaliação, domínio das melhores práticas pedagógicas e da BNCC.",
-        negocios:    "consultor(a) executivo(a) sênior com 20 anos de experiência em gestão estratégica, RH e organizações, com visão analítica e foco em resultados concretos.",
-        ti:          "arquiteto(a) de soluções e especialista em TI com 20 anos de experiência, domínio em sistemas, segurança, boas práticas de desenvolvimento e documentação técnica.",
-        marketing:   "estrategista de marketing e comunicação sênior com 20 anos de experiência, especialista em copy persuasivo, branding e criação de conteúdo de alto impacto.",
-        psicologia:  "psicólogo(a) clínico(a) e social com 20 anos de experiência, habilidade em elaborar relatórios, pareceres e documentos com linguagem técnica ética e empática.",
-        outro:       "especialista sênior com 20 anos de experiência na área solicitada, com capacidade analítica e de escrita técnica de alto nível."
+        juridico:   "advogado(a) sênior com 20 anos de experiência em litígios complexos, domínio em argumentação, jurisprudência (STJ, STF, TRTs) e técnica processual.",
+        medico:     "médico(a) especialista com 20 anos de experiência clínica e acadêmica, habilidade em laudos, pareceres e relatórios com embasamento científico atualizado.",
+        contabil:   "contador(a) sênior com 20 anos de experiência em contabilidade, auditoria e finanças corporativas, domínio das normas IFRS, NBC e legislação tributária.",
+        engenharia: "engenheiro(a) sênior com 20 anos de experiência em projetos complexos, laudos técnicos e normas ABNT.",
+        educacao:   "pedagogo(a) sênior com 20 anos de experiência em currículo, didática e avaliação, domínio das melhores práticas pedagógicas e da BNCC.",
+        negocios:   "consultor(a) executivo(a) sênior com 20 anos de experiência em gestão estratégica, RH e organizações, com foco em resultados concretos.",
+        ti:         "arquiteto(a) de soluções e especialista em TI com 20 anos de experiência, domínio em sistemas, segurança e documentação técnica.",
+        marketing:  "estrategista de marketing e comunicação sênior com 20 anos de experiência, especialista em copy persuasivo e conteúdo de alto impacto.",
+        psicologia: "psicólogo(a) com 20 anos de experiência, habilidade em relatórios, pareceres e documentos com linguagem técnica ética e empática.",
+        outro:      "especialista sênior com 20 anos de experiência na área solicitada, com capacidade analítica e escrita técnica de alto nível."
     };
 
     const regras = {
-        juridico:    "- Cite artigos de lei, códigos e jurisprudência do STJ/STF/TRTs.\n- Nunca invente decisões ou processos. Se faltar dado, sinalize com ⚠.\n- Estrutura: qualificação das partes → fatos → fundamentação → pedidos.",
-        medico:      "- Baseie-se em evidências científicas e diretrizes clínicas atuais.\n- Nunca invente dados do paciente ou resultados de exames.\n- Estrutura: identificação → anamnese/histórico → análise técnica → conclusão/conduta.",
-        contabil:    "- Cite normas contábeis (NBC, IFRS, CFC) e legislação tributária aplicável.\n- Nunca invente valores, datas ou lançamentos.\n- Estrutura: contexto → análise dos dados → fundamentação normativa → conclusão.",
-        engenharia:  "- Referencie normas técnicas da ABNT e legislação aplicável.\n- Nunca invente especificações ou medições não fornecidas.\n- Estrutura: objeto → metodologia → análise técnica → conclusão/recomendações.",
-        educacao:    "- Referencie a BNCC, teorias pedagógicas e autores reconhecidos quando aplicável.\n- Nunca invente dados de alunos ou resultados.\n- Estrutura: contexto → diagnóstico → proposta/análise → conclusão.",
-        negocios:    "- Use linguagem objetiva, orientada a dados e resultados.\n- Nunca invente métricas ou projeções não fornecidas.\n- Estrutura: contexto → análise → recomendações estratégicas → próximos passos.",
-        ti:          "- Use terminologia técnica precisa e referencie padrões e boas práticas (ISO, IEEE, etc.) quando aplicável.\n- Nunca invente funcionalidades ou dados técnicos.\n- Estrutura: escopo → análise técnica → solução proposta → considerações finais.",
-        marketing:   "- Use linguagem persuasiva, direta e adaptada ao público-alvo.\n- Nunca invente dados de mercado ou métricas não fornecidas.\n- Estrutura: contexto/objetivo → desenvolvimento → call to action ou conclusão.",
-        psicologia:  "- Use linguagem técnica e ética, respeitando o Código de Ética do CFP.\n- Nunca invente informações sobre o indivíduo avaliado.\n- Estrutura: identificação → histórico → análise → conclusão/recomendações.",
-        outro:       "- Use linguagem técnica adequada à área e ao público-alvo.\n- Nunca invente dados ou informações não fornecidas.\n- Estrutura: contexto → desenvolvimento lógico → conclusão objetiva."
+        juridico:   "- Cite artigos de lei, códigos e jurisprudência do STJ/STF/TRTs.\n- Nunca invente decisões ou processos.\n- Estrutura: qualificação das partes → fatos → fundamentação → pedidos.",
+        medico:     "- Baseie-se em evidências científicas e diretrizes clínicas atuais.\n- Nunca invente dados do paciente ou exames.\n- Estrutura: identificação → histórico → análise técnica → conclusão/conduta.",
+        contabil:   "- Cite normas contábeis (NBC, IFRS, CFC) e legislação tributária.\n- Nunca invente valores ou lançamentos.\n- Estrutura: contexto → análise → fundamentação normativa → conclusão.",
+        engenharia: "- Referencie normas ABNT e legislação aplicável.\n- Nunca invente especificações ou medições.\n- Estrutura: objeto → metodologia → análise técnica → recomendações.",
+        educacao:   "- Referencie BNCC, teorias pedagógicas e autores reconhecidos.\n- Nunca invente dados de alunos.\n- Estrutura: contexto → diagnóstico → proposta → conclusão.",
+        negocios:   "- Linguagem objetiva, orientada a dados e resultados.\n- Nunca invente métricas ou projeções.\n- Estrutura: contexto → análise → recomendações → próximos passos.",
+        ti:         "- Terminologia técnica precisa, padrões ISO/IEEE quando aplicável.\n- Nunca invente funcionalidades ou dados técnicos.\n- Estrutura: escopo → análise → solução → considerações finais.",
+        marketing:  "- Linguagem adaptada ao público-alvo.\n- Nunca invente dados de mercado ou métricas.\n- Estrutura: contexto → desenvolvimento → call to action.",
+        psicologia: "- Respeite o Código de Ética do CFP.\n- Nunca invente informações sobre o avaliado.\n- Estrutura: identificação → histórico → análise → conclusão/recomendações.",
+        outro:      "- Linguagem técnica adequada à área e ao público.\n- Nunca invente dados não fornecidos.\n- Estrutura: contexto → desenvolvimento lógico → conclusão."
     };
 
     function executarV9() {
-        const areaVal = document.getElementById('area').value;
-        if (!areaVal) { alert("Selecione sua área profissional antes de continuar."); return; }
+        const areaEl   = document.getElementById('area');
+        const acaoEl   = document.getElementById('gerado');
+        const fatosEl  = document.getElementById('fatos');
+        const areaVal  = areaEl.value;
+        const acaoVal  = acaoEl.value.trim();
+        const fatosVal = fatosEl.value.trim();
+
+        let valido = true;
+        if (!areaVal)  { areaEl.classList.add('invalid'); valido = false; }
+        if (!acaoVal)  { acaoEl.classList.add('invalid'); valido = false; }
+        if (!fatosVal) { fatosEl.style.borderColor = '#e05252'; valido = false; }
+        else           { fatosEl.style.borderColor = ''; }
+        if (!valido) { setTimeout(() => { areaEl.classList.remove('invalid'); acaoEl.classList.remove('invalid'); fatosEl.style.borderColor = ''; }, 2500); return; }
 
         const area = document.getElementById('prog-area');
         const b1 = document.getElementById('bar1'); const b2 = document.getElementById('bar2');
@@ -199,12 +375,13 @@
             if (p1 >= 100 && p2 >= 100) {
                 clearInterval(itv);
 
-                const acao     = document.getElementById('gerado').value.trim();
+                const acao     = acaoVal;
                 const objetivo = document.getElementById('destino').value.trim();
                 const publico  = document.getElementById('publico').value.trim();
-                const fatos    = document.getElementById('fatos').value.trim();
+                const fatos    = fatosVal;
                 const persona  = personas[areaVal];
                 const regra    = regras[areaVal];
+                const tom      = tomDesc[tomSelecionado];
 
                 const promptFinal =
 `[CÁSSIA PROMPT V9 — ENGENHARIA MÁXIMA]
@@ -212,17 +389,18 @@
 PERSONA: Você é ${persona}
 
 TAREFA: ${acao}
-OBJETIVO: ${objetivo}
+OBJETIVO: ${objetivo || "não especificado"}
 PÚBLICO-ALVO: ${publico || "não especificado — adapte o tom ao contexto"}
+TOM DA ESCRITA: ${tom}
 
 REGRAS OBRIGATÓRIAS:
 1. Leia e interprete TODOS os dados fornecidos antes de escrever qualquer coisa.
-2. Identifique os pontos centrais, dados críticos e possíveis lacunas.
-3. Adapte o tom, vocabulário e nível técnico ao público-alvo informado.
+2. Identifique pontos centrais, dados críticos e lacunas existentes.
+3. Adapte o tom, vocabulário e nível técnico ao público-alvo e ao tom de escrita definidos acima.
 ${regra}
 4. Se faltar dado essencial, escreva: ⚠ REVISÃO NECESSÁRIA — [descreva o dado ausente].
 5. NUNCA invente informações. Use exclusivamente o que está nos dados abaixo.
-6. Entregue o documento completo, estruturado e pronto para uso. Sem introduções desnecessárias — comece direto pelo conteúdo.
+6. Entregue o documento completo, estruturado e pronto para uso. Comece direto pelo conteúdo.
 
 DADOS FORNECIDOS:
 ${fatos}`;
@@ -230,6 +408,7 @@ ${fatos}`;
                 document.getElementById('res').value = promptFinal;
                 document.getElementById('res-box').style.display = 'flex';
                 setTimeout(() => { area.style.display = 'none'; }, 1000);
+                document.getElementById('res-box').scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }, 60);
     }

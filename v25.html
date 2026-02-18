@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -183,14 +182,41 @@
 <script>
     const firebaseConfig = { databaseURL: "https://promptv25-default-rtdb.firebaseio.com" };
     firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
-    function entrar() {
-        document.getElementById('carregando').style.display = 'none';
-        document.getElementById('app-content').style.display = 'flex';
-        renderHistorico();
+    // ── VALIDAÇÃO DE ACESSO ──
+    function verificarAcesso() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        if (!id) {
+            bloqueado("ACESSO NEGADO", "Nenhum código de acesso encontrado.<br>Solicite seu link autorizado.");
+            return;
+        }
+        db.ref('acessos_v9/' + id).once('value').then(snap => {
+            if (snap.exists()) {
+                document.getElementById('carregando').style.display = 'none';
+                document.getElementById('app-content').style.display = 'flex';
+                renderHistorico();
+            } else {
+                bloqueado("ACESSO REVOGADO", "Seu acesso foi desativado.<br>Entre em contato para mais informações.");
+            }
+        }).catch(() => {
+            bloqueado("ERRO DE CONEXÃO", "Não foi possível verificar seu acesso.<br>Tente novamente em instantes.");
+        });
     }
-    setTimeout(entrar, 1500);
 
+    function bloqueado(titulo, msg) {
+        document.getElementById('carregando').innerHTML = `
+            <div style="text-align:center;padding:40px;">
+                <div style="font-size:22px;font-weight:900;letter-spacing:6px;background:linear-gradient(135deg,#bf953f,#fcf6ba,#b38728);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:30px;">CÁSSIA PROMPT</div>
+                <div style="font-size:14px;font-weight:900;color:#e05252;letter-spacing:3px;margin-bottom:16px;">${titulo}</div>
+                <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.8;">${msg}</div>
+            </div>`;
+    }
+
+    setTimeout(verificarAcesso, 1000);
+
+    // ── TOAST ──
     function showToast(msg) {
         const t = document.getElementById('toast');
         t.innerText = msg;
@@ -198,17 +224,20 @@
         setTimeout(() => t.classList.remove('show'), 2200);
     }
 
+    // ── TEMA ──
     function toggleTema() {
         document.body.classList.toggle('light-mode');
         document.getElementById('btnTema').textContent =
             document.body.classList.contains('light-mode') ? '🌙 ESCURO' : '☀️ CLARO';
     }
 
+    // ── FOCO ──
     function toggleFoco() {
         document.body.classList.toggle('focus-mode');
         document.getElementById('btnFoco').classList.toggle('active');
     }
 
+    // ── TOM ──
     let tomSelecionado = 'formal';
     const tomDesc = {
         formal:     "Linguagem formal, técnica e culta. Adequada para documentos oficiais, processos e relatórios institucionais.",
@@ -223,10 +252,12 @@
         calcEfetividade();
     }
 
+    // ── CONTAGEM ──
     function countChars() {
         document.getElementById('count').innerText = "Caracteres: " + document.getElementById('fatos').value.length;
     }
 
+    // ── QUALIDADE ──
     function calcQualidade() {
         const texto = document.getElementById('fatos').value.trim();
         const chars = texto.length;
@@ -244,6 +275,7 @@
         document.getElementById('quality-warn').style.display = (pct < 60 && chars > 0) ? 'block' : 'none';
     }
 
+    // ── EFETIVIDADE ──
     function calcEfetividade() {
         const area    = document.getElementById('area').value;
         const acao    = document.getElementById('gerado').value.trim();
@@ -251,10 +283,10 @@
         const publico = document.getElementById('publico').value.trim();
         const fatos   = document.getElementById('fatos').value.trim();
         let score = 0;
-        if (area)               score += 25;
-        if (acao.length > 3)    score += 20;
-        if (destino.length > 3) score += 15;
-        if (publico.length > 3) score += 10;
+        if (area)                score += 25;
+        if (acao.length > 3)     score += 20;
+        if (destino.length > 3)  score += 15;
+        if (publico.length > 3)  score += 10;
         if (fatos.length >= 200) score += 15;
         if (fatos.length >= 800) score += 10;
         if (tomSelecionado)      score += 5;
@@ -269,8 +301,10 @@
         else                  msg.innerText = "🏆 Prompt no nível máximo. Pronto para resultados excepcionais.";
     }
 
+    // ── INVALID ──
     function limparInvalid(el) { el.classList.remove('invalid'); }
 
+    // ── COPIAR ──
     function copyRes() {
         const texto = document.getElementById('res').value;
         const btn = document.getElementById('btnCopy');
@@ -291,6 +325,7 @@
         catch(e) { showToast("SELECIONE O TEXTO E COPIE MANUALMENTE"); }
     }
 
+    // ── PDF ──
     async function lerPDF(input) {
         const file = input.files[0];
         if (!file) return;
@@ -312,6 +347,7 @@
         reader.readAsArrayBuffer(file);
     }
 
+    // ── PERSONAS E REGRAS ──
     const personas = {
         juridico:   "advogado(a) sênior com 20 anos de experiência em litígios complexos, domínio em argumentação, jurisprudência (STJ, STF, TRTs) e técnica processual.",
         medico:     "médico(a) especialista com 20 anos de experiência clínica e acadêmica, habilidade em laudos, pareceres e relatórios com embasamento científico atualizado.",
@@ -342,6 +378,7 @@
         ti:'TI', marketing:'Marketing', psicologia:'Psicologia', outro:'Outra área'
     };
 
+    // ── HISTÓRICO ──
     const HIST_KEY = 'cassia_v9_historico';
     function salvarHistorico(entry) {
         let hist = JSON.parse(localStorage.getItem(HIST_KEY) || '[]');
@@ -379,6 +416,7 @@
         setTimeout(() => document.getElementById('res-box').scrollIntoView({ behavior: 'smooth' }), 200);
     }
 
+    // ── NOVA CONSULTA ──
     function novaConsulta() {
         document.getElementById('area').value = '';
         document.getElementById('gerado').value = '';
@@ -398,12 +436,13 @@
         showToast("PRONTO PARA NOVA CONSULTA!");
     }
 
+    // ── EXECUTAR ──
     function executarV9() {
-        const areaEl  = document.getElementById('area');
-        const acaoEl  = document.getElementById('gerado');
-        const fatosEl = document.getElementById('fatos');
-        const areaVal = areaEl.value;
-        const acaoVal = acaoEl.value.trim();
+        const areaEl   = document.getElementById('area');
+        const acaoEl   = document.getElementById('gerado');
+        const fatosEl  = document.getElementById('fatos');
+        const areaVal  = areaEl.value;
+        const acaoVal  = acaoEl.value.trim();
         const fatosVal = fatosEl.value.trim();
         let valido = true;
         if (!areaVal)  { areaEl.classList.add('invalid'); valido = false; }
@@ -461,6 +500,7 @@ ${fatosVal}`;
         }, 60);
     }
 
+    // ── EXPORTAR ──
     function baixar() {
         const conteudo = document.getElementById('res').value;
         const blob = new Blob(['\ufeff', conteudo], { type: 'application/msword' });

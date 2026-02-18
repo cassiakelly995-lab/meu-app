@@ -9,103 +9,88 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <style>
         :root {
-            --bg: #050505;
-            --card: rgba(12, 12, 12, 0.98);
-            --text: #ffffff;
+            --bg: #050505; --card: rgba(12,12,12,0.98); --text: #ffffff;
             --subtext: rgba(255,255,255,0.5);
             --gold: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
-            --gold-solid: #bf953f;
-            --border: rgba(191, 149, 63, 0.3);
-            --input-bg: rgba(255,255,255,0.02);
-            --focus-overlay: rgba(0,0,0,0);
-            --warn-bg: rgba(191,149,63,0.08);
-            --res-bg: #000;
-            --res-color: #fcf6ba;
+            --gold-solid: #bf953f; --border: rgba(191,149,63,0.3);
+            --input-bg: rgba(255,255,255,0.02); --focus-overlay: rgba(0,0,0,0);
+            --warn-bg: rgba(191,149,63,0.08); --res-bg: #000; --res-color: #fcf6ba;
+            --hist-bg: rgba(191,149,63,0.05);
         }
-
         body.light-mode {
-            --bg: #f0ece3;
-            --card: rgba(255,255,255,0.97);
-            --text: #1a1209;
-            --subtext: rgba(0,0,0,0.45);
-            --border: rgba(139, 100, 20, 0.35);
-            --input-bg: rgba(0,0,0,0.03);
-            --focus-overlay: rgba(0,0,0,0);
-            --warn-bg: rgba(191,149,63,0.12);
-            --res-bg: #1a1209;
-            --res-color: #fcf6ba;
+            --bg: #f0ece3; --card: rgba(255,255,255,0.97); --text: #1a1209;
+            --subtext: rgba(0,0,0,0.45); --border: rgba(139,100,20,0.35);
+            --input-bg: rgba(0,0,0,0.03); --warn-bg: rgba(191,149,63,0.12);
+            --res-bg: #1a1209; --res-color: #fcf6ba; --hist-bg: rgba(191,149,63,0.08);
         }
         body.light-mode .glass-panel { box-shadow: 0 25px 80px rgba(0,0,0,0.12); }
-        body.light-mode footer { border-top-color: var(--border); }
-        body.light-mode .progress-container { background: rgba(0,0,0,0.06); }
-
+        body.light-mode .progress-container,
+        body.light-mode .quality-track,
+        body.light-mode .efetividade-track { background: rgba(0,0,0,0.06); }
         .focus-mode { --bg: #000000; --focus-overlay: rgba(0,0,0,0.85); }
-        .focus-mode header, .focus-mode footer, .focus-mode .logo-v9:first-child { opacity: 0; pointer-events: none; transition: 0.5s; }
-
+        .focus-mode footer, .focus-mode .logo-v9 { opacity: 0; pointer-events: none; transition: 0.5s; }
+        * { box-sizing: border-box; }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; transition: background 0.5s, color 0.5s; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--focus-overlay); z-index: 1; pointer-events: none; transition: 0.8s; }
-
         #app-content { display: none; flex-grow: 1; flex-direction: column; align-items: center; justify-content: center; width: 100%; z-index: 2; position: relative; }
         #carregando { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
-
-        .logo-v9 { font-size: 26px; font-weight: 900; letter-spacing: 10px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; margin: 40px 0; text-align: center; }
-
-        .glass-panel { background: var(--card); width: 92%; max-width: 950px; border-radius: 12px; border: 1px solid var(--border); padding: clamp(20px, 5vw, 50px); box-shadow: 0 25px 80px rgba(0,0,0,1); backdrop-filter: blur(25px); margin-bottom: 40px; position: relative; box-sizing: border-box; transition: 0.5s; }
+        .logo-v9 { font-size: 26px; font-weight: 900; letter-spacing: 10px; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; margin: 40px 0; text-align: center; transition: 0.5s; }
+        .glass-panel { background: var(--card); width: 92%; max-width: 950px; border-radius: 12px; border: 1px solid var(--border); padding: clamp(20px,5vw,50px); box-shadow: 0 25px 80px rgba(0,0,0,1); backdrop-filter: blur(25px); margin-bottom: 40px; position: relative; transition: 0.5s; }
         .focus-mode .glass-panel { border-color: #bf953f; box-shadow: 0 0 100px rgba(191,149,63,0.1); }
-
-        .progress-group { margin-bottom: 30px; display: none; width: 100%; text-align: left; }
+        .progress-group { margin-bottom: 30px; display: none; width: 100%; }
         .label-rigor { font-size: 10px; font-weight: 800; color: #bf953f; letter-spacing: 2px; margin-bottom: 8px; display: block; text-transform: uppercase; }
         .progress-container { width: 100%; background: rgba(255,255,255,0.05); height: 6px; border-radius: 10px; margin-bottom: 15px; overflow: hidden; border: 1px solid rgba(191,149,63,0.1); }
         .progress-bar { width: 0%; height: 100%; background: var(--gold); transition: width 0.2s ease; }
-
         .btn-supreme { width: 100%; background: var(--gold); color: #000; border: none; padding: 22px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; font-size: 14px; margin-top: 15px; transition: 0.3s; }
         .btn-supreme:hover { filter: brightness(1.2); }
-
+        .btn-secondary { width: 100%; background: transparent; color: var(--gold-solid); border: 1px solid var(--gold-solid); padding: 14px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 3px; font-size: 12px; margin-top: 10px; transition: 0.3s; }
+        .btn-secondary:hover { background: rgba(191,149,63,0.1); }
         .btn-copy { background: transparent; color: #bf953f; border: 1px solid #bf953f; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; margin-bottom: 10px; width: fit-content; align-self: flex-end; transition: 0.3s; }
         .btn-copy.copied { background: var(--gold); color: #000; border-color: transparent; }
-
-        input, textarea, select { width: 100%; background: var(--input-bg); border: 1px solid var(--border); padding: 18px; border-radius: 4px; color: var(--text); font-size: 15px; box-sizing: border-box; margin-bottom: 10px; outline: none; transition: 0.3s; }
+        input, textarea, select { width: 100%; background: var(--input-bg); border: 1px solid var(--border); padding: 18px; border-radius: 4px; color: var(--text); font-size: 15px; margin-bottom: 10px; outline: none; transition: 0.3s; }
         input:focus, textarea:focus, select:focus { border-color: var(--gold-solid); }
         input.invalid, select.invalid { border-color: #e05252 !important; }
-
         select { cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23bf953f' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 18px center; background-color: var(--input-bg); }
         select option { background: #111; color: #fff; }
         body.light-mode select option { background: #fff; color: #111; }
-
         .char-count { font-size: 10px; color: #bf953f; text-align: right; margin-bottom: 5px; font-weight: bold; letter-spacing: 1px; }
-
         .quality-bar-wrap { width: 100%; margin-bottom: 20px; }
         .quality-label { font-size: 10px; font-weight: 800; color: var(--gold-solid); letter-spacing: 2px; text-transform: uppercase; display: flex; justify-content: space-between; margin-bottom: 6px; }
         .quality-track { width: 100%; background: rgba(255,255,255,0.05); height: 6px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(191,149,63,0.1); }
-        body.light-mode .quality-track { background: rgba(0,0,0,0.06); }
-        .quality-fill { height: 100%; border-radius: 10px; transition: width 0.4s ease, background 0.4s; }
-        .quality-warn { font-size: 11px; color: #e0a052; margin-top: 6px; display: none; font-weight: 600; letter-spacing: 0.5px; background: var(--warn-bg); padding: 8px 12px; border-radius: 4px; border-left: 3px solid #bf953f; }
-
+        .quality-fill { height: 100%; border-radius: 10px; transition: width 0.4s, background 0.4s; }
+        .quality-warn { font-size: 11px; color: #e0a052; margin-top: 6px; display: none; font-weight: 600; background: var(--warn-bg); padding: 8px 12px; border-radius: 4px; border-left: 3px solid #bf953f; }
         .efetividade-wrap { display: none; margin-bottom: 20px; padding: 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--warn-bg); }
         .efetividade-label { font-size: 10px; font-weight: 800; color: var(--gold-solid); letter-spacing: 2px; text-transform: uppercase; display: flex; justify-content: space-between; margin-bottom: 8px; }
         .efetividade-track { width: 100%; background: rgba(255,255,255,0.05); height: 8px; border-radius: 10px; overflow: hidden; }
-        body.light-mode .efetividade-track { background: rgba(0,0,0,0.08); }
-        .efetividade-fill { height: 100%; border-radius: 10px; background: var(--gold); transition: width 0.8s ease; }
-        .efetividade-msg { font-size: 11px; color: var(--subtext); margin-top: 8px; letter-spacing: 0.3px; }
-
+        .efetividade-fill { height: 100%; border-radius: 10px; background: var(--gold); transition: width 0.8s; }
+        .efetividade-msg { font-size: 11px; color: var(--subtext); margin-top: 8px; }
+        .tom-label { font-size: 10px; font-weight: 800; color: var(--gold-solid); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; display: block; }
         .tom-group { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
         .tom-btn { flex: 1; min-width: 80px; background: var(--input-bg); border: 1px solid var(--border); padding: 10px 8px; border-radius: 4px; color: var(--subtext); font-size: 10px; font-weight: 800; letter-spacing: 1px; cursor: pointer; text-transform: uppercase; text-align: center; transition: 0.2s; }
         .tom-btn.active { background: var(--gold); color: #000; border-color: transparent; }
-        .tom-label { font-size: 10px; font-weight: 800; color: var(--gold-solid); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; display: block; }
-
-        #res { height: 300px; border-color: #bf953f; color: var(--res-color); background: var(--res-bg); font-family: 'Courier New', monospace; resize: vertical; min-height: 200px; }
-
+        #res { height: 300px; border-color: #bf953f !important; color: var(--res-color); background: var(--res-bg); font-family: 'Courier New', monospace; resize: vertical; min-height: 200px; }
+        .hist-section { margin-top: 30px; border-top: 1px solid var(--border); padding-top: 24px; display: none; }
+        .hist-title { font-size: 10px; font-weight: 800; color: var(--gold-solid); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
+        .hist-item { background: var(--hist-bg); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer; transition: 0.2s; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .hist-item:hover { border-color: var(--gold-solid); background: rgba(191,149,63,0.12); }
+        .hist-info { flex: 1; min-width: 0; }
+        .hist-acao { font-size: 12px; font-weight: 800; color: var(--text); text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .hist-meta { font-size: 10px; color: var(--subtext); margin-top: 3px; }
+        .hist-arrow { color: var(--gold-solid); font-size: 16px; flex-shrink: 0; }
         .top-controls { position: absolute; top: 20px; right: 20px; display: flex; gap: 8px; z-index: 1001; flex-wrap: wrap; justify-content: flex-end; }
         .ctrl-btn { background: none; border: 1px solid #bf953f; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 9px; letter-spacing: 1px; font-weight: 900; color: #bf953f; transition: 0.2s; }
         .ctrl-btn:hover { background: rgba(191,149,63,0.1); }
         .ctrl-btn.active { background: var(--gold); color: #000; border-color: transparent; }
-
-        footer { padding: 40px 20px; text-align: center; font-size: 10px; opacity: 0.5; letter-spacing: 2px; border-top: 1px solid var(--border); width: 100%; box-sizing: border-box; transition: 0.5s; }
+        footer { padding: 40px 20px; text-align: center; font-size: 10px; opacity: 0.5; letter-spacing: 2px; border-top: 1px solid var(--border); width: 100%; transition: 0.5s; }
         .pdf-action { color: #fcf6ba; font-weight: 900; cursor: pointer; font-size: 12px; text-transform: uppercase; display: block; text-align: left; margin-bottom: 15px; }
         body.light-mode .pdf-action { color: #8a6010; }
+        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--gold); color: #000; padding: 12px 28px; border-radius: 4px; font-size: 12px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; opacity: 0; transition: 0.3s; z-index: 9999; pointer-events: none; white-space: nowrap; }
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 <body>
+
+<div id="toast"></div>
 
 <div class="top-controls">
     <button class="ctrl-btn" id="btnFoco" onclick="toggleFoco()">MODO FOCO</button>
@@ -118,8 +103,8 @@
 
 <div id="app-content">
     <div class="logo-v9">V9 POWER EDITION</div>
-    <main style="width: 100%; display: flex; flex-direction: column; align-items: center; padding: 0 10px; box-sizing: border-box;">
-        <div class="glass-panel" style="display: flex; flex-direction: column;">
+    <main style="width:100%;display:flex;flex-direction:column;align-items:center;padding:0 10px;">
+        <div class="glass-panel" style="display:flex;flex-direction:column;">
 
             <div class="progress-group" id="prog-area">
                 <span class="label-rigor">Análise de Dados: <span id="val1">0%</span></span>
@@ -131,7 +116,7 @@
             <span class="pdf-action" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR PDF (MÁXIMA PRECISÃO)</span>
             <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
 
-            <select id="area" onchange="limparInvalid(this); calcEfetividade()">
+            <select id="area" onchange="limparInvalid(this);calcEfetividade()">
                 <option value="" disabled selected>SELECIONE SUA ÁREA PROFISSIONAL</option>
                 <option value="juridico">⚖️ Jurídico / Advocacia</option>
                 <option value="medico">🏥 Medicina / Saúde</option>
@@ -145,7 +130,7 @@
                 <option value="outro">✳️ Outra área</option>
             </select>
 
-            <input type="text" id="gerado" placeholder="O QUE DEVE SER GERADO? (EX: RELATÓRIO, PARECER, LAUDO...)" oninput="limparInvalid(this); calcEfetividade()">
+            <input type="text" id="gerado" placeholder="O QUE DEVE SER GERADO? (EX: RELATÓRIO, PARECER, LAUDO...)" oninput="limparInvalid(this);calcEfetividade()">
             <input type="text" id="destino" placeholder="QUAL O OBJETIVO? (EX: CONVENCER, INFORMAR, RESOLVER...)" oninput="calcEfetividade()">
             <input type="text" id="publico" placeholder="PARA QUEM É? (EX: CLIENTE, JUIZ, DIRETOR, PACIENTE...)" oninput="calcEfetividade()">
 
@@ -157,34 +142,35 @@
                 <button class="tom-btn" data-tom="persuasivo" onclick="selecionarTom(this)">PERSUASIVO</button>
             </div>
 
-            <textarea id="fatos" rows="10" placeholder="COLE AQUI AS INFORMAÇÕES, FATOS OU USE O PDF ACIMA" oninput="countChars(); calcQualidade(); calcEfetividade()"></textarea>
+            <textarea id="fatos" rows="10" placeholder="COLE AQUI AS INFORMAÇÕES, FATOS OU USE O PDF ACIMA" oninput="countChars();calcQualidade();calcEfetividade()"></textarea>
             <div class="char-count" id="count">Caracteres: 0</div>
 
             <div class="quality-bar-wrap">
-                <div class="quality-label">
-                    <span>QUALIDADE DOS DADOS</span>
-                    <span id="quality-pct">0%</span>
-                </div>
+                <div class="quality-label"><span>QUALIDADE DOS DADOS</span><span id="quality-pct">0%</span></div>
                 <div class="quality-track"><div class="quality-fill" id="quality-fill" style="width:0%"></div></div>
-                <div class="quality-warn" id="quality-warn">⚠ Seus dados estão incompletos. Quanto mais detalhes você fornecer, melhor será o resultado gerado.</div>
+                <div class="quality-warn" id="quality-warn">⚠ Seus dados estão incompletos. Quanto mais detalhes, melhor o resultado.</div>
             </div>
 
             <div class="efetividade-wrap" id="efetividade-wrap">
-                <div class="efetividade-label">
-                    <span>EFETIVIDADE DO PROMPT</span>
-                    <span id="efet-pct">0%</span>
-                </div>
+                <div class="efetividade-label"><span>EFETIVIDADE DO PROMPT</span><span id="efet-pct">0%</span></div>
                 <div class="efetividade-track"><div class="efetividade-fill" id="efet-fill" style="width:0%"></div></div>
                 <div class="efetividade-msg" id="efet-msg"></div>
             </div>
 
             <button class="btn-supreme" onclick="executarV9()">EXECUTAR ENGENHARIA V9 POWER</button>
 
-            <div id="res-box" style="display:none; margin-top:40px; border-top: 1px solid var(--border); padding-top: 30px; flex-direction: column;">
+            <div id="res-box" style="display:none;margin-top:40px;border-top:1px solid var(--border);padding-top:30px;flex-direction:column;">
                 <button class="btn-copy" id="btnCopy" onclick="copyRes()">COPIAR COMANDO PARA IA</button>
                 <textarea id="res" readonly></textarea>
                 <button class="btn-supreme" onclick="baixar()">EXPORTAR PARA WORD (.DOC)</button>
+                <button class="btn-secondary" onclick="novaConsulta()">+ NOVA CONSULTA</button>
             </div>
+
+            <div class="hist-section" id="hist-section">
+                <div class="hist-title">⏱ ÚLTIMAS CONSULTAS</div>
+                <div id="hist-lista"></div>
+            </div>
+
         </div>
     </main>
     <footer>
@@ -200,37 +186,41 @@
     function entrar() {
         document.getElementById('carregando').style.display = 'none';
         document.getElementById('app-content').style.display = 'flex';
+        renderHistorico();
     }
     setTimeout(entrar, 1500);
 
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.innerText = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2200);
+    }
+
     function toggleTema() {
-        const body = document.body;
-        const btn = document.getElementById('btnTema');
-        body.classList.toggle('light-mode');
-        btn.textContent = body.classList.contains('light-mode') ? '🌙 ESCURO' : '☀️ CLARO';
+        document.body.classList.toggle('light-mode');
+        document.getElementById('btnTema').textContent =
+            document.body.classList.contains('light-mode') ? '🌙 ESCURO' : '☀️ CLARO';
     }
 
     function toggleFoco() {
-        const body = document.body;
-        const btn = document.getElementById('btnFoco');
-        body.classList.toggle('focus-mode');
-        btn.classList.toggle('active');
+        document.body.classList.toggle('focus-mode');
+        document.getElementById('btnFoco').classList.toggle('active');
     }
 
     let tomSelecionado = 'formal';
+    const tomDesc = {
+        formal:     "Linguagem formal, técnica e culta. Adequada para documentos oficiais, processos e relatórios institucionais.",
+        semiformal: "Linguagem semiformal: clara e profissional, sem excesso de tecnicidade. Adequada para e-mails e comunicações internas.",
+        simples:    "Linguagem simples e acessível. Adequada para comunicação com leigos, clientes e público geral.",
+        persuasivo: "Linguagem persuasiva e estratégica. Foco em convencer, engajar e gerar impacto no leitor."
+    };
     function selecionarTom(el) {
         document.querySelectorAll('.tom-btn').forEach(b => b.classList.remove('active'));
         el.classList.add('active');
         tomSelecionado = el.dataset.tom;
         calcEfetividade();
     }
-
-    const tomDesc = {
-        formal:      "Linguagem formal, técnica e culta. Adequada para documentos oficiais, processos e relatórios institucionais.",
-        semiformal:  "Linguagem semiformal: clara, profissional, sem excesso de tecnicidade. Adequada para e-mails e comunicações internas.",
-        simples:     "Linguagem simples e acessível. Adequada para comunicação com leigos, clientes e público geral.",
-        persuasivo:  "Linguagem persuasiva e estratégica. Foco em convencer, engajar e gerar impacto no leitor."
-    };
 
     function countChars() {
         document.getElementById('count').innerText = "Caracteres: " + document.getElementById('fatos').value.length;
@@ -240,22 +230,17 @@
         const texto = document.getElementById('fatos').value.trim();
         const chars = texto.length;
         const palavras = texto.split(/\s+/).filter(p => p.length > 0).length;
-
         let pct = 0;
         if (chars >= 50)  pct = 20;
         if (chars >= 200) pct = 40;
         if (chars >= 500) pct = 60;
         if (chars >= 900) pct = 80;
         if (chars >= 1500 && palavras >= 150) pct = 100;
-
         const fill = document.getElementById('quality-fill');
-        const label = document.getElementById('quality-pct');
-        const warn = document.getElementById('quality-warn');
-
         fill.style.width = pct + '%';
         fill.style.background = pct < 40 ? '#e05252' : pct < 70 ? '#e0a052' : '#52c452';
-        label.innerText = pct + '%';
-        warn.style.display = (pct < 60 && chars > 0) ? 'block' : 'none';
+        document.getElementById('quality-pct').innerText = pct + '%';
+        document.getElementById('quality-warn').style.display = (pct < 60 && chars > 0) ? 'block' : 'none';
     }
 
     function calcEfetividade() {
@@ -264,7 +249,6 @@
         const destino = document.getElementById('destino').value.trim();
         const publico = document.getElementById('publico').value.trim();
         const fatos   = document.getElementById('fatos').value.trim();
-
         let score = 0;
         if (area)               score += 25;
         if (acao.length > 3)    score += 20;
@@ -273,16 +257,11 @@
         if (fatos.length >= 200) score += 15;
         if (fatos.length >= 800) score += 10;
         if (tomSelecionado)      score += 5;
-
         const wrap = document.getElementById('efetividade-wrap');
-        const fill = document.getElementById('efet-fill');
-        const pctEl = document.getElementById('efet-pct');
-        const msg = document.getElementById('efet-msg');
-
         if (score > 0) wrap.style.display = 'block';
-        fill.style.width = score + '%';
-        pctEl.innerText = score + '%';
-
+        document.getElementById('efet-fill').style.width = score + '%';
+        document.getElementById('efet-pct').innerText = score + '%';
+        const msg = document.getElementById('efet-msg');
         if (score < 40)      msg.innerText = "Preencha mais campos para aumentar a efetividade.";
         else if (score < 65) msg.innerText = "Bom começo! Adicione mais detalhes nos dados fornecidos.";
         else if (score < 85) msg.innerText = "Ótimo! O prompt já tem alta qualidade.";
@@ -292,18 +271,29 @@
     function limparInvalid(el) { el.classList.remove('invalid'); }
 
     function copyRes() {
-        const text = document.getElementById('res');
+        const texto = document.getElementById('res').value;
         const btn = document.getElementById('btnCopy');
-        text.select();
-        document.execCommand('copy');
-        btn.innerText = "COPIADO COM SUCESSO!";
-        btn.classList.add('copied');
-        setTimeout(() => { btn.innerText = "COPIAR COMANDO PARA IA"; btn.classList.remove('copied'); }, 2000);
+        const sucesso = () => {
+            btn.innerText = "COPIADO COM SUCESSO!";
+            btn.classList.add('copied');
+            showToast("PROMPT COPIADO!");
+            setTimeout(() => { btn.innerText = "COPIAR COMANDO PARA IA"; btn.classList.remove('copied'); }, 2000);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(texto).then(sucesso).catch(() => fallbackCopy(sucesso));
+        } else { fallbackCopy(sucesso); }
+    }
+    function fallbackCopy(cb) {
+        const ta = document.getElementById('res');
+        ta.select(); ta.setSelectionRange(0, 99999);
+        try { document.execCommand('copy'); cb(); }
+        catch(e) { showToast("SELECIONE O TEXTO E COPIE MANUALMENTE"); }
     }
 
     async function lerPDF(input) {
         const file = input.files[0];
         if (!file) return;
+        showToast("LENDO PDF...");
         const reader = new FileReader();
         reader.onload = async function () {
             const typedarray = new Uint8Array(this.result);
@@ -316,6 +306,7 @@
             }
             document.getElementById('fatos').value = text;
             countChars(); calcQualidade(); calcEfetividade();
+            showToast("PDF IMPORTADO!");
         };
         reader.readAsArrayBuffer(file);
     }
@@ -332,7 +323,6 @@
         psicologia: "psicólogo(a) com 20 anos de experiência, habilidade em relatórios, pareceres e documentos com linguagem técnica ética e empática.",
         outro:      "especialista sênior com 20 anos de experiência na área solicitada, com capacidade analítica e escrita técnica de alto nível."
     };
-
     const regras = {
         juridico:   "- Cite artigos de lei, códigos e jurisprudência do STJ/STF/TRTs.\n- Nunca invente decisões ou processos.\n- Estrutura: qualificação das partes → fatos → fundamentação → pedidos.",
         medico:     "- Baseie-se em evidências científicas e diretrizes clínicas atuais.\n- Nunca invente dados do paciente ou exames.\n- Estrutura: identificação → histórico → análise técnica → conclusão/conduta.",
@@ -345,70 +335,127 @@
         psicologia: "- Respeite o Código de Ética do CFP.\n- Nunca invente informações sobre o avaliado.\n- Estrutura: identificação → histórico → análise → conclusão/recomendações.",
         outro:      "- Linguagem técnica adequada à área e ao público.\n- Nunca invente dados não fornecidos.\n- Estrutura: contexto → desenvolvimento lógico → conclusão."
     };
+    const areaLabels = {
+        juridico:'Jurídico', medico:'Medicina', contabil:'Contabilidade',
+        engenharia:'Engenharia', educacao:'Educação', negocios:'Negócios',
+        ti:'TI', marketing:'Marketing', psicologia:'Psicologia', outro:'Outra área'
+    };
+
+    const HIST_KEY = 'cassia_v9_historico';
+    function salvarHistorico(entry) {
+        let hist = JSON.parse(localStorage.getItem(HIST_KEY) || '[]');
+        hist.unshift(entry);
+        hist = hist.slice(0, 3);
+        localStorage.setItem(HIST_KEY, JSON.stringify(hist));
+    }
+    function renderHistorico() {
+        const hist = JSON.parse(localStorage.getItem(HIST_KEY) || '[]');
+        const section = document.getElementById('hist-section');
+        const lista = document.getElementById('hist-lista');
+        if (hist.length === 0) { section.style.display = 'none'; return; }
+        section.style.display = 'block';
+        lista.innerHTML = '';
+        hist.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'hist-item';
+            div.innerHTML = `<div class="hist-info"><div class="hist-acao">${item.acao}</div><div class="hist-meta">${item.area} &bull; ${item.data}</div></div><span class="hist-arrow">↗</span>`;
+            div.onclick = () => restaurarHistorico(item);
+            lista.appendChild(div);
+        });
+    }
+    function restaurarHistorico(item) {
+        document.getElementById('area').value = item.areaVal;
+        document.getElementById('gerado').value = item.acao;
+        document.getElementById('destino').value = item.objetivo;
+        document.getElementById('publico').value = item.publico;
+        document.getElementById('fatos').value = item.fatos;
+        document.querySelectorAll('.tom-btn').forEach(b => b.classList.toggle('active', b.dataset.tom === item.tom));
+        tomSelecionado = item.tom;
+        document.getElementById('res').value = item.prompt;
+        document.getElementById('res-box').style.display = 'flex';
+        countChars(); calcQualidade(); calcEfetividade();
+        showToast("CONSULTA RESTAURADA!");
+        setTimeout(() => document.getElementById('res-box').scrollIntoView({ behavior: 'smooth' }), 200);
+    }
+
+    function novaConsulta() {
+        document.getElementById('area').value = '';
+        document.getElementById('gerado').value = '';
+        document.getElementById('destino').value = '';
+        document.getElementById('publico').value = '';
+        document.getElementById('fatos').value = '';
+        document.getElementById('res').value = '';
+        document.getElementById('res-box').style.display = 'none';
+        document.getElementById('efetividade-wrap').style.display = 'none';
+        document.getElementById('quality-fill').style.width = '0%';
+        document.getElementById('quality-pct').innerText = '0%';
+        document.getElementById('quality-warn').style.display = 'none';
+        document.getElementById('count').innerText = 'Caracteres: 0';
+        document.querySelectorAll('.tom-btn').forEach(b => b.classList.toggle('active', b.dataset.tom === 'formal'));
+        tomSelecionado = 'formal';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        showToast("PRONTO PARA NOVA CONSULTA!");
+    }
 
     function executarV9() {
-        const areaEl   = document.getElementById('area');
-        const acaoEl   = document.getElementById('gerado');
-        const fatosEl  = document.getElementById('fatos');
-        const areaVal  = areaEl.value;
-        const acaoVal  = acaoEl.value.trim();
+        const areaEl  = document.getElementById('area');
+        const acaoEl  = document.getElementById('gerado');
+        const fatosEl = document.getElementById('fatos');
+        const areaVal = areaEl.value;
+        const acaoVal = acaoEl.value.trim();
         const fatosVal = fatosEl.value.trim();
-
         let valido = true;
         if (!areaVal)  { areaEl.classList.add('invalid'); valido = false; }
         if (!acaoVal)  { acaoEl.classList.add('invalid'); valido = false; }
         if (!fatosVal) { fatosEl.style.borderColor = '#e05252'; valido = false; }
         else           { fatosEl.style.borderColor = ''; }
-        if (!valido) { setTimeout(() => { areaEl.classList.remove('invalid'); acaoEl.classList.remove('invalid'); fatosEl.style.borderColor = ''; }, 2500); return; }
-
-        const area = document.getElementById('prog-area');
-        const b1 = document.getElementById('bar1'); const b2 = document.getElementById('bar2');
-        const v1 = document.getElementById('val1'); const v2 = document.getElementById('val2');
-
-        area.style.display = 'block';
-        let p1 = 0; let p2 = 0;
-
+        if (!valido) {
+            showToast("PREENCHA OS CAMPOS OBRIGATÓRIOS");
+            setTimeout(() => { areaEl.classList.remove('invalid'); acaoEl.classList.remove('invalid'); fatosEl.style.borderColor = ''; }, 2500);
+            return;
+        }
+        const progArea = document.getElementById('prog-area');
+        const b1 = document.getElementById('bar1'), b2 = document.getElementById('bar2');
+        const v1 = document.getElementById('val1'), v2 = document.getElementById('val2');
+        progArea.style.display = 'block';
+        b1.style.width = '0%'; b2.style.width = '0%'; v1.innerText = '0%'; v2.innerText = '0%';
+        const objetivo = document.getElementById('destino').value.trim();
+        const publico  = document.getElementById('publico').value.trim();
+        let p1 = 0, p2 = 0;
         let itv = setInterval(() => {
-            if (p1 < 100) { p1 += 5; b1.style.width = p1 + '%'; v1.innerText = p1 + '%'; }
-            if (p1 > 50 && p2 < 100) { p2 += 10; b2.style.width = p2 + '%'; v2.innerText = p2 + '%'; }
-
+            if (p1 < 100) { p1 += 5; b1.style.width = p1+'%'; v1.innerText = p1+'%'; }
+            if (p1 > 50 && p2 < 100) { p2 += 10; b2.style.width = p2+'%'; v2.innerText = p2+'%'; }
             if (p1 >= 100 && p2 >= 100) {
                 clearInterval(itv);
-
-                const acao     = acaoVal;
-                const objetivo = document.getElementById('destino').value.trim();
-                const publico  = document.getElementById('publico').value.trim();
-                const fatos    = fatosVal;
-                const persona  = personas[areaVal];
-                const regra    = regras[areaVal];
-                const tom      = tomDesc[tomSelecionado];
-
                 const promptFinal =
 `[CÁSSIA PROMPT V9 — ENGENHARIA MÁXIMA]
 
-PERSONA: Você é ${persona}
+PERSONA: Você é ${personas[areaVal]}
 
-TAREFA: ${acao}
+TAREFA: ${acaoVal}
 OBJETIVO: ${objetivo || "não especificado"}
 PÚBLICO-ALVO: ${publico || "não especificado — adapte o tom ao contexto"}
-TOM DA ESCRITA: ${tom}
+TOM DA ESCRITA: ${tomDesc[tomSelecionado]}
 
 REGRAS OBRIGATÓRIAS:
 1. Leia e interprete TODOS os dados fornecidos antes de escrever qualquer coisa.
 2. Identifique pontos centrais, dados críticos e lacunas existentes.
 3. Adapte o tom, vocabulário e nível técnico ao público-alvo e ao tom de escrita definidos acima.
-${regra}
+${regras[areaVal]}
 4. Se faltar dado essencial, escreva: ⚠ REVISÃO NECESSÁRIA — [descreva o dado ausente].
 5. NUNCA invente informações. Use exclusivamente o que está nos dados abaixo.
 6. Entregue o documento completo, estruturado e pronto para uso. Comece direto pelo conteúdo.
 
 DADOS FORNECIDOS:
-${fatos}`;
-
+${fatosVal}`;
                 document.getElementById('res').value = promptFinal;
                 document.getElementById('res-box').style.display = 'flex';
-                setTimeout(() => { area.style.display = 'none'; }, 1000);
-                document.getElementById('res-box').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                setTimeout(() => { progArea.style.display = 'none'; }, 800);
+                setTimeout(() => document.getElementById('res-box').scrollIntoView({ behavior: 'smooth', block: 'start' }), 900);
+                const now = new Date();
+                const data = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+                salvarHistorico({ acao: acaoVal, areaVal, area: areaLabels[areaVal], objetivo, publico, fatos: fatosVal, tom: tomSelecionado, prompt: promptFinal, data });
+                renderHistorico();
             }
         }, 60);
     }
@@ -420,6 +467,7 @@ ${fatos}`;
         link.href = URL.createObjectURL(blob);
         link.download = 'CASSIA_PROMPT_V9.doc';
         link.click();
+        showToast("ARQUIVO EXPORTADO!");
     }
 </script>
 </body>

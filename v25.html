@@ -24,9 +24,7 @@
             --res-bg: #1a1209; --res-color: #fcf6ba; --hist-bg: rgba(191,149,63,0.08);
         }
         body.light-mode .glass-panel { box-shadow: 0 25px 80px rgba(0,0,0,0.12); }
-        body.light-mode .progress-container,
-        body.light-mode .quality-track,
-        body.light-mode .efetividade-track { background: rgba(0,0,0,0.06); }
+        body.light-mode .progress-container, body.light-mode .quality-track, body.light-mode .efetividade-track { background: rgba(0,0,0,0.06); }
         .focus-mode { --bg: #000000; --focus-overlay: rgba(0,0,0,0.85); }
         .focus-mode footer, .focus-mode .logo-v9 { opacity: 0; pointer-events: none; transition: 0.5s; }
         * { box-sizing: border-box; }
@@ -89,33 +87,26 @@
     </style>
 </head>
 <body>
-
 <div id="toast"></div>
-
 <div class="top-controls">
     <button class="ctrl-btn" id="btnFoco" onclick="toggleFoco()">MODO FOCO</button>
     <button class="ctrl-btn" id="btnTema" onclick="toggleTema()">☀️ CLARO</button>
 </div>
-
 <div id="carregando">
     <div class="logo-v9">CÁSSIA PROMPT • V9 POWER</div>
 </div>
-
 <div id="app-content">
     <div class="logo-v9">V9 POWER EDITION</div>
     <main style="width:100%;display:flex;flex-direction:column;align-items:center;padding:0 10px;">
         <div class="glass-panel" style="display:flex;flex-direction:column;">
-
             <div class="progress-group" id="prog-area">
                 <span class="label-rigor">Análise de Dados: <span id="val1">0%</span></span>
                 <div class="progress-container"><div class="progress-bar" id="bar1"></div></div>
                 <span class="label-rigor">Calibração de Expertise: <span id="val2">0%</span></span>
                 <div class="progress-container"><div class="progress-bar" id="bar2"></div></div>
             </div>
-
             <span class="pdf-action" onclick="document.getElementById('pdf-up').click()">📎 IMPORTAR PDF (MÁXIMA PRECISÃO)</span>
             <input type="file" id="pdf-up" accept="application/pdf" style="display:none" onchange="lerPDF(this)">
-
             <select id="area" onchange="limparInvalid(this);calcEfetividade()">
                 <option value="" disabled selected>SELECIONE SUA ÁREA PROFISSIONAL</option>
                 <option value="juridico">⚖️ Jurídico / Advocacia</option>
@@ -129,11 +120,9 @@
                 <option value="psicologia">🧠 Psicologia / Assistência Social</option>
                 <option value="outro">✳️ Outra área</option>
             </select>
-
             <input type="text" id="gerado" placeholder="O QUE DEVE SER GERADO? (EX: RELATÓRIO, PARECER, LAUDO...)" oninput="limparInvalid(this);calcEfetividade()">
             <input type="text" id="destino" placeholder="QUAL O OBJETIVO? (EX: CONVENCER, INFORMAR, RESOLVER...)" oninput="calcEfetividade()">
             <input type="text" id="publico" placeholder="PARA QUEM É? (EX: CLIENTE, JUIZ, DIRETOR, PACIENTE...)" oninput="calcEfetividade()">
-
             <span class="tom-label">TOM DA ESCRITA</span>
             <div class="tom-group">
                 <button class="tom-btn active" data-tom="formal" onclick="selecionarTom(this)">FORMAL</button>
@@ -141,100 +130,84 @@
                 <button class="tom-btn" data-tom="simples" onclick="selecionarTom(this)">SIMPLES</button>
                 <button class="tom-btn" data-tom="persuasivo" onclick="selecionarTom(this)">PERSUASIVO</button>
             </div>
-
             <textarea id="fatos" rows="10" placeholder="COLE AQUI AS INFORMAÇÕES, FATOS OU USE O PDF ACIMA" oninput="countChars();calcQualidade();calcEfetividade()"></textarea>
             <div class="char-count" id="count">Caracteres: 0</div>
-
             <div class="quality-bar-wrap">
                 <div class="quality-label"><span>QUALIDADE DOS DADOS</span><span id="quality-pct">0%</span></div>
                 <div class="quality-track"><div class="quality-fill" id="quality-fill" style="width:0%"></div></div>
                 <div class="quality-warn" id="quality-warn">⚠ Seus dados estão incompletos. Quanto mais detalhes, melhor o resultado.</div>
             </div>
-
             <div class="efetividade-wrap" id="efetividade-wrap">
                 <div class="efetividade-label"><span>EFETIVIDADE DO PROMPT</span><span id="efet-pct">0%</span></div>
                 <div class="efetividade-track"><div class="efetividade-fill" id="efet-fill" style="width:0%"></div></div>
                 <div class="efetividade-msg" id="efet-msg"></div>
             </div>
-
             <button class="btn-supreme" onclick="executarV9()">EXECUTAR ENGENHARIA V9 POWER</button>
-
             <div id="res-box" style="display:none;margin-top:40px;border-top:1px solid var(--border);padding-top:30px;flex-direction:column;">
                 <button class="btn-copy" id="btnCopy" onclick="copyRes()">COPIAR COMANDO PARA IA</button>
                 <textarea id="res" readonly></textarea>
                 <button class="btn-supreme" onclick="baixar()">EXPORTAR PARA WORD (.DOC)</button>
                 <button class="btn-secondary" onclick="novaConsulta()">+ NOVA CONSULTA</button>
             </div>
-
             <div class="hist-section" id="hist-section">
                 <div class="hist-title">⏱ ÚLTIMAS CONSULTAS</div>
                 <div id="hist-lista"></div>
             </div>
-
         </div>
     </main>
-    <footer>
-        CÁSSIA PROMPT ® | V9 POWER EDITION<br>
-        A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. O PROGRAMA APENAS GERA O PROMPT.
-    </footer>
+    <footer>CÁSSIA PROMPT ® | V9 POWER EDITION<br>A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. O PROGRAMA APENAS GERA O PROMPT.</footer>
 </div>
-
 <script>
-    const firebaseConfig = { databaseURL: "https://promptv25-default-rtdb.firebaseio.com" };
+    const firebaseConfig = { databaseURL: "https://cassia-v9-default-rtdb.firebaseio.com" };
     firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
-    function entrar() {
-        document.getElementById('carregando').style.display = 'none';
-        document.getElementById('app-content').style.display = 'flex';
-        renderHistorico();
-    }
-    setTimeout(entrar, 1500);
-
-    function showToast(msg) {
-        const t = document.getElementById('toast');
-        t.innerText = msg;
-        t.classList.add('show');
-        setTimeout(() => t.classList.remove('show'), 2200);
-    }
-
-    function toggleTema() {
-        document.body.classList.toggle('light-mode');
-        document.getElementById('btnTema').textContent =
-            document.body.classList.contains('light-mode') ? '🌙 ESCURO' : '☀️ CLARO';
+    function verificarAcesso() {
+        const id = new URLSearchParams(window.location.search).get('id');
+        if (!id) { bloqueado("ACESSO NEGADO", "Nenhum código de acesso encontrado.<br>Solicite seu link autorizado."); return; }
+        db.ref('acessos_v9/' + id).once('value').then(snap => {
+            if (snap.exists()) {
+                db.ref('acessos_v9/' + id).update({ ultimoUso: Date.now(), usos: (snap.val().usos || 0) + 1 });
+                document.getElementById('carregando').style.display = 'none';
+                document.getElementById('app-content').style.display = 'flex';
+                renderHistorico();
+            } else {
+                bloqueado("ACESSO REVOGADO", "Seu acesso foi desativado.<br>Entre em contato para mais informações.");
+            }
+        }).catch(() => bloqueado("ERRO DE CONEXÃO", "Não foi possível verificar seu acesso.<br>Tente novamente."));
     }
 
-    function toggleFoco() {
-        document.body.classList.toggle('focus-mode');
-        document.getElementById('btnFoco').classList.toggle('active');
+    function bloqueado(titulo, msg) {
+        document.getElementById('carregando').innerHTML = `
+            <div style="text-align:center;padding:40px;">
+                <div style="font-size:22px;font-weight:900;letter-spacing:6px;background:linear-gradient(135deg,#bf953f,#fcf6ba,#b38728);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:30px;">CÁSSIA PROMPT</div>
+                <div style="font-size:14px;font-weight:900;color:#e05252;letter-spacing:3px;margin-bottom:16px;">${titulo}</div>
+                <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.8;">${msg}</div>
+            </div>`;
     }
+
+    setTimeout(verificarAcesso, 800);
+
+    function showToast(msg) { const t = document.getElementById('toast'); t.innerText = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2200); }
+    function toggleTema() { document.body.classList.toggle('light-mode'); document.getElementById('btnTema').textContent = document.body.classList.contains('light-mode') ? '🌙 ESCURO' : '☀️ CLARO'; }
+    function toggleFoco() { document.body.classList.toggle('focus-mode'); document.getElementById('btnFoco').classList.toggle('active'); }
 
     let tomSelecionado = 'formal';
     const tomDesc = {
-        formal:     "Linguagem formal, técnica e culta. Adequada para documentos oficiais, processos e relatórios institucionais.",
-        semiformal: "Linguagem semiformal: clara e profissional, sem excesso de tecnicidade. Adequada para e-mails e comunicações internas.",
-        simples:    "Linguagem simples e acessível. Adequada para comunicação com leigos, clientes e público geral.",
+        formal: "Linguagem formal, técnica e culta. Adequada para documentos oficiais, processos e relatórios institucionais.",
+        semiformal: "Linguagem semiformal: clara e profissional, sem excesso de tecnicidade.",
+        simples: "Linguagem simples e acessível. Adequada para comunicação com leigos e público geral.",
         persuasivo: "Linguagem persuasiva e estratégica. Foco em convencer, engajar e gerar impacto no leitor."
     };
-    function selecionarTom(el) {
-        document.querySelectorAll('.tom-btn').forEach(b => b.classList.remove('active'));
-        el.classList.add('active');
-        tomSelecionado = el.dataset.tom;
-        calcEfetividade();
-    }
-
-    function countChars() {
-        document.getElementById('count').innerText = "Caracteres: " + document.getElementById('fatos').value.length;
-    }
-
+    function selecionarTom(el) { document.querySelectorAll('.tom-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); tomSelecionado = el.dataset.tom; calcEfetividade(); }
+    function countChars() { document.getElementById('count').innerText = "Caracteres: " + document.getElementById('fatos').value.length; }
     function calcQualidade() {
         const texto = document.getElementById('fatos').value.trim();
         const chars = texto.length;
         const palavras = texto.split(/\s+/).filter(p => p.length > 0).length;
         let pct = 0;
-        if (chars >= 50)  pct = 20;
-        if (chars >= 200) pct = 40;
-        if (chars >= 500) pct = 60;
-        if (chars >= 900) pct = 80;
+        if (chars >= 50) pct = 20; if (chars >= 200) pct = 40;
+        if (chars >= 500) pct = 60; if (chars >= 900) pct = 80;
         if (chars >= 1500 && palavras >= 150) pct = 100;
         const fill = document.getElementById('quality-fill');
         fill.style.width = pct + '%';
@@ -242,57 +215,37 @@
         document.getElementById('quality-pct').innerText = pct + '%';
         document.getElementById('quality-warn').style.display = (pct < 60 && chars > 0) ? 'block' : 'none';
     }
-
     function calcEfetividade() {
-        const area    = document.getElementById('area').value;
-        const acao    = document.getElementById('gerado').value.trim();
+        const area = document.getElementById('area').value;
+        const acao = document.getElementById('gerado').value.trim();
         const destino = document.getElementById('destino').value.trim();
         const publico = document.getElementById('publico').value.trim();
-        const fatos   = document.getElementById('fatos').value.trim();
+        const fatos = document.getElementById('fatos').value.trim();
         let score = 0;
-        if (area)               score += 25;
-        if (acao.length > 3)    score += 20;
-        if (destino.length > 3) score += 15;
-        if (publico.length > 3) score += 10;
-        if (fatos.length >= 200) score += 15;
-        if (fatos.length >= 800) score += 10;
-        if (tomSelecionado)      score += 5;
+        if (area) score += 25; if (acao.length > 3) score += 20;
+        if (destino.length > 3) score += 15; if (publico.length > 3) score += 10;
+        if (fatos.length >= 200) score += 15; if (fatos.length >= 800) score += 10;
+        if (tomSelecionado) score += 5;
         const wrap = document.getElementById('efetividade-wrap');
         if (score > 0) wrap.style.display = 'block';
         document.getElementById('efet-fill').style.width = score + '%';
         document.getElementById('efet-pct').innerText = score + '%';
         const msg = document.getElementById('efet-msg');
-        if (score < 40)      msg.innerText = "Preencha mais campos para aumentar a efetividade.";
+        if (score < 40) msg.innerText = "Preencha mais campos para aumentar a efetividade.";
         else if (score < 65) msg.innerText = "Bom começo! Adicione mais detalhes nos dados fornecidos.";
         else if (score < 85) msg.innerText = "Ótimo! O prompt já tem alta qualidade.";
-        else                  msg.innerText = "🏆 Prompt no nível máximo. Pronto para resultados excepcionais.";
+        else msg.innerText = "🏆 Prompt no nível máximo. Pronto para resultados excepcionais.";
     }
-
     function limparInvalid(el) { el.classList.remove('invalid'); }
-
     function copyRes() {
         const texto = document.getElementById('res').value;
         const btn = document.getElementById('btnCopy');
-        const sucesso = () => {
-            btn.innerText = "COPIADO COM SUCESSO!";
-            btn.classList.add('copied');
-            showToast("PROMPT COPIADO!");
-            setTimeout(() => { btn.innerText = "COPIAR COMANDO PARA IA"; btn.classList.remove('copied'); }, 2000);
-        };
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(texto).then(sucesso).catch(() => fallbackCopy(sucesso));
-        } else { fallbackCopy(sucesso); }
+        const sucesso = () => { btn.innerText = "COPIADO!"; btn.classList.add('copied'); showToast("PROMPT COPIADO!"); setTimeout(() => { btn.innerText = "COPIAR COMANDO PARA IA"; btn.classList.remove('copied'); }, 2000); };
+        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(texto).then(sucesso).catch(() => fallbackCopy(sucesso)); } else { fallbackCopy(sucesso); }
     }
-    function fallbackCopy(cb) {
-        const ta = document.getElementById('res');
-        ta.select(); ta.setSelectionRange(0, 99999);
-        try { document.execCommand('copy'); cb(); }
-        catch(e) { showToast("SELECIONE O TEXTO E COPIE MANUALMENTE"); }
-    }
-
+    function fallbackCopy(cb) { const ta = document.getElementById('res'); ta.select(); ta.setSelectionRange(0, 99999); try { document.execCommand('copy'); cb(); } catch(e) { showToast("COPIE MANUALMENTE"); } }
     async function lerPDF(input) {
-        const file = input.files[0];
-        if (!file) return;
+        const file = input.files[0]; if (!file) return;
         showToast("LENDO PDF...");
         const reader = new FileReader();
         reader.onload = async function () {
@@ -310,57 +263,43 @@
         };
         reader.readAsArrayBuffer(file);
     }
-
     const personas = {
-        juridico:   "advogado(a) sênior com 20 anos de experiência em litígios complexos, domínio em argumentação, jurisprudência (STJ, STF, TRTs) e técnica processual.",
-        medico:     "médico(a) especialista com 20 anos de experiência clínica e acadêmica, habilidade em laudos, pareceres e relatórios com embasamento científico atualizado.",
-        contabil:   "contador(a) sênior com 20 anos de experiência em contabilidade, auditoria e finanças corporativas, domínio das normas IFRS, NBC e legislação tributária.",
+        juridico: "advogado(a) sênior com 20 anos de experiência em litígios complexos, domínio em argumentação, jurisprudência (STJ, STF, TRTs) e técnica processual.",
+        medico: "médico(a) especialista com 20 anos de experiência clínica e acadêmica, habilidade em laudos, pareceres e relatórios com embasamento científico atualizado.",
+        contabil: "contador(a) sênior com 20 anos de experiência em contabilidade, auditoria e finanças corporativas, domínio das normas IFRS, NBC e legislação tributária.",
         engenharia: "engenheiro(a) sênior com 20 anos de experiência em projetos complexos, laudos técnicos e normas ABNT.",
-        educacao:   "pedagogo(a) sênior com 20 anos de experiência em currículo, didática e avaliação, domínio das melhores práticas pedagógicas e da BNCC.",
-        negocios:   "consultor(a) executivo(a) sênior com 20 anos de experiência em gestão estratégica, RH e organizações, com foco em resultados concretos.",
-        ti:         "arquiteto(a) de soluções e especialista em TI com 20 anos de experiência, domínio em sistemas, segurança e documentação técnica.",
-        marketing:  "estrategista de marketing e comunicação sênior com 20 anos de experiência, especialista em copy persuasivo e conteúdo de alto impacto.",
+        educacao: "pedagogo(a) sênior com 20 anos de experiência em currículo, didática e avaliação, domínio das melhores práticas pedagógicas e da BNCC.",
+        negocios: "consultor(a) executivo(a) sênior com 20 anos de experiência em gestão estratégica, RH e organizações, com foco em resultados concretos.",
+        ti: "arquiteto(a) de soluções e especialista em TI com 20 anos de experiência, domínio em sistemas, segurança e documentação técnica.",
+        marketing: "estrategista de marketing e comunicação sênior com 20 anos de experiência, especialista em copy persuasivo e conteúdo de alto impacto.",
         psicologia: "psicólogo(a) com 20 anos de experiência, habilidade em relatórios, pareceres e documentos com linguagem técnica ética e empática.",
-        outro:      "especialista sênior com 20 anos de experiência na área solicitada, com capacidade analítica e escrita técnica de alto nível."
+        outro: "especialista sênior com 20 anos de experiência na área solicitada, com capacidade analítica e escrita técnica de alto nível."
     };
     const regras = {
-        juridico:   "- Cite artigos de lei, códigos e jurisprudência do STJ/STF/TRTs.\n- Nunca invente decisões ou processos.\n- Estrutura: qualificação das partes → fatos → fundamentação → pedidos.",
-        medico:     "- Baseie-se em evidências científicas e diretrizes clínicas atuais.\n- Nunca invente dados do paciente ou exames.\n- Estrutura: identificação → histórico → análise técnica → conclusão/conduta.",
-        contabil:   "- Cite normas contábeis (NBC, IFRS, CFC) e legislação tributária.\n- Nunca invente valores ou lançamentos.\n- Estrutura: contexto → análise → fundamentação normativa → conclusão.",
+        juridico: "- Cite artigos de lei, códigos e jurisprudência do STJ/STF/TRTs.\n- Nunca invente decisões ou processos.\n- Estrutura: qualificação das partes → fatos → fundamentação → pedidos.",
+        medico: "- Baseie-se em evidências científicas e diretrizes clínicas atuais.\n- Nunca invente dados do paciente ou exames.\n- Estrutura: identificação → histórico → análise técnica → conclusão/conduta.",
+        contabil: "- Cite normas contábeis (NBC, IFRS, CFC) e legislação tributária.\n- Nunca invente valores ou lançamentos.\n- Estrutura: contexto → análise → fundamentação normativa → conclusão.",
         engenharia: "- Referencie normas ABNT e legislação aplicável.\n- Nunca invente especificações ou medições.\n- Estrutura: objeto → metodologia → análise técnica → recomendações.",
-        educacao:   "- Referencie BNCC, teorias pedagógicas e autores reconhecidos.\n- Nunca invente dados de alunos.\n- Estrutura: contexto → diagnóstico → proposta → conclusão.",
-        negocios:   "- Linguagem objetiva, orientada a dados e resultados.\n- Nunca invente métricas ou projeções.\n- Estrutura: contexto → análise → recomendações → próximos passos.",
-        ti:         "- Terminologia técnica precisa, padrões ISO/IEEE quando aplicável.\n- Nunca invente funcionalidades ou dados técnicos.\n- Estrutura: escopo → análise → solução → considerações finais.",
-        marketing:  "- Linguagem adaptada ao público-alvo.\n- Nunca invente dados de mercado ou métricas.\n- Estrutura: contexto → desenvolvimento → call to action.",
+        educacao: "- Referencie BNCC, teorias pedagógicas e autores reconhecidos.\n- Nunca invente dados de alunos.\n- Estrutura: contexto → diagnóstico → proposta → conclusão.",
+        negocios: "- Linguagem objetiva, orientada a dados e resultados.\n- Nunca invente métricas ou projeções.\n- Estrutura: contexto → análise → recomendações → próximos passos.",
+        ti: "- Terminologia técnica precisa, padrões ISO/IEEE quando aplicável.\n- Nunca invente funcionalidades ou dados técnicos.\n- Estrutura: escopo → análise → solução → considerações finais.",
+        marketing: "- Linguagem adaptada ao público-alvo.\n- Nunca invente dados de mercado ou métricas.\n- Estrutura: contexto → desenvolvimento → call to action.",
         psicologia: "- Respeite o Código de Ética do CFP.\n- Nunca invente informações sobre o avaliado.\n- Estrutura: identificação → histórico → análise → conclusão/recomendações.",
-        outro:      "- Linguagem técnica adequada à área e ao público.\n- Nunca invente dados não fornecidos.\n- Estrutura: contexto → desenvolvimento lógico → conclusão."
+        outro: "- Linguagem técnica adequada à área e ao público.\n- Nunca invente dados não fornecidos.\n- Estrutura: contexto → desenvolvimento lógico → conclusão."
     };
-    const areaLabels = {
-        juridico:'Jurídico', medico:'Medicina', contabil:'Contabilidade',
-        engenharia:'Engenharia', educacao:'Educação', negocios:'Negócios',
-        ti:'TI', marketing:'Marketing', psicologia:'Psicologia', outro:'Outra área'
-    };
-
+    const areaLabels = { juridico:'Jurídico', medico:'Medicina', contabil:'Contabilidade', engenharia:'Engenharia', educacao:'Educação', negocios:'Negócios', ti:'TI', marketing:'Marketing', psicologia:'Psicologia', outro:'Outra área' };
     const HIST_KEY = 'cassia_v9_historico';
-    function salvarHistorico(entry) {
-        let hist = JSON.parse(localStorage.getItem(HIST_KEY) || '[]');
-        hist.unshift(entry);
-        hist = hist.slice(0, 3);
-        localStorage.setItem(HIST_KEY, JSON.stringify(hist));
-    }
+    function salvarHistorico(entry) { let hist = JSON.parse(localStorage.getItem(HIST_KEY) || '[]'); hist.unshift(entry); hist = hist.slice(0, 3); localStorage.setItem(HIST_KEY, JSON.stringify(hist)); }
     function renderHistorico() {
         const hist = JSON.parse(localStorage.getItem(HIST_KEY) || '[]');
         const section = document.getElementById('hist-section');
         const lista = document.getElementById('hist-lista');
         if (hist.length === 0) { section.style.display = 'none'; return; }
-        section.style.display = 'block';
-        lista.innerHTML = '';
+        section.style.display = 'block'; lista.innerHTML = '';
         hist.forEach(item => {
-            const div = document.createElement('div');
-            div.className = 'hist-item';
+            const div = document.createElement('div'); div.className = 'hist-item';
             div.innerHTML = `<div class="hist-info"><div class="hist-acao">${item.acao}</div><div class="hist-meta">${item.area} &bull; ${item.data}</div></div><span class="hist-arrow">↗</span>`;
-            div.onclick = () => restaurarHistorico(item);
-            lista.appendChild(div);
+            div.onclick = () => restaurarHistorico(item); lista.appendChild(div);
         });
     }
     function restaurarHistorico(item) {
@@ -377,14 +316,8 @@
         showToast("CONSULTA RESTAURADA!");
         setTimeout(() => document.getElementById('res-box').scrollIntoView({ behavior: 'smooth' }), 200);
     }
-
     function novaConsulta() {
-        document.getElementById('area').value = '';
-        document.getElementById('gerado').value = '';
-        document.getElementById('destino').value = '';
-        document.getElementById('publico').value = '';
-        document.getElementById('fatos').value = '';
-        document.getElementById('res').value = '';
+        ['area','gerado','destino','publico','fatos','res'].forEach(id => document.getElementById(id).value = '');
         document.getElementById('res-box').style.display = 'none';
         document.getElementById('efetividade-wrap').style.display = 'none';
         document.getElementById('quality-fill').style.width = '0%';
@@ -396,58 +329,27 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
         showToast("PRONTO PARA NOVA CONSULTA!");
     }
-
     function executarV9() {
-        const areaEl  = document.getElementById('area');
-        const acaoEl  = document.getElementById('gerado');
-        const fatosEl = document.getElementById('fatos');
-        const areaVal = areaEl.value;
-        const acaoVal = acaoEl.value.trim();
-        const fatosVal = fatosEl.value.trim();
+        const areaEl = document.getElementById('area'), acaoEl = document.getElementById('gerado'), fatosEl = document.getElementById('fatos');
+        const areaVal = areaEl.value, acaoVal = acaoEl.value.trim(), fatosVal = fatosEl.value.trim();
         let valido = true;
-        if (!areaVal)  { areaEl.classList.add('invalid'); valido = false; }
-        if (!acaoVal)  { acaoEl.classList.add('invalid'); valido = false; }
-        if (!fatosVal) { fatosEl.style.borderColor = '#e05252'; valido = false; }
-        else           { fatosEl.style.borderColor = ''; }
-        if (!valido) {
-            showToast("PREENCHA OS CAMPOS OBRIGATÓRIOS");
-            setTimeout(() => { areaEl.classList.remove('invalid'); acaoEl.classList.remove('invalid'); fatosEl.style.borderColor = ''; }, 2500);
-            return;
-        }
+        if (!areaVal) { areaEl.classList.add('invalid'); valido = false; }
+        if (!acaoVal) { acaoEl.classList.add('invalid'); valido = false; }
+        if (!fatosVal) { fatosEl.style.borderColor = '#e05252'; valido = false; } else { fatosEl.style.borderColor = ''; }
+        if (!valido) { showToast("PREENCHA OS CAMPOS OBRIGATÓRIOS"); setTimeout(() => { areaEl.classList.remove('invalid'); acaoEl.classList.remove('invalid'); fatosEl.style.borderColor = ''; }, 2500); return; }
         const progArea = document.getElementById('prog-area');
         const b1 = document.getElementById('bar1'), b2 = document.getElementById('bar2');
         const v1 = document.getElementById('val1'), v2 = document.getElementById('val2');
-        progArea.style.display = 'block';
-        b1.style.width = '0%'; b2.style.width = '0%'; v1.innerText = '0%'; v2.innerText = '0%';
+        progArea.style.display = 'block'; b1.style.width = '0%'; b2.style.width = '0%'; v1.innerText = '0%'; v2.innerText = '0%';
         const objetivo = document.getElementById('destino').value.trim();
-        const publico  = document.getElementById('publico').value.trim();
+        const publico = document.getElementById('publico').value.trim();
         let p1 = 0, p2 = 0;
         let itv = setInterval(() => {
             if (p1 < 100) { p1 += 5; b1.style.width = p1+'%'; v1.innerText = p1+'%'; }
             if (p1 > 50 && p2 < 100) { p2 += 10; b2.style.width = p2+'%'; v2.innerText = p2+'%'; }
             if (p1 >= 100 && p2 >= 100) {
                 clearInterval(itv);
-                const promptFinal =
-`[CÁSSIA PROMPT V9 — ENGENHARIA MÁXIMA]
-
-PERSONA: Você é ${personas[areaVal]}
-
-TAREFA: ${acaoVal}
-OBJETIVO: ${objetivo || "não especificado"}
-PÚBLICO-ALVO: ${publico || "não especificado — adapte o tom ao contexto"}
-TOM DA ESCRITA: ${tomDesc[tomSelecionado]}
-
-REGRAS OBRIGATÓRIAS:
-1. Leia e interprete TODOS os dados fornecidos antes de escrever qualquer coisa.
-2. Identifique pontos centrais, dados críticos e lacunas existentes.
-3. Adapte o tom, vocabulário e nível técnico ao público-alvo e ao tom de escrita definidos acima.
-${regras[areaVal]}
-4. Se faltar dado essencial, escreva: ⚠ REVISÃO NECESSÁRIA — [descreva o dado ausente].
-5. NUNCA invente informações. Use exclusivamente o que está nos dados abaixo.
-6. Entregue o documento completo, estruturado e pronto para uso. Comece direto pelo conteúdo.
-
-DADOS FORNECIDOS:
-${fatosVal}`;
+                const promptFinal = `[CÁSSIA PROMPT V9 — ENGENHARIA MÁXIMA]\n\nPERSONA: Você é ${personas[areaVal]}\n\nTAREFA: ${acaoVal}\nOBJETIVO: ${objetivo || "não especificado"}\nPÚBLICO-ALVO: ${publico || "não especificado — adapte o tom ao contexto"}\nTOM DA ESCRITA: ${tomDesc[tomSelecionado]}\n\nREGRAS OBRIGATÓRIAS:\n1. Leia e interprete TODOS os dados fornecidos antes de escrever qualquer coisa.\n2. Identifique pontos centrais, dados críticos e lacunas existentes.\n3. Adapte o tom, vocabulário e nível técnico ao público-alvo e ao tom de escrita definidos acima.\n${regras[areaVal]}\n4. Se faltar dado essencial, escreva: ⚠ REVISÃO NECESSÁRIA — [descreva o dado ausente].\n5. NUNCA invente informações. Use exclusivamente o que está nos dados abaixo.\n6. Entregue o documento completo, estruturado e pronto para uso. Comece direto pelo conteúdo.\n\nDADOS FORNECIDOS:\n${fatosVal}`;
                 document.getElementById('res').value = promptFinal;
                 document.getElementById('res-box').style.display = 'flex';
                 setTimeout(() => { progArea.style.display = 'none'; }, 800);
@@ -459,14 +361,11 @@ ${fatosVal}`;
             }
         }, 60);
     }
-
     function baixar() {
         const conteudo = document.getElementById('res').value;
         const blob = new Blob(['\ufeff', conteudo], { type: 'application/msword' });
         const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'CASSIA_PROMPT_V9.doc';
-        link.click();
+        link.href = URL.createObjectURL(blob); link.download = 'CASSIA_PROMPT_V9.doc'; link.click();
         showToast("ARQUIVO EXPORTADO!");
     }
 </script>

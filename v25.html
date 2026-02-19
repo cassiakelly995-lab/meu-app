@@ -79,7 +79,12 @@
         .ctrl-btn { background: none; border: 1px solid #bf953f; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 9px; letter-spacing: 1px; font-weight: 900; color: #bf953f; transition: 0.2s; }
         .ctrl-btn:hover { background: rgba(191,149,63,0.1); }
         .ctrl-btn.active { background: var(--gold); color: #000; border-color: transparent; }
-        footer { padding: 40px 20px; text-align: center; font-size: 10px; opacity: 0.5; letter-spacing: 2px; border-top: 1px solid var(--border); width: 100%; transition: 0.5s; }
+        footer { padding: 40px 20px; text-align: center; font-size: 10px; letter-spacing: 2px; border-top: 1px solid var(--border); width: 100%; transition: 0.5s; }
+        .footer-licenca { background: rgba(191,149,63,0.06); border: 1px solid rgba(191,149,63,0.2); border-radius: 4px; padding: 14px 24px; margin-bottom: 20px; display: inline-block; }
+        .footer-licenca-label { font-size: 8px; color: rgba(191,149,63,0.6); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 5px; }
+        .footer-licenca-nome { font-size: 13px; font-weight: 900; background: linear-gradient(135deg,#bf953f,#fcf6ba,#b38728); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 3px; text-transform: uppercase; }
+        .footer-aviso { font-size: 9px; color: rgba(255,255,255,0.22); line-height: 2; max-width: 750px; margin: 0 auto; letter-spacing: 0.5px; }
+        .footer-aviso strong { color: rgba(255,255,255,0.38); }
         .pdf-action { color: #fcf6ba; font-weight: 900; cursor: pointer; font-size: 12px; text-transform: uppercase; display: block; text-align: left; margin-bottom: 15px; }
         body.light-mode .pdf-action { color: #8a6010; }
         #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--gold); color: #000; padding: 12px 28px; border-radius: 4px; font-size: 12px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; opacity: 0; transition: 0.3s; z-index: 9999; pointer-events: none; white-space: nowrap; }
@@ -155,7 +160,22 @@
             </div>
         </div>
     </main>
-    <footer>CÁSSIA PROMPT ® | V9 POWER EDITION<br>A RESPONSABILIDADE É DE QUEM ESTÁ USANDO. O PROGRAMA APENAS GERA O PROMPT.</footer>
+    <footer>
+        <div class="footer-licenca">
+            <div class="footer-licenca-label">Licença nominal concedida a</div>
+            <div class="footer-licenca-nome" id="footer-nome">carregando...</div>
+        </div>
+        <div class="footer-aviso">
+            <strong>CÁSSIA PROMPT ® | V9 POWER EDITION</strong><br>
+            Este software é licenciado de forma nominal, individual e intransferível.<br>
+            O acesso é vinculado exclusivamente ao titular da licença identificado acima.<br>
+            <strong>É expressamente proibido</strong> o compartilhamento, repasse, cessão ou qualquer forma de transferência deste acesso a terceiros.<br>
+            O uso indevido desta licença implica revogação imediata do acesso, sem aviso prévio.<br>
+            <strong>Este programa gera prompts para uso em inteligências artificiais.</strong> A responsabilidade pelo conteúdo gerado e pela sua aplicação é exclusivamente do usuário licenciado.<br>
+            Cássia Prompt não se responsabiliza por decisões tomadas com base nos prompts gerados.<br>
+            © 2025 Cássia Prompt. Todos os direitos reservados.
+        </div>
+    </footer>
 </div>
 <script>
     const firebaseConfig = { databaseURL: "https://cassia-v9-default-rtdb.firebaseio.com" };
@@ -167,7 +187,10 @@
         if (!id) { bloqueado("ACESSO NEGADO", "Nenhum código de acesso encontrado.<br>Solicite seu link autorizado."); return; }
         db.ref('acessos_v9/' + id).once('value').then(snap => {
             if (snap.exists()) {
-                db.ref('acessos_v9/' + id).update({ ultimoUso: Date.now(), usos: (snap.val().usos || 0) + 1 });
+                const dados = snap.val();
+                db.ref('acessos_v9/' + id).update({ ultimoUso: Date.now(), usos: (dados.usos || 0) + 1 });
+                const nomeEl = document.getElementById('footer-nome');
+                if (nomeEl) nomeEl.innerText = dados.nome || 'LICENCIADO';
                 document.getElementById('carregando').style.display = 'none';
                 document.getElementById('app-content').style.display = 'flex';
                 renderHistorico();

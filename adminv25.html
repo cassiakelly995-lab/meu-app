@@ -2,113 +2,277 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>GESTOR V9 ELITE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CÁSSIA PROMPT — PAINEL ADMINISTRATIVO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <style>
-        body { background: #000; color: #fff; font-family: sans-serif; text-align: center; padding: 20px; }
-        .card { border: 2px solid #ed0b5a; padding: 30px; border-radius: 20px; max-width: 500px; margin: auto; box-shadow: 0 0 20px rgba(237,11,90,0.2); }
-        h1 { text-transform: uppercase; color: #ed0b5a; letter-spacing: 2px; }
-        input { width: 90%; padding: 15px; margin: 15px 0; background: #111; border: 1px solid #333; color: #fff; border-radius: 10px; font-size: 15px; }
-        .btn-gerar { background: #ed0b5a; color: #fff; border: none; padding: 15px; width: 95%; border-radius: 10px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 14px; }
-        .item { background: #111; padding: 15px; border-radius: 10px; margin-top: 15px; border: 1px solid #222; text-align: left; }
-        .item-nome { font-weight: 800; font-size: 13px; letter-spacing: 1px; color: #fff; }
-        .item-id { font-size: 10px; color: #555; margin-top: 3px; }
-        .btn-copiar { background: #007bff; color: #fff; border: none; padding: 10px; width: 100%; border-radius: 5px; cursor: pointer; margin-top: 10px; font-weight: bold; font-size: 12px; }
-        .btn-revogar { background: none; border: 1px solid #ff4d4d; color: #ff4d4d; padding: 5px 12px; cursor: pointer; border-radius: 5px; float: right; font-size: 10px; font-weight: bold; }
-        .status-ok { display: inline-block; background: rgba(82,196,82,0.15); color: #52c452; border: 1px solid #52c452; border-radius: 4px; font-size: 9px; padding: 2px 8px; margin-left: 8px; font-weight: 800; letter-spacing: 1px; }
-        .status-fixo { display: inline-block; background: rgba(191,149,63,0.15); color: #bf953f; border: 1px solid #bf953f; border-radius: 4px; font-size: 9px; padding: 2px 8px; margin-left: 8px; font-weight: 800; letter-spacing: 1px; }
-        .total { font-size: 11px; color: #555; margin-top: 20px; letter-spacing: 1px; }
-        footer { margin-top: 40px; font-size: 10px; color: #666; }
-        #msg { font-size: 12px; color: #52c452; height: 20px; margin-top: 8px; font-weight: bold; letter-spacing: 1px; }
+        :root {
+            --bg: #030303;
+            --gold: #bf953f;
+            --gold-light: #fcf6ba;
+            --gold-grad: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 70%, #fbf5b7 100%);
+            --card: rgba(10,10,10,0.95);
+            --border: rgba(191,149,63,0.2);
+            --border-hover: rgba(191,149,63,0.6);
+            --text: #ffffff;
+            --subtext: rgba(255,255,255,0.4);
+            --danger: #c0392b;
+            --danger-soft: rgba(192,57,43,0.12);
+            --success: #27ae60;
+            --success-soft: rgba(39,174,96,0.12);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; min-height: 100vh; overflow-x: hidden; }
+        body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse 60% 40% at 20% 20%, rgba(191,149,63,0.04) 0%, transparent 70%), radial-gradient(ellipse 40% 60% at 80% 80%, rgba(191,149,63,0.03) 0%, transparent 70%); pointer-events: none; z-index: 0; }
+        #tela-login { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 1000; background: #030303; }
+        .login-box { width: 90%; max-width: 400px; text-align: center; animation: fadeUp 0.8s ease both; }
+        .login-logo { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 300; letter-spacing: 8px; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; }
+        .login-title { font-size: 11px; font-weight: 700; letter-spacing: 4px; color: var(--subtext); text-transform: uppercase; margin-bottom: 50px; }
+        .login-field input { width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 2px; padding: 18px 20px; color: var(--text); font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 3px; outline: none; transition: 0.3s; text-align: center; margin-bottom: 16px; }
+        .login-field input::placeholder { color: var(--subtext); letter-spacing: 2px; font-weight: 400; }
+        .login-field input:focus { border-color: var(--gold); }
+        .btn-login { width: 100%; background: var(--gold-grad); color: #000; border: none; padding: 18px; border-radius: 2px; font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; cursor: pointer; margin-top: 8px; transition: 0.3s; }
+        .btn-login:hover { filter: brightness(1.15); }
+        .login-erro { font-size: 10px; color: var(--danger); letter-spacing: 2px; margin-top: 12px; height: 16px; font-weight: 700; }
+        #painel { display: none; min-height: 100vh; position: relative; z-index: 1; }
+        .header { display: flex; align-items: center; justify-content: space-between; padding: 30px 50px; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 15px; }
+        .header-logo { font-family: 'Cormorant Garamond', serif; font-size: 11px; font-weight: 300; letter-spacing: 6px; color: var(--gold); text-transform: uppercase; }
+        .header-title { font-size: 20px; font-weight: 900; letter-spacing: 2px; margin-top: 4px; }
+        .header-right { display: flex; align-items: center; gap: 20px; }
+        .stats-pill { background: rgba(191,149,63,0.08); border: 1px solid var(--border); border-radius: 2px; padding: 10px 20px; text-align: center; }
+        .stats-pill-num { font-size: 22px; font-weight: 900; background: var(--gold-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; }
+        .stats-pill-label { font-size: 8px; font-weight: 700; color: var(--subtext); letter-spacing: 2px; text-transform: uppercase; margin-top: 3px; }
+        .btn-sair { background: none; border: 1px solid rgba(255,255,255,0.1); color: var(--subtext); padding: 10px 18px; border-radius: 2px; font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+        .btn-sair:hover { border-color: var(--danger); color: var(--danger); }
+        .content { padding: 40px 50px; max-width: 1100px; margin: 0 auto; }
+        .novo-acesso { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 35px 40px; margin-bottom: 40px; position: relative; overflow: hidden; }
+        .novo-acesso::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--gold-grad); }
+        .section-label { font-size: 9px; font-weight: 800; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+        .form-row { display: flex; gap: 12px; flex-wrap: wrap; }
+        .form-row input { flex: 1; min-width: 200px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 2px; padding: 16px 20px; color: var(--text); font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1px; outline: none; transition: 0.3s; }
+        .form-row input::placeholder { color: var(--subtext); font-weight: 400; }
+        .form-row input:focus { border-color: var(--gold); }
+        .btn-gerar { background: var(--gold-grad); color: #000; border: none; padding: 16px 35px; border-radius: 2px; font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: 0.3s; white-space: nowrap; }
+        .btn-gerar:hover { filter: brightness(1.15); }
+        .msg-feedback { font-size: 10px; font-weight: 700; letter-spacing: 2px; margin-top: 14px; height: 16px; transition: 0.3s; }
+        .lista-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+        .acesso-item { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 22px 28px; margin-bottom: 10px; display: grid; grid-template-columns: 1fr auto auto auto; align-items: center; gap: 20px; transition: 0.3s; animation: fadeUp 0.4s ease both; }
+        .acesso-item:hover { border-color: var(--border-hover); }
+        .acesso-nome { font-size: 13px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+        .acesso-meta { font-size: 10px; color: var(--subtext); margin-top: 5px; letter-spacing: 0.5px; }
+        .acesso-uso { font-size: 9px; color: var(--gold); font-weight: 700; letter-spacing: 1px; margin-top: 3px; }
+        .badge { font-size: 8px; font-weight: 800; letter-spacing: 2px; padding: 5px 12px; border-radius: 2px; text-transform: uppercase; }
+        .badge-ativo { background: var(--success-soft); color: var(--success); border: 1px solid var(--success); }
+        .badge-fixo { background: rgba(191,149,63,0.1); color: var(--gold); border: 1px solid var(--border); }
+        .btn-copiar { background: rgba(0,123,255,0.1); border: 1px solid rgba(0,123,255,0.4); color: #4d9fff; padding: 10px 18px; border-radius: 2px; font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: 0.3s; white-space: nowrap; }
+        .btn-copiar:hover { background: rgba(0,123,255,0.2); border-color: #4d9fff; }
+        .btn-copiar.ok { background: var(--success-soft); border-color: var(--success); color: var(--success); }
+        .btn-revogar { background: var(--danger-soft); border: 1px solid rgba(192,57,43,0.4); color: #e74c3c; padding: 10px 18px; border-radius: 2px; font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: 0.3s; white-space: nowrap; }
+        .btn-revogar:hover { background: rgba(192,57,43,0.25); border-color: #e74c3c; }
+        .vazio { text-align: center; padding: 60px 20px; color: var(--subtext); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; border: 1px dashed var(--border); border-radius: 4px; }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000; display: none; align-items: center; justify-content: center; }
+        .modal-overlay.show { display: flex; }
+        .modal-box { background: #0a0a0a; border: 1px solid var(--border); border-radius: 4px; padding: 50px 40px; max-width: 400px; width: 90%; text-align: center; position: relative; animation: fadeUp 0.3s ease both; }
+        .modal-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--danger), transparent); }
+        .modal-icon { font-size: 36px; margin-bottom: 20px; }
+        .modal-title { font-size: 11px; font-weight: 900; letter-spacing: 4px; color: #e74c3c; text-transform: uppercase; margin-bottom: 12px; }
+        .modal-nome { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+        .modal-desc { font-size: 11px; color: var(--subtext); letter-spacing: 0.5px; line-height: 1.7; margin-bottom: 30px; }
+        .modal-buttons { display: flex; gap: 10px; }
+        .btn-cancelar { flex: 1; background: none; border: 1px solid var(--border); color: var(--subtext); padding: 14px; border-radius: 2px; font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+        .btn-cancelar:hover { border-color: var(--subtext); color: var(--text); }
+        .btn-confirmar { flex: 1; background: var(--danger); border: none; color: #fff; padding: 14px; border-radius: 2px; font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+        .btn-confirmar:hover { background: #a93226; }
+        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--gold-grad); color: #000; padding: 14px 30px; border-radius: 2px; font-size: 10px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; opacity: 0; transition: 0.3s; z-index: 9999; pointer-events: none; white-space: nowrap; }
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .footer { padding: 30px 50px; border-top: 1px solid var(--border); text-align: center; font-size: 9px; color: var(--subtext); letter-spacing: 2px; margin-top: 20px; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 700px) { .header { padding: 20px; } .content { padding: 20px; } .acesso-item { grid-template-columns: 1fr; } .form-row { flex-direction: column; } .novo-acesso { padding: 25px 20px; } }
     </style>
 </head>
 <body>
-<div class="card">
-    <h1>Gestor <span style="color:#fff">V9 Elite</span></h1>
-    <input type="text" id="nomeDoutora" placeholder="NOME DA PESSOA">
-    <button class="btn-gerar" onclick="gerarAcesso()">GERAR LINK E AUTORIZAR</button>
-    <div id="msg"></div>
-    <div id="listaAcessos"></div>
-    <div class="total" id="total"></div>
-    <footer>
-        <strong style="color:#bf953f">LICENCIADO PARA: CÁSSIA PROMPT</strong><br><br>
-        A RESPONSABILIDADE É DE QUEM ESTÁ USANDO.<br>ESTE PROGRAMA APENAS GERA O PROMPT.
-    </footer>
+<div id="toast"></div>
+<div class="modal-overlay" id="modal">
+    <div class="modal-box">
+        <div class="modal-icon">⚠️</div>
+        <div class="modal-title">Revogar Acesso</div>
+        <div class="modal-nome" id="modal-nome"></div>
+        <div class="modal-desc">Esta ação bloqueará o acesso imediatamente.<br>A pessoa não conseguirá mais usar o sistema.</div>
+        <div class="modal-buttons">
+            <button class="btn-cancelar" onclick="fecharModal()">CANCELAR</button>
+            <button class="btn-confirmar" onclick="confirmarRevogacao()">REVOGAR AGORA</button>
+        </div>
+    </div>
+</div>
+<div id="tela-login">
+    <div class="login-box">
+        <div class="login-logo">Cássia Prompt</div>
+        <div class="login-title">Painel Administrativo</div>
+        <div class="login-field">
+            <input type="password" id="inp-senha" placeholder="SENHA DE ACESSO" onkeydown="if(event.key==='Enter') fazerLogin()">
+        </div>
+        <button class="btn-login" onclick="fazerLogin()">ENTRAR NO PAINEL</button>
+        <div class="login-erro" id="login-erro"></div>
+    </div>
+</div>
+<div id="painel">
+    <div class="header">
+        <div class="header-left">
+            <div class="header-logo">Cássia Prompt</div>
+            <div class="header-title">PAINEL ADMINISTRATIVO</div>
+        </div>
+        <div class="header-right">
+            <div class="stats-pill">
+                <div class="stats-pill-num" id="stat-total">0</div>
+                <div class="stats-pill-label">Acessos Ativos</div>
+            </div>
+            <button class="btn-sair" onclick="sair()">SAIR</button>
+        </div>
+    </div>
+    <div class="content">
+        <div class="novo-acesso">
+            <div class="section-label">Gerar Novo Acesso</div>
+            <div class="form-row">
+                <input type="text" id="inp-nome" placeholder="Nome da pessoa" onkeydown="if(event.key==='Enter') gerarAcesso()">
+                <button class="btn-gerar" onclick="gerarAcesso()">⚡ GERAR LINK</button>
+            </div>
+            <div class="msg-feedback" id="msg"></div>
+        </div>
+        <div class="lista-header">
+            <div class="section-label" style="margin:0;flex:1">Acessos Licenciados</div>
+        </div>
+        <div id="lista-acessos"></div>
+    </div>
+    <div class="footer">CÁSSIA PROMPT ® | PAINEL ADMINISTRATIVO V9 ELITE &nbsp;|&nbsp; USO EXCLUSIVO DA ADMINISTRADORA</div>
 </div>
 <script>
-    const firebaseConfig = { databaseURL: "https://promptv25-default-rtdb.firebaseio.com" };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+    const SENHA_ADMIN = "cassia2025";
     const BASE_URL = "https://cassiakelly995-lab.github.io/meu-app/v25.html";
     const FIXOS = ["Helen_cristina"];
+    const firebaseConfig = { databaseURL: "https://cassia-v9-default-rtdb.firebaseio.com" };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    let idParaRevogar = null, nomeParaRevogar = null;
 
-    function showMsg(txt, cor) {
-        const el = document.getElementById('msg');
-        el.style.color = cor || '#52c452';
-        el.innerText = txt;
-        setTimeout(() => el.innerText = '', 2500);
+    function fazerLogin() {
+        const senha = document.getElementById('inp-senha').value;
+        if (senha === SENHA_ADMIN) {
+            document.getElementById('tela-login').style.opacity = '0';
+            document.getElementById('tela-login').style.transition = '0.5s';
+            setTimeout(() => {
+                document.getElementById('tela-login').style.display = 'none';
+                document.getElementById('painel').style.display = 'block';
+                iniciarPainel();
+            }, 500);
+        } else {
+            const erro = document.getElementById('login-erro');
+            erro.innerText = 'SENHA INCORRETA';
+            document.getElementById('inp-senha').value = '';
+            setTimeout(() => erro.innerText = '', 2000);
+        }
+    }
+
+    function sair() {
+        document.getElementById('painel').style.display = 'none';
+        document.getElementById('tela-login').style.display = 'flex';
+        document.getElementById('tela-login').style.opacity = '1';
+        document.getElementById('inp-senha').value = '';
+    }
+
+    function iniciarPainel() {
+        db.ref('acessos_v9').on('value', snap => {
+            const dados = snap.val() || {};
+            if (!dados['Helen_cristina']) {
+                db.ref('acessos_v9/Helen_cristina').set({ nome: 'HELEN CRISTINA', criadoEm: Date.now(), usos: 0 });
+            }
+            renderizar(dados);
+        });
     }
 
     function renderizar(acessos) {
-        const lista = document.getElementById('listaAcessos');
-        const total = document.getElementById('total');
-        lista.innerHTML = '';
+        const lista = document.getElementById('lista-acessos');
         const keys = Object.keys(acessos || {});
-        keys.forEach(id => {
+        document.getElementById('stat-total').innerText = keys.length;
+        if (keys.length === 0) { lista.innerHTML = '<div class="vazio">Nenhum acesso ativo</div>'; return; }
+        lista.innerHTML = '';
+        keys.sort((a, b) => {
+            if (FIXOS.includes(a)) return -1;
+            if (FIXOS.includes(b)) return 1;
+            return (acessos[b].criadoEm || 0) - (acessos[a].criadoEm || 0);
+        }).forEach((id, i) => {
             const acc = acessos[id];
             const ehFixo = FIXOS.includes(id);
-            lista.innerHTML += `
-                <div class="item">
-                    <span class="item-nome">${acc.nome}</span>
-                    ${ehFixo ? '<span class="status-fixo">FIXO</span>' : '<span class="status-ok">ATIVO</span>'}
-                    ${ehFixo ? '' : `<button class="btn-revogar" onclick="revogar('${id}', '${acc.nome}')">REVOGAR</button>`}
-                    <div class="item-id">ID: ${id}</div>
-                    <button class="btn-copiar" onclick="copiar('${id}')">📋 COPIAR LINK</button>
-                </div>`;
+            const data = acc.criadoEm ? new Date(acc.criadoEm).toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' }) : '—';
+            const usos = acc.usos || 0;
+            const ultimoUso = acc.ultimoUso ? new Date(acc.ultimoUso).toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' }) : 'Nunca acessou';
+            const item = document.createElement('div');
+            item.className = 'acesso-item';
+            item.style.animationDelay = (i * 0.05) + 's';
+            item.innerHTML = `
+                <div>
+                    <div class="acesso-nome">${acc.nome}</div>
+                    <div class="acesso-meta">Criado em: ${data} &nbsp;|&nbsp; ID: ${id}</div>
+                    <div class="acesso-uso">Último acesso: ${ultimoUso} &nbsp;·&nbsp; Total de acessos: ${usos}</div>
+                </div>
+                <span class="badge ${ehFixo ? 'badge-fixo' : 'badge-ativo'}">${ehFixo ? 'FIXO' : 'ATIVO'}</span>
+                <button class="btn-copiar" id="btn-cp-${id}" onclick="copiar('${id}','${acc.nome}')">📋 COPIAR LINK</button>
+                ${ehFixo ? '<div></div>' : `<button class="btn-revogar" onclick="abrirModal('${id}','${acc.nome}')">🚫 REVOGAR</button>`}`;
+            lista.appendChild(item);
         });
-        total.innerText = `ACESSOS ATIVOS: ${keys.length}`;
     }
-
-    db.ref('acessos_v9').on('value', snap => {
-        const dados = snap.val() || {};
-        if (!dados['Helen_cristina']) {
-            db.ref('acessos_v9/Helen_cristina').set({ nome: 'HELEN CRISTINA', criadoEm: Date.now() });
-        }
-        renderizar(dados);
-    });
 
     function gerarAcesso() {
-        const nome = document.getElementById('nomeDoutora').value.trim().toUpperCase();
-        if (!nome) { showMsg('DIGITE O NOME!', '#ff4d4d'); return; }
-        const id = btoa(nome + Date.now()).replace(/[^a-zA-Z0-9]/g,'').substring(0, 10);
-        db.ref('acessos_v9/' + id).set({ nome, criadoEm: Date.now() })
-            .then(() => {
-                document.getElementById('nomeDoutora').value = '';
-                showMsg('ACESSO GERADO COM SUCESSO!');
-            });
+        const nome = document.getElementById('inp-nome').value.trim().toUpperCase();
+        if (!nome) { showMsg('Digite o nome da pessoa', '#e74c3c'); return; }
+        const id = btoa(nome + Date.now()).replace(/[^a-zA-Z0-9]/g,'').substring(0, 12);
+        db.ref('acessos_v9/' + id).set({ nome, criadoEm: Date.now(), usos: 0 })
+            .then(() => { document.getElementById('inp-nome').value = ''; showMsg('✅ Acesso gerado!', '#27ae60'); copiar(id, nome); })
+            .catch(() => showMsg('Erro ao salvar.', '#e74c3c'));
     }
 
-    function revogar(id, nome) {
-        if (confirm(`Revogar acesso de ${nome}? Ela será bloqueada imediatamente.`)) {
-            db.ref('acessos_v9/' + id).remove()
-                .then(() => showMsg('ACESSO REVOGADO!', '#ff4d4d'));
-        }
-    }
-
-    function copiar(id) {
+    function copiar(id, nome) {
         const link = BASE_URL + '?id=' + id;
+        const btn = document.getElementById('btn-cp-' + id);
+        const sucesso = () => {
+            showToast('LINK DE ' + nome + ' COPIADO!');
+            if (btn) { btn.innerText = '✓ COPIADO'; btn.classList.add('ok'); setTimeout(() => { btn.innerText = '📋 COPIAR LINK'; btn.classList.remove('ok'); }, 2000); }
+        };
         if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(link).then(() => showMsg('LINK COPIADO!'));
-        } else {
-            const el = document.createElement('textarea');
-            el.value = link;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-            showMsg('LINK COPIADO!');
-        }
+            navigator.clipboard.writeText(link).then(sucesso).catch(() => fallback(link, sucesso));
+        } else { fallback(link, sucesso); }
+    }
+    function fallback(link, cb) {
+        const el = document.createElement('textarea');
+        el.value = link; document.body.appendChild(el); el.select();
+        try { document.execCommand('copy'); cb(); } catch(e) { alert('Link: ' + link); }
+        document.body.removeChild(el);
+    }
+
+    function abrirModal(id, nome) {
+        idParaRevogar = id; nomeParaRevogar = nome;
+        document.getElementById('modal-nome').innerText = nome;
+        document.getElementById('modal').classList.add('show');
+    }
+    function fecharModal() { document.getElementById('modal').classList.remove('show'); idParaRevogar = null; }
+    function confirmarRevogacao() {
+        if (!idParaRevogar) return;
+        db.ref('acessos_v9/' + idParaRevogar).remove()
+            .then(() => { showToast('ACESSO REVOGADO!'); fecharModal(); })
+            .catch(() => showMsg('Erro ao revogar.', '#e74c3c'));
+    }
+
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.innerText = msg; t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2500);
+    }
+    function showMsg(txt, cor) {
+        const el = document.getElementById('msg');
+        el.style.color = cor || '#27ae60'; el.innerText = txt;
+        setTimeout(() => el.innerText = '', 3000);
     }
 </script>
 </body>
